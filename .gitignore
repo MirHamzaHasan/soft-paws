@@ -1,0 +1,60 @@
+# Dependencies
+/node_modules/
+/.pnp/
+.pnp.js
+
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Expo and generated native projects
+/.expo/
+/android/
+/ios/
+/index.js
+/expo-env.d.ts
+/.metro-health-check*
+
+# Generated output and caches
+/coverage/
+/dist/
+/web-build/
+/.tamagui/
+/tamagui.generated.css
+/supabase/.temp/
+/.cache/
+/.turbo/
+*.tsbuildinfo
+.eslintcache
+
+# Local process and temporary files
+/.poc*
+*.orig.*
+*.tmp
+*.temp
+
+# Debug logs
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+expo-debug.log*
+
+# Signing credentials and provisioning files
+*.jks
+*.keystore
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.pem
+
+# Editors and operating systems
+/.idea/
+/.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

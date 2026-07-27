@@ -1,0 +1,110 @@
+import { useRouter } from 'expo-router';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+
+import { HomeAvatar } from './HomeAvatar';
+import { SettingsIcon } from './HomeIcons';
+
+type HomeHeaderProps = {
+  appTitle?: string;
+  dogName?: string;
+  dogMeta?: string;
+  variant?: 'default' | 'compact';
+  avatarEmoji?: string;
+  avatarBackgroundColor?: string;
+};
+
+const styles = StyleSheet.create({
+  chrome: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#E5E5E5',
+    backgroundColor: '#FAFAFA',
+  },
+  inner: {
+    width: '100%',
+    maxWidth: 760,
+    alignSelf: 'center',
+    paddingHorizontal: 18,
+    paddingTop: 10,
+    paddingBottom: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 16,
+  },
+  identity: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    minWidth: 0,
+  },
+  copy: {
+    flex: 1,
+    gap: 4,
+    minWidth: 0,
+  },
+  copyCompact: {
+    justifyContent: 'center',
+  },
+  title: {
+    color: '#0A0A0A',
+    fontSize: 22,
+    lineHeight: 28,
+    fontWeight: '500',
+  },
+  subtitle: {
+    color: '#5F6670',
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '400',
+  },
+  settingsButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+export function HomeHeader({
+  appTitle = 'BarkLog',
+  dogName = 'Max',
+  dogMeta = 'Golden Retriever · 3y',
+  variant = 'default',
+  avatarEmoji,
+  avatarBackgroundColor,
+}: HomeHeaderProps) {
+  const router = useRouter();
+  const compact = variant === 'compact';
+
+  return (
+    <View style={styles.chrome}>
+      <View style={styles.inner}>
+        <View style={styles.identity}>
+          <HomeAvatar
+            emoji={avatarEmoji}
+            backgroundColor={avatarBackgroundColor}
+          />
+
+          <View style={[styles.copy, compact ? styles.copyCompact : null]}>
+            <Text style={styles.title}>{appTitle}</Text>
+            {compact ? null : (
+              <Text style={styles.subtitle}>
+                {dogName} · {dogMeta}
+              </Text>
+            )}
+          </View>
+        </View>
+
+        <Pressable
+          accessibilityRole="button"
+          style={styles.settingsButton}
+          onPress={() => router.push('/settings')}
+        >
+          <SettingsIcon color="#9A938C" />
+        </Pressable>
+      </View>
+    </View>
+  );
+}

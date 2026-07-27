@@ -1,0 +1,4 @@
+interface:
+  display_name: "BarkLog Monetization Growth"
+  short_description: "Design BarkLog premium loops and retention"
+  default_prompt: "Use $barklog-monetization-engagement to shape BarkLog paywalls, premium packaging, and engagement loops."

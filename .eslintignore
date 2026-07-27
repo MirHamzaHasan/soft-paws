@@ -1,0 +1,8 @@
+node_modules
+out
+dist
+.expo
+.tamagui
+expo-env.d.ts
+tamagui.generated.css
+!.detoxrc.js

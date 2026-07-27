@@ -1,0 +1,4 @@
+interface:
+  display_name: "BarkLog UI UX Journal"
+  short_description: "Design BarkLog with the tactile journal system"
+  default_prompt: "Use $barklog-ui-ux-journal to design a BarkLog screen or interaction in the Parchment and Ink style."

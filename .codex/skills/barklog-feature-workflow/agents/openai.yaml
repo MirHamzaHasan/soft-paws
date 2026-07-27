@@ -1,0 +1,4 @@
+interface:
+  display_name: "BarkLog Feature Workflow"
+  short_description: "Plan and ship BarkLog features end to end"
+  default_prompt: "Use $barklog-feature-workflow to shape and sequence a BarkLog feature from brief to delivery."

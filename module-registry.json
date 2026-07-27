@@ -1,0 +1,14 @@
+{
+  "ads": true,
+  "notifications": true,
+  "analytics": true,
+  "auth": true,
+  "storage": true,
+  "purchases": false,
+  "remoteConfig": true,
+  "theme": true,
+  "localization": true,
+  "deepLinks": true,
+  "consent": true,
+  "crashReporting": true
+}

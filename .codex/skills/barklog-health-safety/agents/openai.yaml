@@ -1,0 +1,4 @@
+interface:
+  display_name: "BarkLog Health Safety"
+  short_description: "Keep BarkLog health guidance high trust and safe"
+  default_prompt: "Use $barklog-health-safety to scope BarkLog health, triage, toxicity, and vet-report features safely."
