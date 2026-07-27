@@ -11,7 +11,7 @@ export default function OnboardingLayout() {
     (state) => state.contactPreferenceStatus,
   );
   const sessionStatus = useAuthSessionStore((state) => state.sessionStatus);
-  const segments = useSegments();
+  const segments = useSegments() as readonly string[];
   const onboardingRoute = String(segments[1] ?? '');
 
   if (bootstrapStatus !== 'ready') {

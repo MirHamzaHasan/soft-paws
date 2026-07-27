@@ -8,7 +8,7 @@ import { getAuthRedirectTarget } from '../utils/authRouting';
 
 export function AuthNavigationGate() {
   const router = useRouter();
-  const segments = useSegments();
+  const segments = useSegments() as readonly string[];
   const rootNavigationState = useRootNavigationState();
   const bootstrapStatus = useAuthSessionStore((state) => state.bootstrapStatus);
   const onboardingStatus = useAuthSessionStore(
