@@ -228,6 +228,9 @@ importers:
       prettier:
         specifier: ^3.0.0
         version: 3.8.3
+      react-test-renderer:
+        specifier: 19.1.0
+        version: 19.1.0(react@19.1.0)
       rimraf:
         specifier: ^5.0.1
         version: 5.0.10
