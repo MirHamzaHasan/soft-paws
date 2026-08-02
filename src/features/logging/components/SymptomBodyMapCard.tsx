@@ -1,5 +1,5 @@
-import { Pressable, StyleSheet, View } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
+import { Pressable, StyleSheet, View } from "react-native";
+import Svg, { Path } from "react-native-svg";
 
 type SymptomHotspot = {
   id: string;
@@ -15,18 +15,18 @@ type SymptomBodyMapCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    minHeight: 278,
-    borderRadius: 22,
+    minHeight: 240,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#DDD8D2',
-    backgroundColor: '#FFFCFA',
-    overflow: 'hidden',
+    borderColor: "#DDD8D2",
+    backgroundColor: "#FFFCFA",
+    overflow: "hidden",
   },
   canvas: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
   },
   figure: {
     width: 220,
@@ -34,30 +34,30 @@ const styles = StyleSheet.create({
     opacity: 0.16,
   },
   hotspot: {
-    position: 'absolute',
-    width: 34,
-    height: 34,
+    position: "absolute",
+    width: 24,
+    height: 24,
     borderRadius: 999,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#DDD8D2',
-    backgroundColor: '#FFFCFA',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: -17,
-    marginTop: -17,
+    borderColor: "#DDD8D2",
+    backgroundColor: "#FFFCFA",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: -12,
+    marginTop: -12,
   },
   hotspotInner: {
-    width: 10,
-    height: 10,
+    width: 8,
+    height: 8,
     borderRadius: 999,
-    backgroundColor: '#757B80',
+    backgroundColor: "#757B80",
   },
   hotspotSelected: {
-    borderColor: '#F1CACA',
-    backgroundColor: '#FFF0EE',
+    borderColor: "#F1CACA",
+    backgroundColor: "#FFF0EE",
   },
   hotspotInnerSelected: {
-    backgroundColor: '#A8342A',
+    backgroundColor: "#A8342A",
   },
 });
 

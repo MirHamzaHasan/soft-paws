@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   shell: {
     flex: 1,
     width: '100%',
-    maxWidth: 760,
+    maxWidth: 448,
   },
   topBar: {
     paddingHorizontal: 24,
@@ -45,15 +45,15 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   title: {
-    marginTop: 56,
+    marginTop: 28,
     color: '#2F373A',
-    fontSize: 42,
-    lineHeight: 50,
-    fontWeight: '400',
-    letterSpacing: -1.5,
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: '500',
+    letterSpacing: -0.5,
   },
   body: {
-    marginTop: 56,
+    marginTop: 40,
   },
 });
 

@@ -13,34 +13,34 @@ type LedgerDonutCardProps = {
   data: LedgerDonutSlice[];
 };
 
-const SIZE = 168;
-const STROKE = 20;
+const SIZE = 112;
+const STROKE = 12;
 const RADIUS = (SIZE - STROKE) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 28,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#E5E1DB',
     backgroundColor: '#FFFCFA',
-    paddingHorizontal: 22,
-    paddingTop: 22,
-    paddingBottom: 20,
-    gap: 24,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    gap: 16,
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 22,
-    lineHeight: 28,
-    fontWeight: '400',
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: '500',
   },
   chartWrap: {
     alignItems: 'center',
     justifyContent: 'center',
   },
   legend: {
-    gap: 12,
+    gap: 8,
   },
   legendRow: {
     flexDirection: 'row',
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   legendCopy: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: 8,
   },
   legendDot: {
     width: 11,
@@ -62,14 +62,14 @@ const styles = StyleSheet.create({
   },
   legendLabel: {
     color: '#2D3135',
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 11,
+    lineHeight: 14,
     fontWeight: '400',
   },
   legendValue: {
     color: '#5E6670',
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 11,
+    lineHeight: 14,
     fontWeight: '400',
   },
 });

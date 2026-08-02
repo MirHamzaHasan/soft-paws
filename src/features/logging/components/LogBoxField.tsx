@@ -4,7 +4,7 @@ import {
   TextInput,
   type TextInputProps,
   View,
-} from 'react-native';
+} from "react-native";
 
 type LogBoxFieldProps = TextInputProps & {
   label: string;
@@ -16,46 +16,46 @@ type LogBoxFieldProps = TextInputProps & {
 
 const styles = StyleSheet.create({
   field: {
-    gap: 16,
+    gap: 8,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     gap: 16,
   },
   label: {
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "500",
   },
   unitLabel: {
-    fontSize: 14,
-    lineHeight: 18,
-    fontWeight: '500',
-    letterSpacing: 1.4,
-    textTransform: 'uppercase',
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
   },
   inputWrap: {
-    minHeight: 92,
-    borderWidth: 1,
-    paddingHorizontal: 4,
-    justifyContent: 'center',
+    minHeight: 52,
+    borderWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: 0,
+    justifyContent: "center",
   },
   input: {
-    minHeight: 84,
-    fontSize: 36,
-    lineHeight: 42,
-    fontWeight: '400',
+    minHeight: 50,
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: "500",
   },
 });
 
 export function LogBoxField({
   label,
   unitLabel,
-  labelColor = '#8F6110',
-  borderColor = '#8F6110',
-  inputColor = '#8F6110',
+  labelColor = "#8F6110",
+  borderColor = "#8F6110",
+  inputColor = "#8F6110",
   ...props
 }: LogBoxFieldProps) {
   return (

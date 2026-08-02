@@ -1,5 +1,5 @@
-import { type ReactNode } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { type ReactNode } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 type VetPrepMetricCardProps = {
   icon: ReactNode;
@@ -10,28 +10,28 @@ type VetPrepMetricCardProps = {
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    minHeight: 140,
-    borderRadius: 18,
+    minHeight: 128,
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E2DDD7',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 18,
-    paddingTop: 16,
-    paddingBottom: 14,
-    gap: 16,
+    borderColor: "#E2DDD7",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+    gap: 10,
   },
   value: {
-    color: '#0A0A0A',
-    fontSize: 38,
-    lineHeight: 42,
-    fontWeight: '400',
-    letterSpacing: -1.2,
+    color: "#0A0A0A",
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: "400",
+    letterSpacing: -0.5,
   },
   label: {
-    color: '#5D656D',
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '400',
+    color: "#5D656D",
+    fontSize: 12,
+    lineHeight: 18,
+    fontWeight: "400",
   },
 });
 

@@ -1,140 +1,140 @@
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { useMemo, useState } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { BarklogStatusBanner, useBarklogFeedback } from '@/components/ui';
+import { BarklogStatusBanner, useBarklogFeedback } from "@/components/ui";
 import {
   captureBarklogError,
   queueBarklogEvent,
-} from '@/features/observability';
-import HapticManager from '@/managers/HapticManager';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
-import { getBarklogErrorMessage } from '@/utils/barklogErrorMessages';
+} from "@/features/observability";
+import HapticManager from "@/managers/HapticManager";
+import { getSelectedDog, useAuthSessionStore } from "@/stores";
+import { getBarklogErrorMessage } from "@/utils/barklogErrorMessages";
 
-import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { OnboardingCirclePlate } from '../../onboarding/components/OnboardingCirclePlate';
-import { PawIcon } from '../../onboarding/components/OnboardingIcons';
-import { PremiumFeatureRow } from '../components/PremiumFeatureRow';
+import { PrimaryButton } from "../../../components/ui/PrimaryButton";
+import { OnboardingCirclePlate } from "../../onboarding/components/OnboardingCirclePlate";
+import { PawIcon } from "../../onboarding/components/OnboardingIcons";
+import { PremiumFeatureRow } from "../components/PremiumFeatureRow";
 import {
   BARKLOG_PREMIUM_PLANS,
   type BarklogPremiumPlanId,
   FREE_ACCESS_GUARANTEES,
   PAYWALL_FEATURE_ROWS,
-} from '../data/premiumCatalog';
-import { purchaseBarklogPlan } from '../services/revenueCatService';
-import { usePremiumPresentationStore } from '../stores/usePremiumPresentationStore';
+} from "../data/premiumCatalog";
+import { purchaseBarklogPlan } from "../services/revenueCatService";
+import { usePremiumPresentationStore } from "../stores/usePremiumPresentationStore";
 import {
   getPremiumEntitlementState,
   getTrialDaysRemaining,
-} from '../utils/premiumAccess';
+} from "../utils/premiumAccess";
 
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FFFDF8',
+    backgroundColor: "#FFFDF8",
   },
   screen: {
-    flex: 1,
+    flexGrow: 1,
     paddingHorizontal: 24,
-    paddingTop: 30,
-    paddingBottom: 28,
-    justifyContent: 'space-between',
+    paddingTop: 20,
+    paddingBottom: 20,
+    justifyContent: "space-between",
   },
   top: {
-    alignItems: 'center',
-    gap: 22,
-    paddingTop: 18,
+    alignItems: "center",
+    gap: 14,
+    paddingTop: 8,
   },
   title: {
-    color: '#1F2528',
-    fontSize: 44,
-    lineHeight: 50,
-    fontWeight: '400',
+    color: "#1F2528",
+    fontSize: 32,
+    lineHeight: 38,
+    fontWeight: "400",
     letterSpacing: -1.2,
-    textAlign: 'center',
+    textAlign: "center",
   },
   subtitle: {
     maxWidth: 520,
-    color: '#5D656D',
-    fontSize: 17,
-    lineHeight: 27,
-    fontWeight: '400',
-    textAlign: 'center',
+    color: "#5D656D",
+    fontSize: 14,
+    lineHeight: 21,
+    fontWeight: "400",
+    textAlign: "center",
   },
   pill: {
-    minHeight: 42,
-    borderRadius: 21,
+    minHeight: 32,
+    borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#AAB3B8',
-    backgroundColor: '#FFFCFA',
+    borderColor: "#AAB3B8",
+    backgroundColor: "#FFFCFA",
     paddingHorizontal: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   pillText: {
-    color: '#4E5660',
-    fontSize: 14,
-    lineHeight: 18,
-    fontWeight: '500',
+    color: "#4E5660",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
     letterSpacing: 1,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   features: {
-    width: '100%',
-    gap: 18,
-    paddingTop: 8,
+    width: "100%",
+    gap: 10,
+    paddingTop: 2,
   },
   guaranteeBox: {
-    alignSelf: 'stretch',
+    alignSelf: "stretch",
     borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E2DDD8',
-    backgroundColor: '#FFFCFA',
+    borderColor: "#E2DDD8",
+    backgroundColor: "#FFFCFA",
     paddingHorizontal: 16,
     paddingVertical: 14,
     gap: 8,
   },
   guaranteeTitle: {
-    color: '#1F2528',
+    color: "#1F2528",
     fontSize: 15,
     lineHeight: 20,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   guaranteeText: {
-    color: '#5D656D',
+    color: "#5D656D",
     fontSize: 14,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "400",
   },
   bottom: {
     gap: 14,
   },
   status: {
     borderRadius: 12,
-    backgroundColor: '#F4F6F5',
+    backgroundColor: "#F4F6F5",
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
   statusText: {
-    color: '#4F575F',
+    color: "#4F575F",
     fontSize: 14,
     lineHeight: 20,
-    fontWeight: '400',
-    textAlign: 'center',
+    fontWeight: "400",
+    textAlign: "center",
   },
   error: {
-    backgroundColor: '#FCEBEB',
+    backgroundColor: "#FCEBEB",
   },
   errorText: {
-    color: '#791F1F',
+    color: "#791F1F",
   },
   maybeLater: {
-    color: '#7A817F',
+    color: "#7A817F",
     fontSize: 17,
     lineHeight: 24,
-    fontWeight: '400',
-    textAlign: 'center',
+    fontWeight: "400",
+    textAlign: "center",
     paddingVertical: 8,
   },
 });
@@ -144,12 +144,12 @@ function getPaywallHeadline(input: {
   reason?: string;
   trialStateLabel: string;
 }) {
-  if (input.reason === 'trial-ended') {
+  if (input.reason === "trial-ended") {
     return `Keep BarkLog working harder for ${input.dogName}`;
   }
 
-  if (input.trialStateLabel === 'Premium') {
-    return 'BarkLog Premium is active';
+  if (input.trialStateLabel === "Premium") {
+    return "BarkLog Premium is active";
   }
 
   return `Unlock more care context for ${input.dogName}`;
@@ -169,10 +169,10 @@ export default function PaywallScreen() {
     useState<BarklogPremiumPlanId | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [errorTone, setErrorTone] = useState<'danger' | 'warning'>('danger');
+  const [errorTone, setErrorTone] = useState<"danger" | "warning">("danger");
   const feedback = useBarklogFeedback();
   const selectedDog = getSelectedDog(dogs, selectedDogId);
-  const dogName = selectedDog?.name ?? 'your dog';
+  const dogName = selectedDog?.name ?? "your dog";
   const entitlementState = getPremiumEntitlementState(barklogUser);
   const trialDaysRemaining = getTrialDaysRemaining(barklogUser);
   const headline = getPaywallHeadline({
@@ -181,13 +181,13 @@ export default function PaywallScreen() {
     trialStateLabel: entitlementState.label,
   });
   const pillLabel = useMemo(() => {
-    if (entitlementState.kind === 'trial-expired') {
-      return 'Trial ended';
+    if (entitlementState.kind === "trial-expired") {
+      return "Trial ended";
     }
 
-    if (entitlementState.kind === 'trial') {
+    if (entitlementState.kind === "trial") {
       return trialDaysRemaining === 1
-        ? 'Trial ends tomorrow'
+        ? "Trial ends tomorrow"
         : `${trialDaysRemaining} trial days left`;
     }
 
@@ -196,17 +196,17 @@ export default function PaywallScreen() {
 
   const handlePurchase = async (planId: BarklogPremiumPlanId) => {
     if (!barklogUser?.id) {
-      const nextError = 'Sign in again to start BarkLog Premium.';
+      const nextError = "Sign in again to start BarkLog Premium.";
 
       setError(nextError);
-      setErrorTone('warning');
+      setErrorTone("warning");
       await HapticManager.warning();
       return;
     }
 
     setPurchasingPlan(planId);
     setError(null);
-    setErrorTone('danger');
+    setErrorTone("danger");
     setMessage(null);
 
     try {
@@ -218,28 +218,28 @@ export default function PaywallScreen() {
       setMessage(`${result.plan.title} Premium is active.`);
       await HapticManager.success();
       feedback.showSuccess({
-        title: 'Premium active',
+        title: "Premium active",
         description: `${result.plan.title} Premium is active.`,
       });
-      router.replace('/(tabs)');
+      router.replace("/(tabs)");
     } catch (purchaseError) {
       const safeMessage = getBarklogErrorMessage(purchaseError, {
-        domain: 'purchase',
+        domain: "purchase",
       });
-      const isCancellation = safeMessage.startsWith('Purchase cancelled');
+      const isCancellation = safeMessage.startsWith("Purchase cancelled");
 
-      queueBarklogEvent('premium_purchase_failed', {
+      queueBarklogEvent("premium_purchase_failed", {
         plan_id: planId,
-        reason: isCancellation ? 'cancelled' : 'failed',
+        reason: isCancellation ? "cancelled" : "failed",
       });
       setError(safeMessage);
-      setErrorTone(isCancellation ? 'warning' : 'danger');
+      setErrorTone(isCancellation ? "warning" : "danger");
 
       if (isCancellation) {
         await HapticManager.warning();
       } else {
         captureBarklogError(purchaseError, {
-          source: 'premium.paywall_purchase',
+          source: "premium.paywall_purchase",
           extra: {
             plan_id: planId,
           },
@@ -252,7 +252,7 @@ export default function PaywallScreen() {
   };
 
   const handleMaybeLater = () => {
-    if (barklogUser?.id && entitlementState.kind === 'trial-expired') {
+    if (barklogUser?.id && entitlementState.kind === "trial-expired") {
       dismissTrialExpiryPaywall(barklogUser.id);
     }
 
@@ -261,7 +261,7 @@ export default function PaywallScreen() {
       return;
     }
 
-    router.replace('/(tabs)');
+    router.replace("/(tabs)");
   };
 
   return (
@@ -269,12 +269,15 @@ export default function PaywallScreen() {
       <Stack.Screen options={{ headerShown: false }} />
       <SafeAreaView
         style={styles.safeArea}
-        edges={['top', 'right', 'bottom', 'left']}
+        edges={["top", "right", "bottom", "left"]}
       >
-        <View style={styles.screen}>
+        <ScrollView
+          contentContainerStyle={styles.screen}
+          showsVerticalScrollIndicator={false}
+        >
           <View style={styles.top}>
-            <OnboardingCirclePlate size={104}>
-              <PawIcon size={48} />
+            <OnboardingCirclePlate size={72}>
+              <PawIcon size={34} />
             </OnboardingCirclePlate>
             <Text style={styles.title}>{headline}</Text>
             <Text style={styles.subtitle}>
@@ -286,7 +289,7 @@ export default function PaywallScreen() {
             </View>
 
             <View style={styles.features}>
-              {PAYWALL_FEATURE_ROWS.map((feature) => (
+              {PAYWALL_FEATURE_ROWS.slice(0, 5).map((feature) => (
                 <PremiumFeatureRow key={feature} label={feature} />
               ))}
             </View>
@@ -294,7 +297,7 @@ export default function PaywallScreen() {
             <View style={styles.guaranteeBox}>
               <Text style={styles.guaranteeTitle}>Always free</Text>
               <Text style={styles.guaranteeText}>
-                {FREE_ACCESS_GUARANTEES.join(' • ')}
+                {FREE_ACCESS_GUARANTEES.join(" • ")}
               </Text>
             </View>
           </View>
@@ -311,9 +314,9 @@ export default function PaywallScreen() {
               <BarklogStatusBanner
                 tone={errorTone}
                 title={
-                  errorTone === 'warning'
-                    ? 'Purchase not completed'
-                    : 'Premium not updated'
+                  errorTone === "warning"
+                    ? "Purchase not completed"
+                    : "Premium not updated"
                 }
                 description={error}
               />
@@ -321,20 +324,20 @@ export default function PaywallScreen() {
 
             <PrimaryButton
               label={
-                purchasingPlan === 'annual'
-                  ? 'Starting annual...'
+                purchasingPlan === "annual"
+                  ? "Starting annual..."
                   : `${BARKLOG_PREMIUM_PLANS.annual.priceLabel} - Save with annual`
               }
               size="large"
               disabled={Boolean(purchasingPlan)}
               onPress={() => {
-                handlePurchase('annual').catch(() => undefined);
+                handlePurchase("annual").catch(() => undefined);
               }}
             />
             <PrimaryButton
               label={
-                purchasingPlan === 'monthly'
-                  ? 'Starting monthly...'
+                purchasingPlan === "monthly"
+                  ? "Starting monthly..."
                   : BARKLOG_PREMIUM_PLANS.monthly.priceLabel
               }
               size="large"
@@ -343,14 +346,14 @@ export default function PaywallScreen() {
               labelColor="#1F2528"
               disabled={Boolean(purchasingPlan)}
               onPress={() => {
-                handlePurchase('monthly').catch(() => undefined);
+                handlePurchase("monthly").catch(() => undefined);
               }}
             />
             <Pressable accessibilityRole="button" onPress={handleMaybeLater}>
               <Text style={styles.maybeLater}>Not now</Text>
             </Pressable>
           </View>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </>
   );

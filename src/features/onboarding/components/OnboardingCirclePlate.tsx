@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
 export function OnboardingCirclePlate({
   children,
-  size = 132,
+  size = 72,
   onPress,
   accessibilityLabel,
   alignSelf = 'center',

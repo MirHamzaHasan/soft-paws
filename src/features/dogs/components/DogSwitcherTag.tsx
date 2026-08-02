@@ -22,24 +22,24 @@ const TONE_META = {
 
 const styles = StyleSheet.create({
   pill: {
-    minHeight: 42,
-    borderRadius: 21,
+    minHeight: 24,
+    borderRadius: 999,
     borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 16,
+    paddingHorizontal: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 4,
   },
   label: {
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: 10,
+    lineHeight: 12,
     fontWeight: '400',
-    letterSpacing: 1.4,
+    letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   emoji: {
-    fontSize: 16,
-    lineHeight: 18,
+    fontSize: 10,
+    lineHeight: 12,
   },
 });
 

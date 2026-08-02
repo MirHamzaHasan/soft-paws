@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BarkLog - Log Medication Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#adb3b4",
+                        "surface-dim": "#d4dbdd",
+                        "primary-fixed": "#e5e2e1",
+                        "on-background": "#2d3435",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-secondary-container": "#505252",
+                        "secondary-container": "#e2e2e2",
+                        "inverse-surface": "#0c0f0f",
+                        "on-secondary-fixed": "#3e403f",
+                        "secondary": "#5e5f5f",
+                        "error-container": "#fe8983",
+                        "on-primary-fixed": "#403f3f",
+                        "primary-fixed-dim": "#d7d4d3",
+                        "error": "#9f403d",
+                        "primary-container": "#e5e2e1",
+                        "surface": "#f9f9f9",
+                        "on-surface-variant": "#5a6061",
+                        "on-surface": "#2d3435",
+                        "on-error-container": "#752121",
+                        "surface-container-low": "#f2f4f4",
+                        "on-secondary-fixed-variant": "#5a5c5b",
+                        "inverse-primary": "#ffffff",
+                        "surface-bright": "#f9f9f9",
+                        "tertiary-container": "#f5f3f2",
+                        "tertiary-dim": "#535352",
+                        "tertiary-fixed": "#f5f3f2",
+                        "primary": "#5f5e5e",
+                        "surface-tint": "#5f5e5e",
+                        "tertiary-fixed-dim": "#e7e5e4",
+                        "primary-dim": "#535252",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#494a49",
+                        "on-secondary": "#f9f9f8",
+                        "on-primary-fixed-variant": "#5c5b5b",
+                        "surface-container": "#ebeeef",
+                        "background": "#f9f9f9",
+                        "on-tertiary": "#fbf8f7",
+                        "on-primary-container": "#525151",
+                        "on-tertiary-fixed-variant": "#666665",
+                        "on-error": "#fff7f6",
+                        "surface-container-highest": "#dde4e5",
+                        "secondary-fixed-dim": "#d4d4d3",
+                        "on-primary": "#faf7f6",
+                        "inverse-on-surface": "#9c9d9d",
+                        "error-dim": "#4e0309",
+                        "surface-container-high": "#e4e9ea",
+                        "tertiary": "#5f5f5e",
+                        "on-tertiary-container": "#5c5c5b",
+                        "secondary-dim": "#525353",
+                        "outline": "#757c7d",
+                        "surface-variant": "#dde4e5",
+                        "event-meds-bg": "#F5F3FF",
+                        "event-meds-border": "#DDD6FE",
+                        "event-meds-text": "#4C1D95",
+                        "hairline": "#E7E5E4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #FAFAFA; color: #0A0A0A; }
+        .hairline-border { border-width: 0.5px; border-color: #E7E5E4; border-style: solid; }
+        .hairline-border-b { border-bottom-width: 0.5px; border-bottom-color: #E7E5E4; border-bottom-style: solid; }
+        .hairline-border-t { border-top-width: 0.5px; border-top-color: #E7E5E4; border-top-style: solid; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased min-h-screen pb-safe">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#FAFAFA]/80 backdrop-blur-xl border-b-[0.5px] border-[#E7E5E4]">
+<div class="flex items-center justify-between px-6 h-16 w-full max-w-screen-xl mx-auto">
+<button aria-label="Go back" class="text-[#0A0A0A] hover:opacity-70 transition-opacity flex items-center justify-center p-2 -ml-2">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-inter font-medium text-base tracking-tight text-[#0A0A0A]">BarkLog</h1>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-6 max-w-md mx-auto flex flex-col gap-8 pb-32">
+<!-- Header -->
+<div class="flex flex-col gap-2">
+<div class="inline-flex items-center gap-2 bg-event-meds-bg border-[0.5px] border-event-meds-border text-event-meds-text px-3 py-1 rounded-full w-max">
+<span class="material-symbols-outlined text-sm" data-icon="medical_services">medical_services</span>
+<span class="font-inter font-medium text-[11px] uppercase tracking-wider">Log Event</span>
+</div>
+<h2 class="font-inter font-medium text-[28px] leading-tight tracking-tight mt-2">Log Medication</h2>
+</div>
+<!-- Form Section -->
+<section class="bg-surface-container-low rounded-xl p-6 hairline-border flex flex-col gap-6">
+<!-- Medication Dropdown -->
+<div class="flex flex-col gap-2">
+<label class="font-inter font-medium text-[16px]" for="medication">Medication</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-lowest hairline-border rounded-lg px-4 py-3 text-[14px] font-inter text-on-background focus:ring-0 focus:border-[#0A0A0A] focus:border-[1px] transition-all" id="medication">
+<option value="bravecto">Bravecto (Flea &amp; Tick)</option>
+<option value="heartgard">Heartgard Plus</option>
+<option value="carprofen">Carprofen 25mg</option>
+<option selected="" value="apoquel">Apoquel 16mg</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+</div>
+</div>
+<!-- Dose -->
+<div class="flex flex-col gap-2">
+<label class="font-inter font-medium text-[16px]" for="dose">Dose</label>
+<input class="w-full bg-surface-container-lowest hairline-border-b border-t-0 border-l-0 border-r-0 px-4 py-3 text-[14px] font-inter text-on-background focus:ring-0 focus:border-[#0A0A0A] focus:border-b-[1px] transition-all" id="dose" placeholder="Enter dose amount" type="text" value="1 tablet (16mg)"/>
+</div>
+<!-- Given with food toggle -->
+<div class="flex items-center justify-between py-2">
+<label class="font-inter font-medium text-[16px]" for="food_toggle">Given with food</label>
+<button aria-pressed="true" class="w-12 h-6 bg-[#0A0A0A] rounded-full relative transition-colors focus:outline-none" id="food_toggle">
+<span class="absolute right-1 top-1 w-4 h-4 bg-[#FAFAFA] rounded-full transition-transform"></span>
+</button>
+</div>
+<!-- Side Effects Multi-select -->
+<div class="flex flex-col gap-3 pt-2">
+<label class="font-inter font-medium text-[16px]">Side Effects Observed</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 bg-[#0A0A0A] text-[#FAFAFA] rounded-full text-[14px] font-inter border-[0.5px] border-[#0A0A0A]">None</button>
+<button class="px-4 py-2 bg-surface-container-lowest text-on-background rounded-full text-[14px] font-inter hairline-border hover:bg-surface-dim transition-colors">Vomiting</button>
+<button class="px-4 py-2 bg-surface-container-lowest text-on-background rounded-full text-[14px] font-inter hairline-border hover:bg-surface-dim transition-colors">Drowsiness</button>
+<button class="px-4 py-2 bg-surface-container-lowest text-on-background rounded-full text-[14px] font-inter hairline-border hover:bg-surface-dim transition-colors">Loss of appetite</button>
+<button class="px-4 py-2 bg-surface-container-lowest text-on-background rounded-full text-[14px] font-inter hairline-border hover:bg-surface-dim transition-colors">Diarrhea</button>
+</div>
+</div>
+<!-- Notes -->
+<div class="flex flex-col gap-2 pt-2">
+<label class="font-inter font-medium text-[16px]" for="notes">Notes</label>
+<textarea class="w-full bg-surface-container-lowest hairline-border rounded-lg px-4 py-3 text-[14px] font-inter text-on-background focus:ring-0 focus:border-[#0A0A0A] focus:border-[1px] transition-all resize-none" id="notes" placeholder="Any additional observations..." rows="3"></textarea>
+</div>
+</section>
+<!-- Actions -->
+<div class="flex flex-col gap-4 mt-4">
+<button class="w-full bg-[#0A0A0A] text-[#FAFAFA] font-inter font-medium text-[16px] py-4 rounded-[14px] hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="check">check</span>
+                Save event
+            </button>
+<a class="text-center font-inter font-medium text-[14px] text-on-surface-variant hover:text-[#0A0A0A] transition-colors flex items-center justify-center gap-1 mt-2" href="#">
+<span class="material-symbols-outlined text-[16px]" data-icon="add">add</span>
+                Add new medication
+            </a>
+</div>
+</main>
+</body></html>

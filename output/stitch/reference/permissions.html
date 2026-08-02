@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BarkLog - Permissions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#e5e2e1",
+                        "on-secondary": "#f9f9f8",
+                        "on-background": "#2d3435",
+                        "inverse-primary": "#ffffff",
+                        "secondary-dim": "#525353",
+                        "on-primary-fixed-variant": "#5c5b5b",
+                        "on-primary-fixed": "#403f3f",
+                        "primary-container": "#e5e2e1",
+                        "surface-bright": "#f9f9f9",
+                        "tertiary-container": "#f5f3f2",
+                        "surface-container": "#ebeeef",
+                        "surface-container-low": "#f2f4f4",
+                        "error": "#9f403d",
+                        "primary-dim": "#535252",
+                        "primary": "#5f5e5e",
+                        "secondary": "#5e5f5f",
+                        "secondary-fixed-dim": "#d4d4d3",
+                        "tertiary-fixed": "#f5f3f2",
+                        "on-primary": "#faf7f6",
+                        "on-error-container": "#752121",
+                        "on-secondary-fixed": "#3e403f",
+                        "surface-variant": "#dde4e5",
+                        "primary-fixed-dim": "#d7d4d3",
+                        "on-secondary-container": "#505252",
+                        "on-surface": "#2d3435",
+                        "surface": "#f9f9f9",
+                        "outline": "#757c7d",
+                        "on-primary-container": "#525151",
+                        "secondary-container": "#e2e2e2",
+                        "on-tertiary": "#fbf8f7",
+                        "on-surface-variant": "#5a6061",
+                        "on-secondary-fixed-variant": "#5a5c5b",
+                        "inverse-on-surface": "#9c9d9d",
+                        "surface-tint": "#5f5e5e",
+                        "background": "#f9f9f9",
+                        "tertiary": "#5f5f5e",
+                        "surface-container-high": "#e4e9ea",
+                        "error-dim": "#4e0309",
+                        "tertiary-fixed-dim": "#e7e5e4",
+                        "on-tertiary-fixed-variant": "#666665",
+                        "outline-variant": "#adb3b4",
+                        "on-tertiary-container": "#5c5c5b",
+                        "error-container": "#fe8983",
+                        "on-error": "#fff7f6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d4dbdd",
+                        "secondary-fixed": "#e2e2e2",
+                        "inverse-surface": "#0c0f0f",
+                        "tertiary-dim": "#535352",
+                        "surface-container-highest": "#dde4e5",
+                        "on-tertiary-fixed": "#494a49"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col items-center justify-center p-6 antialiased selection:bg-primary-container selection:text-on-primary-container">
+<main class="w-full max-w-md flex flex-col gap-8">
+<!-- Progress Dots -->
+<div class="flex justify-center gap-2 items-center w-full">
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+</div>
+<!-- Header -->
+<header class="text-center space-y-3">
+<h1 class="font-headline text-[28px] font-medium leading-tight tracking-tight text-[#0A0A0A]">
+                Stay in the loop
+            </h1>
+<p class="font-body text-sm text-[#5a6061]">
+                Enable permissions to get the most out of BarkLog and never miss an important update for your dog.
+            </p>
+</header>
+<!-- Permissions List -->
+<div class="space-y-4">
+<!-- Notification Card -->
+<div class="bg-[#FAFAFA] border-[0.5px] border-[#E7E5E4] rounded-[12px] p-5 flex items-start gap-4">
+<div class="mt-0.5 text-[#0A0A0A]">
+<span class="material-symbols-outlined" data-icon="notifications" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</div>
+<div class="flex-1 space-y-1">
+<h3 class="font-headline text-base font-medium text-[#0A0A0A]">Push Notifications</h3>
+<p class="font-body text-sm text-[#5a6061]">Get reminders for walks, meals, and vet appointments.</p>
+</div>
+<div class="pt-1">
+<!-- Toggle Switch -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0A0A0A]"></div>
+</label>
+</div>
+</div>
+<!-- Apple Health Card -->
+<div class="bg-[#FAFAFA] border-[0.5px] border-[#E7E5E4] rounded-[12px] p-5 flex items-start gap-4">
+<div class="mt-0.5 text-[#0A0A0A]">
+<span class="material-symbols-outlined" data-icon="monitor_heart" style="font-variation-settings: 'FILL' 0;">monitor_heart</span>
+</div>
+<div class="flex-1 space-y-1">
+<h3 class="font-headline text-base font-medium text-[#0A0A0A]">Apple Health</h3>
+<p class="font-body text-sm text-[#5a6061]">Sync your steps during walks to track activity together.</p>
+</div>
+<div class="pt-1">
+<!-- Toggle Switch -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0A0A0A]"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="mt-8 flex flex-col gap-4">
+<button class="w-full bg-[#0A0A0A] text-[#FAFAFA] rounded-[14px] py-4 font-headline text-base font-medium transition-opacity hover:opacity-90">
+                Continue
+            </button>
+<button class="w-full py-3 font-headline text-sm font-medium text-[#5a6061] hover:text-[#0A0A0A] transition-colors">
+                Skip for now
+            </button>
+</div>
+</main>
+</body></html>

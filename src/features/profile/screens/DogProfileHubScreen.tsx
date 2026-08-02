@@ -1,13 +1,13 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { type Href, useRouter } from 'expo-router';
+import { useFocusEffect } from "@react-navigation/native";
+import { type Href, useRouter } from "expo-router";
 import {
   CalendarClock,
   GraduationCap,
   ImagePlus,
   Users,
-} from 'lucide-react-native';
-import { useCallback, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+} from "lucide-react-native";
+import { useCallback, useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import {
   type CareTaskModel,
@@ -15,28 +15,28 @@ import {
   listLocalEventsForDog,
   listOpenCareTasksForDog,
   type MedicationModel,
-} from '@/db';
+} from "@/db";
 import {
   formatCareTaskDueLabel,
   getCareTaskDueState,
   getCareTaskTypeLabel,
   sortCareTasksByDueAt,
-} from '@/features/care/utils/careTaskSchedule';
+} from "@/features/care/utils/careTaskSchedule";
 import {
   formatDogMeta,
   formatDogWeight,
   getDogAvatar,
-} from '@/features/dogs/utils/dogDisplay';
-import { shareTextDocument } from '@/features/export/services/exportDocumentService';
-import { buildEventsCsv } from '@/features/export/utils/exportBuilders';
-import { formatMedicationMeta } from '@/features/medications/utils/medicationSchedule';
-import { SyncStatusPill } from '@/features/sync/components/SyncStatusPill';
-import { useSyncDisplayStatus } from '@/features/sync/hooks/useSyncDisplayStatus';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+} from "@/features/dogs/utils/dogDisplay";
+import { shareTextDocument } from "@/features/export/services/exportDocumentService";
+import { buildEventsCsv } from "@/features/export/utils/exportBuilders";
+import { formatMedicationMeta } from "@/features/medications/utils/medicationSchedule";
+import { SyncStatusPill } from "@/features/sync/components/SyncStatusPill";
+import { useSyncDisplayStatus } from "@/features/sync/hooks/useSyncDisplayStatus";
+import { getSelectedDog, useAuthSessionStore } from "@/stores";
 
-import { HomeAvatar } from '../../home/components/HomeAvatar';
-import { HomeShell } from '../../home/components/HomeShell';
-import { ProfileActionCard } from '../components/ProfileActionCard';
+import { HomeAvatar } from "../../home/components/HomeAvatar";
+import { HomeShell } from "../../home/components/HomeShell";
+import { ProfileActionCard } from "../components/ProfileActionCard";
 import {
   ProfileAllergyIcon,
   ProfileCheckStatusIcon,
@@ -47,61 +47,61 @@ import {
   ProfileVaccinationIcon,
   ProfileVetIcon,
   ProfileWarningStatusIcon,
-} from '../components/ProfileIcons';
-import { ProfileMedicationItem } from '../components/ProfileMedicationItem';
-import { ProfileSectionCard } from '../components/ProfileSectionCard';
-import { ProfileStatCard } from '../components/ProfileStatCard';
+} from "../components/ProfileIcons";
+import { ProfileMedicationItem } from "../components/ProfileMedicationItem";
+import { ProfileSectionCard } from "../components/ProfileSectionCard";
+import { ProfileStatCard } from "../components/ProfileStatCard";
 
 const styles = StyleSheet.create({
   stack: {
-    gap: 20,
+    gap: 12,
   },
   hero: {
-    alignItems: 'center',
-    gap: 14,
-    paddingTop: 10,
+    alignItems: "center",
+    gap: 6,
+    paddingTop: 8,
   },
   name: {
-    color: '#1B2327',
-    fontSize: 34,
-    lineHeight: 40,
-    fontWeight: '400',
-    letterSpacing: -1.1,
+    color: "#1B2327",
+    fontSize: 24,
+    lineHeight: 30,
+    fontWeight: "500",
+    letterSpacing: -0.4,
   },
   meta: {
-    color: '#5C646D',
-    fontSize: 17,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#5C646D",
+    fontSize: 11,
+    lineHeight: 16,
+    fontWeight: "400",
   },
   statsRow: {
-    flexDirection: 'row',
-    gap: 14,
+    flexDirection: "row",
+    gap: 8,
   },
   actionButton: {
-    alignSelf: 'center',
+    alignSelf: "center",
     paddingVertical: 10,
   },
   actionText: {
-    color: '#5A6168',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#5A6168",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
   },
   divider: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#DEDAD6',
+    backgroundColor: "#DEDAD6",
     marginTop: 8,
     marginBottom: 8,
   },
   sectionMessage: {
-    color: '#687079',
-    fontSize: 16,
-    lineHeight: 23,
-    fontWeight: '400',
+    color: "#687079",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
   },
   sectionError: {
-    color: '#A8342A',
+    color: "#A8342A",
   },
 });
 
@@ -125,13 +125,13 @@ function isMedicationRefillSoon(medication: MedicationModel) {
 
 function getTrackedDays(createdAt: string | null | undefined) {
   if (!createdAt) {
-    return '0';
+    return "0";
   }
 
   const createdDate = new Date(createdAt);
 
   if (Number.isNaN(createdDate.getTime())) {
-    return '0';
+    return "0";
   }
 
   const dayCount = Math.ceil(
@@ -149,11 +149,11 @@ export default function DogProfileHubScreen() {
   const [careTasks, setCareTasks] = useState<CareTaskModel[]>([]);
   const [exportStatus, setExportStatus] = useState<string | null>(null);
   const [medicationLoadState, setMedicationLoadState] = useState<
-    'error' | 'idle' | 'loading'
-  >('idle');
+    "error" | "idle" | "loading"
+  >("idle");
   const [careTaskLoadState, setCareTaskLoadState] = useState<
-    'error' | 'idle' | 'loading'
-  >('idle');
+    "error" | "idle" | "loading"
+  >("idle");
   const [expandedSections, setExpandedSections] = useState({
     careCalendar: true,
     medications: true,
@@ -163,12 +163,12 @@ export default function DogProfileHubScreen() {
     vetInfo: false,
   });
   const selectedDog = getSelectedDog(dogs, selectedDogId);
-  const dogName = selectedDog?.name ?? 'Your dog';
+  const dogName = selectedDog?.name ?? "Your dog";
   const dogMeta = formatDogMeta(selectedDog);
   const dogWeight = formatDogWeight(selectedDog);
   const dogAvatar = selectedDog
     ? getDogAvatar(selectedDog)
-    : { backgroundColor: '#173136', emoji: '🐶' };
+    : { backgroundColor: "#173136", emoji: "🐶" };
   const syncStatus = useSyncDisplayStatus();
   const upcomingCareTasks = sortCareTasksByDueAt(careTasks).slice(0, 3);
 
@@ -179,16 +179,16 @@ export default function DogProfileHubScreen() {
       if (!selectedDog?.id) {
         setMedications([]);
         setCareTasks([]);
-        setMedicationLoadState('idle');
-        setCareTaskLoadState('idle');
+        setMedicationLoadState("idle");
+        setCareTaskLoadState("idle");
 
         return () => {
           isMounted = false;
         };
       }
 
-      setMedicationLoadState('loading');
-      setCareTaskLoadState('loading');
+      setMedicationLoadState("loading");
+      setCareTaskLoadState("loading");
 
       Promise.all([
         listActiveMedicationsForDog(selectedDog.id),
@@ -198,14 +198,14 @@ export default function DogProfileHubScreen() {
           if (isMounted) {
             setMedications(nextMedications);
             setCareTasks(nextCareTasks);
-            setMedicationLoadState('idle');
-            setCareTaskLoadState('idle');
+            setMedicationLoadState("idle");
+            setCareTaskLoadState("idle");
           }
         })
         .catch(() => {
           if (isMounted) {
-            setMedicationLoadState('error');
-            setCareTaskLoadState('error');
+            setMedicationLoadState("error");
+            setCareTaskLoadState("error");
           }
         });
 
@@ -224,7 +224,7 @@ export default function DogProfileHubScreen() {
 
   const handleExportData = async () => {
     if (!selectedDog) {
-      setExportStatus('Add a dog before exporting data.');
+      setExportStatus("Add a dog before exporting data.");
       return;
     }
 
@@ -233,14 +233,14 @@ export default function DogProfileHubScreen() {
       const message = await shareTextDocument({
         content: buildEventsCsv({ dog: selectedDog, events }),
         fileName: `${selectedDog.name}-barklog-events.csv`,
-        mimeType: 'text/csv',
+        mimeType: "text/csv",
         title: `${selectedDog.name} BarkLog CSV export`,
-        uti: 'public.comma-separated-values-text',
+        uti: "public.comma-separated-values-text",
       });
 
       setExportStatus(message);
     } catch {
-      setExportStatus('Unable to export BarkLog data right now.');
+      setExportStatus("Unable to export BarkLog data right now.");
     }
   };
 
@@ -257,17 +257,17 @@ export default function DogProfileHubScreen() {
           <HomeAvatar
             emoji={dogAvatar.emoji}
             backgroundColor={dogAvatar.backgroundColor}
-            size={118}
+            size={72}
           />
           <Text style={styles.name}>{dogName}</Text>
           <Text style={styles.meta}>{dogMeta}</Text>
           <Pressable
             accessibilityRole="button"
             style={styles.actionButton}
-            onPress={() => router.push('/dog-switcher')}
+            onPress={() => router.push("/dog-switcher")}
           >
             <Text style={styles.actionText}>
-              {dogs.length > 1 ? 'Switch Dog' : 'Manage Dog'}
+              {dogs.length > 1 ? "Switch Dog" : "Manage Dog"}
             </Text>
           </Pressable>
         </View>
@@ -282,7 +282,7 @@ export default function DogProfileHubScreen() {
           <ProfileStatCard
             label="Household"
             value={`${dogs.length}`}
-            suffix={dogs.length === 1 ? 'Dog' : 'Dogs'}
+            suffix={dogs.length === 1 ? "Dog" : "Dogs"}
           />
         </View>
 
@@ -290,17 +290,17 @@ export default function DogProfileHubScreen() {
           title="Care Calendar"
           leading={<CalendarClock size={22} />}
           expanded={expandedSections.careCalendar}
-          onToggle={() => toggleSection('careCalendar')}
+          onToggle={() => toggleSection("careCalendar")}
         >
-          {careTaskLoadState === 'loading' ? (
+          {careTaskLoadState === "loading" ? (
             <Text style={styles.sectionMessage}>Loading care tasks...</Text>
           ) : null}
-          {careTaskLoadState === 'error' ? (
+          {careTaskLoadState === "error" ? (
             <Text style={[styles.sectionMessage, styles.sectionError]}>
               Unable to load care tasks.
             </Text>
           ) : null}
-          {careTaskLoadState === 'idle' && upcomingCareTasks.length === 0 ? (
+          {careTaskLoadState === "idle" && upcomingCareTasks.length === 0 ? (
             <Text style={styles.sectionMessage}>
               Plan refills, preventives, grooming, vet follow-ups, and training
               practice reminders on this device.
@@ -314,19 +314,19 @@ export default function DogProfileHubScreen() {
                 task,
               )}`}
               trailing={
-                getCareTaskDueState(task) === 'overdue' ? (
+                getCareTaskDueState(task) === "overdue" ? (
                   <ProfileWarningStatusIcon />
                 ) : (
                   <ProfileCheckStatusIcon />
                 )
               }
-              onPress={() => router.push('/care-calendar' as Href)}
+              onPress={() => router.push("/care-calendar" as Href)}
             />
           ))}
           <Pressable
             accessibilityRole="button"
             style={styles.actionButton}
-            onPress={() => router.push('/care-calendar' as Href)}
+            onPress={() => router.push("/care-calendar" as Href)}
           >
             <Text style={styles.actionText}>Open Care Calendar</Text>
           </Pressable>
@@ -336,17 +336,17 @@ export default function DogProfileHubScreen() {
           title="Medications"
           leading={<ProfileMedicationIcon />}
           expanded={expandedSections.medications}
-          onToggle={() => toggleSection('medications')}
+          onToggle={() => toggleSection("medications")}
         >
-          {medicationLoadState === 'loading' ? (
+          {medicationLoadState === "loading" ? (
             <Text style={styles.sectionMessage}>Loading medications...</Text>
           ) : null}
-          {medicationLoadState === 'error' ? (
+          {medicationLoadState === "error" ? (
             <Text style={[styles.sectionMessage, styles.sectionError]}>
               Unable to load medications.
             </Text>
           ) : null}
-          {medicationLoadState === 'idle' && medications.length === 0 ? (
+          {medicationLoadState === "idle" && medications.length === 0 ? (
             <Text style={styles.sectionMessage}>
               No active medications yet.
             </Text>
@@ -375,7 +375,7 @@ export default function DogProfileHubScreen() {
           <Pressable
             accessibilityRole="button"
             style={styles.actionButton}
-            onPress={() => router.push('/add-medication')}
+            onPress={() => router.push("/add-medication")}
           >
             <Text style={styles.actionText}>+ Add Medication</Text>
           </Pressable>
@@ -386,7 +386,7 @@ export default function DogProfileHubScreen() {
           leading={<ProfileVaccinationIcon />}
           badge="Set up"
           expanded={expandedSections.vaccinations}
-          onToggle={() => toggleSection('vaccinations')}
+          onToggle={() => toggleSection("vaccinations")}
         >
           <Text style={styles.sectionMessage}>
             Keep rabies, DHPP, bordetella, and other vaccine records here so
@@ -398,7 +398,7 @@ export default function DogProfileHubScreen() {
           title="Grooming"
           leading={<ProfileGroomingIcon />}
           expanded={expandedSections.grooming}
-          onToggle={() => toggleSection('grooming')}
+          onToggle={() => toggleSection("grooming")}
         >
           <Text style={styles.sectionMessage}>
             Track baths, brushing, nail trims, and future grooming cadence from
@@ -410,7 +410,7 @@ export default function DogProfileHubScreen() {
           title="Allergies & Conditions"
           leading={<ProfileAllergyIcon />}
           expanded={expandedSections.allergies}
-          onToggle={() => toggleSection('allergies')}
+          onToggle={() => toggleSection("allergies")}
         >
           <Text style={styles.sectionMessage}>
             Store known allergies, sensitivities, chronic conditions, and
@@ -422,7 +422,7 @@ export default function DogProfileHubScreen() {
           title="Vet Info"
           leading={<ProfileVetIcon />}
           expanded={expandedSections.vetInfo}
-          onToggle={() => toggleSection('vetInfo')}
+          onToggle={() => toggleSection("vetInfo")}
         >
           <Text style={styles.sectionMessage}>
             Add clinic, veterinarian, phone, and after-hours notes before
@@ -439,7 +439,7 @@ export default function DogProfileHubScreen() {
           backgroundColor="#F3F0FB"
           borderColor="#E2DCEF"
           showChevron
-          onPress={() => router.push('/training' as Href)}
+          onPress={() => router.push("/training" as Href)}
         />
 
         <ProfileActionCard
@@ -449,7 +449,7 @@ export default function DogProfileHubScreen() {
           backgroundColor="#FFFCFA"
           borderColor="#D7D3CF"
           showChevron
-          onPress={() => router.push('/photo-baselines' as Href)}
+          onPress={() => router.push("/photo-baselines" as Href)}
         />
 
         <ProfileActionCard
@@ -459,13 +459,13 @@ export default function DogProfileHubScreen() {
           backgroundColor="#FFFCFA"
           borderColor="#D7D3CF"
           showChevron
-          onPress={() => router.push('/household' as Href)}
+          onPress={() => router.push("/household" as Href)}
         />
 
         <SyncStatusPill
           display={syncStatus.display}
           loading={syncStatus.isLoading}
-          onPress={() => router.push('/sync-backup' as Href)}
+          onPress={() => router.push("/sync-backup" as Href)}
         />
 
         <ProfileActionCard
@@ -486,7 +486,7 @@ export default function DogProfileHubScreen() {
           backgroundColor="#FFF1EF"
           borderColor="#F2C7C3"
           showChevron
-          onPress={() => router.push('/safety' as Href)}
+          onPress={() => router.push("/safety" as Href)}
         />
       </View>
     </HomeShell>

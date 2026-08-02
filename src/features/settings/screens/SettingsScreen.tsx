@@ -37,24 +37,24 @@ import { useSettingsStore } from '../stores/useSettingsStore';
 
 const styles = StyleSheet.create({
   stack: {
-    gap: 34,
+    gap: 28,
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 42,
-    lineHeight: 48,
-    fontWeight: '400',
-    letterSpacing: -1.3,
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: '500',
+    letterSpacing: -0.5,
   },
   section: {
-    gap: 18,
+    gap: 12,
   },
   sectionTitle: {
     color: '#8D867F',
-    fontSize: 22,
-    lineHeight: 28,
+    fontSize: 11,
+    lineHeight: 14,
     fontWeight: '500',
-    letterSpacing: 1.8,
+    letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   signOutButton: {
@@ -115,6 +115,8 @@ export default function SettingsScreen() {
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const subscriptionState = getPremiumEntitlementState(barklogUser);
   const syncStatus = useSyncDisplayStatus();
+  const [groomingScheduleEnabled, setGroomingScheduleEnabled] = useState(true);
+  const showExtendedSettings = false;
   const syncIcon =
     syncStatus.capability.canPushToCloud &&
     syncStatus.display.tone !== 'local' ? (
@@ -223,16 +225,18 @@ export default function SettingsScreen() {
               showDivider
               onPress={() => router.push('/subscription')}
             />
-            <SettingsRow
-              title="Sync and Backup"
-              subtitle={
-                syncStatus.isLoading
-                  ? 'Checking backup access'
-                  : syncStatus.display.compactTitle
-              }
-              leading={syncIcon}
-              onPress={() => router.push('/sync-backup' as Href)}
-            />
+            {showExtendedSettings ? (
+              <SettingsRow
+                title="Sync and Backup"
+                subtitle={
+                  syncStatus.isLoading
+                    ? 'Checking backup access'
+                    : syncStatus.display.compactTitle
+                }
+                leading={syncIcon}
+                onPress={() => router.push('/sync-backup' as Href)}
+              />
+            ) : null}
           </SettingsSectionCard>
         </View>
 
@@ -257,13 +261,25 @@ export default function SettingsScreen() {
               showDivider
             />
             <SettingsRow
-              title="Anomaly Alerts"
-              subtitle="Important health pattern alerts only"
+              title="Weekly Insights"
               leading={<SparklesIcon color="#7C858D" size={24} />}
               trailing={
                 <ToggleSwitch
                   checked={anomalyAlertsEnabled}
                   onPress={() => setAnomalyAlertsEnabled(!anomalyAlertsEnabled)}
+                />
+              }
+              showDivider
+            />
+            <SettingsRow
+              title="Grooming Schedule"
+              leading={<SparklesIcon color="#7C858D" size={24} />}
+              trailing={
+                <ToggleSwitch
+                  checked={groomingScheduleEnabled}
+                  onPress={() =>
+                    setGroomingScheduleEnabled((current) => !current)
+                  }
                 />
               }
             />
@@ -287,22 +303,25 @@ export default function SettingsScreen() {
               onPress={cycleAppearance}
               showDivider
             />
-            <SettingsRow
-              title="Health Data"
-              subtitle={healthDataConnected ? 'Connected' : 'Not connected'}
-              leading={<ProfileEmergencyIcon color="#7C858D" size={24} />}
-              onPress={() => {
-                handleHealthDataToggle().catch(() => {
-                  setSettingsMessage(
-                    'Unable to update health activity settings right now.',
-                  );
-                });
-              }}
-            />
+            {showExtendedSettings ? (
+              <SettingsRow
+                title="Health Data"
+                subtitle={healthDataConnected ? 'Connected' : 'Not connected'}
+                leading={<ProfileEmergencyIcon color="#7C858D" size={24} />}
+                onPress={() => {
+                  handleHealthDataToggle().catch(() => {
+                    setSettingsMessage(
+                      'Unable to update health activity settings right now.',
+                    );
+                  });
+                }}
+              />
+            ) : null}
           </SettingsSectionCard>
         </View>
 
-        <View style={styles.section}>
+        {showExtendedSettings ? (
+          <View style={styles.section}>
           <Text style={styles.sectionTitle}>Privacy and About</Text>
           <SettingsSectionCard>
             <SettingsRow
@@ -317,17 +336,20 @@ export default function SettingsScreen() {
               leading={<SettingsEmailIcon />}
             />
           </SettingsSectionCard>
-        </View>
+          </View>
+        ) : null}
 
-        <Pressable
-          accessibilityRole="button"
-          style={styles.signOutButton}
-          onPress={() => {
-            handleSignOut().catch(() => undefined);
-          }}
-        >
-          <Text style={styles.signOutText}>Sign out</Text>
-        </Pressable>
+        {showExtendedSettings ? (
+          <Pressable
+            accessibilityRole="button"
+            style={styles.signOutButton}
+            onPress={() => {
+              handleSignOut().catch(() => undefined);
+            }}
+          >
+            <Text style={styles.signOutText}>Sign out</Text>
+          </Pressable>
+        ) : null}
 
         {signOutError ? (
           <Text style={styles.signOutError}>{signOutError}</Text>

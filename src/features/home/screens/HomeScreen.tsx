@@ -1,11 +1,10 @@
-import { type Href, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { BarklogStatusBanner, useBarklogFeedback } from '@/components/ui';
 import { captureBarklogError } from '@/features/observability';
 import { SkeletonBlock } from '@/features/states/components/SkeletonBlock';
-import { SyncStatusPill } from '@/features/sync/components/SyncStatusPill';
 import { useSyncDisplayStatus } from '@/features/sync/hooks/useSyncDisplayStatus';
 import HapticManager from '@/managers/HapticManager';
 import { getSelectedDog, useAuthSessionStore } from '@/stores';
@@ -40,7 +39,6 @@ import { HomeSecondaryActionButton } from '../components/HomeSecondaryActionButt
 import { HomeShell } from '../components/HomeShell';
 import {
   type HomeInstantLogType,
-  type HomeRecentEvent,
   useHomeLoggingLoop,
 } from '../hooks/useHomeLoggingLoop';
 
@@ -58,7 +56,7 @@ const PRIMARY_ACTIONS: Array<{
 
 const styles = StyleSheet.create({
   stack: {
-    gap: 24,
+    gap: 16,
   },
   offlineBanner: {
     minHeight: 56,
@@ -78,19 +76,19 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   hero: {
-    gap: 8,
+    gap: 3,
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 40,
-    lineHeight: 46,
+    fontSize: 24,
+    lineHeight: 30,
     fontWeight: '400',
-    letterSpacing: -1.4,
+    letterSpacing: -0.5,
   },
   subtitle: {
     color: '#5F6670',
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 11,
+    lineHeight: 16,
     fontWeight: '400',
   },
   helperText: {
@@ -102,20 +100,20 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 16,
+    gap: 8,
   },
   medicationCard: {
-    minHeight: 96,
-    borderRadius: 24,
+    minHeight: 48,
+    borderRadius: 8,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: barklogEventColors.medication.border,
     backgroundColor: barklogEventColors.medication.bg,
-    paddingHorizontal: 24,
-    paddingVertical: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 16,
+    gap: 8,
   },
   medicationCardPressed: {
     opacity: 0.9,
@@ -124,37 +122,38 @@ const styles = StyleSheet.create({
   medicationCopy: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
+    gap: 8,
     flex: 1,
   },
   medicationEmoji: {
-    fontSize: 32,
-    lineHeight: 38,
+    fontSize: 20,
+    lineHeight: 24,
   },
   medicationLabelWrap: {
     flex: 1,
-    gap: 4,
+    gap: 1,
   },
   medicationLabel: {
     color: barklogEventColors.medication.text,
-    fontSize: 20,
-    lineHeight: 24,
+    fontSize: 11,
+    lineHeight: 14,
     fontWeight: '500',
   },
   medicationMeta: {
     color: barklogEventColors.medication.text,
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 9,
+    lineHeight: 12,
     fontWeight: '400',
     opacity: 0.78,
   },
   medicationPlus: {
     color: barklogEventColors.medication.text,
-    fontSize: 28,
-    lineHeight: 32,
+    fontSize: 14,
+    lineHeight: 18,
     fontWeight: '300',
   },
   secondaryRow: {
+    display: 'none',
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 12,
@@ -303,30 +302,30 @@ const styles = StyleSheet.create({
     color: '#791F1F',
   },
   summaryCard: {
-    borderRadius: 24,
+    borderRadius: 9,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#E5E1DB',
     backgroundColor: '#F8F8F7',
-    paddingHorizontal: 24,
-    paddingVertical: 24,
-    gap: 18,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    gap: 10,
   },
   summaryTitle: {
     color: '#0A0A0A',
-    fontSize: 22,
-    lineHeight: 28,
+    fontSize: 13,
+    lineHeight: 17,
     fontWeight: '500',
   },
   summaryStats: {
     color: '#5F6670',
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 11,
+    lineHeight: 16,
     fontWeight: '400',
   },
   summaryEmpty: {
     color: '#5F6670',
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 11,
+    lineHeight: 16,
     fontWeight: '400',
   },
   summaryDivider: {
@@ -336,13 +335,13 @@ const styles = StyleSheet.create({
   summaryFoot: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: 7,
   },
   summaryFootText: {
     flex: 1,
     color: '#5F6670',
-    fontSize: 15,
-    lineHeight: 22,
+    fontSize: 10,
+    lineHeight: 14,
     fontWeight: '400',
   },
   recentList: {
@@ -607,23 +606,6 @@ function SummarySkeleton() {
           </View>
         ))}
       </View>
-    </View>
-  );
-}
-
-function RecentEventRow({ event }: { event: HomeRecentEvent }) {
-  return (
-    <View style={styles.recentRow}>
-      <View style={styles.recentIconWrap}>
-        <Text style={styles.recentEmoji}>{event.emoji}</Text>
-      </View>
-
-      <View style={styles.recentCopy}>
-        <Text style={styles.recentTitle}>{event.title}</Text>
-        <Text style={styles.recentDetail}>{event.detail}</Text>
-      </View>
-
-      <Text style={styles.recentTime}>{event.timeLabel}</Text>
     </View>
   );
 }
@@ -1016,18 +998,9 @@ export function HomeScreen({ mode }: HomeScreenProps) {
           ) : null}
 
           <View style={styles.hero}>
-            <Text style={styles.title}>Today</Text>
+            <Text style={styles.title}>Today.</Text>
             <Text style={styles.subtitle}>How is {dogName} doing?</Text>
-            <Text style={styles.helperText}>
-              Tap to log instantly. Long-press a main tile for details.
-            </Text>
           </View>
-
-          <SyncStatusPill
-            display={syncStatus.display}
-            loading={syncStatus.isLoading}
-            onPress={() => router.push('/sync-backup' as Href)}
-          />
 
           {quickLogError ? (
             <BarklogStatusBanner
@@ -1055,10 +1028,7 @@ export function HomeScreen({ mode }: HomeScreenProps) {
             <View style={styles.medicationCopy}>
               <Text style={styles.medicationEmoji}>💊</Text>
               <View style={styles.medicationLabelWrap}>
-                <Text style={styles.medicationLabel}>Medication</Text>
-                <Text style={styles.medicationMeta}>
-                  Open the detailed log for dose and side effects.
-                </Text>
+                <Text style={styles.medicationLabel}>Log Medication</Text>
               </View>
             </View>
 
@@ -1148,25 +1118,12 @@ export function HomeScreen({ mode }: HomeScreenProps) {
             <SummarySkeleton />
           ) : (
             <View style={styles.summaryCard}>
-              <Text style={styles.summaryTitle}>Today so far</Text>
+              <Text style={styles.summaryTitle}>Today&apos;s Summary</Text>
               <Text style={styles.summaryStats}>
                 {getSummaryText(snapshot.summaryCounts)}
               </Text>
               <View style={styles.summaryDivider} />
 
-              {snapshot.todayEventCount > 0 ? (
-                <View style={styles.recentList}>
-                  {snapshot.recentEvents.map((event) => (
-                    <RecentEventRow key={event.id} event={event} />
-                  ))}
-                </View>
-              ) : (
-                <Text style={styles.summaryEmpty}>
-                  Nothing logged yet today. Start with a quick tap above.
-                </Text>
-              )}
-
-              <View style={styles.summaryDivider} />
               <View style={styles.summaryFoot}>
                 {snapshot.unsyncedCount > 0 ? <CloudSyncIcon /> : <ClockIcon />}
                 <Text style={styles.summaryFootText}>
@@ -1182,27 +1139,6 @@ export function HomeScreen({ mode }: HomeScreenProps) {
           )}
 
           <View style={styles.utilityStack}>
-            <HomeActionRow
-              label="Care Calendar"
-              trailing={<ChevronRightIcon />}
-              onPress={() => router.push('/care-calendar' as Href)}
-            />
-            <HomeActionRow
-              label="Photo Baselines"
-              trailing={<ChevronRightIcon />}
-              onPress={() => router.push('/photo-baselines' as Href)}
-            />
-            <HomeActionRow
-              label="More care logs"
-              trailing={<ChevronRightIcon />}
-              onPress={() => router.push('/care-log' as Href)}
-            />
-            <HomeActionRow
-              label="Safety Center"
-              color="#A8342A"
-              trailing={<ChevronRightIcon />}
-              onPress={() => router.push('/safety' as Href)}
-            />
             <HomeActionRow
               label="Is this safe to eat?"
               trailing={<ChevronRightIcon />}

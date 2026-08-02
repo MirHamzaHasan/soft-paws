@@ -1,79 +1,77 @@
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useRouter } from "expo-router";
+import { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-import { BarklogStatusBanner } from '@/components/ui';
+import { BarklogStatusBanner } from "@/components/ui";
 
-import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { LogBoxField } from '../components/LogBoxField';
-import { LogDetailLayout } from '../components/LogDetailLayout';
-import { LogFormCard } from '../components/LogFormCard';
-import { LogMediaUploadButton } from '../components/LogMediaUploadButton';
-import { LogNotesCard } from '../components/LogNotesCard';
-import { LogOptionCard } from '../components/LogOptionCard';
-import { LogSegmentedControl } from '../components/LogSegmentedControl';
-import { LogSwitchRow } from '../components/LogSwitchRow';
+import { PrimaryButton } from "../../../components/ui/PrimaryButton";
+import { LogBoxField } from "../components/LogBoxField";
+import { LogDetailLayout } from "../components/LogDetailLayout";
+import { LogFormCard } from "../components/LogFormCard";
+import { LogMediaUploadButton } from "../components/LogMediaUploadButton";
+import { LogNotesCard } from "../components/LogNotesCard";
+import { LogOptionCard } from "../components/LogOptionCard";
+import { LogSwitchRow } from "../components/LogSwitchRow";
 import {
   createLocalAttachmentUri,
-  DETAIL_WHEN_OPTIONS,
   type DetailWhenValue,
   normalizeOptionalText,
   parseOptionalNumber,
   resolveDetailWhenTimestamp,
   useDetailedEventSave,
-} from '../hooks/useDetailedEventSave';
+} from "../hooks/useDetailedEventSave";
 
-type EnergyLevel = 'low' | 'normal' | 'high';
+type EnergyLevel = "low" | "normal" | "high";
 
 const ENERGY_OPTIONS: {
   value: EnergyLevel;
   label: string;
   emoji: string;
 }[] = [
-  { value: 'low', label: 'Low', emoji: '🥱' },
-  { value: 'normal', label: 'Normal', emoji: '🙂' },
-  { value: 'high', label: 'High', emoji: '⚡️' },
+  { value: "low", label: "Low", emoji: "🥱" },
+  { value: "normal", label: "Normal", emoji: "🙂" },
+  { value: "high", label: "High", emoji: "⚡️" },
 ];
 
 const styles = StyleSheet.create({
   content: {
-    gap: 42,
+    gap: 48,
   },
   formStack: {
-    gap: 28,
+    gap: 32,
   },
   divider: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#F0D98D',
+    backgroundColor: "#F0D98D",
   },
   section: {
-    gap: 18,
+    gap: 16,
   },
   sectionLabel: {
-    color: '#263136',
+    color: "#263136",
     fontSize: 16,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "500",
   },
   energyGrid: {
-    flexDirection: 'row',
-    gap: 18,
+    flexDirection: "row",
+    gap: 16,
   },
   energyItem: {
     flex: 1,
   },
   energyEmoji: {
-    fontSize: 30,
-    lineHeight: 34,
+    fontSize: 24,
+    lineHeight: 28,
   },
   action: {
     marginTop: 12,
   },
   errorText: {
-    color: '#B02921',
+    color: "#B02921",
     fontSize: 15,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "400",
   },
 });
 
@@ -84,12 +82,12 @@ function renderEnergyIcon(emoji: string) {
 export default function LogWalkDetailScreen() {
   const router = useRouter();
   const { canSave, error, isSaving, saveEvent } = useDetailedEventSave();
-  const [when, setWhen] = useState<DetailWhenValue>('just-now');
-  const [duration, setDuration] = useState('45');
-  const [distance, setDistance] = useState('2.1');
+  const [when] = useState<DetailWhenValue>("just-now");
+  const [duration, setDuration] = useState("45");
+  const [distance, setDistance] = useState("2.1");
   const [autoFromHealth, setAutoFromHealth] = useState(true);
-  const [energyLevel, setEnergyLevel] = useState<EnergyLevel>('normal');
-  const [notes, setNotes] = useState('');
+  const [energyLevel, setEnergyLevel] = useState<EnergyLevel>("normal");
+  const [notes, setNotes] = useState("");
   const [photoAttached, setPhotoAttached] = useState(false);
 
   const handleSave = async () => {
@@ -99,12 +97,12 @@ export default function LogWalkDetailScreen() {
           distance_mi: parseOptionalNumber(distance),
           duration_min: parseOptionalNumber(duration),
           energy_level: energyLevel,
-          source: autoFromHealth ? 'healthkit' : 'manual',
+          source: autoFromHealth ? "healthkit" : "manual",
         },
         notes: normalizeOptionalText(notes),
         occurredAt: resolveDetailWhenTimestamp(when),
-        photoUrl: photoAttached ? createLocalAttachmentUri('walk') : null,
-        type: 'walk',
+        photoUrl: photoAttached ? createLocalAttachmentUri("walk") : null,
+        type: "walk",
       });
 
       router.replace(`/event/${event.id}`);
@@ -116,17 +114,6 @@ export default function LogWalkDetailScreen() {
   return (
     <LogDetailLayout title="Log Walk" onBackPress={() => router.back()}>
       <View style={styles.content}>
-        <View style={styles.section}>
-          <Text style={styles.sectionLabel}>When</Text>
-          <LogSegmentedControl
-            value={when}
-            variant="split"
-            size="large"
-            options={DETAIL_WHEN_OPTIONS}
-            onChange={(value) => setWhen(value as DetailWhenValue)}
-          />
-        </View>
-
         <LogFormCard backgroundColor="#FFF8E6" borderColor="#F4DA85" gap={28}>
           <View style={styles.formStack}>
             <LogBoxField
@@ -183,7 +170,7 @@ export default function LogWalkDetailScreen() {
             label=""
             showPhotoRow={false}
             minHeight={122}
-            borderRadius={18}
+            borderRadius={8}
           />
           <LogMediaUploadButton
             label="Add Photo"
@@ -201,7 +188,7 @@ export default function LogWalkDetailScreen() {
             />
           ) : null}
           <PrimaryButton
-            label={isSaving ? 'Saving...' : 'Save event'}
+            label={isSaving ? "Saving..." : "Save event"}
             size="large"
             disabled={!canSave || isSaving}
             onPress={() => {

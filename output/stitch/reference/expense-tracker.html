@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BarkLog - Expense Tracker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-dim": "#525353",
+                        "surface-dim": "#d4dbdd",
+                        "on-secondary-fixed-variant": "#5a5c5b",
+                        "on-tertiary": "#fbf8f7",
+                        "surface-container-low": "#f2f4f4",
+                        "primary-container": "#e5e2e1",
+                        "primary-fixed": "#e5e2e1",
+                        "on-tertiary-fixed": "#494a49",
+                        "error": "#9f403d",
+                        "on-primary-fixed": "#403f3f",
+                        "inverse-surface": "#0c0f0f",
+                        "on-primary-container": "#525151",
+                        "on-surface-variant": "#5a6061",
+                        "primary-fixed-dim": "#d7d4d3",
+                        "on-primary": "#faf7f6",
+                        "on-error-container": "#752121",
+                        "on-surface": "#2d3435",
+                        "tertiary-dim": "#535352",
+                        "surface": "#f9f9f9",
+                        "surface-variant": "#dde4e5",
+                        "on-tertiary-container": "#5c5c5b",
+                        "on-secondary-container": "#505252",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#5f5e5e",
+                        "tertiary": "#5f5f5e",
+                        "on-tertiary-fixed-variant": "#666665",
+                        "on-secondary": "#f9f9f8",
+                        "on-primary-fixed-variant": "#5c5b5b",
+                        "tertiary-fixed": "#f5f3f2",
+                        "on-secondary-fixed": "#3e403f",
+                        "secondary": "#5e5f5f",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-error": "#fff7f6",
+                        "surface-container": "#ebeeef",
+                        "on-background": "#2d3435",
+                        "outline": "#757c7d",
+                        "outline-variant": "#adb3b4",
+                        "surface-container-highest": "#dde4e5",
+                        "primary": "#5f5e5e",
+                        "tertiary-container": "#f5f3f2",
+                        "primary-dim": "#535252",
+                        "inverse-on-surface": "#9c9d9d",
+                        "inverse-primary": "#ffffff",
+                        "background": "#f9f9f9",
+                        "surface-container-high": "#e4e9ea",
+                        "surface-bright": "#f9f9f9",
+                        "error-container": "#fe8983",
+                        "tertiary-fixed-dim": "#e7e5e4",
+                        "secondary-fixed-dim": "#d4d4d3",
+                        "error-dim": "#4e0309",
+                        "secondary-container": "#e2e2e2"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen font-body pt-16 pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-xl docked full-width top-0 border-b-[0.5px] border-[#E7E5E4] dark:border-[#262626] flat no shadows fixed top-0 w-full z-50 flex items-center justify-between px-6 h-16">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="Companion Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a golden retriever dog with a soft, friendly expression against a clean, light background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUqOp00hRbSYYRr2DL4KZQ5UP5QU-BuUMccazqCW7PVXTiJCjdHLRFnW4hu7dxmhBtIF9OYrWkoZZueMgEqIAXFF93u1TTe4X2u4_CqiuJ91yjFnKng0wV_bqvGqCYmE75xm5F2LfkmIrkPCyBK9uBDoGHLtUY--WylY7yv5vTcAfb7-ObljU4-6crcwqPPzeyBMTG8AoRZtm1p6yrj-Hj7mgwuktO5cD2btHuK0VEgf0h77o0_5J3cd6wgKVs02zNtPB-0rl2uW4"/>
+</div>
+<h1 class="font-['Inter'] font-medium text-[16px] tracking-tight text-[#0A0A0A] dark:text-[#FAFAFA]">BarkLog</h1>
+</div>
+<button class="scale-95 active:scale-100 transition-transform hover:opacity-70 transition-opacity text-[#0A0A0A] dark:text-[#FAFAFA]">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="max-w-4xl mx-auto px-6 py-8 md:py-12 space-y-12">
+<!-- Header & Total Spend -->
+<section class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+<div class="space-y-2">
+<h2 class="font-headline font-medium text-[28px] text-on-surface">Ledger</h2>
+<div class="flex items-baseline gap-2">
+<span class="font-body font-normal text-[56px] tracking-[-0.02em] text-on-surface">$2,450</span>
+<span class="font-label font-medium text-[11px] uppercase tracking-[0.05em] text-on-surface-variant">YTD Spend</span>
+</div>
+</div>
+<button class="bg-[#0A0A0A] text-[#FAFAFA] rounded-[14px] px-6 py-3 font-medium text-[14px] flex items-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                Add expense
+            </button>
+</section>
+<!-- Data Vis Section: Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Pie Chart Container (Abstract Representation) -->
+<div class="bg-surface-container-lowest border-[0.5px] border-[#E7E5E4] rounded-xl p-6 relative">
+<h3 class="font-headline font-medium text-[16px] text-on-surface mb-6">Spend by Category</h3>
+<div class="flex flex-col md:flex-row items-center gap-8">
+<!-- Abstract Pie Chart (CSS) -->
+<div class="w-40 h-40 rounded-full border border-surface-container-high relative overflow-hidden" style="background: conic-gradient(
+                        #FDF4F3 0% 15%, 
+                        #F0F4F8 15% 25%, 
+                        #F2F8F1 25% 65%, 
+                        #FFF9E6 65% 85%, 
+                        #F5F3FF 85% 100%
+                    );">
+<div class="absolute inset-4 bg-surface-container-lowest rounded-full"></div>
+</div>
+<!-- Legend -->
+<div class="flex-1 space-y-3 w-full">
+<div class="flex justify-between items-center text-[14px]">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#F2F8F1] border-[0.5px] border-[#D9EAD3]"></span>
+<span class="text-on-surface">Food</span>
+</div>
+<span class="text-on-surface-variant">40%</span>
+</div>
+<div class="flex justify-between items-center text-[14px]">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#FFF9E6] border-[0.5px] border-[#FFECB3]"></span>
+<span class="text-on-surface">Vet</span>
+</div>
+<span class="text-on-surface-variant">20%</span>
+</div>
+<div class="flex justify-between items-center text-[14px]">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#FDF4F3] border-[0.5px] border-[#F9DEDC]"></span>
+<span class="text-on-surface">Grooming</span>
+</div>
+<span class="text-on-surface-variant">15%</span>
+</div>
+<div class="flex justify-between items-center text-[14px]">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#F5F3FF] border-[0.5px] border-[#DDD6FE]"></span>
+<span class="text-on-surface">Boarding</span>
+</div>
+<span class="text-on-surface-variant">15%</span>
+</div>
+<div class="flex justify-between items-center text-[14px]">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#F0F4F8] border-[0.5px] border-[#D9E2EC]"></span>
+<span class="text-on-surface">Toys</span>
+</div>
+<span class="text-on-surface-variant">10%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Trend Line Container (Abstract Representation) -->
+<div class="bg-surface-container-lowest border-[0.5px] border-[#E7E5E4] rounded-xl p-6 relative">
+<h3 class="font-headline font-medium text-[16px] text-on-surface mb-6">Monthly Trend</h3>
+<div class="h-40 w-full relative flex items-end gap-2 px-2 pb-6 border-b-[0.5px] border-[#E7E5E4]">
+<!-- Abstract Bar Chart for trend -->
+<div class="flex-1 bg-surface-container-low h-[40%] rounded-t-sm hover:bg-surface-variant transition-colors relative group">
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 font-label text-[11px] text-on-surface-variant">JAN</span>
+</div>
+<div class="flex-1 bg-surface-container-low h-[30%] rounded-t-sm hover:bg-surface-variant transition-colors relative group">
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 font-label text-[11px] text-on-surface-variant">FEB</span>
+</div>
+<div class="flex-1 bg-surface-container-low h-[80%] rounded-t-sm hover:bg-surface-variant transition-colors relative group">
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 font-label text-[11px] text-on-surface-variant">MAR</span>
+</div>
+<div class="flex-1 bg-surface-container-low h-[45%] rounded-t-sm hover:bg-surface-variant transition-colors relative group">
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 font-label text-[11px] text-on-surface-variant">APR</span>
+</div>
+<div class="flex-1 bg-primary-container h-[60%] rounded-t-sm hover:bg-primary-fixed-dim transition-colors relative group">
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 font-label text-[11px] text-on-surface-variant font-medium text-on-surface">MAY</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Expense List -->
+<section class="space-y-6">
+<h3 class="font-headline font-medium text-[28px] text-on-surface border-b-[0.5px] border-[#E7E5E4] pb-4">Recent Transactions</h3>
+<div class="flex flex-col gap-4">
+<!-- List Item 1 -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border-[0.5px] border-[#E7E5E4] rounded-lg hover:bg-surface transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-[#F2F8F1] border-[0.5px] border-[#D9EAD3] flex items-center justify-center text-[#1B5E20]">
+<span class="material-symbols-outlined text-[20px]" data-icon="restaurant">restaurant</span>
+</div>
+<div>
+<p class="font-medium text-[14px] text-on-surface">Premium Kibble</p>
+<p class="text-[14px] text-on-surface-variant">Food • May 12</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-medium text-[16px] text-on-surface">-$85.00</p>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border-[0.5px] border-[#E7E5E4] rounded-lg hover:bg-surface transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-[#FFF9E6] border-[0.5px] border-[#FFECB3] flex items-center justify-center text-[#7A5500]">
+<span class="material-symbols-outlined text-[20px]" data-icon="local_hospital">local_hospital</span>
+</div>
+<div>
+<p class="font-medium text-[14px] text-on-surface">Annual Checkup &amp; Vaccines</p>
+<p class="text-[14px] text-on-surface-variant">Vet • May 05</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-medium text-[16px] text-on-surface">-$240.00</p>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border-[0.5px] border-[#E7E5E4] rounded-lg hover:bg-surface transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-[#F0F4F8] border-[0.5px] border-[#D9E2EC] flex items-center justify-center text-[#102A43]">
+<span class="material-symbols-outlined text-[20px]" data-icon="sports_tennis">sports_tennis</span>
+</div>
+<div>
+<p class="font-medium text-[14px] text-on-surface">Tough Chew Toy</p>
+<p class="text-[14px] text-on-surface-variant">Toys • Apr 28</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-medium text-[16px] text-on-surface">-$18.50</p>
+</div>
+</div>
+<!-- List Item 4 -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border-[0.5px] border-[#E7E5E4] rounded-lg hover:bg-surface transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-[#FDF4F3] border-[0.5px] border-[#F9DEDC] flex items-center justify-center text-[#8C1D18]">
+<span class="material-symbols-outlined text-[20px]" data-icon="content_cut">content_cut</span>
+</div>
+<div>
+<p class="font-medium text-[14px] text-on-surface">Spring Grooming Session</p>
+<p class="text-[14px] text-on-surface-variant">Grooming • Apr 15</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-medium text-[16px] text-on-surface">-$65.00</p>
+</div>
+</div>
+</div>
+<button class="w-full py-4 text-center text-[14px] font-medium text-on-surface-variant hover:text-on-surface transition-colors">
+                View all transactions
+            </button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-xl docked full-width bottom-0 border-t-[0.5px] border-[#E7E5E4] dark:border-[#262626] flat no shadows fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-4">
+<a class="flex flex-col items-center justify-center text-[#A1A1AA] hover:text-[#0A0A0A] dark:hover:text-[#FAFAFA] transition-colors tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="history_edu">history_edu</span>
+<span class="font-['Inter'] font-medium text-[11px] uppercase tracking-[0.05em]">Archive</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#0A0A0A] dark:text-[#FAFAFA] hover:text-[#0A0A0A] dark:hover:text-[#FAFAFA] transition-colors tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="payments" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="font-['Inter'] font-medium text-[11px] uppercase tracking-[0.05em]">Ledger</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#A1A1AA] hover:text-[#0A0A0A] dark:hover:text-[#FAFAFA] transition-colors tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="auto_stories">auto_stories</span>
+<span class="font-['Inter'] font-medium text-[11px] uppercase tracking-[0.05em]">Memories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#A1A1AA] hover:text-[#0A0A0A] dark:hover:text-[#FAFAFA] transition-colors tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-['Inter'] font-medium text-[11px] uppercase tracking-[0.05em]">Profile</span>
+</a>
+</nav>
+</body></html>

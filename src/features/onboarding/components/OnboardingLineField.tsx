@@ -17,7 +17,7 @@ type OnboardingLineFieldProps = TextInputProps & {
 
 const styles = StyleSheet.create({
   fieldGroup: {
-    gap: 14,
+    gap: 6,
   },
   header: {
     flexDirection: 'row',
@@ -26,37 +26,37 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   label: {
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: 11,
+    lineHeight: 14,
     fontWeight: '500',
-    letterSpacing: 1.8,
+    letterSpacing: 1.1,
   },
   inputRowLine: {
-    minHeight: 58,
+    minHeight: 44,
     justifyContent: 'center',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#DDD8D2',
   },
   inputRowBox: {
-    minHeight: 74,
+    minHeight: 48,
     justifyContent: 'center',
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#DDD8D2',
     backgroundColor: '#FFFCFA',
   },
   inputBase: {
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
   },
   inputLine: {
-    minHeight: 58,
+    minHeight: 44,
     paddingRight: 42,
     color: '#A79F98',
   },
   inputBox: {
-    minHeight: 74,
-    paddingHorizontal: 22,
+    minHeight: 48,
+    paddingHorizontal: 16,
     color: '#5F6670',
   },
   inputBoxWithTrailing: {

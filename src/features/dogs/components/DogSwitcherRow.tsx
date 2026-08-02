@@ -16,16 +16,16 @@ type DogSwitcherRowProps = {
 
 const styles = StyleSheet.create({
   card: {
-    minHeight: 136,
-    borderRadius: 26,
-    borderWidth: 1,
+    minHeight: 72,
+    borderRadius: 14,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#D9D5D1',
     backgroundColor: '#FFFCFA',
-    paddingHorizontal: 24,
-    paddingVertical: 22,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 18,
+    gap: 12,
   },
   selected: {
     borderColor: '#0A0A0A',
@@ -37,24 +37,24 @@ const styles = StyleSheet.create({
   },
   name: {
     color: '#0A0A0A',
-    fontSize: 24,
-    lineHeight: 30,
-    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
   },
   meta: {
     color: '#5F6670',
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: 11,
+    lineHeight: 14,
     fontWeight: '400',
   },
   right: {
     alignItems: 'flex-end',
-    gap: 14,
+    gap: 6,
   },
   trailingMeta: {
     color: '#A7A099',
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: 11,
+    lineHeight: 14,
     fontWeight: '400',
     letterSpacing: 0.4,
   },
@@ -62,19 +62,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -10,
     right: -10,
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     backgroundColor: '#0A0A0A',
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: '#FAFAFA',
     alignItems: 'center',
     justifyContent: 'center',
   },
   check: {
     color: '#FAFAFA',
-    fontSize: 22,
-    lineHeight: 22,
+    fontSize: 12,
+    lineHeight: 12,
     fontWeight: '500',
   },
 });
@@ -98,7 +98,7 @@ export function DogSwitcherRow({
       <HomeAvatar
         emoji={avatarEmoji}
         backgroundColor={avatarBackgroundColor}
-        size={78}
+        size={44}
       />
 
       <View style={styles.copy}>

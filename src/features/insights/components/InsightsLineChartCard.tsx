@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
-import Svg, { Circle, Line, Path } from 'react-native-svg';
+import { useEffect, useMemo, useRef } from "react";
+import { Animated, Easing, StyleSheet, Text, View } from "react-native";
+import Svg, { Circle, Line, Path } from "react-native-svg";
 
 type InsightsLineChartCardProps = {
   title: string;
@@ -11,49 +11,49 @@ type InsightsLineChartCardProps = {
 };
 
 const CHART_WIDTH = 320;
-const CHART_HEIGHT = 130;
+const CHART_HEIGHT = 96;
 const PADDING_X = 12;
 const PADDING_Y = 18;
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 28,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E5E1DB',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 18,
-    paddingTop: 22,
-    paddingBottom: 18,
-    gap: 20,
+    borderColor: "#E5E1DB",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 16,
+    gap: 16,
   },
   title: {
-    color: '#0A0A0A',
-    fontSize: 20,
-    lineHeight: 26,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "500",
   },
   chartFrame: {
     minHeight: CHART_HEIGHT + 36,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   animatedLayer: {
-    width: '100%',
+    width: "100%",
   },
   labelsRow: {
     marginTop: 6,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingHorizontal: 20,
   },
   label: {
-    color: '#616A72',
-    fontSize: 14,
-    lineHeight: 18,
-    fontWeight: '400',
+    color: "#616A72",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "400",
   },
   baseline: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#DED8D2',
+    backgroundColor: "#DED8D2",
     marginTop: 12,
     marginHorizontal: 6,
   },
@@ -110,7 +110,7 @@ export function InsightsLineChartCard({
       }
 
       return `${acc} L ${point.x} ${point.y}`;
-    }, '');
+    }, "");
 
     return { points, path };
   }, [values]);
@@ -157,7 +157,7 @@ export function InsightsLineChartCard({
             />
             {graph.points.map((point, index) => (
               <Circle
-                key={`${labels[index] ?? index}`}
+                key={`${labels[index] ?? "point"}-${index}`}
                 cx={point.x}
                 cy={point.y}
                 r="3.5"
@@ -168,8 +168,8 @@ export function InsightsLineChartCard({
         </Animated.View>
 
         <View style={styles.labelsRow}>
-          {labels.map((label) => (
-            <Text key={label} style={styles.label}>
+          {labels.map((label, index) => (
+            <Text key={`${label}-${index}`} style={styles.label}>
               {label}
             </Text>
           ))}

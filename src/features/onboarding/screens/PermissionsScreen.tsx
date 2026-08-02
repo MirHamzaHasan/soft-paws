@@ -15,20 +15,20 @@ import { PermissionToggleCard } from '../components/PermissionToggleCard';
 
 const styles = StyleSheet.create({
   stack: {
-    gap: 28,
+    gap: 24,
   },
   actions: {
-    marginTop: 72,
-    gap: 26,
+    marginTop: 32,
+    gap: 16,
   },
   skipRow: {
     alignItems: 'center',
   },
   skipText: {
     color: '#5F6670',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
   },
   statusText: {
     color: '#687079',
@@ -82,8 +82,8 @@ export default function PermissionsScreen() {
       title="Stay in the loop"
       subtitle="Enable permissions to get the most out of BarkLog and never miss an important update for your dog."
       heroTopSpacing={44}
-      bodyTopSpacing={50}
-      subtitleMaxWidth={610}
+      bodyTopSpacing={32}
+      subtitleMaxWidth={360}
     >
       <View style={styles.stack}>
         <PermissionToggleCard

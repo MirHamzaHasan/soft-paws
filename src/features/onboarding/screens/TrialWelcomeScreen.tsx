@@ -34,33 +34,33 @@ const FEATURES = [
 const styles = StyleSheet.create({
   heroContent: {
     alignItems: 'center',
-    gap: 22,
+    gap: 16,
   },
   copyBlock: {
     alignItems: 'center',
-    gap: 16,
+    gap: 12,
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 36,
-    lineHeight: 42,
+    fontSize: 28,
+    lineHeight: 34,
     fontWeight: '500',
-    letterSpacing: -1.2,
+    letterSpacing: -0.5,
     textAlign: 'center',
   },
   subtitle: {
     maxWidth: 520,
     color: '#5F6670',
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
     textAlign: 'center',
   },
   stack: {
-    gap: 32,
+    gap: 48,
   },
   featureList: {
-    gap: 22,
+    gap: 16,
   },
   actions: {
     marginTop: 18,
@@ -140,11 +140,11 @@ export default function TrialWelcomeScreen() {
       currentStep={4}
       totalSteps={4}
       surfaceVariant="card"
-      heroTopSpacing={42}
-      bodyTopSpacing={46}
+      heroTopSpacing={40}
+      bodyTopSpacing={40}
       heroContent={
         <View style={styles.heroContent}>
-          <OnboardingCirclePlate size={116}>
+          <OnboardingCirclePlate size={64}>
             <PawIcon />
           </OnboardingCirclePlate>
 

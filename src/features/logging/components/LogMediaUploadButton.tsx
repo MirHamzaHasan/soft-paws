@@ -1,45 +1,45 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { AddPhotoIcon } from './LoggingIcons';
+import { AddPhotoIcon } from "./LoggingIcons";
 
 type LogMediaUploadButtonProps = {
   label: string;
-  variant?: 'outlined' | 'dashed';
+  variant?: "outlined" | "dashed";
   selected?: boolean;
   onPress?: () => void;
 };
 
 const styles = StyleSheet.create({
   button: {
-    minHeight: 74,
-    borderRadius: 18,
+    minHeight: 52,
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 18,
-    backgroundColor: '#FFFCFA',
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+    backgroundColor: "#FFFCFA",
   },
   outlined: {
-    borderColor: '#B8C2C8',
+    borderColor: "#B8C2C8",
   },
   dashed: {
-    borderColor: '#AEB6BB',
-    borderStyle: 'dashed',
+    borderColor: "#AEB6BB",
+    borderStyle: "dashed",
   },
   content: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
   },
   label: {
-    color: '#5F6670',
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '400',
+    color: "#5F6670",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "500",
   },
   labelSelected: {
-    color: '#145E22',
+    color: "#145E22",
   },
   pressed: {
     opacity: 0.92,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 
 export function LogMediaUploadButton({
   label,
-  variant = 'outlined',
+  variant = "outlined",
   selected = false,
   onPress,
 }: LogMediaUploadButtonProps) {
@@ -57,15 +57,15 @@ export function LogMediaUploadButton({
       accessibilityRole="button"
       style={({ pressed }) => [
         styles.button,
-        variant === 'dashed' ? styles.dashed : styles.outlined,
+        variant === "dashed" ? styles.dashed : styles.outlined,
         pressed ? styles.pressed : null,
       ]}
       onPress={onPress}
     >
       <View style={styles.content}>
-        <AddPhotoIcon color={selected ? '#145E22' : '#5F6670'} />
+        <AddPhotoIcon color={selected ? "#145E22" : "#5F6670"} />
         <Text style={[styles.label, selected ? styles.labelSelected : null]}>
-          {selected ? 'Photo attached' : label}
+          {selected ? "Photo attached" : label}
         </Text>
       </View>
     </Pressable>

@@ -7,7 +7,7 @@ type SettingsSectionCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 28,
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#E0DBD5',
     backgroundColor: '#FFFCFA',

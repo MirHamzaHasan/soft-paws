@@ -1,21 +1,21 @@
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useRouter } from "expo-router";
+import { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-import { BarklogStatusBanner } from '@/components/ui';
+import { BarklogStatusBanner } from "@/components/ui";
 
-import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { WarningIcon } from '../../home/components/HomeIcons';
-import { LogColorSwatch } from '../components/LogColorSwatch';
-import { LogDetailLayout } from '../components/LogDetailLayout';
+import { PrimaryButton } from "../../../components/ui/PrimaryButton";
+import { WarningIcon } from "../../home/components/HomeIcons";
+import { LogColorSwatch } from "../components/LogColorSwatch";
+import { LogDetailLayout } from "../components/LogDetailLayout";
 import {
   CheckIcon,
   LooseLinesIcon,
   SolidDotIcon,
-} from '../components/LoggingIcons';
-import { LogNotesCard } from '../components/LogNotesCard';
-import { LogOptionCard } from '../components/LogOptionCard';
-import { LogSegmentedControl } from '../components/LogSegmentedControl';
+} from "../components/LoggingIcons";
+import { LogNotesCard } from "../components/LogNotesCard";
+import { LogOptionCard } from "../components/LogOptionCard";
+import { LogSegmentedControl } from "../components/LogSegmentedControl";
 import {
   createLocalAttachmentUri,
   DETAIL_WHEN_OPTIONS,
@@ -23,15 +23,15 @@ import {
   normalizeOptionalText,
   resolveDetailWhenTimestamp,
   useDetailedEventSave,
-} from '../hooks/useDetailedEventSave';
+} from "../hooks/useDetailedEventSave";
 
-type QualityValue = 'normal' | 'loose' | 'hard';
-type ColorValue = 'black' | 'brown' | 'dark' | 'red' | 'yellow';
+type QualityValue = "normal" | "loose" | "hard";
+type ColorValue = "black" | "brown" | "dark" | "red" | "yellow";
 
 const QUALITY_OPTIONS: { value: QualityValue; label: string }[] = [
-  { value: 'normal', label: 'Normal' },
-  { value: 'loose', label: 'Loose' },
-  { value: 'hard', label: 'Hard' },
+  { value: "normal", label: "Normal" },
+  { value: "loose", label: "Loose" },
+  { value: "hard", label: "Hard" },
 ];
 
 const COLOR_OPTIONS: {
@@ -39,67 +39,67 @@ const COLOR_OPTIONS: {
   color: string;
   warning?: boolean;
 }[] = [
-  { value: 'brown', color: '#A26A2B' },
-  { value: 'dark', color: '#5C3A1A' },
-  { value: 'yellow', color: '#E0B72F' },
-  { value: 'red', color: '#A91E17', warning: true },
-  { value: 'black', color: '#1F1F21', warning: true },
+  { value: "brown", color: "#A26A2B" },
+  { value: "dark", color: "#5C3A1A" },
+  { value: "yellow", color: "#E0B72F" },
+  { value: "red", color: "#A91E17", warning: true },
+  { value: "black", color: "#1F1F21", warning: true },
 ];
 
 const styles = StyleSheet.create({
   content: {
-    gap: 42,
+    gap: 32,
   },
   title: {
-    color: '#263136',
-    fontSize: 42,
-    lineHeight: 48,
-    fontWeight: '400',
-    letterSpacing: -1.3,
+    color: "#0A0A0A",
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: "500",
+    letterSpacing: -0.5,
   },
   section: {
     gap: 16,
   },
   sectionLabel: {
-    color: '#263136',
+    color: "#0A0A0A",
     fontSize: 16,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "500",
   },
   qualityGrid: {
-    flexDirection: 'row',
-    gap: 16,
+    flexDirection: "row",
+    gap: 12,
   },
   qualityItem: {
     flex: 1,
   },
   normalBadge: {
-    width: 40,
-    height: 40,
+    width: 24,
+    height: 24,
     borderRadius: 999,
-    backgroundColor: '#1E7A2D',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#1E7A2D",
+    alignItems: "center",
+    justifyContent: "center",
   },
   colorRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 18,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 8,
   },
   action: {
     marginTop: 14,
   },
   errorText: {
-    color: '#B02921',
+    color: "#B02921",
     fontSize: 15,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "400",
   },
 });
 
 function renderQualityIcon(value: QualityValue) {
-  if (value === 'normal') {
+  if (value === "normal") {
     return (
       <View style={styles.normalBadge}>
         <CheckIcon size={18} />
@@ -107,7 +107,7 @@ function renderQualityIcon(value: QualityValue) {
     );
   }
 
-  if (value === 'loose') {
+  if (value === "loose") {
     return <LooseLinesIcon />;
   }
 
@@ -125,10 +125,10 @@ function renderColorIcon(warning?: boolean) {
 export default function LogPoopDetailScreen() {
   const router = useRouter();
   const { canSave, error, isSaving, saveEvent } = useDetailedEventSave();
-  const [when, setWhen] = useState<DetailWhenValue>('just-now');
-  const [quality, setQuality] = useState<QualityValue>('normal');
-  const [color, setColor] = useState<ColorValue>('brown');
-  const [notes, setNotes] = useState('');
+  const [when, setWhen] = useState<DetailWhenValue>("just-now");
+  const [quality, setQuality] = useState<QualityValue>("normal");
+  const [color, setColor] = useState<ColorValue>("brown");
+  const [notes, setNotes] = useState("");
   const [photoAttached, setPhotoAttached] = useState(false);
 
   const handleSave = async () => {
@@ -140,8 +140,8 @@ export default function LogPoopDetailScreen() {
         },
         notes: normalizeOptionalText(notes),
         occurredAt: resolveDetailWhenTimestamp(when),
-        photoUrl: photoAttached ? createLocalAttachmentUri('poop') : null,
-        type: 'poop',
+        photoUrl: photoAttached ? createLocalAttachmentUri("poop") : null,
+        type: "poop",
       });
 
       router.replace(`/event/${event.id}`);
@@ -210,8 +210,9 @@ export default function LogPoopDetailScreen() {
           placeholder="Any details..."
           photoPlacement="below"
           minHeight={120}
-          borderRadius={18}
-          borderColor="#111111"
+          backgroundColor="#F5F5F4"
+          borderRadius={8}
+          borderColor="#0A0A0A"
           photoSelected={photoAttached}
           onPhotoPress={() => setPhotoAttached((current) => !current)}
           onChangeText={setNotes}
@@ -226,7 +227,7 @@ export default function LogPoopDetailScreen() {
             />
           ) : null}
           <PrimaryButton
-            label={isSaving ? 'Saving...' : 'Save event'}
+            label={isSaving ? "Saving..." : "Save event"}
             size="large"
             disabled={!canSave || isSaving}
             onPress={() => {

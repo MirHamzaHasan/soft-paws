@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type SeverityOption = {
   label: string;
@@ -16,93 +16,88 @@ type LogSeverityCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 22,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#DDD8D2',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 22,
-    paddingVertical: 22,
-    gap: 22,
+    borderColor: "#DDD8D2",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 24,
+    paddingVertical: 24,
+    gap: 16,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     gap: 16,
   },
   title: {
-    color: '#263136',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#263136",
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "500",
   },
   value: {
-    fontSize: 14,
-    lineHeight: 18,
-    fontWeight: '500',
-    letterSpacing: 1.6,
-    textTransform: 'uppercase',
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
+    letterSpacing: 1.1,
+    textTransform: "uppercase",
   },
   railWrap: {
-    position: 'relative',
+    position: "relative",
     height: 26,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   railBase: {
     height: 4,
     borderRadius: 999,
-    backgroundColor: '#E7EBEE',
+    backgroundColor: "#E7EBEE",
   },
   railFill: {
-    position: 'absolute',
+    position: "absolute",
     left: 0,
     height: 4,
     borderRadius: 999,
   },
   thumb: {
-    position: 'absolute',
+    position: "absolute",
     top: 1,
     width: 22,
     height: 22,
     borderRadius: 999,
     borderWidth: 4,
-    borderColor: '#FFFCFA',
-    backgroundColor: '#FFFCFA',
-    shadowColor: '#0A0A0A',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 2,
+    borderColor: "#FFFCFA",
+    backgroundColor: "#FFFCFA",
   },
   hitTargets: {
     ...StyleSheet.absoluteFillObject,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   hitTarget: {
     flex: 1,
   },
   labels: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     gap: 10,
   },
   levelLabel: {
     flex: 1,
-    color: '#263136',
-    fontSize: 14,
-    lineHeight: 18,
-    fontWeight: '500',
-    letterSpacing: 1.2,
-    textTransform: 'uppercase',
+    color: "#263136",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
   },
   labelStart: {
-    textAlign: 'left',
+    textAlign: "left",
   },
   labelCenter: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   labelEnd: {
-    textAlign: 'right',
+    textAlign: "right",
   },
 });
 
@@ -110,7 +105,7 @@ export function LogSeverityCard({
   label,
   value,
   options,
-  accentColor = '#F2C44B',
+  accentColor = "#F2C44B",
   onChange,
 }: LogSeverityCardProps) {
   const [railWidth, setRailWidth] = useState(0);
@@ -173,7 +168,7 @@ export function LogSeverityCard({
             {
               left: thumbLeft,
               transform: [{ translateX: resolveThumbTranslateX() }],
-              borderColor: '#FFFCFA',
+              borderColor: "#FFFCFA",
             },
           ]}
         >

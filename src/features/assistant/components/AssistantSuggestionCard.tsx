@@ -1,5 +1,5 @@
-import { type ReactNode } from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { type ReactNode } from "react";
+import { Pressable, StyleSheet, Text } from "react-native";
 
 type AssistantSuggestionCardProps = {
   label: string;
@@ -9,22 +9,22 @@ type AssistantSuggestionCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 18,
+    borderRadius: 8,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#B4BDC3',
-    backgroundColor: '#F7F9F9',
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 14,
+    borderColor: "#B4BDC3",
+    backgroundColor: "#F7F9F9",
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 8,
   },
   label: {
     flex: 1,
-    color: '#5B6269',
-    fontSize: 20,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#5B6269",
+    fontSize: 13,
+    lineHeight: 18,
+    fontWeight: "500",
   },
 });
 

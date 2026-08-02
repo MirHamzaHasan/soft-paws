@@ -18,34 +18,34 @@ type SexValue = 'male' | 'female';
 
 const styles = StyleSheet.create({
   form: {
-    gap: 30,
+    gap: 32,
   },
   photoWrap: {
     marginBottom: 10,
   },
   fieldStack: {
-    gap: 26,
+    gap: 24,
   },
   doubleRow: {
     flexDirection: 'row',
-    gap: 18,
+    gap: 16,
   },
   halfField: {
     flex: 1,
   },
   sexSection: {
-    gap: 18,
+    gap: 12,
   },
   sectionLabel: {
     color: '#6F767D',
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: 11,
+    lineHeight: 14,
     fontWeight: '500',
-    letterSpacing: 1.8,
+    letterSpacing: 0.8,
   },
   chipRow: {
     flexDirection: 'row',
-    gap: 18,
+    gap: 16,
   },
   chipCell: {
     flex: 1,
@@ -144,7 +144,7 @@ export default function AddDogScreen() {
       <View style={styles.form}>
         <View style={styles.photoWrap}>
           <OnboardingPhotoButton
-            size={152}
+            size={76}
             alignSelf="flex-start"
             accessibilityLabel="Add another dog photo"
             icon={<CameraAddIcon />}

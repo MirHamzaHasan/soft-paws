@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
   shell: {
     flex: 1,
     width: '100%',
-    maxWidth: 760,
+    maxWidth: 448,
   },
   topBar: {
-    minHeight: 74,
+    minHeight: 64,
     paddingHorizontal: 22,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#E8E2DC',
@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     color: '#0A0A0A',
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: 16,
+    lineHeight: 21,
     fontWeight: '500',
   },
   actionText: {
     color: '#0A0A0A',
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
   },
   scrollView: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: 24,
-    paddingTop: 28,
+    paddingTop: 24,
     paddingBottom: 40,
   },
 });

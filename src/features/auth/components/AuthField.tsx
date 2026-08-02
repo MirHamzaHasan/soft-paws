@@ -23,13 +23,13 @@ type AuthFieldProps = TextInputProps & {
 
 const styles = StyleSheet.create({
   fieldGroup: {
-    gap: 12,
+    gap: 8,
   },
   label: {
     fontSize: 12,
-    lineHeight: 16,
+    lineHeight: 14,
     fontWeight: '500',
-    letterSpacing: 1.8,
+    letterSpacing: 1.1,
   },
   labelOutlined: {
     color: '#555555',
@@ -38,24 +38,25 @@ const styles = StyleSheet.create({
     color: AUTH_COLORS.textMuted,
   },
   fieldShell: {
-    minHeight: 72,
+    minHeight: 48,
     justifyContent: 'center',
     borderRadius: 8,
   },
   shellOutlined: {
-    borderWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: AUTH_COLORS.border,
-    backgroundColor: AUTH_COLORS.surface,
+    backgroundColor: '#F5F5F4',
+    borderRadius: 4,
   },
   shellFilled: {
     backgroundColor: AUTH_COLORS.filledField,
   },
   input: {
-    minHeight: 72,
-    paddingHorizontal: 28,
-    paddingVertical: 18,
-    fontSize: 18,
-    lineHeight: 24,
+    minHeight: 48,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
   },
   inputOutlined: {
@@ -65,27 +66,27 @@ const styles = StyleSheet.create({
     color: AUTH_COLORS.inputMuted,
   },
   inputWithLeading: {
-    paddingLeft: 56,
+    paddingLeft: 48,
   },
   inputWithTrailing: {
-    paddingRight: 68,
+    paddingRight: 48,
   },
   leadingSlot: {
     position: 'absolute',
-    left: 22,
+    left: 16,
     top: '50%',
     marginTop: -12,
   },
   trailingSlot: {
     position: 'absolute',
-    right: 22,
+    right: 16,
     top: '50%',
     marginTop: -12,
   },
   helperText: {
     color: AUTH_COLORS.textMuted,
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 11,
+    lineHeight: 16,
     fontWeight: '400',
   },
 });

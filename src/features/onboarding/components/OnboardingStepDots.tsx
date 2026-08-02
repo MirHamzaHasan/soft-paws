@@ -9,11 +9,11 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 12,
+    gap: 8,
   },
   dot: {
-    width: 12,
-    height: 12,
+    width: 8,
+    height: 8,
     borderRadius: 999,
     backgroundColor: '#E7E5E4',
   },

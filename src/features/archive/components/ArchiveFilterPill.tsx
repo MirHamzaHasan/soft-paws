@@ -9,18 +9,18 @@ type ArchiveFilterPillProps = {
 
 const styles = StyleSheet.create({
   pill: {
-    minHeight: 48,
-    borderRadius: 24,
-    borderWidth: 1,
+    minHeight: 32,
+    borderRadius: 999,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#DCD7D1',
     backgroundColor: '#FFFCFA',
-    paddingHorizontal: 24,
+    paddingHorizontal: 14,
     alignItems: 'center',
     justifyContent: 'center',
   },
   pillCompact: {
-    minHeight: 42,
-    paddingHorizontal: 18,
+    minHeight: 28,
+    paddingHorizontal: 12,
   },
   pillSelected: {
     borderColor: '#0A0A0A',
@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#0A0A0A',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: '500',
   },
   labelCompact: {
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 11,
+    lineHeight: 14,
   },
   labelSelected: {
     color: '#FFFCFA',

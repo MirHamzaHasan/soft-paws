@@ -1,169 +1,170 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { useRouter } from 'expo-router';
-import { useCallback, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useFocusEffect } from "@react-navigation/native";
+import { useRouter } from "expo-router";
+import { useCallback, useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import type { EventModel } from '../../../db';
-import { getSelectedDog, useAuthSessionStore } from '../../../stores';
-import type { Json } from '../../../types/supabase';
-import { AssistantAlertIcon } from '../../assistant/components/AssistantIcons';
-import { HomeBottomTabBar } from '../../home/components/HomeBottomTabBar';
-import { LedgerTrendCard } from '../../ledger/components/LedgerTrendCard';
-import { LogDetailLayout } from '../../logging/components/LogDetailLayout';
+import { PrimaryButton } from "../../../components/ui/PrimaryButton";
+import type { EventModel } from "../../../db";
+import { getSelectedDog, useAuthSessionStore } from "../../../stores";
+import type { Json } from "../../../types/supabase";
+import { AssistantAlertIcon } from "../../assistant/components/AssistantIcons";
+import { HomeBottomTabBar } from "../../home/components/HomeBottomTabBar";
+import { LedgerTrendCard } from "../../ledger/components/LedgerTrendCard";
+import { LogDetailLayout } from "../../logging/components/LogDetailLayout";
 import {
   getPremiumFeatureLabel,
   hasPremiumAccess,
-} from '../../premium/utils/premiumAccess';
-import { openPremiumGate } from '../../premium/utils/premiumNavigation';
-import { MealsIcon } from '../components/InsightsIcons';
-import { InsightsLineChartCard } from '../components/InsightsLineChartCard';
-import { InsightsProgressRow } from '../components/InsightsProgressRow';
+} from "../../premium/utils/premiumAccess";
+import { openPremiumGate } from "../../premium/utils/premiumNavigation";
+import { MealsIcon } from "../components/InsightsIcons";
+import { InsightsLineChartCard } from "../components/InsightsLineChartCard";
+import { InsightsProgressRow } from "../components/InsightsProgressRow";
 import {
   type EventSummary,
   loadMonthlyEvents,
-} from '../utils/insightSummaries';
+} from "../utils/insightSummaries";
 
 const styles = StyleSheet.create({
   stack: {
     gap: 24,
   },
   hero: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    gap: 18,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    flexWrap: "wrap",
+    gap: 16,
   },
   heroCopy: {
     flex: 1,
-    gap: 8,
+    gap: 4,
   },
   title: {
-    color: '#0A0A0A',
-    fontSize: 74,
-    lineHeight: 78,
-    fontWeight: '300',
-    letterSpacing: -2.5,
+    color: "#0A0A0A",
+    fontSize: 56,
+    lineHeight: 62,
+    fontWeight: "400",
+    letterSpacing: -1.1,
   },
   subtitle: {
-    color: '#5D656D',
-    fontSize: 18,
-    lineHeight: 30,
-    fontWeight: '400',
+    color: "#5D656D",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
   },
   monthSwitcher: {
-    minWidth: 172,
-    minHeight: 74,
-    borderRadius: 37,
+    minWidth: 136,
+    minHeight: 40,
+    borderRadius: 999,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E3DFDB',
-    backgroundColor: '#F6F7F6',
-    paddingHorizontal: 20,
-    paddingVertical: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderColor: "#E3DFDB",
+    backgroundColor: "#F6F7F6",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    alignItems: "center",
+    justifyContent: "center",
     gap: 4,
   },
   monthLabel: {
-    color: '#1F2528',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#1F2528",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "500",
   },
   monthYear: {
-    color: '#1F2528',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#1F2528",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "500",
   },
   premiumCard: {
-    borderRadius: 28,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#D8CCFF',
-    backgroundColor: '#F7F4FF',
-    paddingHorizontal: 22,
-    paddingVertical: 24,
-    gap: 18,
+    borderColor: "#D8CCFF",
+    backgroundColor: "#F7F4FF",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    gap: 12,
   },
   premiumTitle: {
-    color: '#3E2A9E',
-    fontSize: 24,
-    lineHeight: 30,
-    fontWeight: '500',
+    color: "#3E2A9E",
+    fontSize: 18,
+    lineHeight: 24,
+    fontWeight: "500",
   },
   premiumBody: {
-    color: '#4C3AA8',
-    fontSize: 17,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#4C3AA8",
+    fontSize: 14,
+    lineHeight: 21,
+    fontWeight: "400",
   },
   routineCard: {
-    borderRadius: 28,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E5E1DB',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 22,
-    paddingTop: 22,
-    paddingBottom: 20,
-    gap: 20,
+    borderColor: "#E5E1DB",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 24,
+    gap: 16,
   },
   routineTitleRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     gap: 16,
   },
   routineTitle: {
-    color: '#0A0A0A',
-    fontSize: 22,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "500",
   },
   routineValueRow: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
+    flexDirection: "row",
+    alignItems: "baseline",
     gap: 10,
   },
   routineValue: {
-    color: '#1B2024',
-    fontSize: 72,
-    lineHeight: 76,
-    fontWeight: '300',
-    letterSpacing: -2.4,
+    color: "#1B2024",
+    fontSize: 56,
+    lineHeight: 60,
+    fontWeight: "400",
+    letterSpacing: -1.1,
   },
   routineMeta: {
-    color: '#0F6A22',
-    fontSize: 20,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#0F6A22",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "500",
   },
   routineDetail: {
-    color: '#5D656D',
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '500',
+    color: "#5D656D",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
     letterSpacing: 0.8,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   symptomsCard: {
-    borderRadius: 28,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E5E1DB',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 22,
-    paddingTop: 22,
-    paddingBottom: 20,
-    gap: 22,
+    borderColor: "#E5E1DB",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 24,
+    gap: 16,
   },
   statusText: {
-    color: '#687079',
+    color: "#687079",
     fontSize: 15,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "400",
   },
 });
 
 function asDetailsRecord(value: Json | null | undefined) {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
     return {};
   }
 
@@ -171,12 +172,12 @@ function asDetailsRecord(value: Json | null | undefined) {
 }
 
 function getNumber(value: Json | undefined) {
-  return typeof value === 'number' ? value : null;
+  return typeof value === "number" ? value : null;
 }
 
 function getStringArray(value: Json | undefined) {
   return Array.isArray(value)
-    ? value.filter((item): item is string => typeof item === 'string')
+    ? value.filter((item): item is string => typeof item === "string")
     : [];
 }
 
@@ -188,7 +189,7 @@ function buildWeekBuckets(events: EventModel[]) {
         return Math.floor((day - 1) / 7) === weekIndex;
       })
       .reduce((total, event) => {
-        if (event.type !== 'walk') {
+        if (event.type !== "walk") {
           return total;
         }
 
@@ -203,7 +204,7 @@ function buildWeightValues(
   events: EventModel[],
   fallbackWeight?: number | null,
 ) {
-  const weightEvents = events.filter((event) => event.type === 'weight');
+  const weightEvents = events.filter((event) => event.type === "weight");
 
   if (weightEvents.length === 0) {
     return Array.from({ length: 4 }, () => fallbackWeight ?? 0);
@@ -235,7 +236,7 @@ function getTopSymptoms(events: EventModel[]) {
   const counts = new Map<string, number>();
 
   events.forEach((event) => {
-    if (event.type !== 'symptom') {
+    if (event.type !== "symptom") {
       return;
     }
 
@@ -260,7 +261,7 @@ export default function MonthlyTrendsScreen() {
   const premiumAccess = hasPremiumAccess(barklogUser);
   const [monthOffset, setMonthOffset] = useState(0);
   const [events, setEvents] = useState<EventModel[]>([]);
-  const [monthLabel, setMonthLabel] = useState('This month');
+  const [monthLabel, setMonthLabel] = useState("This month");
   const [summary, setSummary] = useState<EventSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -285,7 +286,7 @@ export default function MonthlyTrendsScreen() {
         })
         .catch(() => {
           if (isMounted) {
-            setError('Unable to load monthly trends.');
+            setError("Unable to load monthly trends.");
           }
         });
 
@@ -314,7 +315,7 @@ export default function MonthlyTrendsScreen() {
         {!premiumAccess ? (
           <View style={styles.premiumCard}>
             <Text style={styles.premiumTitle}>
-              {getPremiumFeatureLabel('monthly-trends')}
+              {getPremiumFeatureLabel("monthly-trends")}
             </Text>
             <Text style={styles.premiumBody}>
               Monthly trends are a premium intelligence surface. Your basic
@@ -323,7 +324,7 @@ export default function MonthlyTrendsScreen() {
             <PrimaryButton
               label="Unlock with Premium"
               size="large"
-              onPress={() => openPremiumGate(router, 'monthly-trends')}
+              onPress={() => openPremiumGate(router, "monthly-trends")}
             />
           </View>
         ) : null}
@@ -341,8 +342,7 @@ export default function MonthlyTrendsScreen() {
             style={styles.monthSwitcher}
             onPress={() => setMonthOffset((current) => current - 1)}
           >
-            <Text style={styles.monthLabel}>{monthLabel.split(' ')[0]}</Text>
-            <Text style={styles.monthYear}>{monthLabel.split(' ')[1]}</Text>
+            <Text style={styles.monthLabel}>{monthLabel}</Text>
           </Pressable>
         </View>
 
@@ -350,7 +350,7 @@ export default function MonthlyTrendsScreen() {
 
         <InsightsLineChartCard
           title="Weight"
-          labels={['W1', 'W2', 'W3', 'W4']}
+          labels={["W1", "W2", "W3", "W4"]}
           values={weightValues}
           strokeColor="#0A0A0A"
           dotColor="#FAFAFA"
@@ -359,7 +359,7 @@ export default function MonthlyTrendsScreen() {
         <LedgerTrendCard
           title="Activity"
           data={walkBuckets.map((value, index) => ({
-            color: value > 0 ? '#FFE277' : '#FFF8DE',
+            color: value > 0 ? "#FFE277" : "#FFF8DE",
             label: `W${index + 1}`,
             value,
           }))}
@@ -387,7 +387,7 @@ export default function MonthlyTrendsScreen() {
             topSymptoms.map(([symptom, count]) => (
               <InsightsProgressRow
                 key={symptom}
-                label={symptom.replace(/[-_]/g, ' ')}
+                label={symptom.replace(/[-_]/g, " ")}
                 value={`${count} Logs`}
                 percent={Math.min(100, count * 20)}
                 accent="#A8342A"

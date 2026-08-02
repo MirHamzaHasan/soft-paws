@@ -13,31 +13,31 @@ import { PhotoJournalTile } from '../components/PhotoJournalTile';
 
 const styles = StyleSheet.create({
   stack: {
-    gap: 28,
+    gap: 24,
   },
   compareButton: {
-    minHeight: 48,
-    borderRadius: 24,
-    borderWidth: 1,
+    minHeight: 32,
+    borderRadius: 999,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#DDD8D2',
     backgroundColor: '#FFFCFA',
-    paddingHorizontal: 18,
+    paddingHorizontal: 12,
     alignItems: 'center',
     justifyContent: 'center',
   },
   compareText: {
     color: '#0A0A0A',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: '500',
     textTransform: 'uppercase',
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 42,
-    lineHeight: 48,
-    fontWeight: '400',
-    letterSpacing: -1.3,
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: '500',
+    letterSpacing: -0.5,
   },
   filters: {
     flexDirection: 'row',
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   emojiArt: {
-    fontSize: 78,
+    fontSize: 48,
   },
 });
 

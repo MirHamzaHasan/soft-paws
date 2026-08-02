@@ -1,77 +1,79 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'expo-router';
-import { useCallback, useMemo, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useFocusEffect } from "@react-navigation/native";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "expo-router";
+import { useCallback, useMemo, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-import { trainingProgramsQueryOptions } from '@/api/training';
-import { useBarklogFeedback } from '@/components/ui';
-import { captureBarklogError } from '@/features/observability';
-import { useLocalTrainingEnrollments } from '@/features/training/hooks/useLocalTrainingEnrollments';
-import { getActiveTrainingProgramPairs } from '@/features/training/utils/trainingPresentation';
-import HapticManager from '@/managers/HapticManager';
+import { trainingProgramsQueryOptions } from "@/api/training";
+import { useBarklogFeedback } from "@/components/ui";
+import { captureBarklogError } from "@/features/observability";
+import { useLocalTrainingEnrollments } from "@/features/training/hooks/useLocalTrainingEnrollments";
+import { getActiveTrainingProgramPairs } from "@/features/training/utils/trainingPresentation";
+import HapticManager from "@/managers/HapticManager";
 
-import { getSelectedDog, useAuthSessionStore } from '../../../stores';
-import { askBarkLogAi } from '../../insights/api/insightsAiClient';
+import { getSelectedDog, useAuthSessionStore } from "../../../stores";
+import { askBarkLogAi } from "../../insights/api/insightsAiClient";
 import {
   BARKLOG_AI_EMERGENCY_ESCALATION,
   containsEmergencyLanguage,
   getSafeAiErrorMessage,
-} from '../../insights/utils/aiSafety';
+} from "../../insights/utils/aiSafety";
 import {
   loadWeeklyDashboardSnapshot,
   type WeeklyDashboardSnapshot,
-} from '../../insights/utils/insightSummaries';
+} from "../../insights/utils/insightSummaries";
 import {
   getPremiumFeatureLabel,
   hasPremiumAccess,
-} from '../../premium/utils/premiumAccess';
-import { openPremiumGate } from '../../premium/utils/premiumNavigation';
-import { AssistantComposer } from '../components/AssistantComposer';
-import { AssistantContextPill } from '../components/AssistantContextPill';
+} from "../../premium/utils/premiumAccess";
+import { openPremiumGate } from "../../premium/utils/premiumNavigation";
+import { AssistantComposer } from "../components/AssistantComposer";
+import { AssistantContextPill } from "../components/AssistantContextPill";
 import {
   AssistantAlertIcon,
   AssistantDropletIcon,
   AssistantHistoryIcon,
   AssistantWeightIcon,
-} from '../components/AssistantIcons';
-import { AssistantLayout } from '../components/AssistantLayout';
-import { AssistantMessageBubble } from '../components/AssistantMessageBubble';
-import { AssistantSuggestionCard } from '../components/AssistantSuggestionCard';
+} from "../components/AssistantIcons";
+import { AssistantLayout } from "../components/AssistantLayout";
+import { AssistantMessageBubble } from "../components/AssistantMessageBubble";
+import { AssistantSuggestionCard } from "../components/AssistantSuggestionCard";
 
 const styles = StyleSheet.create({
   stack: {
-    gap: 28,
+    gap: 24,
   },
   introCard: {
-    borderRadius: 22,
+    maxWidth: "85%",
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E8E2DC',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 24,
-    paddingVertical: 28,
+    borderColor: "#E8E2DC",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
   introText: {
-    color: '#5B6269',
-    fontSize: 22,
-    lineHeight: 40,
-    fontWeight: '400',
+    color: "#5B6269",
+    fontSize: 14,
+    lineHeight: 21,
+    fontWeight: "400",
   },
   suggestions: {
-    gap: 14,
+    maxWidth: "85%",
+    gap: 8,
   },
   statusText: {
-    color: '#687079',
+    color: "#687079",
     fontSize: 15,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "400",
   },
 });
 
 type AssistantThreadMessage = {
   id: string;
   message: string;
-  tone: 'assistant' | 'user';
+  tone: "assistant" | "user";
 };
 
 export default function AskBarkLogAiScreen() {
@@ -86,7 +88,7 @@ export default function AskBarkLogAiScreen() {
   const [snapshot, setSnapshot] = useState<WeeklyDashboardSnapshot | null>(
     null,
   );
-  const [prompt, setPrompt] = useState('');
+  const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState<AssistantThreadMessage[]>([]);
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -111,7 +113,7 @@ export default function AskBarkLogAiScreen() {
         })
         .catch(() => {
           if (isMounted) {
-            setError('Unable to load BarkLog context.');
+            setError("Unable to load BarkLog context.");
           }
         });
 
@@ -134,14 +136,14 @@ export default function AskBarkLogAiScreen() {
   const trainingContextSummary = useMemo(() => {
     const activePrograms =
       activeTrainingProgramNames.length > 0
-        ? activeTrainingProgramNames.join(', ')
-        : 'No active training programs saved.';
+        ? activeTrainingProgramNames.join(", ")
+        : "No active training programs saved.";
 
     return [
       `Active training programs: ${activePrograms}`,
       snapshot?.trainingContextSummary ??
-        'Recent training: No training sessions recorded. Recent behavior patterns: No behavior logs recorded. Recent mood patterns: No mood check-ins recorded.',
-    ].join(' ');
+        "Recent training: No training sessions recorded. Recent behavior patterns: No behavior logs recorded. Recent mood patterns: No mood check-ins recorded.",
+    ].join(" ");
   }, [activeTrainingProgramNames, snapshot?.trainingContextSummary]);
 
   const sendQuestion = async (question: string) => {
@@ -154,49 +156,49 @@ export default function AskBarkLogAiScreen() {
     if (containsEmergencyLanguage(trimmedQuestion)) {
       const messageTimestamp = Date.now();
 
-      setPrompt('');
+      setPrompt("");
       setError(null);
       setMessages((current) => [
         ...current,
         {
           id: `user-${messageTimestamp}`,
           message: trimmedQuestion,
-          tone: 'user',
+          tone: "user",
         },
         {
           id: `assistant-${messageTimestamp}`,
           message: BARKLOG_AI_EMERGENCY_ESCALATION,
-          tone: 'assistant',
+          tone: "assistant",
         },
       ]);
       return;
     }
 
     if (!premiumAccess) {
-      openPremiumGate(router, 'ask-barklog-ai');
+      openPremiumGate(router, "ask-barklog-ai");
       return;
     }
 
     if (!selectedDog?.id || !snapshot) {
-      const message = 'BarkLog context is still loading.';
+      const message = "BarkLog context is still loading.";
 
       setError(message);
       await HapticManager.warning();
       feedback.showWarning({
-        title: 'Context loading',
+        title: "Context loading",
         description: message,
       });
       return;
     }
 
-    setPrompt('');
+    setPrompt("");
     setIsSending(true);
     setError(null);
 
     const userMessage = {
       id: `user-${Date.now()}`,
       message: trimmedQuestion,
-      tone: 'user' as const,
+      tone: "user" as const,
     };
     setMessages((current) => [...current, userMessage]);
 
@@ -217,7 +219,7 @@ export default function AskBarkLogAiScreen() {
         {
           id: `assistant-${Date.now()}`,
           message: response.content,
-          tone: 'assistant',
+          tone: "assistant",
         },
       ]);
     } catch (askError) {
@@ -225,14 +227,14 @@ export default function AskBarkLogAiScreen() {
 
       setError(message);
       captureBarklogError(askError, {
-        source: 'assistant.ask_barklog_ai',
+        source: "assistant.ask_barklog_ai",
         extra: {
           dog_id: selectedDog.id,
         },
       });
       await HapticManager.error();
       feedback.showError({
-        title: 'AI unavailable',
+        title: "AI unavailable",
         description: message,
       });
     } finally {
@@ -240,14 +242,14 @@ export default function AskBarkLogAiScreen() {
     }
   };
 
-  const dogName = snapshot?.context.dog.name ?? selectedDog?.name ?? 'your dog';
+  const dogName = snapshot?.context.dog.name ?? selectedDog?.name ?? "your dog";
   const introText = premiumAccess
     ? `Hello. I'm reviewing ${dogName}'s recent logs. I can organize patterns, but I can't diagnose.`
     : `${getPremiumFeatureLabel(
-        'ask-barklog-ai',
+        "ask-barklog-ai",
       )} is a premium assistant for non-diagnostic questions about your dog's logs.`;
-  const firstStarterQuestion = 'Summarize the last 7 days';
-  const secondStarterQuestion = 'What changed compared with last week?';
+  const firstStarterQuestion = "Summarize the last 7 days";
+  const secondStarterQuestion = "What changed compared with last week?";
 
   return (
     <AssistantLayout
@@ -258,7 +260,7 @@ export default function AskBarkLogAiScreen() {
           value={prompt}
           questionsRemaining={premiumAccess ? 20 : 0}
           onChangeText={setPrompt}
-          onUpgradePress={() => openPremiumGate(router, 'ask-barklog-ai')}
+          onUpgradePress={() => openPremiumGate(router, "ask-barklog-ai")}
           onSendPress={() => {
             sendQuestion(prompt).catch(() => undefined);
           }}
@@ -268,7 +270,7 @@ export default function AskBarkLogAiScreen() {
     >
       <View style={styles.stack}>
         <AssistantContextPill
-          label={`Using ${selectedDog?.name ?? 'Dog'}'s Data`}
+          label={`Using ${selectedDog?.name ?? "Dog"}'s Data`}
           icon={<AssistantHistoryIcon />}
         />
 

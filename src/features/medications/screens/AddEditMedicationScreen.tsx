@@ -50,21 +50,21 @@ const FREQUENCY_OPTIONS: { key: LocalMedicationFrequency; label: string }[] = [
 
 const styles = StyleSheet.create({
   stack: {
-    gap: 28,
+    gap: 24,
   },
   doubleRow: {
     flexDirection: 'row',
-    gap: 26,
+    gap: 24,
   },
   fieldHalf: {
     flex: 1,
   },
   sectionLabel: {
     color: '#5E6670',
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: 11,
+    lineHeight: 14,
     fontWeight: '500',
-    letterSpacing: 1.8,
+    letterSpacing: 0.8,
     textTransform: 'uppercase',
     marginBottom: 14,
   },
@@ -74,10 +74,10 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   frequencyCell: {
-    minWidth: 118,
+    flexShrink: 0,
   },
   scheduleBlock: {
-    gap: 16,
+    gap: 12,
   },
   timesRow: {
     flexDirection: 'row',
@@ -86,13 +86,13 @@ const styles = StyleSheet.create({
   },
   timesLabel: {
     color: '#4E5660',
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 12,
+    lineHeight: 18,
     fontWeight: '400',
   },
   dateRow: {
     flexDirection: 'row',
-    gap: 26,
+    gap: 24,
   },
   notesWrap: {
     marginTop: 2,
@@ -356,6 +356,7 @@ export default function AddEditMedicationScreen({
                   <View key={option.key} style={styles.frequencyCell}>
                     <OnboardingChoiceChip
                       label={option.label}
+                      size="compact"
                       selected={frequency === option.key}
                       backgroundColor="#F7F7F6"
                       borderColor="#DDD8D2"

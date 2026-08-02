@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BarkLog - Log Symptom</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#adb3b4",
+                        "surface-dim": "#d4dbdd",
+                        "primary-fixed": "#e5e2e1",
+                        "on-background": "#2d3435",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-secondary-container": "#505252",
+                        "secondary-container": "#e2e2e2",
+                        "inverse-surface": "#0c0f0f",
+                        "on-secondary-fixed": "#3e403f",
+                        "secondary": "#5e5f5f",
+                        "error-container": "#fe8983",
+                        "on-primary-fixed": "#403f3f",
+                        "primary-fixed-dim": "#d7d4d3",
+                        "error": "#9f403d",
+                        "primary-container": "#e5e2e1",
+                        "surface": "#f9f9f9",
+                        "on-surface-variant": "#5a6061",
+                        "on-surface": "#2d3435",
+                        "on-error-container": "#752121",
+                        "surface-container-low": "#f2f4f4",
+                        "on-secondary-fixed-variant": "#5a5c5b",
+                        "inverse-primary": "#ffffff",
+                        "surface-bright": "#f9f9f9",
+                        "tertiary-container": "#f5f3f2",
+                        "tertiary-dim": "#535352",
+                        "tertiary-fixed": "#f5f3f2",
+                        "primary": "#5f5e5e",
+                        "surface-tint": "#5f5e5e",
+                        "tertiary-fixed-dim": "#e7e5e4",
+                        "primary-dim": "#535252",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#494a49",
+                        "on-secondary": "#f9f9f8",
+                        "on-primary-fixed-variant": "#5c5b5b",
+                        "surface-container": "#ebeeef",
+                        "background": "#f9f9f9",
+                        "on-tertiary": "#fbf8f7",
+                        "on-primary-container": "#525151",
+                        "on-tertiary-fixed-variant": "#666665",
+                        "on-error": "#fff7f6",
+                        "surface-container-highest": "#dde4e5",
+                        "secondary-fixed-dim": "#d4d4d3",
+                        "on-primary": "#faf7f6",
+                        "inverse-on-surface": "#9c9d9d",
+                        "error-dim": "#4e0309",
+                        "surface-container-high": "#e4e9ea",
+                        "tertiary": "#5f5f5e",
+                        "on-tertiary-container": "#5c5c5b",
+                        "secondary-dim": "#525353",
+                        "outline": "#757c7d",
+                        "surface-variant": "#dde4e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-safe">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#FAFAFA]/80 backdrop-blur-xl border-b-[0.5px] border-[#E7E5E4]">
+<div class="flex items-center justify-between px-6 h-16 w-full max-w-screen-xl mx-auto">
+<button class="text-on-surface hover:opacity-70 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined font-medium text-base tracking-tight" data-icon="arrow_back">arrow_back</span>
+</button>
+<span class="font-inter font-medium text-lg text-on-surface uppercase tracking-widest">BarkLog</span>
+<div class="w-6 h-6"></div> <!-- Spacer for flex-between -->
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 px-6 pb-24 max-w-2xl mx-auto space-y-8">
+<!-- Header -->
+<section>
+<h1 class="text-[28px] font-medium leading-tight tracking-tight text-on-surface mb-2">Log Symptom</h1>
+<p class="text-[14px] font-normal text-on-surface-variant">Record unusual behaviors or physical issues.</p>
+</section>
+<!-- Category Chips -->
+<section class="space-y-4">
+<h2 class="text-[16px] font-medium text-on-surface">Category</h2>
+<div class="flex flex-wrap gap-3">
+<!-- Selected Chip -->
+<button class="px-4 py-2 bg-on-surface text-surface rounded-full text-[14px] font-medium transition-all">Digestive</button>
+<button class="px-4 py-2 bg-surface-container-lowest border border-[#E7E5E4] text-on-surface rounded-full text-[14px] font-medium hover:bg-surface-container transition-all">Mobility</button>
+<button class="px-4 py-2 bg-surface-container-lowest border border-[#E7E5E4] text-on-surface rounded-full text-[14px] font-medium hover:bg-surface-container transition-all">Skin</button>
+<button class="px-4 py-2 bg-surface-container-lowest border border-[#E7E5E4] text-on-surface rounded-full text-[14px] font-medium hover:bg-surface-container transition-all">Behavior</button>
+<button class="px-4 py-2 bg-surface-container-lowest border border-[#E7E5E4] text-on-surface rounded-full text-[14px] font-medium hover:bg-surface-container transition-all">Respiratory</button>
+<button class="px-4 py-2 bg-surface-container-lowest border border-[#E7E5E4] text-on-surface rounded-full text-[14px] font-medium hover:bg-surface-container transition-all">Eyes/Ears</button>
+<button class="px-4 py-2 bg-surface-container-lowest border border-[#E7E5E4] text-on-surface rounded-full text-[14px] font-medium hover:bg-surface-container transition-all">Other</button>
+</div>
+</section>
+<!-- Severity Slider -->
+<section class="space-y-4 bg-surface-container-lowest p-6 rounded-2xl border border-[#E7E5E4]">
+<div class="flex justify-between items-end">
+<h2 class="text-[16px] font-medium text-on-surface">Severity</h2>
+<span class="text-[11px] font-medium uppercase tracking-widest text-[#7A5500]">Moderate</span>
+</div>
+<div class="relative pt-6 pb-2">
+<!-- Track -->
+<div class="h-1 w-full bg-surface-container rounded-full overflow-hidden">
+<!-- Progress (Amber/Moderate) -->
+<div class="h-full bg-gradient-to-r from-[#FFECB3] to-[#FFC107] w-1/2"></div>
+</div>
+<!-- Thumb -->
+<div class="absolute top-4 left-1/2 -ml-3 w-6 h-6 bg-surface-container-lowest border-[0.5px] border-[#E7E5E4] rounded-full shadow-[0_2px_8px_rgba(10,10,10,0.12)] flex items-center justify-center">
+<div class="w-2 h-2 bg-[#FFC107] rounded-full"></div>
+</div>
+<!-- Labels -->
+<div class="flex justify-between text-[11px] font-medium uppercase text-on-surface-variant mt-4">
+<span>Mild</span>
+<span>Moderate</span>
+<span>Severe</span>
+</div>
+</div>
+</section>
+<!-- Body Map -->
+<section class="space-y-4">
+<h2 class="text-[16px] font-medium text-on-surface">Location</h2>
+<div class="bg-surface-container-lowest p-8 rounded-2xl border border-[#E7E5E4] flex justify-center items-center relative min-h-[240px]">
+<!-- Abstract Dog Silhouette Placeholder -->
+<div class="relative w-48 h-32 opacity-80">
+<img alt="Abstract minimalist line art silhouette of a standing dog on a clean off-white background" class="w-full h-full object-contain opacity-20 mix-blend-multiply rounded-lg grayscale" data-alt="Abstract minimalist line art silhouette of a standing dog on a clean off-white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGrglInpPzjcmlbAgzJTZBEyuJzk-uL6QIzZ22MnlrmrbXhVubdKKWO_8nX_nAyqIa0uU82BbCEh8WFC1IiOeieIRh6dH2adTDzF7lJUW4vDl-8tBi2dyVORLhYXo_ZiJmDGFnxGopEH1nWavuq_PuSpZb9cUvaqesTYpZMD40MS_gdDgwXPKsuS42DK_-daz5J8Squ28CAcbVzDfOhvzYj1YVsZu0jAz5n1eNvKZW8wFTCR5LkwQuWlKj3g3EJH-tQIkOi6chT5I"/>
+<!-- Interactive Zones (Abstracted as dots for this mockup) -->
+<button class="absolute top-4 left-4 w-6 h-6 rounded-full bg-surface border border-[#E7E5E4] hover:bg-surface-container flex justify-center items-center group transition-all">
+<span class="w-2 h-2 rounded-full bg-on-surface-variant group-hover:bg-on-surface transition-colors"></span>
+</button> <!-- Head -->
+<button class="absolute bottom-4 left-12 w-6 h-6 rounded-full bg-surface border border-[#E7E5E4] hover:bg-surface-container flex justify-center items-center group transition-all">
+<span class="w-2 h-2 rounded-full bg-on-surface-variant group-hover:bg-on-surface transition-colors"></span>
+</button> <!-- Front Legs -->
+<button class="absolute bottom-8 left-20 w-6 h-6 rounded-full bg-surface border border-[#E7E5E4] hover:bg-surface-container flex justify-center items-center group transition-all">
+<span class="w-2 h-2 rounded-full bg-on-surface-variant group-hover:bg-on-surface transition-colors"></span>
+</button> <!-- Belly -->
+<button class="absolute bottom-4 right-12 w-6 h-6 rounded-full bg-[#FDF4F3] border border-[#F9DEDC] flex justify-center items-center">
+<span class="w-2 h-2 rounded-full bg-[#8C1D18]"></span>
+</button> <!-- Back Legs (Selected - Error tone for symptom) -->
+</div>
+</div>
+</section>
+<!-- Media & Notes -->
+<section class="space-y-4">
+<h2 class="text-[16px] font-medium text-on-surface">Details</h2>
+<div class="space-y-4">
+<button class="w-full flex items-center justify-center gap-2 p-4 rounded-xl border border-dashed border-outline-variant text-on-surface-variant hover:bg-surface-container-lowest hover:text-on-surface transition-all">
+<span class="material-symbols-outlined" data-icon="add_a_photo">add_a_photo</span>
+<span class="text-[14px] font-medium">Add Photo or Video</span>
+</button>
+<textarea class="w-full min-h-[120px] p-4 bg-surface-container-lowest border-[0.5px] border-[#E7E5E4] rounded-xl text-[14px] text-on-surface placeholder:text-outline focus:outline-none focus:border-on-surface focus:ring-0 resize-none transition-colors" placeholder="Describe what you observed..."></textarea>
+</div>
+</section>
+<!-- Actions -->
+<section class="pt-6 space-y-6">
+<button class="w-full py-4 bg-on-surface text-surface rounded-[14px] text-[16px] font-medium hover:opacity-90 transition-opacity">
+                Save symptom
+            </button>
+<div class="flex justify-center">
+<button class="flex items-center gap-2 text-[#9f403d] hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined text-sm" data-icon="emergency">emergency</span>
+<span class="text-[14px] font-medium">Contact Emergency Vet</span>
+</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Suppressed for this transactional screen per 'The Source of Truth Hierarchy' & 'Shell Visibility & Relevance') -->
+</body></html>

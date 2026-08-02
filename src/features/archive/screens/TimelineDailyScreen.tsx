@@ -1,24 +1,17 @@
-import { type Href, useRouter } from 'expo-router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from "expo-router";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import {
-  deleteLocalEvent,
-  type EventModel,
-  listLocalEventsForDogDate,
-} from '@/db';
-import { SyncStatusPill } from '@/features/sync/components/SyncStatusPill';
-import { useSyncDisplayStatus } from '@/features/sync/hooks/useSyncDisplayStatus';
-import HapticManager from '@/managers/HapticManager';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { type EventModel, listLocalEventsForDogDate } from "@/db";
+import { getSelectedDog, useAuthSessionStore } from "@/stores";
 
-import { HomeBottomTabBar } from '../../home/components/HomeBottomTabBar';
-import { LogDetailLayout } from '../../logging/components/LogDetailLayout';
-import { TimelineEventRow } from '../components/TimelineEventRow';
+import { HomeBottomTabBar } from "../../home/components/HomeBottomTabBar";
+import { LogDetailLayout } from "../../logging/components/LogDetailLayout";
+import { TimelineEventRow } from "../components/TimelineEventRow";
 import {
   formatEventClock,
   getEventPresentation,
-} from '../utils/eventPresentation';
+} from "../utils/eventPresentation";
 
 type DatePill = {
   day: string;
@@ -31,110 +24,81 @@ const ONE_DAY = 24 * 60 * 60 * 1000;
 
 const styles = StyleSheet.create({
   stack: {
-    gap: 30,
+    gap: 24,
   },
   title: {
-    color: '#0A0A0A',
-    fontSize: 40,
-    lineHeight: 46,
-    fontWeight: '400',
-    letterSpacing: -1.2,
+    color: "#0A0A0A",
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: "500",
+    letterSpacing: -0.5,
   },
   dateStrip: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     gap: 8,
   },
   dateCell: {
-    alignItems: 'center',
-    gap: 8,
-    minWidth: 44,
+    alignItems: "center",
+    gap: 4,
+    minWidth: 48,
   },
   dateLabel: {
-    color: '#9C958E',
-    fontSize: 14,
-    lineHeight: 18,
-    fontWeight: '500',
+    color: "#9C958E",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
   },
   dateLabelActive: {
-    color: '#0A0A0A',
+    color: "#0A0A0A",
   },
   dateValue: {
-    color: '#7A817F',
-    fontSize: 20,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#7A817F",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
   },
   activeValueWrap: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#0A0A0A',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: "#0A0A0A",
+    alignItems: "center",
+    justifyContent: "center",
   },
   activeValue: {
-    color: '#FFFCFA',
-    fontSize: 22,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#FFFCFA",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "500",
   },
   eventList: {
-    gap: 2,
+    gap: 24,
   },
   emptyCard: {
     borderRadius: 18,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E1DDD8',
-    backgroundColor: '#FFFCFA',
+    borderColor: "#E1DDD8",
+    backgroundColor: "#FFFCFA",
     paddingHorizontal: 20,
     paddingVertical: 20,
     gap: 8,
   },
   emptyTitle: {
-    color: '#263136',
+    color: "#263136",
     fontSize: 20,
     lineHeight: 26,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   emptyBody: {
-    color: '#5F6670',
+    color: "#5F6670",
     fontSize: 16,
     lineHeight: 24,
-    fontWeight: '400',
+    fontWeight: "400",
   },
   emojiIcon: {
-    fontSize: 22,
-    lineHeight: 26,
-  },
-  summaryEntryCard: {
-    borderRadius: 20,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#D8CCFF',
-    backgroundColor: '#F7F4FF',
-    paddingHorizontal: 18,
-    paddingVertical: 18,
-    gap: 6,
-  },
-  summaryEntryEyebrow: {
-    color: '#5A34C3',
-    fontSize: 11,
-    lineHeight: 15,
-    fontWeight: '500',
-    letterSpacing: 1,
-    textTransform: 'uppercase',
-  },
-  summaryEntryTitle: {
-    color: '#3E2A9E',
     fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '500',
-  },
-  summaryEntryBody: {
-    color: '#5F6670',
-    fontSize: 14,
-    lineHeight: 21,
-    fontWeight: '400',
+    lineHeight: 22,
   },
 });
 
@@ -157,13 +121,13 @@ function buildDatePills(selectedDate: Date): DatePill[] {
     return {
       date,
       day: new Intl.DateTimeFormat(undefined, {
-        weekday: 'short',
+        weekday: "short",
       })
         .format(date)
         .toUpperCase(),
       key: getDateKey(date),
       value: new Intl.DateTimeFormat(undefined, {
-        day: 'numeric',
+        day: "numeric",
       }).format(date),
     };
   });
@@ -185,7 +149,6 @@ export default function TimelineDailyScreen() {
   const [events, setEvents] = useState<EventModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const syncStatus = useSyncDisplayStatus();
 
   const datePills = useMemo(() => buildDatePills(selectedDate), [selectedDate]);
   const selectedDateKey = getDateKey(selectedDate);
@@ -214,7 +177,7 @@ export default function TimelineDailyScreen() {
       setError(
         loadError instanceof Error
           ? loadError.message
-          : 'Unable to load timeline events.',
+          : "Unable to load timeline events.",
       );
       setEvents([]);
     } finally {
@@ -225,11 +188,6 @@ export default function TimelineDailyScreen() {
   useEffect(() => {
     loadEvents().catch(() => undefined);
   }, [loadEvents]);
-
-  const handleDelete = async (eventId: string) => {
-    await deleteLocalEvent(eventId);
-    setEvents((current) => current.filter((event) => event.id !== eventId));
-  };
 
   const renderTimelineBody = () => {
     if (!selectedDog?.id) {
@@ -291,16 +249,13 @@ export default function TimelineDailyScreen() {
               iconBorderColor={presentation.iconBorderColor}
               meta={
                 barklogUser?.id && event.userId !== barklogUser.id
-                  ? 'Logged by household member'
+                  ? "Logged by household member"
                   : undefined
               }
               showConnector={index < events.length - 1}
               time={formatEventClock(event.occurredAt)}
               title={presentation.title}
               titleColor={presentation.titleColor}
-              onDelete={() => {
-                handleDelete(event.id).catch(() => undefined);
-              }}
               onPress={() => router.push(`/event/${event.id}`)}
             />
           );
@@ -318,8 +273,8 @@ export default function TimelineDailyScreen() {
           activeTab="log"
           variant="journal"
           routes={{
-            archive: '/timeline',
-            gallery: '/photo-journal',
+            archive: "/timeline",
+            gallery: "/photo-journal",
           }}
         />
       }
@@ -327,31 +282,6 @@ export default function TimelineDailyScreen() {
     >
       <View style={styles.stack}>
         <Text style={styles.title}>Timeline</Text>
-
-        <SyncStatusPill
-          display={syncStatus.display}
-          loading={syncStatus.isLoading}
-          onPress={() => router.push('/sync-backup' as Href)}
-        />
-
-        <Pressable
-          accessibilityHint="Opens Premium care summaries from your saved Timeline logs."
-          accessibilityRole="button"
-          style={styles.summaryEntryCard}
-          onPress={() => {
-            HapticManager.light().catch(() => undefined);
-            router.push('/insights' as Href);
-          }}
-        >
-          <Text style={styles.summaryEntryEyebrow}>Premium summaries</Text>
-          <Text style={styles.summaryEntryTitle}>
-            Summarize this care record
-          </Text>
-          <Text style={styles.summaryEntryBody}>
-            Timeline stays free. Premium turns local logs into short health,
-            mood, behavior, nutrition, expense, and training summaries.
-          </Text>
-        </Pressable>
 
         <View style={styles.dateStrip}>
           {datePills.map((item) => {

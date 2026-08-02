@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from "react-native";
 
-import { PremiumCheckIcon } from './PremiumIcons';
+import { PremiumCheckIcon } from "./PremiumIcons";
 
 type PremiumFeatureRowProps = {
   label: string;
@@ -8,16 +8,16 @@ type PremiumFeatureRowProps = {
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 18,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 10,
   },
   label: {
     flex: 1,
-    color: '#1F2528',
-    fontSize: 18,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#1F2528",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
   },
 });
 

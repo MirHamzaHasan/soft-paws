@@ -1,21 +1,21 @@
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { OnboardingCirclePlate } from '../../onboarding/components/OnboardingCirclePlate';
-import { PremiumLockIcon } from '../components/PremiumIcons';
-import { PREMIUM_FEATURES } from '../data/premiumCatalog';
-import type { PremiumFeatureKey } from '../utils/premiumAccess';
+import { PrimaryButton } from "../../../components/ui/PrimaryButton";
+import { OnboardingCirclePlate } from "../../onboarding/components/OnboardingCirclePlate";
+import { PremiumLockIcon } from "../components/PremiumIcons";
+import { PREMIUM_FEATURES } from "../data/premiumCatalog";
+import type { PremiumFeatureKey } from "../utils/premiumAccess";
 
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: 'rgba(236, 236, 236, 0.92)',
+    backgroundColor: "rgba(236, 236, 236, 0.92)",
   },
   screen: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   backgroundStub: {
     ...StyleSheet.absoluteFillObject,
@@ -24,35 +24,35 @@ const styles = StyleSheet.create({
     gap: 34,
   },
   sheet: {
-    borderTopLeftRadius: 38,
-    borderTopRightRadius: 38,
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 28,
-    paddingTop: 28,
-    paddingBottom: 34,
-    gap: 24,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 28,
+    gap: 18,
   },
   title: {
-    color: '#0A0A0A',
-    fontSize: 52,
-    lineHeight: 58,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 32,
+    lineHeight: 38,
+    fontWeight: "400",
     letterSpacing: -1.6,
-    textAlign: 'center',
+    textAlign: "center",
   },
   body: {
-    color: '#5D656D',
-    fontSize: 18,
-    lineHeight: 32,
-    fontWeight: '400',
-    textAlign: 'center',
+    color: "#5D656D",
+    fontSize: 15,
+    lineHeight: 23,
+    fontWeight: "400",
+    textAlign: "center",
   },
   maybeLater: {
-    color: '#6E757D',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
-    textAlign: 'center',
+    color: "#6E757D",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
+    textAlign: "center",
   },
 });
 
@@ -62,7 +62,7 @@ export default function PremiumGateScreen() {
   const featureKey =
     params.feature && params.feature in PREMIUM_FEATURES
       ? (params.feature as PremiumFeatureKey)
-      : 'weekly-insights';
+      : "weekly-insights";
   const feature = PREMIUM_FEATURES[featureKey];
 
   return (
@@ -70,7 +70,7 @@ export default function PremiumGateScreen() {
       <Stack.Screen options={{ headerShown: false }} />
       <SafeAreaView
         style={styles.safeArea}
-        edges={['top', 'right', 'bottom', 'left']}
+        edges={["top", "right", "bottom", "left"]}
       >
         <View style={styles.screen}>
           <View style={styles.backgroundStub} pointerEvents="none">
@@ -78,28 +78,28 @@ export default function PremiumGateScreen() {
               style={{
                 height: 74,
                 borderRadius: 16,
-                backgroundColor: 'rgba(255,255,255,0.55)',
+                backgroundColor: "rgba(255,255,255,0.55)",
               }}
             />
             <View
               style={{
                 height: 220,
                 borderRadius: 26,
-                backgroundColor: 'rgba(255,255,255,0.48)',
+                backgroundColor: "rgba(255,255,255,0.48)",
               }}
             />
             <View
               style={{
                 height: 180,
                 borderRadius: 26,
-                backgroundColor: 'rgba(255,255,255,0.4)',
+                backgroundColor: "rgba(255,255,255,0.4)",
               }}
             />
           </View>
 
           <View style={styles.sheet}>
-            <OnboardingCirclePlate size={96}>
-              <PremiumLockIcon size={42} />
+            <OnboardingCirclePlate size={72}>
+              <PremiumLockIcon size={32} />
             </OnboardingCirclePlate>
             <Text style={styles.title}>{feature.label}</Text>
             <Text style={styles.body}>{feature.shortValue}</Text>
@@ -109,7 +109,7 @@ export default function PremiumGateScreen() {
               size="large"
               onPress={() =>
                 router.push({
-                  pathname: '/paywall',
+                  pathname: "/paywall",
                   params: { feature: feature.feature },
                 })
               }

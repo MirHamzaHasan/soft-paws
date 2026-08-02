@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from "react-native";
 
 type InsightsProgressRowProps = {
   label: string;
@@ -9,34 +9,35 @@ type InsightsProgressRowProps = {
 
 const styles = StyleSheet.create({
   row: {
-    gap: 12,
+    gap: 6,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "space-between",
     gap: 12,
   },
   label: {
-    color: '#2E363D',
-    fontSize: 17,
-    lineHeight: 22,
-    fontWeight: '400',
+    color: "#2E363D",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
+    textTransform: "uppercase",
   },
   value: {
-    color: '#5F6670',
-    fontSize: 15,
-    lineHeight: 20,
-    fontWeight: '500',
+    color: "#5F6670",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
   },
   rail: {
-    height: 10,
+    height: 6,
     borderRadius: 999,
-    backgroundColor: '#EFEAE5',
-    overflow: 'hidden',
+    backgroundColor: "#EFEAE5",
+    overflow: "hidden",
   },
   fill: {
-    height: '100%',
+    height: "100%",
     borderRadius: 999,
   },
 });

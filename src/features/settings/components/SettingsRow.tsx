@@ -15,11 +15,11 @@ type SettingsRowProps = {
 
 const styles = StyleSheet.create({
   row: {
-    minHeight: 108,
-    paddingHorizontal: 24,
+    minHeight: 64,
+    paddingHorizontal: 12,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 18,
+    gap: 12,
   },
   divider: {
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -32,20 +32,20 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#1F2528',
-    fontSize: 22,
-    lineHeight: 28,
-    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
   },
   subtitle: {
     color: '#7A828A',
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: 11,
+    lineHeight: 14,
     fontWeight: '400',
   },
   value: {
     color: '#7A828A',
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: 11,
+    lineHeight: 14,
     fontWeight: '400',
   },
 });

@@ -13,4 +13,4 @@ export const AUTH_COLORS = {
   buttonText: '#FAFAFA',
 } as const;
 
-export const MAX_AUTH_WIDTH = 420;
+export const MAX_AUTH_WIDTH = 448;

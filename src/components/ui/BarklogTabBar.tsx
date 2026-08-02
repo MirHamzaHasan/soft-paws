@@ -1,7 +1,5 @@
-import { type ReactNode } from 'react';
-import { Button, Paragraph, XStack, YStack } from 'tamagui';
-
-import { barklogTypography } from '@/theme/tokens';
+import { type ReactNode } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export type BarklogTabBarItem = {
   key: string;
@@ -13,59 +11,78 @@ export type BarklogTabBarItem = {
 
 type BarklogTabBarProps = {
   items: BarklogTabBarItem[];
-  variant?: 'main' | 'compact';
+  variant?: "main" | "compact";
 };
 
-export function BarklogTabBar({ items, variant = 'main' }: BarklogTabBarProps) {
-  const compact = variant === 'compact';
+const styles = StyleSheet.create({
+  chrome: {
+    backgroundColor: "#FAFAFA",
+    borderTopColor: "#E7E5E4",
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  row: {
+    width: "100%",
+    maxWidth: 390,
+    alignSelf: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 12,
+    paddingTop: 8,
+    paddingBottom: 6,
+  },
+  item: {
+    flex: 1,
+    minHeight: 48,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
+    backgroundColor: "transparent",
+  },
+  label: {
+    fontFamily: "Inter_400Regular",
+    fontSize: 9,
+    lineHeight: 12,
+    fontWeight: "400",
+  },
+  labelCompact: {
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
+  },
+});
+
+export function BarklogTabBar({ items, variant = "main" }: BarklogTabBarProps) {
+  const compact = variant === "compact";
 
   return (
-    <YStack bg="$background" bc="$borderColor" borderTopWidth={1}>
-      <XStack
-        w="100%"
-        maxWidth={760}
-        alignSelf="center"
-        px="$sm"
-        pt="$sm"
-        pb="$xs"
-        justifyContent="space-between"
-      >
+    <View style={styles.chrome}>
+      <View style={styles.row}>
         {items.map((item) => {
-          const color = item.active ? '$tabActive' : '$tabText';
+          const color = item.active ? "#0A0A0A" : "#A8A29E";
 
           return (
-            <Button
+            <Pressable
               key={item.key}
-              unstyled
-              flex={1}
-              minHeight={60}
-              ai="center"
-              jc="center"
-              gap="$xs"
-              br="$xl"
-              pressStyle={{ opacity: 0.92 }}
+              accessibilityRole="button"
+              style={({ pressed }) => [
+                styles.item,
+                pressed ? { opacity: 0.7 } : null,
+              ]}
               onPress={item.onPress}
             >
               {item.icon}
-              <Paragraph
-                color={color}
-                fontFamily="$body"
-                fontSize={
-                  compact
-                    ? barklogTypography.caption
-                    : barklogTypography.caption + 1
-                }
-                lineHeight={compact ? 16 : 18}
-                fontWeight="400"
-                letterSpacing={compact ? 0.8 : 0.2}
-                textTransform={compact ? 'uppercase' : 'none'}
+              <Text
+                style={[
+                  styles.label,
+                  { color, letterSpacing: compact ? 0.8 : 0.2 },
+                  compact ? styles.labelCompact : null,
+                ]}
               >
                 {item.label}
-              </Paragraph>
-            </Button>
+              </Text>
+            </Pressable>
           );
         })}
-      </XStack>
-    </YStack>
+      </View>
+    </View>
   );
 }

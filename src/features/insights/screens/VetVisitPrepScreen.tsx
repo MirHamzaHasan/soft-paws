@@ -1,192 +1,192 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { useRouter } from 'expo-router';
-import { useCallback, useState } from 'react';
-import { Pressable, Share, StyleSheet, Text, View } from 'react-native';
+import { useFocusEffect } from "@react-navigation/native";
+import { useRouter } from "expo-router";
+import { useCallback, useState } from "react";
+import { Pressable, Share, StyleSheet, Text, View } from "react-native";
 
-import { useBarklogFeedback } from '@/components/ui';
+import { useBarklogFeedback } from "@/components/ui";
 import {
   type EventModel,
   listActiveMedicationsForDog,
   listLocalEventsForDogRange,
   type MedicationModel,
-} from '@/db';
+} from "@/db";
 import {
   formatDogMeta,
   formatDogWeight,
   getDogAvatar,
-} from '@/features/dogs/utils/dogDisplay';
+} from "@/features/dogs/utils/dogDisplay";
 import {
   buildVetReportHtml,
   summarizeEventCounts,
-} from '@/features/export/utils/exportBuilders';
-import { generateVetReport } from '@/features/insights/api/insightsAiClient';
-import { captureBarklogError } from '@/features/observability';
-import { hasPremiumAccess } from '@/features/premium/utils/premiumAccess';
-import { openPremiumGate } from '@/features/premium/utils/premiumNavigation';
+} from "@/features/export/utils/exportBuilders";
+import { generateVetReport } from "@/features/insights/api/insightsAiClient";
+import { captureBarklogError } from "@/features/observability";
+import { hasPremiumAccess } from "@/features/premium/utils/premiumAccess";
+import { openPremiumGate } from "@/features/premium/utils/premiumNavigation";
 import {
   type CreatedVetShareLink,
   createVetShareLink,
   revokeVetShareLink,
-} from '@/features/vet/api/vetShareLinkClient';
+} from "@/features/vet/api/vetShareLinkClient";
 import {
   buildLocalVetQuestions,
   buildVetReportAiContext,
   buildVetShareReportSnapshot,
   type GeneratedVetReport,
-} from '@/features/vet/utils/vetReportBuilder';
-import HapticManager from '@/managers/HapticManager';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
-import { getBarklogErrorMessage } from '@/utils/barklogErrorMessages';
+} from "@/features/vet/utils/vetReportBuilder";
+import HapticManager from "@/managers/HapticManager";
+import { getSelectedDog, useAuthSessionStore } from "@/stores";
+import { getBarklogErrorMessage } from "@/utils/barklogErrorMessages";
 
-import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { ArchiveFilterPill } from '../../archive/components/ArchiveFilterPill';
-import { AssistantAlertIcon } from '../../assistant/components/AssistantIcons';
-import { AssistantLayout } from '../../assistant/components/AssistantLayout';
+import { PrimaryButton } from "../../../components/ui/PrimaryButton";
+import { ArchiveFilterPill } from "../../archive/components/ArchiveFilterPill";
+import { AssistantAlertIcon } from "../../assistant/components/AssistantIcons";
+import { AssistantLayout } from "../../assistant/components/AssistantLayout";
 import {
   printHtmlDocument,
   sharePdfDocument,
-} from '../../export/services/exportDocumentService';
-import { HomeAvatar } from '../../home/components/HomeAvatar';
-import { ClockIcon } from '../../home/components/HomeIcons';
-import { MedicationCalendarIcon } from '../../medications/components/MedicationIcons';
+} from "../../export/services/exportDocumentService";
+import { HomeAvatar } from "../../home/components/HomeAvatar";
+import { ClockIcon } from "../../home/components/HomeIcons";
+import { MedicationCalendarIcon } from "../../medications/components/MedicationIcons";
 import {
   ExportIcon,
   MealsIcon,
   PoopsIcon,
   WalksIcon,
-} from '../components/InsightsIcons';
-import { InsightsProgressRow } from '../components/InsightsProgressRow';
-import { VetPrepChecklistItem } from '../components/VetPrepChecklistItem';
-import { VetPrepMetricCard } from '../components/VetPrepMetricCard';
+} from "../components/InsightsIcons";
+import { InsightsProgressRow } from "../components/InsightsProgressRow";
+import { VetPrepChecklistItem } from "../components/VetPrepChecklistItem";
+import { VetPrepMetricCard } from "../components/VetPrepMetricCard";
 
 const styles = StyleSheet.create({
   stack: {
-    gap: 28,
+    gap: 48,
   },
   rangeRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 10,
   },
   title: {
-    color: '#0A0A0A',
-    fontSize: 62,
-    lineHeight: 68,
-    fontWeight: '300',
-    letterSpacing: -2.1,
+    color: "#0A0A0A",
+    fontSize: 56,
+    lineHeight: 56,
+    fontWeight: "400",
+    letterSpacing: -1.1,
   },
   generatedRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
   },
   generatedText: {
-    color: '#5D656D',
-    fontSize: 15,
-    lineHeight: 22,
-    fontWeight: '400',
+    color: "#5D656D",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
   },
   patientCard: {
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E2DDD8',
-    paddingVertical: 22,
-    gap: 18,
+    borderColor: "#E2DDD8",
+    paddingVertical: 32,
+    gap: 24,
   },
   patientTop: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 14,
-    alignItems: 'center',
+    alignItems: "center",
   },
   patientMeta: {
-    color: '#1F2528',
-    fontSize: 20,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#1F2528",
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "500",
   },
   patientSub: {
-    color: '#5D656D',
-    fontSize: 15,
-    lineHeight: 24,
-    fontWeight: '500',
-    textTransform: 'uppercase',
+    color: "#5D656D",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
+    textTransform: "uppercase",
     letterSpacing: 1,
   },
   patientGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 20,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 24,
   },
   patientColumn: {
-    flexBasis: '46%',
+    flexBasis: "46%",
     flexGrow: 1,
     gap: 4,
   },
   label: {
-    color: '#7D756D',
-    fontSize: 13,
-    lineHeight: 18,
-    fontWeight: '500',
+    color: "#7D756D",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
     letterSpacing: 1.2,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   value: {
-    color: '#1F2528',
-    fontSize: 18,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#1F2528",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
   },
   valueNegative: {
-    color: '#B03A32',
+    color: "#B03A32",
   },
   sectionTitle: {
-    color: '#0A0A0A',
-    fontSize: 22,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "500",
   },
   metricGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     gap: 14,
   },
   metricCell: {
-    flexBasis: '47%',
+    flexBasis: "47%",
     flexGrow: 1,
   },
   adherenceCard: {
-    borderRadius: 22,
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E0DBD5',
-    backgroundColor: '#F7F9F8',
-    paddingHorizontal: 18,
-    paddingTop: 18,
-    paddingBottom: 16,
-    gap: 14,
+    borderColor: "#E0DBD5",
+    backgroundColor: "#F7F9F8",
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 24,
+    gap: 16,
   },
   adherenceHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     gap: 14,
   },
   adherenceValue: {
-    color: '#1F2528',
-    fontSize: 38,
-    lineHeight: 42,
-    fontWeight: '400',
+    color: "#1F2528",
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: "400",
   },
   timeline: {
-    gap: 18,
+    gap: 32,
   },
   symptomRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 12,
   },
   symptomDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#0A0A0A',
+    backgroundColor: "#0A0A0A",
     marginTop: 10,
   },
   symptomCopy: {
@@ -194,127 +194,127 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   symptomDate: {
-    color: '#7D756D',
-    fontSize: 12,
-    lineHeight: 18,
-    fontWeight: '500',
+    color: "#7D756D",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
     letterSpacing: 1.1,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   symptomTitle: {
-    color: '#1F2528',
-    fontSize: 18,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#1F2528",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "500",
   },
   symptomBody: {
-    color: '#5D656D',
-    fontSize: 16,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#5D656D",
+    fontSize: 14,
+    lineHeight: 21,
+    fontWeight: "400",
   },
   questionsCard: {
-    borderRadius: 22,
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E0DBD5',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 18,
-    paddingVertical: 18,
-    gap: 18,
+    borderColor: "#E0DBD5",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 24,
+    paddingVertical: 24,
+    gap: 20,
   },
   premiumCard: {
-    borderRadius: 22,
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E2DCEF',
-    backgroundColor: '#F3F0FB',
-    paddingHorizontal: 18,
-    paddingVertical: 18,
-    gap: 14,
+    borderColor: "#E2DCEF",
+    backgroundColor: "#F3F0FB",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    gap: 12,
   },
   premiumHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     gap: 14,
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
   },
   premiumBadge: {
     borderRadius: 999,
-    backgroundColor: '#534AB7',
+    backgroundColor: "#534AB7",
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
   premiumBadgeText: {
-    color: '#FAFAFA',
+    color: "#FAFAFA",
     fontSize: 11,
     lineHeight: 14,
-    fontWeight: '500',
+    fontWeight: "500",
     letterSpacing: 0.8,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   premiumTitle: {
-    color: '#362B68',
-    fontSize: 20,
-    lineHeight: 26,
-    fontWeight: '500',
+    color: "#362B68",
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "500",
   },
   premiumBody: {
-    color: '#4A3580',
-    fontSize: 15,
-    lineHeight: 23,
-    fontWeight: '400',
+    color: "#4A3580",
+    fontSize: 14,
+    lineHeight: 21,
+    fontWeight: "400",
   },
   premiumActions: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     gap: 10,
   },
   secondaryButton: {
     minHeight: 44,
     borderRadius: 14,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#D6CBEF',
+    borderColor: "#D6CBEF",
     paddingHorizontal: 14,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   secondaryButtonText: {
-    color: '#362B68',
+    color: "#362B68",
     fontSize: 14,
     lineHeight: 18,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   questionText: {
-    color: '#1F2528',
-    fontSize: 15,
-    lineHeight: 22,
-    fontWeight: '400',
+    color: "#1F2528",
+    fontSize: 14,
+    lineHeight: 21,
+    fontWeight: "400",
   },
   footerDivider: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#E0DBD5',
+    backgroundColor: "#E0DBD5",
   },
   footerActions: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     gap: 24,
   },
   footerActionText: {
-    color: '#1F2528',
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '400',
+    color: "#1F2528",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "500",
   },
   statusText: {
-    color: '#687079',
+    color: "#687079",
     fontSize: 15,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "400",
   },
 });
 
 const REPORT_RANGES = [
-  { days: 7, label: '7 Days' },
-  { days: 30, label: '30 Days' },
-  { days: 90, label: '90 Days' },
+  { days: 7, label: "7 Days" },
+  { days: 30, label: "30 Days" },
+  { days: 90, label: "90 Days" },
 ] as const;
 
 function getRangeStart(days: number) {
@@ -330,16 +330,16 @@ function formatGeneratedRange(days: number) {
   const end = new Date();
 
   return `${new Intl.DateTimeFormat(undefined, {
-    day: 'numeric',
-    month: 'short',
+    day: "numeric",
+    month: "short",
   }).format(start)} - ${new Intl.DateTimeFormat(undefined, {
-    day: 'numeric',
-    month: 'short',
+    day: "numeric",
+    month: "short",
   }).format(end)}`;
 }
 
 function getEventDetails(event: EventModel) {
-  if (!event.details || typeof event.details !== 'object') {
+  if (!event.details || typeof event.details !== "object") {
     return {};
   }
 
@@ -351,11 +351,11 @@ function getSymptomTitle(event: EventModel) {
 
   if (Array.isArray(details.symptoms) && details.symptoms.length > 0) {
     return details.symptoms
-      .filter((item) => typeof item === 'string')
-      .join(', ');
+      .filter((item) => typeof item === "string")
+      .join(", ");
   }
 
-  return 'Symptom logged';
+  return "Symptom logged";
 }
 
 function getAverage(count: number, days: number) {
@@ -416,12 +416,12 @@ export default function VetVisitPrepScreen() {
         .catch((loadError) => {
           if (isMounted) {
             captureBarklogError(loadError, {
-              source: 'vet_report.local_context_load',
+              source: "vet_report.local_context_load",
               extra: {
                 dog_id: selectedDog.id,
               },
             });
-            setError('Unable to build the vet report from local records.');
+            setError("Unable to build the vet report from local records.");
           }
         });
 
@@ -431,10 +431,10 @@ export default function VetVisitPrepScreen() {
     }, [rangeDays, selectedDog?.id]),
   );
 
-  const dogName = selectedDog?.name ?? 'Your dog';
+  const dogName = selectedDog?.name ?? "Your dog";
   const avatar = selectedDog
     ? getDogAvatar(selectedDog)
-    : { backgroundColor: '#D7DDE1', emoji: '🐶' };
+    : { backgroundColor: "#D7DDE1", emoji: "🐶" };
   const counts = summarizeEventCounts(events);
   const rangeStart = getRangeStart(rangeDays);
   const rangeEnd = new Date();
@@ -470,25 +470,25 @@ export default function VetVisitPrepScreen() {
         rangeLabel,
         shareUrl: shareLink?.url ?? null,
       })
-    : '';
-  const symptomEvents = events.filter((event) => event.type === 'symptom');
+    : "";
+  const symptomEvents = events.filter((event) => event.type === "symptom");
   const userHasPremium = hasPremiumAccess(barklogUser);
-  let premiumSummaryButtonLabel = 'Unlock premium report';
+  let premiumSummaryButtonLabel = "Unlock premium report";
 
   if (isGeneratingPremiumReport) {
-    premiumSummaryButtonLabel = 'Generating...';
+    premiumSummaryButtonLabel = "Generating...";
   } else if (userHasPremium) {
-    premiumSummaryButtonLabel = 'Generate premium summary';
+    premiumSummaryButtonLabel = "Generate premium summary";
   }
 
   const handleSharePdf = async () => {
     if (!selectedDog) {
-      const message = 'Add a dog before generating a report.';
+      const message = "Add a dog before generating a report.";
 
       setError(message);
       await HapticManager.warning();
       feedback.showWarning({
-        title: 'Dog needed',
+        title: "Dog needed",
         description: message,
       });
       return;
@@ -507,18 +507,18 @@ export default function VetVisitPrepScreen() {
       setStatusMessage(message);
       await HapticManager.success();
       feedback.showSuccess({
-        title: 'Report ready',
+        title: "Report ready",
         description: message,
       });
     } catch (shareError) {
       const message = getBarklogErrorMessage(shareError, {
-        domain: 'export',
+        domain: "export",
       });
 
       setError(message);
       await HapticManager.error();
       feedback.showError({
-        title: 'Report not exported',
+        title: "Report not exported",
         description: message,
       });
     }
@@ -526,12 +526,12 @@ export default function VetVisitPrepScreen() {
 
   const handlePrint = async () => {
     if (!selectedDog) {
-      const message = 'Add a dog before printing a report.';
+      const message = "Add a dog before printing a report.";
 
       setError(message);
       await HapticManager.warning();
       feedback.showWarning({
-        title: 'Dog needed',
+        title: "Dog needed",
         description: message,
       });
       return;
@@ -550,19 +550,19 @@ export default function VetVisitPrepScreen() {
       setStatusMessage(message);
       await HapticManager.success();
       feedback.showSuccess({
-        title: 'Print ready',
+        title: "Print ready",
         description: message,
       });
     } catch (printError) {
       const message = getBarklogErrorMessage(printError, {
-        domain: 'export',
-        fallback: 'Unable to open the print dialog right now.',
+        domain: "export",
+        fallback: "Unable to open the print dialog right now.",
       });
 
       setError(message);
       await HapticManager.error();
       feedback.showError({
-        title: 'Print not opened',
+        title: "Print not opened",
         description: message,
       });
     }
@@ -570,17 +570,17 @@ export default function VetVisitPrepScreen() {
 
   const handleGeneratePremiumReport = async () => {
     if (!userHasPremium) {
-      openPremiumGate(router, 'vet-pdf-reports');
+      openPremiumGate(router, "vet-pdf-reports");
       return;
     }
 
     if (!selectedDog || !reportContext) {
-      const message = 'Add a dog before generating a premium vet report.';
+      const message = "Add a dog before generating a premium vet report.";
 
       setError(message);
       await HapticManager.warning();
       feedback.showWarning({
-        title: 'Dog needed',
+        title: "Dog needed",
         description: message,
       });
       return;
@@ -599,27 +599,27 @@ export default function VetVisitPrepScreen() {
       });
 
       setGeneratedVetReport(response.report);
-      setStatusMessage('Premium vet report summary is ready.');
+      setStatusMessage("Premium vet report summary is ready.");
       await HapticManager.success();
       feedback.showSuccess({
-        title: 'Premium report ready',
-        description: 'Premium vet report summary is ready.',
+        title: "Premium report ready",
+        description: "Premium vet report summary is ready.",
       });
     } catch (reportError) {
       const message = getBarklogErrorMessage(reportError, {
-        domain: 'ai',
+        domain: "ai",
       });
 
       setError(message);
       captureBarklogError(reportError, {
-        source: 'vet_report.generate_premium',
+        source: "vet_report.generate_premium",
         extra: {
           dog_id: selectedDog.id,
         },
       });
       await HapticManager.error();
       feedback.showError({
-        title: 'Premium report unavailable',
+        title: "Premium report unavailable",
         description: message,
       });
     } finally {
@@ -629,17 +629,17 @@ export default function VetVisitPrepScreen() {
 
   const handleCreateShareLink = async () => {
     if (!userHasPremium) {
-      openPremiumGate(router, 'vet-pdf-reports');
+      openPremiumGate(router, "vet-pdf-reports");
       return;
     }
 
     if (!selectedDog || !barklogUser || !reportContext) {
-      const message = 'Sign in and select a dog before creating a share link.';
+      const message = "Sign in and select a dog before creating a share link.";
 
       setError(message);
       await HapticManager.warning();
       feedback.showWarning({
-        title: 'Account needed',
+        title: "Account needed",
         description: message,
       });
       return;
@@ -647,12 +647,12 @@ export default function VetVisitPrepScreen() {
 
     if (!generatedVetReport) {
       const message =
-        'Generate the premium vet report before creating a share link.';
+        "Generate the premium vet report before creating a share link.";
 
       setError(message);
       await HapticManager.warning();
       feedback.showWarning({
-        title: 'Report needed',
+        title: "Report needed",
         description: message,
       });
       return;
@@ -687,24 +687,24 @@ export default function VetVisitPrepScreen() {
       });
       await HapticManager.success();
       feedback.showSuccess({
-        title: 'Share link ready',
-        description: 'Secure vet share link created.',
+        title: "Share link ready",
+        description: "Secure vet share link created.",
       });
     } catch (shareError) {
       const message = getBarklogErrorMessage(shareError, {
-        domain: 'share',
+        domain: "share",
       });
 
       setError(message);
       captureBarklogError(shareError, {
-        source: 'vet_report.create_share_link',
+        source: "vet_report.create_share_link",
         extra: {
           dog_id: selectedDog.id,
         },
       });
       await HapticManager.error();
       feedback.showError({
-        title: 'Share link not created',
+        title: "Share link not created",
         description: message,
       });
     } finally {
@@ -723,27 +723,27 @@ export default function VetVisitPrepScreen() {
     try {
       await revokeVetShareLink(shareLink.id);
       setShareLink(null);
-      setStatusMessage('Secure vet share link revoked.');
+      setStatusMessage("Secure vet share link revoked.");
       await HapticManager.success();
       feedback.showSuccess({
-        title: 'Share link revoked',
-        description: 'Secure vet share link revoked.',
+        title: "Share link revoked",
+        description: "Secure vet share link revoked.",
       });
     } catch (shareError) {
       const message = getBarklogErrorMessage(shareError, {
-        domain: 'share',
+        domain: "share",
       });
 
       setError(message);
       captureBarklogError(shareError, {
-        source: 'vet_report.revoke_share_link',
+        source: "vet_report.revoke_share_link",
         extra: {
           link_id: shareLink.id,
         },
       });
       await HapticManager.error();
       feedback.showError({
-        title: 'Share link not revoked',
+        title: "Share link not revoked",
         description: message,
       });
     }
@@ -849,7 +849,7 @@ export default function VetVisitPrepScreen() {
                   <View>
                     <Text style={styles.value}>{medication.name}</Text>
                     <Text style={styles.generatedText}>
-                      {(medication.frequency ?? 'as_needed').replace(/_/g, ' ')}
+                      {(medication.frequency ?? "as_needed").replace(/_/g, " ")}
                     </Text>
                   </View>
                   <Text style={styles.adherenceValue}>{counts.medication}</Text>
@@ -878,15 +878,15 @@ export default function VetVisitPrepScreen() {
                 <View style={styles.symptomCopy}>
                   <Text style={styles.symptomDate}>
                     {new Intl.DateTimeFormat(undefined, {
-                      day: '2-digit',
-                      month: 'short',
+                      day: "2-digit",
+                      month: "short",
                     }).format(event.occurredAt)}
                   </Text>
                   <Text style={styles.symptomTitle}>
                     {getSymptomTitle(event)}
                   </Text>
                   <Text style={styles.symptomBody}>
-                    {event.notes || 'No caregiver note recorded.'}
+                    {event.notes || "No caregiver note recorded."}
                   </Text>
                 </View>
               </View>
@@ -906,7 +906,7 @@ export default function VetVisitPrepScreen() {
             </View>
             <View style={styles.premiumBadge}>
               <Text style={styles.premiumBadgeText}>
-                {userHasPremium ? 'Unlocked' : 'Premium'}
+                {userHasPremium ? "Unlocked" : "Premium"}
               </Text>
             </View>
           </View>
@@ -925,7 +925,7 @@ export default function VetVisitPrepScreen() {
           ) : null}
           {shareLink ? (
             <Text style={styles.premiumBody}>
-              Share link expires{' '}
+              Share link expires{" "}
               {new Date(shareLink.expiresAt).toLocaleDateString()}.
             </Text>
           ) : null}
@@ -951,7 +951,7 @@ export default function VetVisitPrepScreen() {
               }}
             >
               <Text style={styles.secondaryButtonText}>
-                {isCreatingShareLink ? 'Creating...' : 'Create share link'}
+                {isCreatingShareLink ? "Creating..." : "Create share link"}
               </Text>
             </Pressable>
             {shareLink ? (
@@ -1010,7 +1010,7 @@ export default function VetVisitPrepScreen() {
           <Text style={styles.statusText}>{statusMessage}</Text>
         ) : null}
         {error ? (
-          <Text style={[styles.statusText, { color: '#B02921' }]}>{error}</Text>
+          <Text style={[styles.statusText, { color: "#B02921" }]}>{error}</Text>
         ) : null}
       </View>
     </AssistantLayout>

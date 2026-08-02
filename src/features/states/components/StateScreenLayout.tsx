@@ -1,6 +1,6 @@
-import { type ReactNode } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { type ReactNode } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type StateScreenLayoutProps = {
   illustration: ReactNode;
@@ -12,46 +12,46 @@ type StateScreenLayoutProps = {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FAFAFA',
+    backgroundColor: "#FAFAFA",
   },
   screen: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#FAFAFA',
+    alignItems: "center",
+    backgroundColor: "#FAFAFA",
   },
   shell: {
     flex: 1,
-    width: '100%',
-    maxWidth: 760,
-    paddingHorizontal: 28,
-    paddingTop: 74,
-    paddingBottom: 40,
-    justifyContent: 'space-between',
+    width: "100%",
+    maxWidth: 448,
+    paddingHorizontal: 24,
+    paddingTop: 44,
+    paddingBottom: 28,
+    justifyContent: "space-between",
   },
   hero: {
-    alignItems: 'center',
-    gap: 28,
-    paddingTop: 42,
+    alignItems: "center",
+    gap: 20,
+    paddingTop: 28,
   },
   copy: {
     maxWidth: 430,
-    alignItems: 'center',
+    alignItems: "center",
     gap: 18,
   },
   title: {
-    color: '#273136',
-    fontSize: 38,
-    lineHeight: 46,
-    fontWeight: '400',
+    color: "#273136",
+    fontSize: 30,
+    lineHeight: 36,
+    fontWeight: "400",
     letterSpacing: -1.2,
-    textAlign: 'center',
+    textAlign: "center",
   },
   message: {
-    color: '#5D666E',
-    fontSize: 18,
-    lineHeight: 30,
-    fontWeight: '400',
-    textAlign: 'center',
+    color: "#5D666E",
+    fontSize: 15,
+    lineHeight: 23,
+    fontWeight: "400",
+    textAlign: "center",
   },
   actions: {
     gap: 16,
@@ -67,7 +67,7 @@ export function StateScreenLayout({
   return (
     <SafeAreaView
       style={styles.safeArea}
-      edges={['top', 'right', 'bottom', 'left']}
+      edges={["top", "right", "bottom", "left"]}
     >
       <View style={styles.screen}>
         <View style={styles.shell}>

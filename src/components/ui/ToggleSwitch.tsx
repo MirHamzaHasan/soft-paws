@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { Animated, Pressable, StyleSheet } from 'react-native';
+import { useEffect, useRef } from "react";
+import { Animated, Pressable, StyleSheet } from "react-native";
 
 type ToggleSwitchProps = {
   checked: boolean;
@@ -13,33 +13,33 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   track: {
-    width: 72,
-    height: 42,
+    width: 48,
+    height: 24,
     borderRadius: 999,
     paddingHorizontal: 4,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    overflow: 'hidden',
+    alignItems: "flex-start",
+    justifyContent: "center",
+    overflow: "hidden",
   },
   trackChecked: {
-    backgroundColor: '#0A0A0A',
+    backgroundColor: "#0A0A0A",
   },
   trackUnchecked: {
-    backgroundColor: '#DDE4E8',
+    backgroundColor: "#DDE4E8",
   },
   thumb: {
-    width: 34,
-    height: 34,
+    width: 16,
+    height: 16,
     borderRadius: 999,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
 });
 
 export function ToggleSwitch({
   checked,
   onPress,
-  checkedTrackColor = '#0A0A0A',
-  uncheckedTrackColor = '#DDE4E8',
+  checkedTrackColor = "#0A0A0A",
+  uncheckedTrackColor = "#DDE4E8",
 }: ToggleSwitchProps) {
   const progress = useRef(new Animated.Value(checked ? 1 : 0)).current;
 
@@ -55,7 +55,7 @@ export function ToggleSwitch({
 
   const thumbTranslateX = progress.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 30],
+    outputRange: [0, 24],
   });
 
   return (

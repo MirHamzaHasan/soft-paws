@@ -8,16 +8,16 @@ type MedicationStepperProps = {
 
 const styles = StyleSheet.create({
   wrap: {
-    minWidth: 122,
-    minHeight: 52,
-    borderRadius: 12,
+    minWidth: 88,
+    minHeight: 36,
+    borderRadius: 8,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#D9D4CE',
     backgroundColor: '#FFFCFA',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 14,
+    paddingHorizontal: 8,
   },
   button: {
     width: 24,
@@ -27,14 +27,14 @@ const styles = StyleSheet.create({
   },
   symbol: {
     color: '#7B838B',
-    fontSize: 22,
-    lineHeight: 24,
+    fontSize: 18,
+    lineHeight: 20,
     fontWeight: '300',
   },
   value: {
     color: '#0A0A0A',
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
   },
 });

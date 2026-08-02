@@ -1,11 +1,11 @@
-import { type ReactNode } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { type ReactNode } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type OnboardingChoiceChipProps = {
   label: string;
   selected?: boolean;
   onPress: () => void;
-  size?: 'default' | 'large';
+  size?: "compact" | "default" | "large";
   leading?: ReactNode;
   backgroundColor?: string;
   borderColor?: string;
@@ -17,43 +17,52 @@ type OnboardingChoiceChipProps = {
 
 const styles = StyleSheet.create({
   chip: {
-    minHeight: 56,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#E7E5E4',
-    backgroundColor: '#FFFCFA',
+    minHeight: 44,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 14,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: "#E7E5E4",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 16,
   },
   chipSelected: {
-    borderColor: '#0A0A0A',
+    borderColor: "#0A0A0A",
+  },
+  chipCompact: {
+    minHeight: 32,
+    borderRadius: 999,
+    paddingHorizontal: 12,
   },
   chipLarge: {
-    minHeight: 78,
-    borderRadius: 24,
+    minHeight: 48,
+    borderRadius: 14,
   },
   chipPressed: {
     opacity: 0.92,
   },
   content: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 10,
-    paddingHorizontal: 18,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
   },
   label: {
-    color: '#A79F98',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#A79F98",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
   },
   labelSelected: {
-    color: '#0A0A0A',
+    color: "#0A0A0A",
+  },
+  labelCompact: {
+    fontSize: 11,
+    lineHeight: 14,
   },
   labelLarge: {
-    fontSize: 20,
-    lineHeight: 28,
+    fontSize: 14,
+    lineHeight: 20,
   },
 });
 
@@ -61,16 +70,17 @@ export function OnboardingChoiceChip({
   label,
   selected = false,
   onPress,
-  size = 'default',
+  size = "default",
   leading,
-  backgroundColor = '#FFFCFA',
-  borderColor = '#E7E5E4',
-  labelColor = '#A79F98',
-  selectedBackgroundColor = '#FFFCFA',
-  selectedBorderColor = '#0A0A0A',
-  selectedLabelColor = '#0A0A0A',
+  backgroundColor = "#FFFCFA",
+  borderColor = "#E7E5E4",
+  labelColor = "#A79F98",
+  selectedBackgroundColor = "#FFFCFA",
+  selectedBorderColor = "#0A0A0A",
+  selectedLabelColor = "#0A0A0A",
 }: OnboardingChoiceChipProps) {
-  const isLarge = size === 'large';
+  const isLarge = size === "large";
+  const isCompact = size === "compact";
   const resolvedBackgroundColor = selected
     ? selectedBackgroundColor
     : backgroundColor;
@@ -82,6 +92,7 @@ export function OnboardingChoiceChip({
       accessibilityRole="button"
       style={({ pressed }) => [
         styles.chip,
+        isCompact ? styles.chipCompact : null,
         isLarge ? styles.chipLarge : null,
         {
           backgroundColor: resolvedBackgroundColor,
@@ -96,6 +107,7 @@ export function OnboardingChoiceChip({
         <Text
           style={[
             styles.label,
+            isCompact ? styles.labelCompact : null,
             isLarge ? styles.labelLarge : null,
             { color: resolvedLabelColor },
           ]}

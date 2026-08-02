@@ -1,5 +1,5 @@
-import { type ReactNode } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { type ReactNode } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type LogOptionCardProps = {
   label: string;
@@ -16,22 +16,22 @@ type LogOptionCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    minHeight: 160,
-    borderRadius: 22,
+    minHeight: 84,
+    borderRadius: 14,
     borderWidth: StyleSheet.hairlineWidth,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 18,
-    paddingHorizontal: 16,
-    paddingVertical: 18,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 16,
   },
   pressed: {
     opacity: 0.92,
   },
   label: {
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "500",
   },
 });
 
@@ -40,12 +40,12 @@ export function LogOptionCard({
   icon,
   selected = false,
   onPress,
-  backgroundColor = '#FFFCFA',
-  borderColor = '#DDD8D2',
-  labelColor = '#0A0A0A',
-  selectedBackgroundColor = '#FFFCFA',
-  selectedBorderColor = '#0A0A0A',
-  selectedLabelColor = '#0A0A0A',
+  backgroundColor = "#FFFCFA",
+  borderColor = "#DDD8D2",
+  labelColor = "#0A0A0A",
+  selectedBackgroundColor = "#FFFCFA",
+  selectedBorderColor = "#0A0A0A",
+  selectedLabelColor = "#0A0A0A",
 }: LogOptionCardProps) {
   const resolvedBackgroundColor = selected
     ? selectedBackgroundColor

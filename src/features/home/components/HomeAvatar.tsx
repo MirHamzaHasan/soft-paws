@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 export function HomeAvatar({
   emoji = '🐶',
   backgroundColor = '#1A1A1A',
-  size = 56,
+  size = 36,
 }: HomeAvatarProps) {
   return (
     <View

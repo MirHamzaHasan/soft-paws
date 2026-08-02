@@ -1,5 +1,5 @@
-import { type ReactNode } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { type ReactNode } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 type InsightsSnapshotCardProps = {
   icon: ReactNode;
@@ -12,52 +12,52 @@ type InsightsSnapshotCardProps = {
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    minHeight: 156,
-    borderRadius: 24,
+    minHeight: 136,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E5E1DB',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 18,
-    paddingTop: 18,
+    borderColor: "#E5E1DB",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 16,
+    paddingTop: 16,
     paddingBottom: 16,
-    gap: 22,
+    gap: 8,
   },
   topRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 10,
   },
   label: {
-    color: '#1B2024',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#1B2024",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "500",
   },
   valueRow: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
+    flexDirection: "row",
+    alignItems: "baseline",
     gap: 4,
   },
   value: {
-    color: '#0A0A0A',
+    color: "#0A0A0A",
     fontSize: 28,
     lineHeight: 32,
-    fontWeight: '500',
+    fontWeight: "500",
     letterSpacing: -0.8,
   },
   valueSuffix: {
-    color: '#5F6670',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#5F6670",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
   },
   detail: {
-    color: '#5F6670',
-    fontSize: 13,
-    lineHeight: 18,
-    fontWeight: '500',
-    letterSpacing: 0.6,
-    textTransform: 'uppercase',
+    color: "#5F6670",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
   },
 });
 

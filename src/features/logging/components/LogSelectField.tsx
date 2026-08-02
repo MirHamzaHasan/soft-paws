@@ -1,5 +1,5 @@
-import { type ReactNode } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { type ReactNode } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type LogSelectFieldProps = {
   label: string;
@@ -10,32 +10,32 @@ type LogSelectFieldProps = {
 
 const styles = StyleSheet.create({
   field: {
-    gap: 14,
+    gap: 8,
   },
   label: {
-    color: '#263136',
+    color: "#263136",
     fontSize: 16,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "500",
   },
   control: {
-    minHeight: 72,
-    borderRadius: 18,
+    minHeight: 48,
+    borderRadius: 8,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#DDD8D2',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    borderColor: "#DDD8D2",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     gap: 16,
   },
   value: {
     flex: 1,
-    color: '#263136',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#263136",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
   },
 });
 

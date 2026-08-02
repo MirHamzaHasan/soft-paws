@@ -12,14 +12,14 @@ import { OnboardingPhotoButton } from '../components/OnboardingPhotoButton';
 
 const styles = StyleSheet.create({
   form: {
-    gap: 28,
+    gap: 24,
   },
   photoWrap: {
     marginBottom: 4,
   },
   doubleRow: {
     flexDirection: 'row',
-    gap: 18,
+    gap: 24,
   },
   halfField: {
     flex: 1,
@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
   },
   unitText: {
     color: '#A79F98',
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 11,
+    lineHeight: 16,
     fontWeight: '400',
   },
   unitTextActive: {
@@ -43,17 +43,17 @@ const styles = StyleSheet.create({
   },
   sectionLabel: {
     color: '#0A0A0A',
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: 11,
+    lineHeight: 14,
     fontWeight: '500',
-    letterSpacing: 1.8,
+    letterSpacing: 1.1,
   },
   chipGrid: {
-    gap: 16,
+    gap: 12,
   },
   chipRow: {
     flexDirection: 'row',
-    gap: 16,
+    gap: 12,
   },
   chipCell: {
     flex: 1,

@@ -13,6 +13,7 @@ type AuthLayoutProps = {
   heroAlign?: 'left' | 'center';
   heroTopSpacing: number;
   bodyTopSpacing: number;
+  centerContent?: boolean;
   onBackPress?: () => void;
   showTopDivider?: boolean;
 };
@@ -40,6 +41,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingBottom: 40,
   },
+  scrollContentCentered: {
+    justifyContent: 'center',
+    paddingTop: 48,
+    paddingBottom: 80,
+  },
   topBar: {
     paddingHorizontal: 24,
     paddingTop: 8,
@@ -56,7 +62,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   heroBlock: {
-    gap: 14,
+    gap: 8,
   },
   heroLeft: {
     alignItems: 'flex-start',
@@ -66,15 +72,15 @@ const styles = StyleSheet.create({
   },
   title: {
     color: AUTH_COLORS.textPrimary,
-    fontSize: 36,
-    lineHeight: 42,
+    fontSize: 28,
+    lineHeight: 34,
     fontWeight: '500',
-    letterSpacing: -1.2,
+    letterSpacing: -0.5,
   },
   subtitle: {
     color: AUTH_COLORS.textSecondary,
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 14,
+    lineHeight: 21,
     fontWeight: '400',
   },
   alignLeft: {
@@ -92,6 +98,7 @@ export function AuthLayout({
   heroAlign = 'center',
   heroTopSpacing,
   bodyTopSpacing,
+  centerContent = false,
   onBackPress = () => {},
   showTopDivider = false,
 }: AuthLayoutProps) {
@@ -126,7 +133,10 @@ export function AuthLayout({
 
             <ScrollView
               style={styles.scrollView}
-              contentContainerStyle={styles.scrollContent}
+              contentContainerStyle={[
+                styles.scrollContent,
+                centerContent ? styles.scrollContentCentered : null,
+              ]}
               keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
             >

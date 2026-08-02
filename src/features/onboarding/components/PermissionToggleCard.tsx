@@ -13,13 +13,13 @@ type PermissionToggleCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    minHeight: 140,
-    borderRadius: 22,
+    minHeight: 104,
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#E7E5E4',
     backgroundColor: '#FFFCFA',
-    paddingHorizontal: 24,
-    paddingVertical: 22,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
   },
   row: {
     flexDirection: 'row',
@@ -27,15 +27,15 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   iconWrap: {
-    width: 48,
-    height: 48,
+    width: 24,
+    height: 24,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 2,
   },
   content: {
     flex: 1,
-    gap: 10,
+    gap: 4,
     minWidth: 0,
   },
   header: {
@@ -45,21 +45,21 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: 16,
+    lineHeight: 21,
     fontWeight: '500',
     flex: 1,
     minWidth: 0,
   },
   description: {
     color: '#5F6670',
-    fontSize: 16,
-    lineHeight: 26,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
   },
   compactDescription: {
-    fontSize: 15,
-    lineHeight: 24,
+    fontSize: 13,
+    lineHeight: 19,
   },
 });
 

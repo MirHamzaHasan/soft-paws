@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { signInWithEmailPassword } from '@/api';
 import { BarklogStatusBanner, useBarklogFeedback } from '@/components/ui';
@@ -16,7 +16,7 @@ import { AUTH_COLORS } from '../components/authTheme';
 
 const styles = StyleSheet.create({
   form: {
-    gap: 28,
+    gap: 24,
   },
   forgottenRow: {
     alignItems: 'flex-end',
@@ -24,13 +24,13 @@ const styles = StyleSheet.create({
   },
   utilityLink: {
     color: AUTH_COLORS.utility,
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
   },
   actions: {
     marginTop: 22,
-    gap: 28,
+    gap: 24,
   },
   footer: {
     flexDirection: 'row',
@@ -40,14 +40,14 @@ const styles = StyleSheet.create({
   },
   footerText: {
     color: AUTH_COLORS.textSecondary,
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
   },
   footerLink: {
     color: AUTH_COLORS.textPrimary,
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '500',
   },
 });
@@ -120,8 +120,9 @@ export default function SignInScreen() {
     <AuthLayout
       title="Welcome back"
       subtitle="Enter your details to sign in to BarkLog."
-      heroTopSpacing={Platform.select({ web: 172, default: 138 }) ?? 138}
-      bodyTopSpacing={Platform.select({ web: 76, default: 68 }) ?? 68}
+      heroTopSpacing={0}
+      bodyTopSpacing={48}
+      centerContent
       onBackPress={() => router.replace('/(auth)/welcome')}
     >
       <View style={styles.form}>

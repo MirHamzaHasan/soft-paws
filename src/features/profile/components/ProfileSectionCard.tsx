@@ -14,32 +14,32 @@ type ProfileSectionCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 24,
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#CFD4D8',
     backgroundColor: '#FFFCFA',
     overflow: 'hidden',
   },
   header: {
-    minHeight: 74,
-    paddingHorizontal: 20,
+    minHeight: 52,
+    paddingHorizontal: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 14,
+    gap: 10,
   },
   left: {
     flex: 1,
     minWidth: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 14,
+    gap: 10,
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
   },
   right: {
     flexDirection: 'row',
@@ -47,23 +47,23 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   badge: {
-    minHeight: 32,
-    borderRadius: 16,
+    minHeight: 22,
+    borderRadius: 999,
     backgroundColor: '#F0EFEE',
-    paddingHorizontal: 12,
+    paddingHorizontal: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
   badgeText: {
     color: '#5A6168',
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 10,
+    lineHeight: 12,
     fontWeight: '400',
   },
   body: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    gap: 14,
+    paddingHorizontal: 12,
+    paddingBottom: 12,
+    gap: 10,
   },
 });
 

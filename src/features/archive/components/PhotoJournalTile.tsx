@@ -14,12 +14,12 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     overflow: 'hidden',
     justifyContent: 'space-between',
-    padding: 14,
+    padding: 8,
   },
   date: {
     color: '#FFFCFA',
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 10,
+    lineHeight: 12,
     fontWeight: '500',
   },
   artworkWrap: {

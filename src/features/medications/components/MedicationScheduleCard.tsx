@@ -8,19 +8,19 @@ type MedicationScheduleCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 22,
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#DDD8D2',
     backgroundColor: '#F3F5F6',
-    paddingHorizontal: 28,
-    paddingVertical: 26,
-    gap: 26,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    gap: 20,
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
   },
 });
 

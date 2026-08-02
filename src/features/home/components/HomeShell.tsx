@@ -60,26 +60,26 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    paddingBottom: 28,
+    paddingBottom: 16,
     alignItems: 'center',
   },
   inner: {
     width: '100%',
-    maxWidth: 760,
-    paddingHorizontal: 18,
-    paddingTop: 28,
+    maxWidth: 390,
+    paddingHorizontal: 12,
+    paddingTop: 18,
   },
   overlayWrap: {
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 96,
+    bottom: 72,
     alignItems: 'center',
-    paddingHorizontal: 18,
+    paddingHorizontal: 12,
   },
   overlayInner: {
     width: '100%',
-    maxWidth: 760,
+    maxWidth: 390,
   },
 });
 

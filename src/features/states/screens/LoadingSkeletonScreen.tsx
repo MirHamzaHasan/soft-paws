@@ -1,75 +1,75 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from "react-native";
 
-import { HomeShell } from '../../home/components/HomeShell';
-import { SkeletonBlock } from '../components/SkeletonBlock';
+import { HomeShell } from "../../home/components/HomeShell";
+import { SkeletonBlock } from "../components/SkeletonBlock";
 
 const styles = StyleSheet.create({
   stack: {
-    gap: 24,
+    gap: 16,
   },
   hero: {
     gap: 14,
   },
   heroCard: {
-    borderRadius: 28,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E4E0DC',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 24,
-    paddingVertical: 22,
-    gap: 18,
+    borderColor: "#E4E0DC",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    gap: 12,
   },
   rowHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 14,
   },
   tileGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 18,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
   },
   tile: {
-    flexBasis: '47%',
+    flexBasis: "47%",
     flexGrow: 1,
-    minHeight: 180,
-    borderRadius: 24,
+    minHeight: 120,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E4E0DC',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 24,
-    paddingVertical: 22,
-    gap: 18,
+    borderColor: "#E4E0DC",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    gap: 12,
   },
   chartCard: {
-    borderRadius: 30,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E4E0DC',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 24,
-    paddingVertical: 24,
-    gap: 24,
+    borderColor: "#E4E0DC",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    gap: 16,
   },
   chartBars: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'space-between',
-    height: 240,
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+    height: 160,
     marginTop: 8,
   },
 });
 
 export default function LoadingSkeletonScreen() {
-  const skeletonTiles = ['overview', 'routine', 'symptoms', 'adherence'];
+  const skeletonTiles = ["overview", "routine", "symptoms", "adherence"];
   const chartBars = [
-    { key: 'mon', height: 120 },
-    { key: 'tue', height: 168 },
-    { key: 'wed', height: 86 },
-    { key: 'thu', height: 218 },
-    { key: 'fri', height: 262 },
-    { key: 'sat', height: 182 },
-    { key: 'sun', height: 132 },
-    { key: 'extra', height: 54 },
+    { key: "mon", height: 72 },
+    { key: "tue", height: 104 },
+    { key: "wed", height: 54 },
+    { key: "thu", height: 132 },
+    { key: "fri", height: 152 },
+    { key: "sat", height: 112 },
+    { key: "sun", height: 82 },
+    { key: "extra", height: 36 },
   ];
 
   return (

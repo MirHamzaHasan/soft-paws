@@ -11,13 +11,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   actions: {
-    gap: 26,
+    gap: 12,
   },
   accountLink: {
     color: '#0A0A0A',
-    fontSize: 18,
-    lineHeight: 28,
-    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
     textAlign: 'center',
   },
 });
@@ -29,7 +29,7 @@ export default function WelcomeScreen() {
     <AuthWelcomeLayout
       hero={
         <View style={styles.hero}>
-          <PawIcon size={108} />
+          <PawIcon size={80} />
         </View>
       }
       title="BarkLog"
@@ -39,7 +39,6 @@ export default function WelcomeScreen() {
       <View style={styles.actions}>
         <PrimaryButton
           label="Get started"
-          size="large"
           onPress={() => router.replace('/(auth)/sign-up')}
         />
 

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add Medication - The Living Archive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAFAFA;
+            color: #0A0A0A;
+        }
+        .hairline-border {
+            border-width: 0.5px;
+            border-color: #E7E5E4;
+        }
+        .hairline-border-b {
+            border-bottom-width: 0.5px;
+            border-bottom-color: #E7E5E4;
+        }
+        .hairline-border-t {
+            border-top-width: 0.5px;
+            border-top-color: #E7E5E4;
+        }
+        /* Custom Toggle Switch Styles */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #0A0A0A;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #0A0A0A;
+        }
+        .toggle-checkbox:checked + .toggle-label:after {
+            transform: translateX(100%);
+            border-color: white;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error-container": "#fe8983",
+                      "on-error": "#fff7f6",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-dim": "#d4dbdd",
+                      "error-dim": "#4e0309",
+                      "tertiary-fixed-dim": "#e7e5e4",
+                      "on-tertiary-fixed-variant": "#666665",
+                      "outline-variant": "#adb3b4",
+                      "on-tertiary-container": "#5c5c5b",
+                      "inverse-surface": "#0c0f0f",
+                      "tertiary-dim": "#535352",
+                      "surface-container-highest": "#dde4e5",
+                      "on-tertiary-fixed": "#494a49",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-secondary-container": "#505252",
+                      "on-surface": "#2d3435",
+                      "surface": "#f9f9f9",
+                      "outline": "#757c7d",
+                      "on-primary-container": "#525151",
+                      "on-primary": "#faf7f6",
+                      "on-error-container": "#752121",
+                      "on-secondary-fixed": "#3e403f",
+                      "surface-variant": "#dde4e5",
+                      "primary-fixed-dim": "#d7d4d3",
+                      "on-secondary-fixed-variant": "#5a5c5b",
+                      "inverse-on-surface": "#9c9d9d",
+                      "surface-tint": "#5f5e5e",
+                      "background": "#f9f9f9",
+                      "tertiary": "#5f5f5e",
+                      "surface-container-high": "#e4e9ea",
+                      "secondary-container": "#e2e2e2",
+                      "on-tertiary": "#fbf8f7",
+                      "on-surface-variant": "#5a6061",
+                      "tertiary-container": "#f5f3f2",
+                      "surface-container": "#ebeeef",
+                      "surface-container-low": "#f2f4f4",
+                      "secondary": "#5e5f5f",
+                      "secondary-fixed-dim": "#d4d4d3",
+                      "tertiary-fixed": "#f5f3f2",
+                      "error": "#9f403d",
+                      "primary-dim": "#535252",
+                      "primary": "#5f5e5e",
+                      "primary-fixed": "#e5e2e1",
+                      "on-secondary": "#f9f9f8",
+                      "on-primary-fixed-variant": "#5c5b5b",
+                      "on-primary-fixed": "#403f3f",
+                      "primary-container": "#e5e2e1",
+                      "surface-bright": "#f9f9f9",
+                      "on-background": "#2d3435",
+                      "inverse-primary": "#ffffff",
+                      "secondary-dim": "#525353"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Inter"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "Inter"
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased min-h-screen flex flex-col pt-16 pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-[#FAFAFA] dark:bg-[#0A0A0A] border-b-[0.5px] border-[#E7E5E4] dark:border-[#262626]">
+<div class="flex items-center gap-4">
+<button class="text-[#0A0A0A] dark:text-[#FAFAFA] hover:bg-[#F5F5F4] dark:hover:bg-[#1A1A1A] rounded-full p-2 active:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<h1 class="text-xl font-medium tracking-tighter text-[#0A0A0A] dark:text-[#FAFAFA] font-['Inter']">Add Medication</h1>
+</div>
+<button class="text-sm font-medium text-[#0A0A0A] dark:text-[#FAFAFA] active:opacity-70 transition-opacity">Save</button>
+</header>
+<!-- Main Content -->
+<main class="flex-grow max-w-3xl mx-auto w-full px-6 py-8 space-y-10">
+<!-- Med Name & Dose Area -->
+<section class="space-y-6">
+<div class="space-y-2">
+<label class="block text-[11px] font-medium uppercase tracking-widest text-on-surface-variant" for="med-name">Medication Name</label>
+<input class="w-full bg-transparent border-0 border-b-[0.5px] border-[#E7E5E4] focus:border-[#0A0A0A] focus:ring-0 px-0 py-3 text-lg font-medium placeholder-inverse-on-surface transition-colors" id="med-name" placeholder="e.g., NexGard, Apoquel" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="block text-[11px] font-medium uppercase tracking-widest text-on-surface-variant" for="med-dose">Dose</label>
+<input class="w-full bg-transparent border-0 border-b-[0.5px] border-[#E7E5E4] focus:border-[#0A0A0A] focus:ring-0 px-0 py-3 text-base placeholder-inverse-on-surface transition-colors" id="med-dose" placeholder="Amount" type="number"/>
+</div>
+<div class="space-y-2">
+<label class="block text-[11px] font-medium uppercase tracking-widest text-on-surface-variant" for="med-unit">Unit</label>
+<select class="w-full bg-transparent border-0 border-b-[0.5px] border-[#E7E5E4] focus:border-[#0A0A0A] focus:ring-0 px-0 py-3 text-base text-on-surface transition-colors" id="med-unit">
+<option>mg</option>
+<option>ml</option>
+<option>pill(s)</option>
+<option>drop(s)</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Frequency & Schedule -->
+<section class="space-y-6 bg-surface-container-low p-6 rounded-xl hairline-border">
+<h2 class="text-sm font-medium text-on-surface">Schedule</h2>
+<div class="space-y-4">
+<label class="block text-[11px] font-medium uppercase tracking-widest text-on-surface-variant">Frequency</label>
+<div class="flex flex-wrap gap-3">
+<button class="px-4 py-2 rounded-full hairline-border bg-surface-container-lowest text-sm font-medium text-on-surface">Daily</button>
+<button class="px-4 py-2 rounded-full hairline-border bg-surface text-sm font-medium text-on-surface-variant">Weekly</button>
+<button class="px-4 py-2 rounded-full hairline-border bg-surface text-sm font-medium text-on-surface-variant">Monthly</button>
+<button class="px-4 py-2 rounded-full hairline-border bg-surface text-sm font-medium text-on-surface-variant">As Needed</button>
+</div>
+</div>
+<div class="space-y-4 pt-4 hairline-border-t">
+<label class="block text-[11px] font-medium uppercase tracking-widest text-on-surface-variant">Times Per Day</label>
+<div class="flex items-center gap-4">
+<div class="flex items-center bg-surface-container-lowest rounded-lg hairline-border overflow-hidden">
+<button class="px-3 py-2 text-on-surface-variant hover:bg-surface-dim transition-colors">-</button>
+<span class="px-4 py-2 font-medium">1</span>
+<button class="px-3 py-2 text-on-surface-variant hover:bg-surface-dim transition-colors">+</button>
+</div>
+<span class="text-sm text-on-surface-variant">time(s)</span>
+</div>
+<!-- Time Pickers -->
+<div class="space-y-3 mt-4">
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest rounded-lg hairline-border">
+<span class="text-sm text-on-surface">Dose 1</span>
+<input class="bg-transparent border-0 text-sm font-medium focus:ring-0 p-0 text-right" type="time" value="08:00"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Conditions & Dates -->
+<section class="space-y-6">
+<!-- Toggles -->
+<div class="space-y-4">
+<div class="flex items-center justify-between py-2 border-b-[0.5px] border-[#E7E5E4]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="restaurant">restaurant</span>
+<span class="text-sm text-on-surface">Give with food</span>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300 z-10 top-0 left-0" id="food-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer transition-colors duration-300" for="food-toggle"></label>
+</div>
+</div>
+<div class="flex items-center justify-between py-2 border-b-[0.5px] border-[#E7E5E4]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="event_repeat">event_repeat</span>
+<span class="text-sm text-on-surface">Refill Reminder</span>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300 z-10 top-0 left-0" id="refill-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer transition-colors duration-300" for="refill-toggle"></label>
+</div>
+</div>
+</div>
+<!-- Dates -->
+<div class="grid grid-cols-2 gap-6 pt-4">
+<div class="space-y-2">
+<label class="block text-[11px] font-medium uppercase tracking-widest text-on-surface-variant" for="start-date">Start Date</label>
+<input class="w-full bg-transparent border-0 border-b-[0.5px] border-[#E7E5E4] focus:border-[#0A0A0A] focus:ring-0 px-0 py-3 text-sm text-on-surface transition-colors" id="start-date" type="date"/>
+</div>
+<div class="space-y-2">
+<label class="block text-[11px] font-medium uppercase tracking-widest text-on-surface-variant" for="end-date">End Date (Optional)</label>
+<input class="w-full bg-transparent border-0 border-b-[0.5px] border-[#E7E5E4] focus:border-[#0A0A0A] focus:ring-0 px-0 py-3 text-sm text-on-surface transition-colors text-inverse-on-surface" id="end-date" type="date"/>
+</div>
+</div>
+</section>
+<!-- Notes -->
+<section class="space-y-2 pb-10">
+<label class="block text-[11px] font-medium uppercase tracking-widest text-on-surface-variant" for="med-notes">Notes</label>
+<textarea class="w-full bg-surface-container-lowest hairline-border rounded-xl focus:border-[#0A0A0A] focus:ring-0 p-4 text-sm placeholder-inverse-on-surface resize-none transition-colors" id="med-notes" placeholder="Any special instructions or observations..." rows="4"></textarea>
+</section>
+<div class="pt-6 border-t-[0.5px] border-[#E7E5E4]">
+<button class="w-full bg-[#0A0A0A] text-[#FAFAFA] py-4 rounded-[14px] text-sm font-medium active:opacity-80 transition-opacity">Save Medication</button>
+</div>
+</main>
+</body></html>

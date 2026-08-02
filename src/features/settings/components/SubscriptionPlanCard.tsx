@@ -1,7 +1,7 @@
-import { type ReactNode } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { type ReactNode } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { ChevronRightIcon } from '../../home/components/HomeIcons';
+import { ChevronRightIcon } from "../../home/components/HomeIcons";
 
 type SubscriptionPlanCardProps = {
   title: string;
@@ -16,80 +16,80 @@ type SubscriptionPlanCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 28,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E0DBD5',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 24,
-    paddingTop: 30,
-    paddingBottom: 24,
-    gap: 24,
+    borderColor: "#E0DBD5",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 16,
+    paddingTop: 18,
+    paddingBottom: 16,
+    gap: 16,
   },
   title: {
-    color: '#0A0A0A',
-    fontSize: 30,
-    lineHeight: 36,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 22,
+    lineHeight: 28,
+    fontWeight: "400",
     letterSpacing: -0.9,
   },
   subtitle: {
-    color: '#5D656D',
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#5D656D",
+    fontSize: 13,
+    lineHeight: 19,
+    fontWeight: "400",
   },
   statusPill: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     minHeight: 34,
     borderRadius: 17,
-    backgroundColor: '#EEF1F2',
+    backgroundColor: "#EEF1F2",
     paddingHorizontal: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   statusText: {
-    color: '#4D565E',
+    color: "#4D565E",
     fontSize: 14,
     lineHeight: 18,
-    fontWeight: '500',
+    fontWeight: "500",
     letterSpacing: 1,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   meta: {
     gap: 8,
   },
   renewalLabel: {
-    color: '#5D656D',
+    color: "#5D656D",
     fontSize: 16,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "400",
   },
   renewalDate: {
-    color: '#0A0A0A',
-    fontSize: 20,
-    lineHeight: 28,
-    fontWeight: '400',
-  },
-  price: {
-    color: '#5D656D',
+    color: "#0A0A0A",
     fontSize: 16,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "400",
+  },
+  price: {
+    color: "#5D656D",
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: "400",
   },
   divider: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#E3DFDB',
+    backgroundColor: "#E3DFDB",
   },
   manageRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   manageText: {
-    color: '#0A0A0A',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
   },
 });
 

@@ -20,24 +20,24 @@ type LedgerTrendCardProps = {
   style?: ViewStyle;
 };
 
-const CHART_HEIGHT = 120;
+const CHART_HEIGHT = 80;
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 28,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#E5E1DB',
     backgroundColor: '#FFFCFA',
-    paddingHorizontal: 22,
-    paddingTop: 22,
-    paddingBottom: 20,
-    gap: 18,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    gap: 14,
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 22,
-    lineHeight: 28,
-    fontWeight: '400',
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: '500',
   },
   chart: {
     height: CHART_HEIGHT + 28,
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#77706A',
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: 10,
+    lineHeight: 12,
     fontWeight: '400',
     letterSpacing: 0.5,
   },

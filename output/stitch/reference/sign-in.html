@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BarkLog - Welcome back</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#e5e2e1",
+                        "on-secondary": "#f9f9f8",
+                        "on-background": "#2d3435",
+                        "inverse-primary": "#ffffff",
+                        "secondary-dim": "#525353",
+                        "on-primary-fixed-variant": "#5c5b5b",
+                        "on-primary-fixed": "#403f3f",
+                        "primary-container": "#e5e2e1",
+                        "surface-bright": "#f9f9f9",
+                        "tertiary-container": "#f5f3f2",
+                        "surface-container": "#ebeeef",
+                        "surface-container-low": "#f2f4f4",
+                        "error": "#9f403d",
+                        "primary-dim": "#535252",
+                        "primary": "#5f5e5e",
+                        "secondary": "#5e5f5f",
+                        "secondary-fixed-dim": "#d4d4d3",
+                        "tertiary-fixed": "#f5f3f2",
+                        "on-primary": "#faf7f6",
+                        "on-error-container": "#752121",
+                        "on-secondary-fixed": "#3e403f",
+                        "surface-variant": "#dde4e5",
+                        "primary-fixed-dim": "#d7d4d3",
+                        "on-secondary-container": "#505252",
+                        "on-surface": "#2d3435",
+                        "surface": "#f9f9f9",
+                        "outline": "#757c7d",
+                        "on-primary-container": "#525151",
+                        "secondary-container": "#e2e2e2",
+                        "on-tertiary": "#fbf8f7",
+                        "on-surface-variant": "#5a6061",
+                        "on-secondary-fixed-variant": "#5a5c5b",
+                        "inverse-on-surface": "#9c9d9d",
+                        "surface-tint": "#5f5e5e",
+                        "background": "#f9f9f9",
+                        "tertiary": "#5f5f5e",
+                        "surface-container-high": "#e4e9ea",
+                        "error-dim": "#4e0309",
+                        "tertiary-fixed-dim": "#e7e5e4",
+                        "on-tertiary-fixed-variant": "#666665",
+                        "outline-variant": "#adb3b4",
+                        "on-tertiary-container": "#5c5c5b",
+                        "error-container": "#fe8983",
+                        "on-error": "#fff7f6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d4dbdd",
+                        "secondary-fixed": "#e2e2e2",
+                        "inverse-surface": "#0c0f0f",
+                        "tertiary-dim": "#535352",
+                        "surface-container-highest": "#dde4e5",
+                        "on-tertiary-fixed": "#494a49"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .border-hairline {
+            border-width: 0.5px;
+        }
+        .border-b-hairline {
+            border-bottom-width: 0.5px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
+<!-- Top Navigation (Minimal for Sign In) -->
+<header class="w-full max-w-screen-xl mx-auto px-6 py-4 flex items-center bg-[#FAFAFA] dark:bg-stone-950 top-0 sticky z-50">
+<button aria-label="Go back" class="text-[#0A0A0A] dark:text-stone-50 hover:opacity-70 transition-opacity p-2 -ml-2 rounded-full focus:outline-none focus:ring-1 focus:ring-outline">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<div class="flex-1"></div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col items-center justify-center px-6 py-12 w-full max-w-md mx-auto">
+<!-- Header Section -->
+<div class="w-full text-center mb-12">
+<h1 class="font-headline text-[28px] leading-tight font-medium tracking-tight text-[#0A0A0A] dark:text-stone-50 mb-2">Welcome back</h1>
+<p class="font-body text-[14px] text-on-surface-variant font-normal">Enter your details to sign in to BarkLog.</p>
+</div>
+<!-- Form Section -->
+<form class="w-full space-y-6 flex flex-col">
+<!-- Email Input -->
+<div class="flex flex-col space-y-2">
+<label class="font-label text-[11px] font-medium uppercase tracking-wider text-on-surface-variant" for="email">Email</label>
+<div class="relative">
+<input class="w-full bg-[#F5F5F4] dark:bg-stone-900 border-b-hairline border-[#E7E5E4] dark:border-stone-800 text-[#0A0A0A] dark:text-stone-50 text-[14px] font-normal px-4 py-3 rounded-t-[4px] rounded-b-none focus:outline-none focus:bg-surface-bright focus:border-b-[1px] focus:border-[#0A0A0A] dark:focus:border-stone-50 transition-colors" id="email" name="email" placeholder="name@example.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="flex flex-col space-y-2">
+<label class="font-label text-[11px] font-medium uppercase tracking-wider text-on-surface-variant" for="password">Password</label>
+<div class="relative">
+<input class="w-full bg-[#F5F5F4] dark:bg-stone-900 border-b-hairline border-[#E7E5E4] dark:border-stone-800 text-[#0A0A0A] dark:text-stone-50 text-[14px] font-normal px-4 py-3 rounded-t-[4px] rounded-b-none focus:outline-none focus:bg-surface-bright focus:border-b-[1px] focus:border-[#0A0A0A] dark:focus:border-stone-50 transition-colors" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-[#0A0A0A] transition-colors focus:outline-none" type="button">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Forgot Password Link -->
+<div class="flex justify-end pt-2">
+<a class="font-body text-[14px] font-medium text-on-surface-variant hover:text-[#0A0A0A] dark:hover:text-stone-50 transition-colors" href="#">Forgot password?</a>
+</div>
+<!-- Sign In Button -->
+<div class="pt-6">
+<button class="w-full bg-[#0A0A0A] dark:bg-stone-50 text-[#FAFAFA] dark:text-stone-950 font-body text-[16px] font-medium py-4 rounded-[14px] hover:opacity-90 active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2" type="submit">
+                    Sign in
+                </button>
+</div>
+</form>
+<!-- Sign Up Link -->
+<div class="mt-8 text-center">
+<p class="font-body text-[14px] text-on-surface-variant font-normal">
+                Don't have an account? 
+                <a class="font-medium text-[#0A0A0A] dark:text-stone-50 hover:opacity-70 transition-opacity ml-1" href="#">Sign up</a>
+</p>
+</div>
+</main>
+</body></html>

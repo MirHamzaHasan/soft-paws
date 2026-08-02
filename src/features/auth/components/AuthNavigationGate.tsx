@@ -1,10 +1,10 @@
-import { useRootNavigationState, useRouter, useSegments } from 'expo-router';
-import { useEffect } from 'react';
+import { useRootNavigationState, useRouter, useSegments } from "expo-router";
+import { useEffect } from "react";
 
-import { usePremiumPresentationStore } from '@/features/premium/stores/usePremiumPresentationStore';
-import { useAuthSessionStore } from '@/stores';
+import { usePremiumPresentationStore } from "@/features/premium/stores/usePremiumPresentationStore";
+import { useAuthSessionStore } from "@/stores";
 
-import { getAuthRedirectTarget } from '../utils/authRouting';
+import { getAuthRedirectTarget } from "../utils/authRouting";
 
 export function AuthNavigationGate() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export function AuthNavigationGate() {
   );
 
   useEffect(() => {
-    if (!rootNavigationState?.key || bootstrapStatus !== 'ready') {
+    if (!rootNavigationState?.key || bootstrapStatus !== "ready") {
       return;
     }
 

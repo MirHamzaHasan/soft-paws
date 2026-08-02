@@ -15,24 +15,24 @@ type ProfileActionCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    minHeight: 76,
-    borderRadius: 22,
+    minHeight: 52,
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 22,
+    paddingHorizontal: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 16,
+    gap: 12,
   },
   left: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
+    gap: 10,
   },
   label: {
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
   },
 });
 

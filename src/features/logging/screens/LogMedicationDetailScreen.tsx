@@ -1,112 +1,109 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { useRouter } from 'expo-router';
-import { useCallback, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useFocusEffect } from "@react-navigation/native";
+import { useRouter } from "expo-router";
+import { useCallback, useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { BarklogStatusBanner } from '@/components/ui';
-import { listActiveMedicationsForDog, type MedicationModel } from '@/db';
+import { BarklogStatusBanner } from "@/components/ui";
+import { listActiveMedicationsForDog, type MedicationModel } from "@/db";
 
-import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { OnboardingChoiceChip } from '../../onboarding/components/OnboardingChoiceChip';
-import { OnboardingPillBadge } from '../../onboarding/components/OnboardingPillBadge';
-import { LogDetailLayout } from '../components/LogDetailLayout';
-import { LogFormCard } from '../components/LogFormCard';
+import { PrimaryButton } from "../../../components/ui/PrimaryButton";
+import { OnboardingChoiceChip } from "../../onboarding/components/OnboardingChoiceChip";
+import { OnboardingPillBadge } from "../../onboarding/components/OnboardingPillBadge";
+import { LogDetailLayout } from "../components/LogDetailLayout";
+import { LogFormCard } from "../components/LogFormCard";
 import {
   CheckIcon,
   ChevronDoubleDownIcon,
   PlusSquareIcon,
-} from '../components/LoggingIcons';
-import { LogNotesCard } from '../components/LogNotesCard';
-import { LogSegmentedControl } from '../components/LogSegmentedControl';
-import { LogSelectField } from '../components/LogSelectField';
-import { LogSwitchRow } from '../components/LogSwitchRow';
-import { LogUnderlineField } from '../components/LogUnderlineField';
+} from "../components/LoggingIcons";
+import { LogNotesCard } from "../components/LogNotesCard";
+import { LogSelectField } from "../components/LogSelectField";
+import { LogSwitchRow } from "../components/LogSwitchRow";
+import { LogUnderlineField } from "../components/LogUnderlineField";
 import {
-  DETAIL_WHEN_OPTIONS,
   type DetailWhenValue,
   normalizeOptionalText,
   parseOptionalNumber,
   resolveDetailWhenTimestamp,
   useDetailedEventSave,
-} from '../hooks/useDetailedEventSave';
+} from "../hooks/useDetailedEventSave";
 
 type SideEffect =
-  | 'none'
-  | 'vomiting'
-  | 'drowsiness'
-  | 'loss-of-appetite'
-  | 'diarrhea';
+  | "none"
+  | "vomiting"
+  | "drowsiness"
+  | "loss-of-appetite"
+  | "diarrhea";
 
 const SIDE_EFFECTS: { value: SideEffect; label: string }[] = [
-  { value: 'none', label: 'None' },
-  { value: 'vomiting', label: 'Vomiting' },
-  { value: 'drowsiness', label: 'Drowsiness' },
-  { value: 'loss-of-appetite', label: 'Loss of appetite' },
-  { value: 'diarrhea', label: 'Diarrhea' },
+  { value: "none", label: "None" },
+  { value: "vomiting", label: "Vomiting" },
+  { value: "drowsiness", label: "Drowsiness" },
+  { value: "loss-of-appetite", label: "Loss of appetite" },
+  { value: "diarrhea", label: "Diarrhea" },
 ];
 
 const styles = StyleSheet.create({
   content: {
-    gap: 22,
+    gap: 32,
   },
   hero: {
-    gap: 22,
-    marginBottom: 4,
+    gap: 8,
   },
   title: {
-    color: '#263136',
-    fontSize: 42,
-    lineHeight: 48,
-    fontWeight: '400',
-    letterSpacing: -1.3,
+    color: "#0A0A0A",
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: "500",
+    letterSpacing: -0.5,
   },
   cardContent: {
-    gap: 30,
+    gap: 24,
   },
   section: {
     gap: 16,
   },
   chips: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     gap: 12,
   },
   chipItem: {
-    minWidth: 118,
+    flexShrink: 0,
   },
   sectionLabel: {
-    color: '#263136',
+    color: "#263136",
     fontSize: 16,
     lineHeight: 22,
-    fontWeight: '400',
-    marginBottom: 14,
+    fontWeight: "500",
+    marginBottom: 12,
   },
   action: {
-    marginTop: 18,
-    gap: 22,
+    marginTop: 16,
+    gap: 16,
   },
   errorText: {
-    color: '#B02921',
-    fontSize: 15,
-    lineHeight: 22,
-    fontWeight: '400',
+    color: "#B02921",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "400",
   },
   helperText: {
-    color: '#687079',
+    color: "#687079",
     fontSize: 15,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "400",
   },
   addMedicationButton: {
-    alignSelf: 'center',
+    alignSelf: "center",
     paddingHorizontal: 12,
     paddingVertical: 6,
   },
   addMedicationText: {
-    color: '#5F6670',
-    fontSize: 17,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#5F6670",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "500",
   },
 });
 
@@ -124,18 +121,18 @@ export default function LogMedicationDetailScreen() {
   const router = useRouter();
   const { canSave, error, isSaving, primaryDog, saveEvent } =
     useDetailedEventSave();
-  const [when, setWhen] = useState<DetailWhenValue>('just-now');
+  const [when] = useState<DetailWhenValue>("just-now");
   const [medications, setMedications] = useState<MedicationModel[]>([]);
   const [selectedMedicationId, setSelectedMedicationId] = useState<
     string | null
   >(null);
   const [isLoadingMedications, setIsLoadingMedications] = useState(false);
   const [medicationError, setMedicationError] = useState<string | null>(null);
-  const [dose, setDose] = useState('');
+  const [dose, setDose] = useState("");
   const [withFood, setWithFood] = useState(true);
-  const [notes, setNotes] = useState('');
+  const [notes, setNotes] = useState("");
   const [selectedEffects, setSelectedEffects] = useState<SideEffect[]>([
-    'none',
+    "none",
   ]);
   const selectedMedication =
     medications.find((medication) => medication.id === selectedMedicationId) ??
@@ -145,7 +142,7 @@ export default function LogMedicationDetailScreen() {
   const selectMedication = useCallback((medication: MedicationModel) => {
     setSelectedMedicationId(medication.id);
     setDose(
-      typeof medication.doseMg === 'number' ? `${medication.doseMg} mg` : '',
+      typeof medication.doseMg === "number" ? `${medication.doseMg} mg` : "",
     );
     setWithFood(medication.giveWithFood);
   }, []);
@@ -194,7 +191,7 @@ export default function LogMedicationDetailScreen() {
         })
         .catch(() => {
           if (isMounted) {
-            setMedicationError('Unable to load medications.');
+            setMedicationError("Unable to load medications.");
             setIsLoadingMedications(false);
           }
         });
@@ -206,17 +203,17 @@ export default function LogMedicationDetailScreen() {
   );
 
   const toggleEffect = (value: SideEffect) => {
-    if (value === 'none') {
-      setSelectedEffects(['none']);
+    if (value === "none") {
+      setSelectedEffects(["none"]);
       return;
     }
 
     setSelectedEffects((current) => {
-      const withoutNone = current.filter((item) => item !== 'none');
+      const withoutNone = current.filter((item) => item !== "none");
 
       if (withoutNone.includes(value)) {
         const next = withoutNone.filter((item) => item !== value);
-        return next.length > 0 ? next : ['none'];
+        return next.length > 0 ? next : ["none"];
       }
 
       return [...withoutNone, value];
@@ -225,12 +222,12 @@ export default function LogMedicationDetailScreen() {
 
   const handleSave = async () => {
     if (!selectedMedication) {
-      setMedicationError('Add a medication before saving this event.');
+      setMedicationError("Add a medication before saving this event.");
       return;
     }
 
     try {
-      const sideEffects = selectedEffects.includes('none')
+      const sideEffects = selectedEffects.includes("none")
         ? []
         : selectedEffects;
       const event = await saveEvent({
@@ -242,7 +239,7 @@ export default function LogMedicationDetailScreen() {
         },
         notes: normalizeOptionalText(notes),
         occurredAt: resolveDetailWhenTimestamp(when),
-        type: 'medication',
+        type: "medication",
       });
 
       router.replace(`/event/${event.id}`);
@@ -292,24 +289,13 @@ export default function LogMedicationDetailScreen() {
           <Text style={styles.title}>Log Medication</Text>
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionLabel}>When</Text>
-          <LogSegmentedControl
-            value={when}
-            variant="split"
-            size="large"
-            options={DETAIL_WHEN_OPTIONS}
-            onChange={(value) => setWhen(value as DetailWhenValue)}
-          />
-        </View>
-
         <LogFormCard>
           <View style={styles.cardContent}>
             <LogSelectField
               label="Medication"
               value={
                 selectedMedication?.name ??
-                (isLoadingMedications ? 'Loading medications...' : 'None saved')
+                (isLoadingMedications ? "Loading medications..." : "None saved")
               }
               trailing={<ChevronDoubleDownIcon />}
               onPress={medications.length > 1 ? cycleMedication : undefined}
@@ -400,7 +386,7 @@ export default function LogMedicationDetailScreen() {
             />
           ) : null}
           <PrimaryButton
-            label={isSaving ? 'Saving...' : 'Save event'}
+            label={isSaving ? "Saving..." : "Save event"}
             size="large"
             leadingIcon={<CheckIcon />}
             disabled={submitDisabled}
@@ -412,7 +398,7 @@ export default function LogMedicationDetailScreen() {
           <Pressable
             accessibilityRole="button"
             style={styles.addMedicationButton}
-            onPress={() => router.push('/add-medication')}
+            onPress={() => router.push("/add-medication")}
           >
             <Text style={styles.addMedicationText}>+ Add new medication</Text>
           </Pressable>

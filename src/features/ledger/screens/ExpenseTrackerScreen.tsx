@@ -39,10 +39,10 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 34,
-    lineHeight: 40,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
-    letterSpacing: -1.1,
+    letterSpacing: 0,
   },
   amountRow: {
     flexDirection: 'row',
@@ -52,15 +52,15 @@ const styles = StyleSheet.create({
   },
   amount: {
     color: '#1F2528',
-    fontSize: 72,
-    lineHeight: 78,
-    fontWeight: '300',
-    letterSpacing: -2.4,
+    fontSize: 40,
+    lineHeight: 46,
+    fontWeight: '400',
+    letterSpacing: -0.8,
   },
   amountMeta: {
     color: '#6B727A',
-    fontSize: 13,
-    lineHeight: 18,
+    fontSize: 10,
+    lineHeight: 12,
     fontWeight: '500',
     letterSpacing: 1.2,
     textTransform: 'uppercase',
@@ -72,10 +72,10 @@ const styles = StyleSheet.create({
   },
   transactionsHeader: {
     color: '#0A0A0A',
-    fontSize: 30,
-    lineHeight: 36,
-    fontWeight: '400',
-    letterSpacing: -0.9,
+    fontSize: 24,
+    lineHeight: 30,
+    fontWeight: '500',
+    letterSpacing: -0.4,
     marginTop: 8,
   },
   divider: {
@@ -84,18 +84,18 @@ const styles = StyleSheet.create({
     marginTop: -8,
   },
   transactionList: {
-    gap: 16,
+    gap: 8,
   },
   viewAll: {
     alignSelf: 'center',
     color: '#4F575F',
-    fontSize: 17,
-    lineHeight: 24,
+    fontSize: 12,
+    lineHeight: 18,
     fontWeight: '400',
     marginTop: 2,
   },
   formCard: {
-    borderRadius: 24,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#E4E0DC',
     backgroundColor: '#FFFCFA',
@@ -105,20 +105,20 @@ const styles = StyleSheet.create({
   },
   formTitle: {
     color: '#0A0A0A',
-    fontSize: 20,
-    lineHeight: 26,
+    fontSize: 16,
+    lineHeight: 21,
     fontWeight: '500',
   },
   field: {
-    minHeight: 54,
-    borderRadius: 14,
+    minHeight: 44,
+    borderRadius: 8,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#DDD8D2',
     backgroundColor: '#FAFAFA',
     paddingHorizontal: 14,
     color: '#1F2528',
-    fontSize: 17,
-    lineHeight: 22,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
   },
   formRow: {
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   chipCell: {
-    minWidth: 112,
+    flexShrink: 0,
   },
   secondaryActions: {
     flexDirection: 'row',
@@ -465,6 +465,7 @@ export default function ExpenseTrackerScreen() {
             {EXPENSE_CATEGORIES.map((item) => (
               <View key={item} style={styles.chipCell}>
                 <OnboardingChoiceChip
+                  size="compact"
                   label={CATEGORY_META[item].label}
                   selected={category === item}
                   backgroundColor="#F7F7F6"

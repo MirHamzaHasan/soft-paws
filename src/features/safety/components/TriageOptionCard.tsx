@@ -1,5 +1,5 @@
-import { type ReactNode } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { type ReactNode } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type TriageOptionCardProps = {
   title: string;
@@ -11,45 +11,45 @@ type TriageOptionCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 24,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#DED9D4',
-    backgroundColor: '#F7F9F8',
-    paddingHorizontal: 22,
-    paddingVertical: 22,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 18,
+    borderColor: "#DED9D4",
+    backgroundColor: "#F7F9F8",
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
   },
   selected: {
-    borderColor: '#0A0A0A',
-    backgroundColor: '#FFFCFA',
+    borderColor: "#0A0A0A",
+    backgroundColor: "#FFFCFA",
   },
   iconWrap: {
-    width: 66,
-    height: 66,
-    borderRadius: 33,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#DED9D4',
-    backgroundColor: '#FFFCFA',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderColor: "#DED9D4",
+    backgroundColor: "#FFFCFA",
+    alignItems: "center",
+    justifyContent: "center",
   },
   copy: {
     flex: 1,
     gap: 6,
   },
   title: {
-    color: '#0A0A0A',
-    fontSize: 22,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "400",
   },
   body: {
-    color: '#5D656D',
-    fontSize: 17,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#5D656D",
+    fontSize: 13,
+    lineHeight: 19,
+    fontWeight: "400",
   },
 });
 

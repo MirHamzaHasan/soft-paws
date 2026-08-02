@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from "react-native";
 
 type VetPrepChecklistItemProps = {
   label: string;
@@ -6,8 +6,8 @@ type VetPrepChecklistItemProps = {
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    alignItems: "flex-start",
     gap: 14,
   },
   box: {
@@ -16,15 +16,15 @@ const styles = StyleSheet.create({
     marginTop: 3,
     borderRadius: 4,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#C8C4C0',
-    backgroundColor: '#FFFCFA',
+    borderColor: "#C8C4C0",
+    backgroundColor: "#FFFCFA",
   },
   label: {
     flex: 1,
-    color: '#1F2528',
-    fontSize: 17,
-    lineHeight: 30,
-    fontWeight: '400',
+    color: "#1F2528",
+    fontSize: 14,
+    lineHeight: 21,
+    fontWeight: "400",
   },
 });
 

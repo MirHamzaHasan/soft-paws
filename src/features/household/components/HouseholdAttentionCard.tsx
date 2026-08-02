@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from "react-native";
 
 type HouseholdAttentionItem = {
   color: string;
@@ -13,30 +13,30 @@ type HouseholdAttentionCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#F3F6F7',
-    paddingHorizontal: 24,
-    paddingVertical: 24,
-    gap: 22,
+    backgroundColor: "#F3F6F7",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    gap: 12,
   },
   titleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
   titleEmoji: {
-    fontSize: 24,
-    lineHeight: 24,
+    fontSize: 16,
+    lineHeight: 18,
   },
   title: {
-    color: '#0A0A0A',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 14,
+    lineHeight: 18,
+    fontWeight: "400",
   },
   item: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 14,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 8,
   },
   dot: {
     width: 8,
@@ -46,19 +46,19 @@ const styles = StyleSheet.create({
   },
   copy: {
     flex: 1,
-    gap: 6,
+    gap: 2,
   },
   itemTitle: {
-    color: '#0A0A0A',
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 12,
+    lineHeight: 17,
+    fontWeight: "400",
   },
   detail: {
-    color: '#5E6670',
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#5E6670",
+    fontSize: 11,
+    lineHeight: 16,
+    fontWeight: "400",
   },
 });
 

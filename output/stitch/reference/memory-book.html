@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BarkLog - Memory Book</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-dim": "#525353",
+                        "surface-dim": "#d4dbdd",
+                        "on-secondary-fixed-variant": "#5a5c5b",
+                        "on-tertiary": "#fbf8f7",
+                        "surface-container-low": "#f2f4f4",
+                        "primary-container": "#e5e2e1",
+                        "primary-fixed": "#e5e2e1",
+                        "on-tertiary-fixed": "#494a49",
+                        "error": "#9f403d",
+                        "on-primary-fixed": "#403f3f",
+                        "inverse-surface": "#0c0f0f",
+                        "on-primary-container": "#525151",
+                        "on-surface-variant": "#5a6061",
+                        "primary-fixed-dim": "#d7d4d3",
+                        "on-primary": "#faf7f6",
+                        "on-error-container": "#752121",
+                        "on-surface": "#2d3435",
+                        "tertiary-dim": "#535352",
+                        "surface": "#f9f9f9",
+                        "surface-variant": "#dde4e5",
+                        "on-tertiary-container": "#5c5c5b",
+                        "on-secondary-container": "#505252",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#5f5e5e",
+                        "tertiary": "#5f5f5e",
+                        "on-tertiary-fixed-variant": "#666665",
+                        "on-secondary": "#f9f9f8",
+                        "on-primary-fixed-variant": "#5c5b5b",
+                        "tertiary-fixed": "#f5f3f2",
+                        "on-secondary-fixed": "#3e403f",
+                        "secondary": "#5e5f5f",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-error": "#fff7f6",
+                        "surface-container": "#ebeeef",
+                        "on-background": "#2d3435",
+                        "outline": "#757c7d",
+                        "outline-variant": "#adb3b4",
+                        "surface-container-highest": "#dde4e5",
+                        "primary": "#5f5e5e",
+                        "tertiary-container": "#f5f3f2",
+                        "primary-dim": "#535252",
+                        "inverse-on-surface": "#9c9d9d",
+                        "inverse-primary": "#ffffff",
+                        "background": "#f9f9f9",
+                        "surface-container-high": "#e4e9ea",
+                        "surface-bright": "#f9f9f9",
+                        "error-container": "#fe8983",
+                        "tertiary-fixed-dim": "#e7e5e4",
+                        "secondary-fixed-dim": "#d4d4d3",
+                        "error-dim": "#4e0309",
+                        "secondary-container": "#e2e2e2"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f9f9;
+            color: #2d3435;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-ink { color: #0A0A0A; }
+        .bg-ink { background-color: #0A0A0A; }
+        .border-ink { border-color: #0A0A0A; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen relative pb-safe">
+<!-- TopAppBar (from JSON) -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-xl border-b-[0.5px] border-[#E7E5E4] dark:border-[#262626] scale-95 active:scale-100 transition-transform">
+<div class="w-8 h-8 rounded-full overflow-hidden border-[0.5px] border-outline-variant">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="close up of a happy golden retriever dog's face in soft daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyLIO8OTK9tlfPSNLs296i-wrEXf1PnyWBAZu-yp0KAGP5to5YrFLb0FL7nt99v3gBC33_PIfEwyAaQn75l5SFSD_N5wM4SPuvktmpRSqTnpEvaSYwPfDoInuvYICa6dk5MzOofvBC8JkL5X2RU17jjcRZJjC3kVlT0Ai2MQF0jBEPEUtAGlFzlGpPNIAc4yMrVoEZGFhedYm1_KFYRKTzEB7IV-d3vU_SK_X5EeWy5iBpervtdcsy5P4faxNf-nKKLpk1rP3ucUg"/>
+</div>
+<h1 class="font-['Inter'] font-medium text-[16px] tracking-tight text-[#0A0A0A] dark:text-[#FAFAFA]">BarkLog</h1>
+<button class="w-8 h-8 flex items-center justify-center text-[#0A0A0A] dark:text-[#FAFAFA] hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="pt-20 pb-28 px-4 max-w-md mx-auto flex flex-col gap-6">
+<!-- Month Selector -->
+<nav class="flex overflow-x-auto gap-3 py-1 hide-scrollbar -mx-4 px-4 items-center">
+<button class="px-4 py-1.5 rounded-[14px] border-[0.5px] border-outline-variant text-on-surface text-sm font-medium whitespace-nowrap bg-surface">Sep 2023</button>
+<button class="px-4 py-1.5 rounded-[14px] border-[0.5px] border-outline-variant text-on-surface text-sm font-medium whitespace-nowrap bg-surface">Oct 2023</button>
+<button class="px-4 py-1.5 rounded-[14px] bg-ink text-[#FAFAFA] text-sm font-medium whitespace-nowrap">Nov 2023</button>
+<button class="px-4 py-1.5 rounded-[14px] border-[0.5px] border-outline-variant text-on-surface text-sm font-medium whitespace-nowrap bg-surface">Dec 2023</button>
+</nav>
+<!-- Shareable Monthly Card (Instagram Story Style) -->
+<div class="relative w-full aspect-[9/16] bg-surface-container-lowest border-[0.5px] border-outline-variant rounded-[16px] overflow-hidden flex flex-col shadow-[0_4px_24px_rgba(10,10,10,0.04)]" id="monthly-card">
+<!-- Hero Image Header -->
+<div class="h-[45%] w-full relative">
+<img alt="Dog in autumn" class="w-full h-full object-cover" data-alt="golden retriever dog sitting in a park surrounded by fallen crisp yellow autumn leaves under soft natural sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVPI0BKR6c085XhpGs9HfMqGD7I7zvLkFptFtRWNCxIQRHDEG_ONXRyYsllmr6t4wOU8Mjd8wa-Zxr1HhjCVd5ZH0btFjgE1-RMSgsZDDts5LKVVJAsQ9FCYFPblw1tySq1muIAi1v5x6kafOhUXb4Wt0UevpQ4Wp96rnbdqV_49Sp_snx_ap7IfBg-333fNmnXvxgm_POt1kcGqKrRXgel84TJ6cUF8w0jeN0qs26LWttGsA3lAc8WdP0dVH2uSYHssJAc-G-ByE"/>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#ffffff]/90 flex flex-col justify-end p-5">
+<h2 class="font-headline text-[28px] font-medium tracking-tight text-ink leading-none">November</h2>
+<p class="text-[11px] font-medium tracking-[0.05em] uppercase text-on-surface-variant mt-1">Volume 11 • The Living Archive</p>
+</div>
+</div>
+<!-- Card Body Content -->
+<div class="flex-1 p-5 flex flex-col justify-between">
+<!-- AI Narrative -->
+<div class="mb-4">
+<p class="font-body text-[14px] leading-relaxed text-on-surface text-balance">
+                        A crisp month marked by longer morning patrols through the crunching leaves. We discovered a new trail by the creek and mastered the "wait" command before dinner.
+                    </p>
+</div>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-2 gap-3 mb-4">
+<!-- Stat 1 -->
+<div class="bg-[#FFF9E6] border-[0.5px] border-[#FFECB3] rounded-[12px] p-3 flex flex-col justify-between aspect-[4/3]">
+<span class="material-symbols-outlined text-[#7A5500] text-xl" data-icon="directions_walk">directions_walk</span>
+<div>
+<div class="text-[24px] font-medium text-[#7A5500] tracking-tight leading-none mb-1">42</div>
+<div class="text-[11px] font-medium uppercase tracking-widest text-[#7A5500]/70">Walks Logged</div>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="bg-[#F2F8F1] border-[0.5px] border-[#D9EAD3] rounded-[12px] p-3 flex flex-col justify-between aspect-[4/3]">
+<span class="material-symbols-outlined text-[#1B5E20] text-xl" data-icon="restaurant">restaurant</span>
+<div>
+<div class="text-[24px] font-medium text-[#1B5E20] tracking-tight leading-none mb-1">60</div>
+<div class="text-[11px] font-medium uppercase tracking-widest text-[#1B5E20]/70">Meals Served</div>
+</div>
+</div>
+<!-- Stat 3 -->
+<div class="bg-surface-container-low border-[0.5px] border-outline-variant rounded-[12px] p-3 flex flex-col justify-between aspect-[4/3]">
+<span class="material-symbols-outlined text-on-surface text-xl" data-icon="timer">timer</span>
+<div>
+<div class="text-[24px] font-medium text-on-surface tracking-tight leading-none mb-1">28h</div>
+<div class="text-[11px] font-medium uppercase tracking-widest text-on-surface-variant">Active Time</div>
+</div>
+</div>
+<!-- Stat 4 -->
+<div class="bg-surface-container-low border-[0.5px] border-outline-variant rounded-[12px] p-3 flex flex-col justify-between aspect-[4/3]">
+<span class="material-symbols-outlined text-on-surface text-xl" data-icon="route">route</span>
+<div>
+<div class="text-[24px] font-medium text-on-surface tracking-tight leading-none mb-1">112m</div>
+<div class="text-[11px] font-medium uppercase tracking-widest text-on-surface-variant">Distance</div>
+</div>
+</div>
+</div>
+<!-- Milestone Badges -->
+<div class="flex flex-wrap gap-2 mt-auto pb-2">
+<span class="bg-surface px-2.5 py-1 rounded-full text-[11px] font-medium border-[0.5px] border-outline-variant text-on-surface flex items-center gap-1">
+                        🍂 Autumn Explorer
+                    </span>
+<span class="bg-surface px-2.5 py-1 rounded-full text-[11px] font-medium border-[0.5px] border-outline-variant text-on-surface flex items-center gap-1">
+                        🦴 Good Boy Streak
+                    </span>
+</div>
+<!-- Footer Watermark -->
+<div class="mt-2 pt-3 border-t-[0.5px] border-[#E7E5E4] flex justify-between items-center opacity-60">
+<span class="font-['Inter'] font-medium text-[12px] tracking-tight text-ink">BarkLog</span>
+<span class="text-[10px] uppercase tracking-widest text-on-surface-variant">@companion_name</span>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex gap-3 mt-2">
+<button class="flex-1 bg-ink text-[#FAFAFA] rounded-[14px] py-3.5 flex items-center justify-center gap-2 font-medium text-[14px] transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="ios_share">ios_share</span>
+                Share to Story
+            </button>
+<button class="flex-1 bg-background text-ink border-[0.5px] border-outline-variant rounded-[14px] py-3.5 flex items-center justify-center gap-2 font-medium text-[14px] transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+                Save Image
+            </button>
+</div>
+</main>
+<!-- BottomNavBar (from JSON, Active logic applied) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-4 bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-xl border-t-[0.5px] border-[#E7E5E4] dark:border-[#262626] tap-highlight-transparent md:hidden">
+<a class="flex flex-col items-center justify-center text-[#A1A1AA] hover:text-[#0A0A0A] dark:hover:text-[#FAFAFA] transition-colors gap-1" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="font-['Inter'] font-medium text-[11px] uppercase tracking-[0.05em]">Archive</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#A1A1AA] hover:text-[#0A0A0A] dark:hover:text-[#FAFAFA] transition-colors gap-1" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-['Inter'] font-medium text-[11px] uppercase tracking-[0.05em]">Ledger</span>
+</a>
+<!-- Active Tab: Memories -->
+<a class="flex flex-col items-center justify-center text-[#0A0A0A] dark:text-[#FAFAFA] hover:text-[#0A0A0A] dark:hover:text-[#FAFAFA] transition-colors gap-1" href="#">
+<span class="material-symbols-outlined" data-icon="auto_stories" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<span class="font-['Inter'] font-medium text-[11px] uppercase tracking-[0.05em]">Memories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#A1A1AA] hover:text-[#0A0A0A] dark:hover:text-[#FAFAFA] transition-colors gap-1" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Inter'] font-medium text-[11px] uppercase tracking-[0.05em]">Profile</span>
+</a>
+</nav>
+</body></html>

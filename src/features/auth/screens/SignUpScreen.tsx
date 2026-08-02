@@ -21,16 +21,16 @@ import { AUTH_COLORS } from '../components/authTheme';
 
 const styles = StyleSheet.create({
   form: {
-    gap: 30,
+    gap: 24,
   },
   actions: {
-    marginTop: 34,
-    gap: 26,
+    marginTop: 32,
+    gap: 16,
   },
   helperTextError: {
     color: '#791F1F',
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 11,
+    lineHeight: 16,
     fontWeight: '400',
     marginTop: -18,
   },
@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
   },
   footerText: {
     color: AUTH_COLORS.textMuted,
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
   },
   footerLink: {
     color: AUTH_COLORS.textPrimary,
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '500',
     textDecorationLine: 'underline',
   },
@@ -132,8 +132,8 @@ export default function SignUpScreen() {
       title="Create your account"
       subtitle="Join The Living Archive to start logging."
       heroAlign="left"
-      heroTopSpacing={Platform.select({ web: 80, default: 72 }) ?? 72}
-      bodyTopSpacing={Platform.select({ web: 62, default: 56 }) ?? 56}
+      heroTopSpacing={Platform.select({ web: 28, default: 24 }) ?? 24}
+      bodyTopSpacing={40}
       onBackPress={() => router.replace('/(auth)/welcome')}
       showTopDivider
     >

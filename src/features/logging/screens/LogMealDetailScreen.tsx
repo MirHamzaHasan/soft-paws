@@ -1,57 +1,65 @@
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useRouter } from "expo-router";
+import { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { BarklogStatusBanner } from '@/components/ui';
+import { BarklogStatusBanner } from "@/components/ui";
 
-import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { OnboardingChoiceChip } from '../../onboarding/components/OnboardingChoiceChip';
-import { SearchIcon } from '../../onboarding/components/OnboardingIcons';
-import { LogDetailLayout } from '../components/LogDetailLayout';
-import { LogNotesCard } from '../components/LogNotesCard';
-import { LogSegmentedControl } from '../components/LogSegmentedControl';
-import { LogUnderlineField } from '../components/LogUnderlineField';
+import { PrimaryButton } from "../../../components/ui/PrimaryButton";
+import { OnboardingChoiceChip } from "../../onboarding/components/OnboardingChoiceChip";
+import { SearchIcon } from "../../onboarding/components/OnboardingIcons";
+import { LogDetailLayout } from "../components/LogDetailLayout";
+import { LogNotesCard } from "../components/LogNotesCard";
+import { LogSegmentedControl } from "../components/LogSegmentedControl";
+import { LogUnderlineField } from "../components/LogUnderlineField";
 import {
   createLocalAttachmentUri,
-  DETAIL_WHEN_OPTIONS,
   type DetailWhenValue,
   normalizeOptionalText,
   parseOptionalNumber,
   resolveDetailWhenTimestamp,
   useDetailedEventSave,
-} from '../hooks/useDetailedEventSave';
+} from "../hooks/useDetailedEventSave";
 
-type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'treat';
-type AmountUnit = 'cups' | 'grams';
+type MealType = "breakfast" | "lunch" | "dinner" | "snack" | "treat";
+type AmountUnit = "cups" | "grams";
 
 const MEAL_OPTIONS: {
   value: MealType;
   label: string;
   leading?: string;
 }[] = [
-  { value: 'breakfast', label: 'Breakfast', leading: '🦴' },
-  { value: 'lunch', label: 'Lunch' },
-  { value: 'dinner', label: 'Dinner' },
-  { value: 'snack', label: 'Snack' },
-  { value: 'treat', label: 'Treat', leading: '🥓' },
+  { value: "breakfast", label: "Breakfast", leading: "🦴" },
+  { value: "lunch", label: "Lunch" },
+  { value: "dinner", label: "Dinner" },
+  { value: "snack", label: "Snack" },
+  { value: "treat", label: "Treat", leading: "🥓" },
 ];
 
 const styles = StyleSheet.create({
   content: {
-    gap: 34,
+    gap: 32,
   },
   section: {
     gap: 16,
   },
   sectionLabel: {
-    color: '#263136',
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '400',
+    color: "#A8A29E",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
+  },
+  whenValue: {
+    color: "#0A0A0A",
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: "500",
+    letterSpacing: -0.5,
   },
   amountRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
+    flexDirection: "row",
+    alignItems: "flex-end",
     gap: 22,
   },
   amountField: {
@@ -61,27 +69,27 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   chipGrid: {
-    gap: 16,
+    gap: 12,
   },
   chipWrap: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 14,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 12,
   },
   chipItem: {
-    minWidth: 126,
+    flexShrink: 0,
   },
   action: {
     marginTop: 18,
   },
   errorText: {
-    color: '#B02921',
+    color: "#B02921",
     fontSize: 15,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "400",
   },
   mealIcon: {
-    fontSize: 18,
+    fontSize: 14,
     lineHeight: 20,
   },
 });
@@ -97,23 +105,23 @@ function renderMealLeading(emoji?: string) {
 export default function LogMealDetailScreen() {
   const router = useRouter();
   const { canSave, error, isSaving, saveEvent } = useDetailedEventSave();
-  const [when, setWhen] = useState<DetailWhenValue>('just-now');
-  const [mealType, setMealType] = useState<MealType>('breakfast');
-  const [amountUnit, setAmountUnit] = useState<AmountUnit>('cups');
-  const [amount, setAmount] = useState('1.5');
-  const [brand, setBrand] = useState('Orijen Regional Red');
-  const [notes, setNotes] = useState('');
+  const [when, setWhen] = useState<DetailWhenValue>("just-now");
+  const [mealType, setMealType] = useState<MealType>("breakfast");
+  const [amountUnit, setAmountUnit] = useState<AmountUnit>("cups");
+  const [amount, setAmount] = useState("1.5");
+  const [brand, setBrand] = useState("Orijen Regional Red");
+  const [notes, setNotes] = useState("");
   const [photoAttached, setPhotoAttached] = useState(false);
 
   const handleSave = async () => {
     try {
       const numericAmount = parseOptionalNumber(amount);
       const amountCups =
-        amountUnit === 'cups' && numericAmount !== undefined
+        amountUnit === "cups" && numericAmount !== undefined
           ? numericAmount
           : undefined;
       const amountGrams =
-        amountUnit === 'grams' && numericAmount !== undefined
+        amountUnit === "grams" && numericAmount !== undefined
           ? numericAmount
           : undefined;
       const event = await saveEvent({
@@ -125,8 +133,8 @@ export default function LogMealDetailScreen() {
         },
         notes: normalizeOptionalText(notes),
         occurredAt: resolveDetailWhenTimestamp(when),
-        photoUrl: photoAttached ? createLocalAttachmentUri('meal') : null,
-        type: 'meal',
+        photoUrl: photoAttached ? createLocalAttachmentUri("meal") : null,
+        type: "meal",
       });
 
       router.replace(`/event/${event.id}`);
@@ -140,24 +148,30 @@ export default function LogMealDetailScreen() {
       <View style={styles.content}>
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>When</Text>
-          <LogSegmentedControl
-            value={when}
-            variant="split"
-            size="large"
-            options={DETAIL_WHEN_OPTIONS}
-            onChange={(value) => setWhen(value as DetailWhenValue)}
-          />
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Change meal time"
+            onPress={() =>
+              setWhen((current) =>
+                current === "just-now" ? "earlier" : "just-now",
+              )
+            }
+          >
+            <Text style={styles.whenValue}>
+              {when === "just-now" ? "Today, 8:30 AM" : "Earlier today"}
+            </Text>
+          </Pressable>
         </View>
 
         <View style={styles.chipGrid}>
           <Text
             style={{
-              color: '#A7A099',
-              fontSize: 12,
-              lineHeight: 16,
-              fontWeight: '500',
-              letterSpacing: 1.8,
-              textTransform: 'uppercase',
+              color: "#A7A099",
+              fontSize: 11,
+              lineHeight: 14,
+              fontWeight: "500",
+              letterSpacing: 0.8,
+              textTransform: "uppercase",
             }}
           >
             MEAL TYPE
@@ -190,9 +204,9 @@ export default function LogMealDetailScreen() {
               keyboardType="decimal-pad"
               onChangeText={setAmount}
               inputTextStyle={{
-                fontSize: 24,
-                lineHeight: 30,
-                fontWeight: '500',
+                fontSize: 28,
+                lineHeight: 34,
+                fontWeight: "500",
               }}
             />
           </View>
@@ -201,8 +215,8 @@ export default function LogMealDetailScreen() {
             <LogSegmentedControl
               value={amountUnit}
               options={[
-                { label: 'Cups', value: 'cups' },
-                { label: 'Grams', value: 'grams' },
+                { label: "Cups", value: "cups" },
+                { label: "Grams", value: "grams" },
               ]}
               onChange={(value) => setAmountUnit(value as AmountUnit)}
             />
@@ -233,7 +247,7 @@ export default function LogMealDetailScreen() {
             />
           ) : null}
           <PrimaryButton
-            label={isSaving ? 'Saving...' : 'Save Meal'}
+            label={isSaving ? "Saving..." : "Save Meal"}
             size="large"
             disabled={!canSave || isSaving}
             onPress={() => {

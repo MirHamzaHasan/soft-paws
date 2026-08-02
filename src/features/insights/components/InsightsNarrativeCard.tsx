@@ -1,5 +1,5 @@
-import { type ReactNode } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { type ReactNode } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 type InsightsNarrativeCardProps = {
   eyebrow: string;
@@ -14,38 +14,38 @@ type InsightsNarrativeCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 28,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E5E1DB',
-    backgroundColor: '#FFFCFA',
-    paddingHorizontal: 22,
-    paddingVertical: 22,
-    gap: 14,
+    borderColor: "#E5E1DB",
+    backgroundColor: "#FFFCFA",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    gap: 12,
   },
   eyebrow: {
-    fontSize: 12,
-    lineHeight: 16,
-    fontWeight: '500',
-    letterSpacing: 1.2,
-    textTransform: 'uppercase',
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "500",
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
   },
   eyebrowRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
   },
   title: {
-    color: '#0A0A0A',
-    fontSize: 24,
-    lineHeight: 30,
-    fontWeight: '500',
+    color: "#0A0A0A",
+    fontSize: 18,
+    lineHeight: 24,
+    fontWeight: "500",
     letterSpacing: -0.6,
   },
   body: {
-    color: '#5F6670',
-    fontSize: 17,
-    lineHeight: 28,
-    fontWeight: '400',
+    color: "#5F6670",
+    fontSize: 14,
+    lineHeight: 21,
+    fontWeight: "400",
   },
 });
 
@@ -54,10 +54,10 @@ export function InsightsNarrativeCard({
   title,
   body,
   eyebrowIcon,
-  borderColor = '#E5E1DB',
-  backgroundColor = '#FFFCFA',
-  eyebrowColor = '#7A847F',
-  bodyColor = '#5F6670',
+  borderColor = "#E5E1DB",
+  backgroundColor = "#FFFCFA",
+  eyebrowColor = "#7A847F",
+  bodyColor = "#5F6670",
 }: InsightsNarrativeCardProps) {
   return (
     <View style={[styles.card, { borderColor, backgroundColor }]}>

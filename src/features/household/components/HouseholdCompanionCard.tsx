@@ -1,7 +1,7 @@
-import { isValidElement, type ReactNode } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { isValidElement, type ReactNode } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { HomeAvatar } from '../../home/components/HomeAvatar';
+import { HomeAvatar } from "../../home/components/HomeAvatar";
 
 type HouseholdCompanionCardProps = {
   name: string;
@@ -22,101 +22,101 @@ type HouseholdCompanionCardProps = {
 const styles = StyleSheet.create({
   card: {
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#D7D3CF',
-    backgroundColor: '#FFFCFA',
+    borderColor: "#D7D3CF",
+    backgroundColor: "#FFFCFA",
   },
   cardSelected: {
-    borderColor: '#0A0A0A',
+    borderColor: "#0A0A0A",
   },
   header: {
-    paddingHorizontal: 24,
-    paddingVertical: 22,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 18,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
   },
   copy: {
     flex: 1,
     minWidth: 0,
-    gap: 6,
+    gap: 2,
   },
   name: {
-    color: '#0A0A0A',
-    fontSize: 24,
-    lineHeight: 30,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 18,
+    lineHeight: 23,
+    fontWeight: "400",
   },
   meta: {
-    color: '#4E5660',
-    fontSize: 17,
-    lineHeight: 26,
-    fontWeight: '400',
+    color: "#4E5660",
+    fontSize: 12,
+    lineHeight: 17,
+    fontWeight: "400",
   },
   middle: {
-    paddingHorizontal: 24,
-    paddingVertical: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#D7D3CF',
-    gap: 16,
+    borderTopColor: "#D7D3CF",
+    gap: 10,
   },
   row: {
-    flexDirection: 'row',
-    gap: 18,
+    flexDirection: "row",
+    gap: 12,
   },
   metricCell: {
     flex: 1,
-    gap: 8,
+    gap: 4,
   },
   metricLabel: {
-    color: '#4E5660',
-    fontSize: 12,
-    lineHeight: 16,
-    fontWeight: '500',
+    color: "#4E5660",
+    fontSize: 9,
+    lineHeight: 12,
+    fontWeight: "500",
     letterSpacing: 1.8,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   metricValue: {
-    color: '#0A0A0A',
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 13,
+    lineHeight: 18,
+    fontWeight: "400",
   },
   metricAlert: {
-    color: '#B03A32',
+    color: "#B03A32",
   },
   tagsRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 6,
   },
   actionStrip: {
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#D7D3CF',
-    flexDirection: 'row',
+    borderTopColor: "#D7D3CF",
+    flexDirection: "row",
   },
   actionCell: {
     flex: 1,
-    minHeight: 72,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
+    minHeight: 52,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
     borderRightWidth: StyleSheet.hairlineWidth,
-    borderRightColor: '#D7D3CF',
+    borderRightColor: "#D7D3CF",
   },
   actionCellLast: {
     borderRightWidth: 0,
   },
   actionEmoji: {
-    fontSize: 18,
-    lineHeight: 18,
+    fontSize: 14,
+    lineHeight: 16,
   },
   actionLabel: {
-    color: '#4E5660',
-    fontSize: 13,
-    lineHeight: 16,
-    fontWeight: '500',
+    color: "#4E5660",
+    fontSize: 9,
+    lineHeight: 12,
+    fontWeight: "500",
     letterSpacing: 1.2,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
 });
 
@@ -146,7 +146,7 @@ export function HouseholdCompanionCard({
         <HomeAvatar
           emoji={avatarEmoji}
           backgroundColor={avatarBackgroundColor}
-          size={74}
+          size={48}
         />
 
         <View style={styles.copy}>
@@ -168,7 +168,7 @@ export function HouseholdCompanionCard({
             <Text
               style={[
                 styles.metricValue,
-                nextValue.includes('Overdue') ? styles.metricAlert : null,
+                nextValue.includes("Overdue") ? styles.metricAlert : null,
               ]}
             >
               {nextValue}

@@ -12,14 +12,14 @@ type ReturningActionCardProps = {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 26,
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#DDD8D2',
     backgroundColor: '#FFFCFA',
-    paddingHorizontal: 22,
-    paddingTop: 20,
-    paddingBottom: 22,
-    gap: 24,
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 24,
+    gap: 18,
   },
   topRow: {
     flexDirection: 'row',
@@ -27,18 +27,18 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   copy: {
-    gap: 10,
+    gap: 8,
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 22,
-    lineHeight: 28,
-    fontWeight: '400',
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: '500',
   },
   body: {
     color: '#5D656D',
-    fontSize: 16,
-    lineHeight: 28,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
   },
 });

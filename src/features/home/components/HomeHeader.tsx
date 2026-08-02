@@ -21,26 +21,26 @@ const styles = StyleSheet.create({
   },
   inner: {
     width: '100%',
-    maxWidth: 760,
+    maxWidth: 390,
     alignSelf: 'center',
-    paddingHorizontal: 18,
-    paddingTop: 10,
-    paddingBottom: 16,
+    paddingHorizontal: 12,
+    paddingTop: 8,
+    paddingBottom: 9,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 16,
+    gap: 10,
   },
   identity: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 14,
+    gap: 8,
     minWidth: 0,
   },
   copy: {
     flex: 1,
-    gap: 4,
+    gap: 1,
     minWidth: 0,
   },
   copyCompact: {
@@ -48,14 +48,14 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 22,
-    lineHeight: 28,
+    fontSize: 12,
+    lineHeight: 15,
     fontWeight: '500',
   },
   subtitle: {
     color: '#5F6670',
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 9,
+    lineHeight: 12,
     fontWeight: '400',
   },
   settingsButton: {
@@ -85,6 +85,7 @@ export function HomeHeader({
           <HomeAvatar
             emoji={avatarEmoji}
             backgroundColor={avatarBackgroundColor}
+            size={36}
           />
 
           <View style={[styles.copy, compact ? styles.copyCompact : null]}>
@@ -99,6 +100,7 @@ export function HomeHeader({
 
         <Pressable
           accessibilityRole="button"
+          accessibilityLabel="Open settings"
           style={styles.settingsButton}
           onPress={() => router.push('/settings')}
         >

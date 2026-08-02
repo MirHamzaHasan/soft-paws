@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { sendPasswordResetEmail } from '@/api';
 import { BarklogStatusBanner } from '@/components/ui';
@@ -14,10 +14,10 @@ import { AUTH_COLORS } from '../components/authTheme';
 
 const styles = StyleSheet.create({
   form: {
-    gap: 38,
+    gap: 32,
   },
   actions: {
-    marginTop: 14,
+    marginTop: 0,
   },
 });
 
@@ -66,8 +66,9 @@ export default function ForgotPasswordScreen() {
       title="Reset password"
       subtitle="We'll send a reset link to your email."
       heroAlign="left"
-      heroTopSpacing={Platform.select({ web: 216, default: 188 }) ?? 188}
-      bodyTopSpacing={Platform.select({ web: 74, default: 66 }) ?? 66}
+      heroTopSpacing={0}
+      bodyTopSpacing={48}
+      centerContent
       onBackPress={() => router.replace('/(auth)/sign-in')}
       showTopDivider
     >

@@ -10,12 +10,12 @@ type MedicationTimeRowProps = {
 
 const styles = StyleSheet.create({
   card: {
-    minHeight: 58,
-    borderRadius: 14,
+    minHeight: 40,
+    borderRadius: 8,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#D9D4CE',
     backgroundColor: '#FFFCFA',
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#0A0A0A',
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 12,
+    lineHeight: 18,
     fontWeight: '400',
   },
   timeWrap: {
@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
   },
   time: {
     color: '#0A0A0A',
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 12,
+    lineHeight: 18,
     fontWeight: '400',
   },
 });

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from "react-native";
 
 type HouseholdSummaryItem = {
   label: string;
@@ -15,47 +15,47 @@ type HouseholdSummaryGridProps = {
 
 const styles = StyleSheet.create({
   stack: {
-    gap: 20,
+    gap: 12,
   },
   headingRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 8,
   },
   title: {
-    color: '#0A0A0A',
-    fontSize: 34,
-    lineHeight: 40,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 24,
+    lineHeight: 30,
+    fontWeight: "400",
     letterSpacing: -1.1,
   },
   date: {
-    color: '#4E5660',
-    fontSize: 14,
-    lineHeight: 18,
-    fontWeight: '500',
+    color: "#4E5660",
+    fontSize: 10,
+    lineHeight: 14,
+    fontWeight: "500",
     letterSpacing: 1,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   grid: {
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#D7D3CF',
-    backgroundColor: '#FFFCFA',
+    borderColor: "#D7D3CF",
+    backgroundColor: "#FFFCFA",
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   cell: {
     flex: 1,
-    minHeight: 144,
-    paddingHorizontal: 24,
-    paddingTop: 20,
-    paddingBottom: 18,
-    gap: 12,
+    minHeight: 88,
+    paddingHorizontal: 14,
+    paddingTop: 12,
+    paddingBottom: 10,
+    gap: 4,
     borderRightWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: '#D7D3CF',
+    borderColor: "#D7D3CF",
   },
   cellLastColumn: {
     borderRightWidth: 0,
@@ -64,24 +64,24 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
   label: {
-    color: '#4E5660',
-    fontSize: 12,
-    lineHeight: 16,
-    fontWeight: '500',
+    color: "#4E5660",
+    fontSize: 9,
+    lineHeight: 12,
+    fontWeight: "500",
     letterSpacing: 1.8,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   value: {
-    color: '#0A0A0A',
-    fontSize: 26,
-    lineHeight: 32,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 20,
+    lineHeight: 24,
+    fontWeight: "400",
   },
   detail: {
-    color: '#5E6670',
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '400',
+    color: "#5E6670",
+    fontSize: 11,
+    lineHeight: 15,
+    fontWeight: "400",
   },
 });
 
@@ -91,8 +91,8 @@ export function HouseholdSummaryGrid({
   items,
 }: HouseholdSummaryGridProps) {
   const rows = [
-    { key: 'top', items: items.slice(0, 2) },
-    { key: 'bottom', items: items.slice(2, 4) },
+    { key: "top", items: items.slice(0, 2) },
+    { key: "bottom", items: items.slice(2, 4) },
   ];
 
   return (

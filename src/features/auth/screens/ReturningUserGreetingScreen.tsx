@@ -14,30 +14,33 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: 1,
-    paddingHorizontal: 28,
-    paddingTop: 22,
-    paddingBottom: 32,
+    width: '100%',
+    maxWidth: 896,
+    alignSelf: 'center',
+    paddingHorizontal: 24,
+    paddingTop: 48,
+    paddingBottom: 48,
     justifyContent: 'space-between',
   },
   top: {
-    gap: 28,
+    gap: 24,
   },
   title: {
     color: '#0A0A0A',
-    fontSize: 70,
-    lineHeight: 76,
-    fontWeight: '300',
-    letterSpacing: -2.4,
+    fontSize: 56,
+    lineHeight: 62,
+    fontWeight: '400',
+    letterSpacing: -1.1,
   },
   subtitle: {
     color: '#5D656D',
-    fontSize: 22,
-    lineHeight: 42,
-    fontWeight: '400',
+    fontSize: 28,
+    lineHeight: 36,
+    fontWeight: '500',
   },
   cardStack: {
-    gap: 22,
-    marginTop: 22,
+    gap: 24,
+    marginTop: 12,
   },
   divider: {
     height: StyleSheet.hairlineWidth,
@@ -45,13 +48,13 @@ const styles = StyleSheet.create({
   },
   footerText: {
     color: '#5D656D',
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
     textAlign: 'center',
   },
   bottom: {
-    gap: 20,
+    gap: 16,
   },
 });
 

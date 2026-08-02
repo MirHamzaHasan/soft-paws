@@ -1,15 +1,15 @@
-import { Stack } from 'expo-router';
-import { type ReactNode } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Stack } from "expo-router";
+import { type ReactNode } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { ArrowLeftIcon } from '../../auth/components/AuthIcons';
+import { ArrowLeftIcon } from "../../auth/components/AuthIcons";
 
 type LogDetailLayoutProps = {
   title: string;
   onBackPress: () => void;
   children: ReactNode;
-  headerVariant?: 'caps' | 'brand';
+  headerVariant?: "caps" | "brand";
   trailing?: ReactNode;
   footer?: ReactNode;
 };
@@ -17,49 +17,49 @@ type LogDetailLayoutProps = {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FAFAFA',
+    backgroundColor: "#FAFAFA",
   },
   screen: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#FAFAFA',
+    alignItems: "center",
+    backgroundColor: "#FAFAFA",
   },
   shell: {
     flex: 1,
-    width: '100%',
-    maxWidth: 720,
+    width: "100%",
+    maxWidth: 576,
   },
   topBar: {
-    minHeight: 74,
+    minHeight: 64,
     paddingHorizontal: 24,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#E8E2DC',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderBottomColor: "#E8E2DC",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   backButton: {
-    position: 'absolute',
+    position: "absolute",
     left: 24,
     width: 44,
     height: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
-    color: '#0A0A0A',
-    fontSize: 20,
-    lineHeight: 28,
-    fontWeight: '500',
-    letterSpacing: 3.2,
-    textTransform: 'uppercase',
-  },
-  titleBrand: {
+    color: "#0A0A0A",
     fontSize: 18,
     lineHeight: 24,
-    fontWeight: '500',
+    fontWeight: "500",
+    letterSpacing: 2.4,
+    textTransform: "uppercase",
+  },
+  titleBrand: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: "500",
     letterSpacing: 0,
-    textTransform: 'none',
+    textTransform: "none",
   },
   scrollView: {
     flex: 1,
@@ -67,16 +67,16 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: 24,
-    paddingTop: 28,
-    paddingBottom: 36,
+    paddingTop: 32,
+    paddingBottom: 128,
   },
   trailingWrap: {
-    position: 'absolute',
+    position: "absolute",
     right: 24,
     minWidth: 44,
     minHeight: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
@@ -84,7 +84,7 @@ export function LogDetailLayout({
   title,
   onBackPress,
   children,
-  headerVariant = 'caps',
+  headerVariant = "caps",
   trailing,
   footer,
 }: LogDetailLayoutProps) {
@@ -94,7 +94,7 @@ export function LogDetailLayout({
 
       <SafeAreaView
         style={styles.safeArea}
-        edges={['top', 'right', 'bottom', 'left']}
+        edges={["top", "right", "bottom", "left"]}
       >
         <View style={styles.screen}>
           <View style={styles.shell}>
@@ -112,7 +112,7 @@ export function LogDetailLayout({
               <Text
                 style={[
                   styles.title,
-                  headerVariant === 'brand' ? styles.titleBrand : null,
+                  headerVariant === "brand" ? styles.titleBrand : null,
                 ]}
               >
                 {title}

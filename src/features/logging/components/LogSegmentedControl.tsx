@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type SegmentOption = {
   label: string;
@@ -9,57 +9,57 @@ type LogSegmentedControlProps = {
   value: string;
   options: readonly SegmentOption[];
   onChange: (value: string) => void;
-  variant?: 'joined' | 'split';
-  size?: 'default' | 'large';
+  variant?: "joined" | "split";
+  size?: "default" | "large";
 };
 
 const styles = StyleSheet.create({
   shell: {
-    minHeight: 50,
-    flexDirection: 'row',
+    minHeight: 40,
+    flexDirection: "row",
     borderRadius: 14,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#DDD8D2',
-    backgroundColor: '#FFFCFA',
-    overflow: 'hidden',
+    borderColor: "#DDD8D2",
+    backgroundColor: "#FFFCFA",
+    overflow: "hidden",
   },
   shellSplit: {
     minHeight: 0,
     borderWidth: 0,
-    backgroundColor: 'transparent',
-    gap: 16,
-    overflow: 'visible',
+    backgroundColor: "transparent",
+    gap: 12,
+    overflow: "visible",
   },
   segment: {
-    minWidth: 92,
-    minHeight: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 18,
+    minWidth: 64,
+    minHeight: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 12,
   },
   segmentLarge: {
-    minHeight: 78,
-    borderRadius: 22,
+    minHeight: 48,
+    borderRadius: 14,
   },
   segmentSplit: {
     flex: 1,
-    borderRadius: 22,
+    borderRadius: 14,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#DDD8D2',
-    backgroundColor: '#FFFCFA',
+    borderColor: "#DDD8D2",
+    backgroundColor: "#FFFCFA",
   },
   segmentActive: {
-    backgroundColor: '#0A0A0A',
-    borderColor: '#0A0A0A',
+    backgroundColor: "#0A0A0A",
+    borderColor: "#0A0A0A",
   },
   segmentLabel: {
-    color: '#0A0A0A',
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '400',
+    color: "#0A0A0A",
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: "500",
   },
   segmentLabelActive: {
-    color: '#FAFAFA',
+    color: "#FAFAFA",
   },
 });
 
@@ -67,11 +67,11 @@ export function LogSegmentedControl({
   value,
   options,
   onChange,
-  variant = 'joined',
-  size = 'default',
+  variant = "joined",
+  size = "default",
 }: LogSegmentedControlProps) {
-  const split = variant === 'split';
-  const large = size === 'large';
+  const split = variant === "split";
+  const large = size === "large";
 
   return (
     <View style={[styles.shell, split ? styles.shellSplit : null]}>

@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react';
+import { Platform } from 'react-native';
 import { Button, Paragraph, XStack } from 'tamagui';
 
 import { barklogTypography } from '@/theme/tokens';
@@ -64,8 +65,10 @@ export function BarklogButton({
   return (
     <Button
       unstyled
-      accessibilityLabel={accessibilityLabel ?? label}
-      accessibilityRole="button"
+      accessibilityLabel={
+        Platform.OS === 'web' ? undefined : (accessibilityLabel ?? label)
+      }
+      accessibilityRole={Platform.OS === 'web' ? undefined : 'button'}
       disabled={disabled}
       opacity={disabled ? 0.5 : 1}
       minHeight={large ? '$buttonLg' : '$button'}
