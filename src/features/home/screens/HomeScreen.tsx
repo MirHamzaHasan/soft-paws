@@ -1,8 +1,12 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { BarklogStatusBanner, useBarklogFeedback } from '@/components/ui';
+import {
+  BarklogBottomSheet,
+  BarklogStatusBanner,
+  useBarklogFeedback,
+} from '@/components/ui';
 import { captureBarklogError } from '@/features/observability';
 import { SkeletonBlock } from '@/features/states/components/SkeletonBlock';
 import { useSyncDisplayStatus } from '@/features/sync/hooks/useSyncDisplayStatus';
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
     color: barklogEventColors.medication.text,
     fontSize: 14,
     lineHeight: 18,
-    fontWeight: '300',
+    fontWeight: '400',
   },
   secondaryRow: {
     display: 'none',
@@ -163,34 +167,9 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 18,
     fontWeight: '500',
+    fontFamily: 'Inter_500Medium',
     letterSpacing: 1.1,
     textTransform: 'uppercase',
-  },
-  moodSheetBackdrop: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(10, 10, 10, 0.24)',
-  },
-  moodSheetCard: {
-    width: '100%',
-    maxWidth: 760,
-    alignSelf: 'center',
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E7E5E4',
-    backgroundColor: '#FAFAFA',
-    paddingHorizontal: 20,
-    paddingTop: 12,
-    paddingBottom: 28,
-    gap: 18,
-  },
-  moodSheetHandle: {
-    alignSelf: 'center',
-    width: 42,
-    height: 4,
-    borderRadius: 999,
-    backgroundColor: '#D7D3CF',
   },
   moodSheetHeader: {
     gap: 4,
@@ -200,12 +179,14 @@ const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 28,
     fontWeight: '500',
+    fontFamily: 'Inter_500Medium',
   },
   moodSheetBody: {
     color: '#737373',
     fontSize: 14,
     lineHeight: 20,
     fontWeight: '400',
+    fontFamily: 'Inter_400Regular',
   },
   moodPillGrid: {
     flexDirection: 'row',
@@ -244,6 +225,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 20,
     fontWeight: '500',
+    fontFamily: 'Inter_500Medium',
   },
   moodPillTextSelected: {
     color: '#FAFAFA',
@@ -271,6 +253,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
     fontWeight: '500',
+    fontFamily: 'Inter_500Medium',
   },
   banner: {
     borderRadius: 18,
@@ -472,30 +455,56 @@ function BehaviorQuickLogSheet({
   onSelectTrigger: (trigger: BehaviorTrigger) => void;
 }) {
   return (
-    <Modal
-      transparent
-      animationType="slide"
-      visible={open}
-      onRequestClose={onClose}
+    <BarklogBottomSheet
+      accessibilityLabel="Behavior quick log"
+      open={open}
+      onClose={onClose}
     >
-      <Pressable style={styles.moodSheetBackdrop} onPress={onClose}>
-        <Pressable
-          accessibilityRole="menu"
-          style={styles.moodSheetCard}
-          onPress={(event) => event.stopPropagation()}
-        >
-          <View style={styles.moodSheetHandle} />
-          <View style={styles.moodSheetHeader}>
-            <Text style={styles.moodSheetTitle}>Behavior log</Text>
-            <Text style={styles.moodSheetBody}>
-              Choose the behavior, likely trigger, then intensity to save.
-            </Text>
-          </View>
+      <View style={styles.moodSheetHeader}>
+        <Text style={styles.moodSheetTitle}>Behavior log</Text>
+        <Text style={styles.moodSheetBody}>
+          Choose the behavior, likely trigger, then intensity to save.
+        </Text>
+      </View>
 
-          <Text style={styles.behaviorStepLabel}>Behavior</Text>
+      <Text style={styles.behaviorStepLabel}>Behavior</Text>
+      <View style={styles.moodPillGrid}>
+        {BEHAVIOR_OPTIONS.map((option) => {
+          const selected = selectedBehavior === option.value;
+
+          return (
+            <Pressable
+              key={option.value}
+              accessibilityRole="button"
+              accessibilityState={{ selected }}
+              disabled={saving}
+              style={[
+                styles.moodPill,
+                styles.behaviorPill,
+                selected ? styles.behaviorPillSelected : null,
+              ]}
+              onPress={() => onSelectBehavior(option.value)}
+            >
+              <Text
+                style={[
+                  styles.moodPillText,
+                  styles.behaviorPillText,
+                  selected ? styles.moodPillTextSelected : null,
+                ]}
+              >
+                {option.emoji} {option.label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+
+      {selectedBehavior ? (
+        <>
+          <Text style={styles.behaviorStepLabel}>Trigger</Text>
           <View style={styles.moodPillGrid}>
-            {BEHAVIOR_OPTIONS.map((option) => {
-              const selected = selectedBehavior === option.value;
+            {BEHAVIOR_TRIGGER_OPTIONS.map((option) => {
+              const selected = selectedTrigger === option.value;
 
               return (
                 <Pressable
@@ -508,7 +517,7 @@ function BehaviorQuickLogSheet({
                     styles.behaviorPill,
                     selected ? styles.behaviorPillSelected : null,
                   ]}
-                  onPress={() => onSelectBehavior(option.value)}
+                  onPress={() => onSelectTrigger(option.value)}
                 >
                   <Text
                     style={[
@@ -517,73 +526,37 @@ function BehaviorQuickLogSheet({
                       selected ? styles.moodPillTextSelected : null,
                     ]}
                   >
-                    {option.emoji} {option.label}
+                    {option.label}
                   </Text>
                 </Pressable>
               );
             })}
           </View>
+        </>
+      ) : null}
 
-          {selectedBehavior ? (
-            <>
-              <Text style={styles.behaviorStepLabel}>Trigger</Text>
-              <View style={styles.moodPillGrid}>
-                {BEHAVIOR_TRIGGER_OPTIONS.map((option) => {
-                  const selected = selectedTrigger === option.value;
-
-                  return (
-                    <Pressable
-                      key={option.value}
-                      accessibilityRole="button"
-                      accessibilityState={{ selected }}
-                      disabled={saving}
-                      style={[
-                        styles.moodPill,
-                        styles.behaviorPill,
-                        selected ? styles.behaviorPillSelected : null,
-                      ]}
-                      onPress={() => onSelectTrigger(option.value)}
-                    >
-                      <Text
-                        style={[
-                          styles.moodPillText,
-                          styles.behaviorPillText,
-                          selected ? styles.moodPillTextSelected : null,
-                        ]}
-                      >
-                        {option.label}
-                      </Text>
-                    </Pressable>
-                  );
-                })}
-              </View>
-            </>
-          ) : null}
-
-          {selectedBehavior && selectedTrigger ? (
-            <>
-              <Text style={styles.behaviorStepLabel}>Intensity</Text>
-              <View style={styles.moodEnergyRow}>
-                {BEHAVIOR_INTENSITY_OPTIONS.map((option) => (
-                  <Pressable
-                    key={option.value}
-                    accessibilityRole="button"
-                    disabled={saving}
-                    style={[
-                      styles.moodEnergyPill,
-                      saving ? styles.moodEnergyPillDisabled : null,
-                    ]}
-                    onPress={() => onSelectIntensity(option.value)}
-                  >
-                    <Text style={styles.moodEnergyText}>{option.label}</Text>
-                  </Pressable>
-                ))}
-              </View>
-            </>
-          ) : null}
-        </Pressable>
-      </Pressable>
-    </Modal>
+      {selectedBehavior && selectedTrigger ? (
+        <>
+          <Text style={styles.behaviorStepLabel}>Intensity</Text>
+          <View style={styles.moodEnergyRow}>
+            {BEHAVIOR_INTENSITY_OPTIONS.map((option) => (
+              <Pressable
+                key={option.value}
+                accessibilityRole="button"
+                disabled={saving}
+                style={[
+                  styles.moodEnergyPill,
+                  saving ? styles.moodEnergyPillDisabled : null,
+                ]}
+                onPress={() => onSelectIntensity(option.value)}
+              >
+                <Text style={styles.moodEnergyText}>{option.label}</Text>
+              </Pressable>
+            ))}
+          </View>
+        </>
+      ) : null}
+    </BarklogBottomSheet>
   );
 }
 
@@ -626,76 +599,64 @@ function MoodQuickLogSheet({
   onSelectMood: (mood: MoodValue) => void;
 }) {
   return (
-    <Modal
-      transparent
-      animationType="slide"
-      visible={open}
-      onRequestClose={onClose}
+    <BarklogBottomSheet
+      accessibilityLabel="Mood quick log"
+      open={open}
+      onClose={onClose}
     >
-      <Pressable style={styles.moodSheetBackdrop} onPress={onClose}>
-        <Pressable
-          accessibilityRole="menu"
-          style={styles.moodSheetCard}
-          onPress={(event) => event.stopPropagation()}
-        >
-          <View style={styles.moodSheetHandle} />
-          <View style={styles.moodSheetHeader}>
-            <Text style={styles.moodSheetTitle}>Mood check-in</Text>
-            <Text style={styles.moodSheetBody}>
-              Pick a mood, then choose energy to save.
-            </Text>
-          </View>
+      <View style={styles.moodSheetHeader}>
+        <Text style={styles.moodSheetTitle}>Mood check-in</Text>
+        <Text style={styles.moodSheetBody}>
+          Pick a mood, then choose energy to save.
+        </Text>
+      </View>
 
-          <View style={styles.moodPillGrid}>
-            {MOOD_OPTIONS.map((option) => {
-              const selected = selectedMood === option.value;
+      <View style={styles.moodPillGrid}>
+        {MOOD_OPTIONS.map((option) => {
+          const selected = selectedMood === option.value;
 
-              return (
-                <Pressable
-                  key={option.value}
-                  accessibilityRole="button"
-                  accessibilityState={{ selected }}
-                  disabled={saving}
-                  style={[
-                    styles.moodPill,
-                    selected ? styles.moodPillSelected : null,
-                  ]}
-                  onPress={() => onSelectMood(option.value)}
-                >
-                  <Text
-                    style={[
-                      styles.moodPillText,
-                      selected ? styles.moodPillTextSelected : null,
-                    ]}
-                  >
-                    {option.emoji} {option.label}
-                  </Text>
-                </Pressable>
-              );
-            })}
-          </View>
-
-          <View style={styles.moodEnergyRow}>
-            {MOOD_ENERGY_OPTIONS.map((option) => (
-              <Pressable
-                key={option.value}
-                accessibilityRole="button"
-                disabled={!selectedMood || saving}
+          return (
+            <Pressable
+              key={option.value}
+              accessibilityRole="button"
+              accessibilityState={{ selected }}
+              disabled={saving}
+              style={[
+                styles.moodPill,
+                selected ? styles.moodPillSelected : null,
+              ]}
+              onPress={() => onSelectMood(option.value)}
+            >
+              <Text
                 style={[
-                  styles.moodEnergyPill,
-                  !selectedMood || saving
-                    ? styles.moodEnergyPillDisabled
-                    : null,
+                  styles.moodPillText,
+                  selected ? styles.moodPillTextSelected : null,
                 ]}
-                onPress={() => onSelectEnergy(option.value)}
               >
-                <Text style={styles.moodEnergyText}>{option.label}</Text>
-              </Pressable>
-            ))}
-          </View>
-        </Pressable>
-      </Pressable>
-    </Modal>
+                {option.emoji} {option.label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+
+      <View style={styles.moodEnergyRow}>
+        {MOOD_ENERGY_OPTIONS.map((option) => (
+          <Pressable
+            key={option.value}
+            accessibilityRole="button"
+            disabled={!selectedMood || saving}
+            style={[
+              styles.moodEnergyPill,
+              !selectedMood || saving ? styles.moodEnergyPillDisabled : null,
+            ]}
+            onPress={() => onSelectEnergy(option.value)}
+          >
+            <Text style={styles.moodEnergyText}>{option.label}</Text>
+          </Pressable>
+        ))}
+      </View>
+    </BarklogBottomSheet>
   );
 }
 

@@ -9,7 +9,7 @@ import {
 } from './tokens';
 
 const barklogFont = createFont({
-  family: 'Inter',
+  family: 'Inter_400Regular',
   size: {
     true: barklogTypography.body,
     overline: barklogTypography.overline,

@@ -11,27 +11,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'rgba(10, 10, 10, 0.32)',
   },
-  glassContainer: {
-    padding: 30,
-    borderRadius: 20,
+  card: {
+    minWidth: 176,
+    paddingHorizontal: 24,
+    paddingVertical: 22,
+    borderRadius: 16,
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
-    // Glassmorphism shadow / blur effects
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.3,
-    shadowRadius: 20,
-    elevation: 10,
+    backgroundColor: '#FAFAFA',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#D7D3CF',
   },
   text: {
-    marginTop: 15,
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
+    marginTop: 12,
+    color: '#0A0A0A',
+    fontFamily: 'Inter_500Medium',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
   },
 });
 
@@ -40,10 +38,19 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
   message = 'Loading...',
 }) => {
   return (
-    <Modal transparent animationType="fade" visible={visible}>
+    <Modal
+      transparent
+      animationType="fade"
+      statusBarTranslucent
+      visible={visible}
+    >
       <View style={styles.container}>
-        <View style={styles.glassContainer}>
-          <ActivityIndicator size="large" color="#ffffff" />
+        <View
+          accessibilityLabel={message}
+          accessibilityRole="progressbar"
+          style={styles.card}
+        >
+          <ActivityIndicator size="small" color="#0A0A0A" />
           <Text style={styles.text}>{message}</Text>
         </View>
       </View>

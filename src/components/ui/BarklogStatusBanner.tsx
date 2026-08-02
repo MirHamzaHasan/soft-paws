@@ -7,7 +7,7 @@ import {
 } from 'lucide-react-native';
 import { Paragraph, XStack, YStack } from 'tamagui';
 
-import { barklogColors, barklogTypography } from '@/theme/tokens';
+import { barklogColors } from '@/theme/tokens';
 
 export type BarklogStatusBannerTone =
   | 'default'
@@ -25,7 +25,6 @@ export type BarklogStatusBannerProps = {
 const bannerToneStyles: Record<
   BarklogStatusBannerTone,
   {
-    accent: string;
     background: string;
     border: string;
     iconColor: string;
@@ -33,35 +32,30 @@ const bannerToneStyles: Record<
   }
 > = {
   default: {
-    accent: barklogColors.ink,
     background: '$surface',
     border: '$borderColor',
     iconColor: barklogColors.ink,
     textColor: '$textPrimary',
   },
   success: {
-    accent: barklogColors.success,
     background: '$trainingBackground',
     border: '$trainingBorder',
     iconColor: barklogColors.success,
     textColor: '$trainingText',
   },
   warning: {
-    accent: barklogColors.warning,
     background: '$walkBackground',
     border: '$walkBorder',
     iconColor: barklogColors.warning,
     textColor: '$walkText',
   },
   danger: {
-    accent: barklogColors.danger,
     background: '$symptomBackground',
     border: '$symptomBorder',
     iconColor: barklogColors.danger,
     textColor: '$symptomText',
   },
   ai: {
-    accent: barklogColors.aiAccent,
     background: '$aiBackground',
     border: '$aiBorder',
     iconColor: barklogColors.aiAccent,
@@ -96,25 +90,30 @@ export function BarklogStatusBanner({
   return (
     <XStack
       ai="flex-start"
-      accessibilityRole={tone === 'danger' ? 'alert' : undefined}
+      role={tone === 'danger' ? 'alert' : undefined}
       bg={colors.background}
       bc={colors.border}
-      br="$lg"
+      br="$xl"
       bw={1}
       gap="$sm"
-      overflow="hidden"
-      pr="$md"
-      py="$md"
+      px="$md"
+      py={10}
     >
-      <XStack alignSelf="stretch" bg={colors.accent} br="$pill" w={3} />
-      <XStack ai="center" jc="center" mt={1} w={22}>
+      <XStack
+        ai="center"
+        jc="center"
+        bg="$surfaceRaised"
+        br="$pill"
+        h={32}
+        w={32}
+      >
         {getBannerIcon(tone, colors.iconColor)}
       </XStack>
-      <YStack flex={1} gap="$xs">
+      <YStack flex={1} gap={2} py={1}>
         <Paragraph
           color={colors.textColor}
           fontFamily="$body"
-          fontSize={barklogTypography.body}
+          fontSize={15}
           fontWeight="500"
           lineHeight={20}
         >
@@ -124,8 +123,8 @@ export function BarklogStatusBanner({
           <Paragraph
             color={colors.textColor}
             fontFamily="$body"
-            fontSize={barklogTypography.caption}
-            lineHeight={16}
+            fontSize={13}
+            lineHeight={18}
           >
             {description}
           </Paragraph>

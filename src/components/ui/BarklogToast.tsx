@@ -8,7 +8,7 @@ import {
 import { type ReactNode } from 'react';
 import { Paragraph, XStack, YStack } from 'tamagui';
 
-import { barklogColors, barklogTypography } from '@/theme/tokens';
+import { barklogColors } from '@/theme/tokens';
 
 export type BarklogToastTone =
   | 'default'
@@ -27,7 +27,6 @@ export type BarklogToastProps = {
 const toastToneStyles: Record<
   BarklogToastTone,
   {
-    accent: string;
     background: string;
     border: string;
     iconColor: string;
@@ -35,35 +34,30 @@ const toastToneStyles: Record<
   }
 > = {
   default: {
-    accent: barklogColors.ink,
     background: '$surfaceRaised',
     border: '$borderColor',
     iconColor: barklogColors.ink,
     titleColor: '$textPrimary',
   },
   success: {
-    accent: barklogColors.success,
     background: '$surfaceRaised',
     border: '$trainingBorder',
     iconColor: barklogColors.success,
     titleColor: '$textPrimary',
   },
   warning: {
-    accent: barklogColors.warning,
     background: '$surfaceRaised',
     border: '$walkBorder',
     iconColor: barklogColors.warning,
     titleColor: '$textPrimary',
   },
   danger: {
-    accent: barklogColors.danger,
     background: '$surfaceRaised',
     border: '$symptomBorder',
     iconColor: barklogColors.danger,
     titleColor: '$textPrimary',
   },
   ai: {
-    accent: barklogColors.aiAccent,
     background: '$aiBackground',
     border: '$aiBorder',
     iconColor: barklogColors.aiAccent,
@@ -99,25 +93,23 @@ export function BarklogToast({
   return (
     <XStack
       ai="flex-start"
-      accessibilityRole={tone === 'danger' ? 'alert' : undefined}
+      role={tone === 'danger' ? 'alert' : undefined}
       gap="$sm"
       bg={colors.background}
       bc={colors.border}
       bw={1}
-      br="$lg"
-      overflow="hidden"
-      pr="$md"
-      py="$md"
+      br="$xl"
+      px="$md"
+      py={10}
     >
-      <XStack alignSelf="stretch" bg={colors.accent} br="$pill" w={3} />
-      <XStack ai="center" jc="center" mt={1} w={22}>
+      <XStack ai="center" jc="center" bg="$surface" br="$pill" h={32} w={32}>
         {icon ?? getDefaultIcon(tone, colors.iconColor)}
       </XStack>
-      <YStack flex={1} gap="$xs">
+      <YStack flex={1} gap={2} py={1}>
         <Paragraph
           color={colors.titleColor}
           fontFamily="$body"
-          fontSize={barklogTypography.body}
+          fontSize={15}
           lineHeight={20}
           fontWeight="500"
         >
@@ -127,8 +119,8 @@ export function BarklogToast({
           <Paragraph
             color="$textMuted"
             fontFamily="$body"
-            fontSize={barklogTypography.caption}
-            lineHeight={16}
+            fontSize={13}
+            lineHeight={18}
           >
             {description}
           </Paragraph>

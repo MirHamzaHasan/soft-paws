@@ -12,6 +12,8 @@ import {
   AccessibilityInfo,
   Animated,
   Easing,
+  Platform,
+  Pressable,
   StyleSheet,
   View,
 } from 'react-native';
@@ -51,6 +53,8 @@ const toastDurations: Record<BarklogFeedbackTone, number> = {
   warning: 4000,
 };
 
+const useNativeDriver = Platform.OS !== 'web';
+
 const styles = StyleSheet.create({
   root: {
     flex: 1,
@@ -77,7 +81,8 @@ function FeedbackToastHost({
 }) {
   const insets = useSafeAreaInsets();
   const opacity = useRef(new Animated.Value(0)).current;
-  const translateY = useRef(new Animated.Value(16)).current;
+  const scale = useRef(new Animated.Value(0.98)).current;
+  const translateY = useRef(new Animated.Value(10)).current;
   const [reduceMotionEnabled, setReduceMotionEnabled] = useState(false);
 
   useEffect(() => {
@@ -108,24 +113,33 @@ function FeedbackToastHost({
     }
 
     opacity.setValue(0);
-    translateY.setValue(reduceMotionEnabled ? 0 : 16);
+    scale.setValue(reduceMotionEnabled ? 1 : 0.98);
+    translateY.setValue(reduceMotionEnabled ? 0 : 10);
 
     const showAnimations = [
       Animated.timing(opacity, {
         toValue: 1,
-        duration: reduceMotionEnabled ? 140 : 200,
-        easing: Easing.out(Easing.ease),
-        useNativeDriver: true,
+        duration: reduceMotionEnabled ? 100 : 160,
+        easing: Easing.out(Easing.cubic),
+        useNativeDriver,
       }),
     ];
 
     if (!reduceMotionEnabled) {
       showAnimations.push(
-        Animated.timing(translateY, {
+        Animated.spring(translateY, {
           toValue: 0,
-          duration: 200,
-          easing: Easing.out(Easing.ease),
-          useNativeDriver: true,
+          damping: 22,
+          mass: 0.7,
+          stiffness: 260,
+          useNativeDriver,
+        }),
+        Animated.spring(scale, {
+          toValue: 1,
+          damping: 22,
+          mass: 0.7,
+          stiffness: 260,
+          useNativeDriver,
         }),
       );
     }
@@ -136,19 +150,19 @@ function FeedbackToastHost({
       const hideAnimations = [
         Animated.timing(opacity, {
           toValue: 0,
-          duration: reduceMotionEnabled ? 140 : 180,
-          easing: Easing.in(Easing.ease),
-          useNativeDriver: true,
+          duration: reduceMotionEnabled ? 100 : 140,
+          easing: Easing.in(Easing.cubic),
+          useNativeDriver,
         }),
       ];
 
       if (!reduceMotionEnabled) {
         hideAnimations.push(
           Animated.timing(translateY, {
-            toValue: 16,
-            duration: 180,
-            easing: Easing.in(Easing.ease),
-            useNativeDriver: true,
+            toValue: 8,
+            duration: 140,
+            easing: Easing.in(Easing.cubic),
+            useNativeDriver,
           }),
         );
       }
@@ -163,7 +177,7 @@ function FeedbackToastHost({
     return () => {
       clearTimeout(timeout);
     };
-  }, [onHide, opacity, reduceMotionEnabled, toast, translateY]);
+  }, [onHide, opacity, reduceMotionEnabled, scale, toast, translateY]);
 
   if (!toast) {
     return null;
@@ -171,23 +185,30 @@ function FeedbackToastHost({
 
   return (
     <Animated.View
-      pointerEvents="none"
+      pointerEvents="box-none"
       style={[
         styles.toastWrap,
         {
           bottom: Math.max(insets.bottom, 12) + 86,
           opacity,
-          transform: reduceMotionEnabled ? undefined : [{ translateY }],
+          transform: reduceMotionEnabled
+            ? undefined
+            : [{ translateY }, { scale }],
         },
       ]}
     >
-      <View style={styles.toastCard}>
+      <Pressable
+        accessibilityLabel={`Dismiss notification: ${toast.title}`}
+        accessibilityRole="button"
+        style={styles.toastCard}
+        onPress={() => onHide(toast.id)}
+      >
         <BarklogToast
           title={toast.title}
           description={toast.description}
           tone={toast.tone}
         />
-      </View>
+      </Pressable>
     </Animated.View>
   );
 }
