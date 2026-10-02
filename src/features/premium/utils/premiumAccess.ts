@@ -1,15 +1,11 @@
 import type { BarklogUserRow } from '@/api';
-import { createCloudSyncCapability } from '@/db/sync/access';
-import type { SyncCapability } from '@/db/types';
 
 export type PremiumFeatureKey =
   | 'ai-agents'
   | 'ask-barklog-ai'
   | 'care-automation'
   | 'care-summaries'
-  | 'cloud-sync'
   | 'expense-tracker'
-  | 'household-sharing'
   | 'memory-book'
   | 'monthly-trends'
   | 'multi-dog'
@@ -23,15 +19,13 @@ const featureLabels: Record<PremiumFeatureKey, string> = {
   'ask-barklog-ai': 'Ask BarkLog AI',
   'care-automation': 'Smart Care Automation',
   'care-summaries': 'AI Care Summaries',
-  'cloud-sync': 'Backup and Sync',
   'expense-tracker': 'Expense Tracker',
-  'household-sharing': 'Household Sharing and Sitter Mode',
   'memory-book': 'Memory Book',
   'monthly-trends': 'Monthly Trends',
   'multi-dog': 'Multiple Dogs',
   'photo-compare': 'Photo Compare',
   'training-programs': 'Training Programs',
-  'vet-pdf-reports': 'Advanced Vet Reports and Share Links',
+  'vet-pdf-reports': 'Advanced Vet Reports',
   'weekly-insights': 'AI Weekly Insights',
 };
 
@@ -130,23 +124,6 @@ export function getPremiumEntitlementState(
 
 export function hasPremiumAccess(user: BarklogUserRow | null | undefined) {
   return getPremiumEntitlementState(user).hasAccess;
-}
-
-export function getCloudSyncCapability(
-  user: BarklogUserRow | null | undefined,
-  now = new Date(),
-): SyncCapability {
-  const entitlementState = getPremiumEntitlementState(user, now);
-
-  if (entitlementState.hasAccess) {
-    return createCloudSyncCapability('premium_enabled');
-  }
-
-  if (entitlementState.kind === 'unknown') {
-    return createCloudSyncCapability('unknown', 'loading');
-  }
-
-  return createCloudSyncCapability('local_only');
 }
 
 export function shouldPromptForExpiredTrial(

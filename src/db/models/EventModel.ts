@@ -1,7 +1,7 @@
 import { Model } from '@nozbe/watermelondb';
 import { field, json, text } from '@nozbe/watermelondb/decorators';
 
-import type { Json } from '@/types/supabase';
+import type { Json } from '@/types/local';
 
 import type { BarklogEventType } from '../types';
 import { sanitizeJsonValue } from '../utils';

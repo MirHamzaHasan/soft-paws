@@ -2,7 +2,7 @@
 
 This folder contains the execution backlog for taking BarkLog from the current repo state through production readiness and into the next product feature modules.
 
-`task001` through `task015` capture the completed prototype-completion backlog. `task016` through `task024` capture the production-hardening blockers that must be resolved before BarkLog should be treated as launch-ready. `task025` through `task044` capture post-hardening product modules and local native build blocker removal. `task045` through `task048` capture signed release-build execution, external environment gates, and store submission readiness. `task049` captures release-blocking production feedback and error-handling hardening across core launch flows. `task050` captures the optional, consent-based signup contact-preference slice for opted-in onboarding support and product updates.
+`task001` through `task044` record earlier product and engineering work. `task051` keeps the journal local in WatermelonDB and native builds local. `task052` adds optional Firebase sign-in for Atlas AI, without Firebase care sync. `task045` is superseded. Release tasks `task046` through `task049` require local signed artifacts, device QA, store submission, and production feedback checks. `task050` contact capture was removed by `task051`.
 
 ## Source of Truth
 
@@ -65,11 +65,13 @@ Lower numbers are earlier in the critical path.
 - Photo Baseline Tracker `task042` is completed.
 - Low-cost AI provider migration and vision-ready key boundary `task043` is completed.
 - Native build blocker removal `task044` is completed.
-- EAS project linking and profile lockdown `task045` is in progress.
-- Release environment and Supabase gates `task046` are in progress for local boundary checks and still externally gated for service-dashboard evidence.
-- Preview builds and native device QA `task047` are in progress for local capability checks and still externally gated for signed build/device evidence.
-- Production builds, store submission, and rollback `task048` are in progress for the local production-readiness guard and still externally gated for signed production builds and store evidence.
+- EAS project linking `task045` is superseded by `task051`.
+- Release environment `task046` now covers local client-safe env, signing, and release artifact checks; remote backend gates no longer apply.
+- Native device QA `task047` now uses locally built, signed Android and iOS artifacts.
+- Production builds and store submission `task048` now use local Gradle/Xcode artifacts and manual store upload.
 - Production feedback and error handling hardening `task049` is in progress with local implementation and automated validation complete; it still blocks production sign-off until manual iOS Simulator smoke confirms core launch flows use consistent toast, inline error, safe-copy, haptic, retry/status, and observability behavior.
-- Consented signup contact preferences `task050` is completed locally with optional post-signup capture, explicit consent, Supabase-only PII storage, routing updates, safe telemetry, privacy docs, and targeted validation.
-- `corepack pnpm release:check-local` now bundles the local release gates before the external EAS, service-dashboard, native-device, and store-submission steps.
-- Local native build blockers are complete, but BarkLog is not release-signed until `task045` through `task049` are completed with preview-build, service-dashboard, native-device, production-build, store-submission, rollback, and production feedback/error-handling evidence.
+- Consented signup contact preferences `task050` were removed because the app no longer has accounts or a contact-data backend.
+- Remove Supabase and EAS for a local-only build `task051` is in progress. Automated gates and a disposable-key signed Android AAB/APK passed; offline device smoke and iOS validation remain before completion.
+- Firebase sign-in and Atlas AI `task052` is in progress. Code and mocked tests pass; BarkLog Atlas registration, tested context policy, live signed-in flow, and paid-entitlement linkage remain before production release.
+- `corepack pnpm release:check-local` bundles local environment, native capability, script lint, and TypeScript gates.
+- BarkLog is not release-signed until local Android and iOS artifacts, device QA, store submission, rollback, and production feedback/error-handling evidence are recorded.

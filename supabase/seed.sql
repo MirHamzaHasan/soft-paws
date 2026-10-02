@@ -1,2 +1,0 @@
--- BarkLog local seed placeholder.
--- Intentionally empty for task004 until fixture data lands in later tasks.

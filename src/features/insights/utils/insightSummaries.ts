@@ -20,7 +20,7 @@ import {
   type MoodEnergy,
   type MoodValue,
 } from '@/types/events';
-import type { Json } from '@/types/supabase';
+import type { Json } from '@/types/local';
 
 export type EventSummary = {
   behaviorCount: number;

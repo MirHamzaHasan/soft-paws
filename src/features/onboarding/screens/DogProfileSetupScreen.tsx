@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useShallow } from 'zustand/react/shallow';
 
 import { useOnboardingDraftStore } from '@/stores';
 
@@ -115,16 +116,18 @@ function WeightUnitToggle({
 export default function DogProfileSetupScreen() {
   const router = useRouter();
   const { age, breed, name, patchDraft, sex, status, weight, weightUnit } =
-    useOnboardingDraftStore((state) => ({
-      age: state.age,
-      breed: state.breed,
-      name: state.name,
-      patchDraft: state.patchDraft,
-      sex: state.sex,
-      status: state.status,
-      weight: state.weight,
-      weightUnit: state.weightUnit,
-    }));
+    useOnboardingDraftStore(
+      useShallow((state) => ({
+        age: state.age,
+        breed: state.breed,
+        name: state.name,
+        patchDraft: state.patchDraft,
+        sex: state.sex,
+        status: state.status,
+        weight: state.weight,
+        weightUnit: state.weightUnit,
+      })),
+    );
 
   const handleSelectMale = () => {
     patchDraft({

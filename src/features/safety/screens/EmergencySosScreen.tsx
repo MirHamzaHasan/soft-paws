@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
 
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { AssistantAlertIcon } from '../../assistant/components/AssistantIcons';
@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
 
 export default function EmergencySosScreen() {
   const router = useRouter();
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const dog = {
     name: selectedDog?.name ?? 'your dog',

@@ -11,8 +11,8 @@ import {
   queueBarklogEvent,
 } from '@/features/observability';
 import HapticManager from '@/managers/HapticManager';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
-import type { Json } from '@/types/supabase';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
+import type { Json } from '@/types/local';
 import { getBarklogErrorMessage } from '@/utils/barklogErrorMessages';
 
 export type DetailWhenValue = 'earlier' | 'just-now';
@@ -56,9 +56,9 @@ export function createLocalAttachmentUri(type: BarklogEventType) {
 
 export function useDetailedEventSave() {
   const feedback = useBarklogFeedback();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);

@@ -52,6 +52,22 @@ export function getSafeAiErrorMessage(error: unknown) {
   if (error instanceof BarklogPremiumRequiredError) {
     return BARKLOG_AI_PREMIUM_REQUIRED_MESSAGE;
   }
+  if (
+    error instanceof Error &&
+    error.name === 'AtlasRequestError' &&
+    'code' in error &&
+    error.code === 'authentication_required'
+  ) {
+    return 'AI sign-in expired. Open Connect BarkLog AI and sign in again.';
+  }
+  if (
+    error instanceof Error &&
+    error.name === 'AtlasRequestError' &&
+    'code' in error &&
+    error.code === 'configuration_unavailable'
+  ) {
+    return 'BarkLog AI is not configured for this build.';
+  }
 
   return getBarklogErrorMessage(error, { domain: 'ai' });
 }

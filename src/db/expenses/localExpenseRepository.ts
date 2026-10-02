@@ -3,7 +3,6 @@ import { type Collection, Q } from '@nozbe/watermelondb';
 
 import { getBarklogDatabase } from '../database';
 import type { ExpenseModel } from '../models';
-import { mergeBarklogSyncMetadata } from '../sync';
 import type { BarklogExpenseCategory } from '../types';
 
 export type LocalExpenseInput = {
@@ -40,9 +39,6 @@ export async function createLocalExpense(input: LocalExpenseInput) {
     'createLocalExpense',
   );
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return expense;
 }

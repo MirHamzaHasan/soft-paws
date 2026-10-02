@@ -40,51 +40,23 @@ export const BARKLOG_PREMIUM_PLANS: Record<
   },
 };
 
+export type AvailablePremiumFeatureKey = Exclude<PremiumFeatureKey,
+  'ai-agents' | 'ask-barklog-ai' | 'care-summaries' | 'weekly-insights'>;
+
 export const PREMIUM_FEATURES: Record<
-  PremiumFeatureKey,
+  AvailablePremiumFeatureKey,
   PremiumFeatureMetadata
 > = {
-  'ai-agents': {
-    feature: 'ai-agents',
-    label: 'AI Agent Center',
-    shortValue:
-      'Use specialist agents for health, behavior, training, records, and care coordination.',
-  },
-  'ask-barklog-ai': {
-    feature: 'ask-barklog-ai',
-    label: 'Ask BarkLog AI',
-    shortValue:
-      'Ask non-diagnostic questions about your dog logs and recent patterns.',
-  },
   'care-automation': {
     feature: 'care-automation',
     label: 'Smart Care Automation',
-    shortValue:
-      'Sync care calendars, coordinate household tasks, and unlock future smart checklist automation.',
-  },
-  'care-summaries': {
-    feature: 'care-summaries',
-    label: 'AI Care Summaries',
-    shortValue:
-      'Generate short health, behavior, mood, nutrition, expense, and training summaries from raw logs.',
-  },
-  'cloud-sync': {
-    feature: 'cloud-sync',
-    label: 'Backup and Sync',
-    shortValue:
-      'Keep BarkLog backed up, restorable, and available across signed-in devices.',
+    shortValue: 'Plan recurring care and smart checklists on this device.',
   },
   'expense-tracker': {
     feature: 'expense-tracker',
     label: 'Expense Tracker',
     shortValue:
       'Track yearly spend, categories, and care costs without mixing it into daily logs.',
-  },
-  'household-sharing': {
-    feature: 'household-sharing',
-    label: 'Household Sharing and Sitter Mode',
-    shortValue:
-      'Invite family, sitters, and caregivers with role-based access to shared dog care logs.',
   },
   'memory-book': {
     feature: 'memory-book',
@@ -118,26 +90,16 @@ export const PREMIUM_FEATURES: Record<
   },
   'vet-pdf-reports': {
     feature: 'vet-pdf-reports',
-    label: 'Advanced Vet Reports and Share Links',
-    shortValue:
-      'Generate vet-ready summaries and secure share links while CSV and basic PDF export stay available.',
-  },
-  'weekly-insights': {
-    feature: 'weekly-insights',
-    label: 'AI Weekly Insights',
-    shortValue:
-      'Unlock weekly pattern narratives across meals, walks, medication, symptoms, and routines.',
+    label: 'Advanced Vet Reports',
+    shortValue: 'Advanced local report layouts. Basic PDF and CSV export stay free.',
   },
 };
 
 export const PAYWALL_FEATURE_ROWS = [
-  PREMIUM_FEATURES['cloud-sync'].label,
-  PREMIUM_FEATURES['household-sharing'].label,
   PREMIUM_FEATURES['care-automation'].label,
-  PREMIUM_FEATURES['ai-agents'].label,
-  PREMIUM_FEATURES['care-summaries'].label,
-  PREMIUM_FEATURES['weekly-insights'].label,
-  PREMIUM_FEATURES['ask-barklog-ai'].label,
+  PREMIUM_FEATURES['training-programs'].label,
+  PREMIUM_FEATURES['multi-dog'].label,
+  PREMIUM_FEATURES['photo-compare'].label,
   PREMIUM_FEATURES['monthly-trends'].label,
   PREMIUM_FEATURES['expense-tracker'].label,
   PREMIUM_FEATURES['memory-book'].label,

@@ -5,14 +5,20 @@ import { useFonts } from 'expo-font';
 import { Stack, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { StyleSheet, Text, useColorScheme, View } from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
 import { TamaguiProvider, Theme } from 'tamagui';
 
+import { bootstrapLocalProfile } from '@/api/localProfile';
 import { AppProviders } from '@/app/providers/AppProviders';
 import { BarklogFeedbackProvider } from '@/components/ui';
-import { useBarklogSyncLifecycle } from '@/db';
-import { AuthNavigationGate } from '@/features/auth/components/AuthNavigationGate';
-import { useAuthSessionBootstrap } from '@/features/auth/hooks/useAuthSessionBootstrap';
+import { LocalProfileNavigationGate } from '@/features/auth/components/LocalProfileNavigationGate';
+import { useLocalProfileBootstrap } from '@/features/auth/hooks/useLocalProfileBootstrap';
 import { configureMedicationNotificationHandler } from '@/features/medications/services/medicationReminderService';
 import {
   identifyObservabilityUser,
@@ -20,7 +26,7 @@ import {
   ObservabilityBoundary,
   useRouteAnalytics,
 } from '@/features/observability';
-import { useAuthSessionStore } from '@/stores';
+import { useLocalProfileStore } from '@/stores';
 import { getNavigationTheme } from '@/theme/navigationTheme';
 
 import { tamaguiConfig } from '../tamagui.config';
@@ -54,31 +60,46 @@ const styles = StyleSheet.create({
   },
 });
 
-function BootstrapFallback() {
+function BootstrapFallback({
+  error,
+  retry,
+}: {
+  error?: string | null;
+  retry?: () => void;
+}) {
   return (
     <View style={styles.bootstrapScreen}>
       <Text style={styles.bootstrapTitle}>BarkLog</Text>
-      <Text style={styles.bootstrapBody}>Opening your care journal...</Text>
+      <Text style={styles.bootstrapBody}>
+        {error ?? 'Opening your care journal...'}
+      </Text>
+      {retry ? (
+        <Pressable accessibilityRole="button" onPress={retry}>
+          <Text style={styles.bootstrapBody}>Try again</Text>
+        </Pressable>
+      ) : null}
     </View>
   );
 }
 
 export default function Layout() {
   const colorScheme = useColorScheme();
-  const authBootstrapStatus = useAuthSessionStore(
-    (state) => state.bootstrapStatus,
+  const profileStatus = useLocalProfileStore((state) => state.profileStatus);
+  const profileError = useLocalProfileStore((state) => state.profileError);
+  const setProfile = useLocalProfileStore((state) => state.setProfile);
+  const setProfileError = useLocalProfileStore(
+    (state) => state.setProfileError,
   );
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
   const [fontsLoaded] = useFonts({
     Inter_400Regular: interRegularFont,
     Inter_500Medium: interMediumFont,
   });
   const segments = useSegments();
 
-  useAuthSessionBootstrap();
-  useBarklogSyncLifecycle();
+  useLocalProfileBootstrap();
   useRouteAnalytics({
-    enabled: fontsLoaded && authBootstrapStatus === 'ready',
+    enabled: fontsLoaded && profileStatus === 'ready',
   });
 
   useEffect(() => {
@@ -90,7 +111,6 @@ export default function Layout() {
     identifyObservabilityUser(
       barklogUser
         ? {
-            email: barklogUser.email,
             id: barklogUser.id,
             plan: barklogUser.subscription_tier,
           }
@@ -113,13 +133,31 @@ export default function Layout() {
   }
 
   useEffect(() => {
-    if (fontsLoaded && authBootstrapStatus === 'ready') {
+    if (fontsLoaded && profileStatus !== 'loading') {
       SplashScreen.hideAsync().catch(() => {});
     }
-  }, [authBootstrapStatus, fontsLoaded]);
+  }, [profileStatus, fontsLoaded]);
 
-  if (!fontsLoaded || authBootstrapStatus !== 'ready') {
+  if (!fontsLoaded || profileStatus === 'loading') {
     return <BootstrapFallback />;
+  }
+  if (profileStatus === 'error') {
+    return (
+      <BootstrapFallback
+        error={profileError}
+        retry={() => {
+          bootstrapLocalProfile()
+            .then(setProfile)
+            .catch((error: unknown) => {
+              setProfileError(
+                error instanceof Error
+                  ? error.message
+                  : 'Unable to open local care journal.',
+              );
+            });
+        }}
+      />
+    );
   }
 
   return (
@@ -133,7 +171,7 @@ export default function Layout() {
               })}
             >
               <BarklogFeedbackProvider>
-                <AuthNavigationGate />
+                <LocalProfileNavigationGate />
                 <Stack screenOptions={{ headerShown: false }} />
               </BarklogFeedbackProvider>
             </ThemeProvider>

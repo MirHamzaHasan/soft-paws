@@ -1,5 +1,7 @@
 # Deployment: Release Process
 
+Historical remote-build guide. Task051 replaced this process with [local native builds](../release/local-build.md) and the [local release preflight](../release/preflight-local.md).
+
 ## Prerequisites
 
 - Expo account with EAS project access

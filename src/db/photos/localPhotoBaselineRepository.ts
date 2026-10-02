@@ -5,7 +5,6 @@ import type { PhotoBaselineCategory } from '@/types/photoBaseline';
 
 import { getBarklogDatabase } from '../database';
 import type { PhotoBaselineModel } from '../models';
-import { mergeBarklogSyncMetadata } from '../sync';
 
 export type LocalPhotoBaselineInput = {
   bodyArea?: string | null;
@@ -87,9 +86,6 @@ export async function createLocalPhotoBaseline(input: LocalPhotoBaselineInput) {
     'createLocalPhotoBaseline',
   );
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return photoBaseline;
 }
@@ -97,14 +93,10 @@ export async function createLocalPhotoBaseline(input: LocalPhotoBaselineInput) {
 export async function deleteLocalPhotoBaseline(photoBaselineId: string) {
   const database = getBarklogDatabase();
   const collection = getPhotoBaselineCollection();
-  const now = Date.now();
 
   await database.write(async () => {
     const existingPhotoBaseline = await collection.find(photoBaselineId);
-    await existingPhotoBaseline.markAsDeleted();
+    await existingPhotoBaseline.destroyPermanently();
   }, 'deleteLocalPhotoBaseline');
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 }

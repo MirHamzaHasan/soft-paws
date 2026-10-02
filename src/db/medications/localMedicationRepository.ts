@@ -3,7 +3,6 @@ import { type Collection, Q } from '@nozbe/watermelondb';
 
 import { getBarklogDatabase } from '../database';
 import type { MedicationModel } from '../models';
-import { mergeBarklogSyncMetadata } from '../sync';
 import type { BarklogMedicationFrequency } from '../types';
 
 export type LocalMedicationFrequency = Exclude<
@@ -77,9 +76,6 @@ export async function createLocalMedication(input: LocalMedicationInput) {
     'createLocalMedication',
   );
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return medication;
 }
@@ -87,7 +83,6 @@ export async function createLocalMedication(input: LocalMedicationInput) {
 export async function updateLocalMedication(input: UpdateLocalMedicationInput) {
   const database = getBarklogDatabase();
   const medicationCollection = getMedicationCollection();
-  const now = Date.now();
 
   const medication = await database.write(async () => {
     const existingMedication = await medicationCollection.find(
@@ -137,9 +132,6 @@ export async function updateLocalMedication(input: UpdateLocalMedicationInput) {
     });
   }, 'updateLocalMedication');
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return medication;
 }

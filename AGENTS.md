@@ -2,22 +2,23 @@
 
 ## Start Here
 
-- Treat [docs/source-of-truth/barklog-product-engineering.md](/Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/docs/source-of-truth/barklog-product-engineering.md:1) as the canonical source of truth.
-- Use [docs/agentic/product-truth.md](/Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/docs/agentic/product-truth.md:1) for the condensed BarkLog truth summary.
-- Use [docs/agentic/workflows.md](/Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/docs/agentic/workflows.md:1) as the delivery playbook.
-- Use [docs/design/components.md](/Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/docs/design/components.md:1) as the reusable component registry.
+- Treat [docs/source-of-truth/barklog-product-engineering.md](docs/source-of-truth/barklog-product-engineering.md) as the canonical source of truth.
+- Use [docs/agentic/product-truth.md](docs/agentic/product-truth.md) for the condensed BarkLog truth summary.
+- Use [docs/agentic/workflows.md](docs/agentic/workflows.md) as the delivery playbook.
+- Use [docs/design/components.md](docs/design/components.md) as the reusable component registry.
 
 ## Hard Guardrails
 
-- Build BarkLog with `Expo Router`, `Tamagui`, `TypeScript`, `Zustand`, `TanStack Query`, `WatermelonDB`, and `Supabase`.
+- Build BarkLog with `Expo Router`, `Tamagui`, `TypeScript`, `Zustand`, `TanStack Query`, and local `WatermelonDB`.
 - Do not introduce NativeWind, Tailwind, or a parallel styling system.
 - Do not treat the previous manager-first prototype architecture as the source of truth.
-- Logging is `offline-first`. Persist to WatermelonDB before syncing remotely.
+- Logging and profiles are local-only. Persist all care records to WatermelonDB on the device.
 - Do not present BarkLog as a veterinary authority. Organize facts and patterns, then escalate when appropriate.
 - Do not lock basic logging, timeline access, or export rights behind a paywall.
 - Keep Home as the most polished and highest-priority screen in the app.
 - Use `Inter` 400 and 500 only, BarkLog design tokens only, and no decorative gradients or shadows.
-- Never call AI providers from the client. Use Supabase Edge Functions only.
+- Firebase Auth signs users in for optional Atlas AI only. The local owner and care journal remain in WatermelonDB; there is no Firebase care-record sync.
+- Atlas is the AI router. Send a fresh Firebase ID token and BarkLog's own Atlas app ID to Atlas; never put AI provider keys or Firebase tokens in client configuration or local storage. Require Atlas context checks for generated health content.
 
 ## Skill Routing
 
@@ -41,30 +42,26 @@ Use the repo-local Tamagui implementation skill for codebase discovery and imple
 
 ## Current Feature Backlog
 
-- Task backlog lives in [tasks/README.md](/Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/tasks/README.md:1).
+- Task backlog lives in [tasks/README.md](tasks/README.md).
 - `task025` mood check-in is completed locally and documented as the first Mood, Behavior, and Training slice.
 - `task026` behavior logging is completed locally and documented.
-- `task027` through `task031` define completed premium training foundations: schema, seed content, hub/detail screens, session logger with Timeline events, and training AI personalization.
-- `task032` premium sync and backup entitlement model is completed.
-- `task033` local-only free mode and sync status UI is completed.
+- `task027` through `task030` provide local training content, screens, and session logging. Training AI from `task031` uses the optional Atlas adapter when configured.
+- `task032` and `task033` describe the former cloud sync path, removed by `task051`.
 - `task034` expanded offline log types is completed.
-- `task035` AI Agent Center is completed.
-- `task036` health and behavior summary suite is completed.
+- `task035` AI Agent Center is available when optional AI is configured. `task036` deterministic health and behavior summaries remain available offline.
 - `task037` static free training program rotation is completed.
-- `task038` vet share link and report upgrade is completed.
-- `task039` household sharing and sitter mode is completed.
+- `task038` local vet report export remains; cloud share links were removed.
+- `task039` household sharing and sitter mode were removed.
 - `task040` Safety Center offline pack is completed.
 - `task041` care calendar and refill planning is completed with `/care-calendar`, local `care_tasks`, opt-in reminders, Home/Profile entry points, and a Premium smart automation gate.
 - `task042` Photo Baseline Tracker is completed at `/photo-baselines` with local `photo_baselines`, Home/Profile entry points, and a Premium photo-compare gate.
-- The strategy input for `task032` and later is [barklog-best-in-market-product-and-monetization-plan.md](/Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/docs/product/barklog-best-in-market-product-and-monetization-plan.md:1).
-- Mood and behavior logging are free care-record features. Training enrollment, sessions, personalized training insights, cloud sync, backup, restore, and sharing are premium-gated through RevenueCat.
-- Per the strategy plan, cloud sync and backup are Premium while free users keep local offline tracking and manual export.
-- Generated care summaries are Premium and invoke `generate-care-summary` only through Supabase Edge Functions.
-- Free users can read one deterministic static training program per ISO week. All training progress tracking, session logging, sync, analytics, and personalization remain Premium.
-- Premium vet report summaries invoke `generate-vet-report` only through Supabase Edge Functions. Secure vet share links use hashed tokens, expiry, revoke state, and the public `/vet-share/[token]` route.
-- Household sharing and sitter mode are Premium cloud collaboration features. The implemented path uses `/household`, `/household/invite/[token]`, Supabase RLS helpers, hashed invites, role permissions, and shared-dog sync scoping.
+- `task051` rebaselines care data and native builds as local-only. `task052` adds optional Firebase sign-in for Atlas AI; cloud sync, backup, restore, and sharing remain unavailable.
+- AI routes are hidden without BarkLog Firebase/Atlas identifiers and in production until paid entitlement linkage is verified by Atlas.
+- Mood and behavior logging are free care-record features. RevenueCat gates training enrollment, progress and sessions, photo compare, and smart care automation.
+- Free users can read one deterministic static training program per ISO week. All training progress tracking and session logging remain Premium.
+- Manual CSV and PDF exports remain free. Losing or deleting the device data loses the journal unless the caregiver exported a copy.
 - Safety Center is a free offline-first safety surface at `/safety`, with `/safety-center` as an alias. Urgent actions, first-aid basics, core toxicity lookup, and the local emergency card must not be Premium-gated.
-- Photo Baseline Tracker is free local recordkeeping. It organizes owner-observed visual references only; photo compare, cloud backup, AI summaries, and sharing extensions are Premium.
+- Photo Baseline Tracker is free local recordkeeping. It organizes owner-observed visual references only; photo compare is Premium.
 
 ## Current Repo Notes
 

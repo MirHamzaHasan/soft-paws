@@ -1,5 +1,7 @@
 # Deployment: Android Builds
 
+Historical remote-build guide. Use [local native builds](../release/local-build.md) for current Android signing and artifacts.
+
 ## Preview
 
 ```sh

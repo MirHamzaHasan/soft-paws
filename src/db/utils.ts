@@ -1,4 +1,4 @@
-import type { Json } from '@/types/supabase';
+import type { Json } from '@/types/local';
 
 import type { UnixTimestampInput } from './types';
 

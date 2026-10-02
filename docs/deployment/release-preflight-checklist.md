@@ -1,5 +1,7 @@
 # Release Preflight Checklist
 
+This is a historical remote-build checklist and is superseded by [the local release preflight](../release/preflight-local.md) after task051. Do not use its cloud or account gates for the current app.
+
 ## Release Decision
 
 Do not mark BarkLog release-ready until every required gate below has a passing result, an owner, a date, and evidence such as a command log, build URL, dashboard screenshot, or linked QA note.

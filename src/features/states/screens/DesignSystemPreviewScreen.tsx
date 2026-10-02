@@ -97,27 +97,27 @@ export default function DesignSystemPreviewScreen() {
             </Paragraph>
 
             <BarklogInput
-              label="Caregiver email"
+              label="Dog name"
               hint="Inter 400/500 is loaded globally through Expo fonts."
               value={email}
-              placeholder="you@example.com"
+              placeholder="Your dog's name"
               onChangeText={setEmail}
             />
 
             <YStack gap="$sm">
               <BarklogToast
                 title="Event saved"
-                description="Logged to this device and ready to sync."
+                description="Saved on this device."
                 tone="success"
               />
               <BarklogToast
-                title="Sync will retry"
-                description="BarkLog will try again when the connection improves."
+                title="Export a copy"
+                description="Keep a copy of your journal outside this device."
                 tone="warning"
               />
               <BarklogToast
-                title="AI draft ready"
-                description="Review before sharing with your care team."
+                title="Care summary ready"
+                description="Review your local care history before a vet visit."
                 tone="ai"
               />
             </YStack>
@@ -142,8 +142,8 @@ export default function DesignSystemPreviewScreen() {
               />
               <BarklogStatusBanner
                 tone="warning"
-                title="Backup paused"
-                description="New entries are safe on this device."
+                title="Local journal"
+                description="New entries are saved on this device."
               />
               <BarklogStatusBanner
                 tone="success"

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { type EventModel, listLocalEventsForDogDate } from "@/db";
-import { getSelectedDog, useAuthSessionStore } from "@/stores";
+import { getSelectedDog, useLocalProfileStore } from "@/stores";
 
 import { HomeBottomTabBar } from "../../home/components/HomeBottomTabBar";
 import { LogDetailLayout } from "../../logging/components/LogDetailLayout";
@@ -139,9 +139,9 @@ function TimelineEmojiIcon({ emoji }: { emoji: string }) {
 
 export default function TimelineDailyScreen() {
   const router = useRouter();
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const [selectedDate, setSelectedDate] = useState(() =>
     startOfDay(new Date()),

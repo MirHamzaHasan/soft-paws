@@ -1,8 +1,11 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import type { Database } from '@/types/supabase';
-
-import { getSupabaseClient } from './supabaseClient';
+import {
+  listLocalTrainingEnrollmentsForDog,
+  listLocalTrainingSessionsForEnrollment,
+} from '@/db/training';
+import { TRAINING_PROGRAMS, TRAINING_STEPS } from '@/features/training/data/trainingPrograms';
+import type { Database } from '@/types/local';
 
 export type TrainingProgramRow =
   Database['public']['Tables']['training_programs']['Row'];
@@ -101,33 +104,14 @@ export function createTrainingQueryViewState<TData>(input: {
 }
 
 export async function listTrainingPrograms() {
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from('training_programs')
-    .select('*')
-    .order('sort_order', { ascending: true })
-    .order('name', { ascending: true });
-
-  if (error) {
-    throw error;
-  }
-
-  return data ?? [];
+  return [...TRAINING_PROGRAMS].sort(
+    (a, b) => compareNullableNumber(a.sort_order, b.sort_order) || a.name.localeCompare(b.name),
+  );
 }
 
 export async function listTrainingStepsForProgram(programId: string) {
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from('training_steps')
-    .select('*')
-    .eq('program_id', programId)
-    .order('step_number', { ascending: true });
-
-  if (error) {
-    throw error;
-  }
-
-  return data ?? [];
+  return TRAINING_STEPS.filter((step) => step.program_id === programId)
+    .sort((a, b) => a.step_number - b.step_number);
 }
 
 export async function listTrainingStepsForPrograms(programIds: string[]) {
@@ -135,19 +119,8 @@ export async function listTrainingStepsForPrograms(programIds: string[]) {
     return [];
   }
 
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from('training_steps')
-    .select('*')
-    .in('program_id', programIds)
-    .order('program_id', { ascending: true })
-    .order('step_number', { ascending: true });
-
-  if (error) {
-    throw error;
-  }
-
-  return data ?? [];
+  return TRAINING_STEPS.filter((step) => programIds.includes(step.program_id))
+    .sort((a, b) => a.program_id.localeCompare(b.program_id) || a.step_number - b.step_number);
 }
 
 export async function listTrainingProgramsWithSteps() {
@@ -171,33 +144,11 @@ export async function listTrainingProgramsWithSteps() {
 }
 
 export async function listDogTrainingEnrollments(dogId: string) {
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from('dog_training_enrollments')
-    .select('*')
-    .eq('dog_id', dogId)
-    .order('started_at', { ascending: false });
-
-  if (error) {
-    throw error;
-  }
-
-  return data ?? [];
+  return listLocalTrainingEnrollmentsForDog(dogId);
 }
 
 export async function listTrainingSessionsForEnrollment(enrollmentId: string) {
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from('training_sessions')
-    .select('*')
-    .eq('enrollment_id', enrollmentId)
-    .order('completed_at', { ascending: false });
-
-  if (error) {
-    throw error;
-  }
-
-  return data ?? [];
+  return listLocalTrainingSessionsForEnrollment(enrollmentId);
 }
 
 export function trainingProgramsQueryOptions() {

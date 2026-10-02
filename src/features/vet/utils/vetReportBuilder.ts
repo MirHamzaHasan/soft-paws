@@ -1,4 +1,4 @@
-import type { BarklogDogRow } from '@/api/auth';
+import type { BarklogDogRow } from '@/api/localProfile';
 import type { EventModel, MedicationModel } from '@/db';
 import {
   formatDateTime,
@@ -41,11 +41,6 @@ export type GeneratedVetReport = {
   promptVersion: typeof VET_REPORT_PROMPT_VERSION;
   questions: string[];
   summary: string;
-};
-
-export type VetShareReportSnapshot = {
-  context: VetReportAiContext;
-  generatedReport: GeneratedVetReport | null;
 };
 
 const URGENT_EVENT_TYPES = new Set<EventModel['type']>([
@@ -213,14 +208,4 @@ export function buildLocalVetQuestions(context: VetReportAiContext) {
   }
 
   return questions.slice(0, 5);
-}
-
-export function buildVetShareReportSnapshot(input: {
-  context: VetReportAiContext;
-  generatedReport: GeneratedVetReport | null;
-}): VetShareReportSnapshot {
-  return {
-    context: input.context,
-    generatedReport: input.generatedReport,
-  };
 }

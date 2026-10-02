@@ -40,7 +40,7 @@ import {
   isVomitFrequency,
   isWaterSource,
 } from '@/types/events';
-import type { Json } from '@/types/supabase';
+import type { Json } from '@/types/local';
 
 type EventLike = Pick<
   EventModel,

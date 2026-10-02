@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { useAuthSessionStore } from '@/stores';
+import { useLocalProfileStore } from '@/stores';
 
 import { HomeBottomTabBar } from '../../home/components/HomeBottomTabBar';
 import { MedsIcon, PoopsIcon } from '../../insights/components/InsightsIcons';
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 
 export default function PhotoJournalGalleryScreen() {
   const router = useRouter();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
   const premiumAccess = hasPremiumAccess(barklogUser);
 
   return (

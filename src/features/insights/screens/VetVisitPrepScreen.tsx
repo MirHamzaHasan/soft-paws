@@ -1,7 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useRouter } from "expo-router";
 import { useCallback, useState } from "react";
-import { Pressable, Share, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { useBarklogFeedback } from "@/components/ui";
 import {
@@ -19,23 +19,13 @@ import {
   buildVetReportHtml,
   summarizeEventCounts,
 } from "@/features/export/utils/exportBuilders";
-import { generateVetReport } from "@/features/insights/api/insightsAiClient";
 import { captureBarklogError } from "@/features/observability";
-import { hasPremiumAccess } from "@/features/premium/utils/premiumAccess";
-import { openPremiumGate } from "@/features/premium/utils/premiumNavigation";
-import {
-  type CreatedVetShareLink,
-  createVetShareLink,
-  revokeVetShareLink,
-} from "@/features/vet/api/vetShareLinkClient";
 import {
   buildLocalVetQuestions,
   buildVetReportAiContext,
-  buildVetShareReportSnapshot,
-  type GeneratedVetReport,
 } from "@/features/vet/utils/vetReportBuilder";
 import HapticManager from "@/managers/HapticManager";
-import { getSelectedDog, useAuthSessionStore } from "@/stores";
+import { getSelectedDog, useLocalProfileStore } from "@/stores";
 import { getBarklogErrorMessage } from "@/utils/barklogErrorMessages";
 
 import { PrimaryButton } from "../../../components/ui/PrimaryButton";
@@ -364,19 +354,12 @@ function getAverage(count: number, days: number) {
 
 export default function VetVisitPrepScreen() {
   const router = useRouter();
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const [rangeDays, setRangeDays] = useState<7 | 30 | 90>(30);
   const [events, setEvents] = useState<EventModel[]>([]);
   const [medications, setMedications] = useState<MedicationModel[]>([]);
-  const [generatedVetReport, setGeneratedVetReport] =
-    useState<GeneratedVetReport | null>(null);
-  const [shareLink, setShareLink] = useState<CreatedVetShareLink | null>(null);
-  const [isGeneratingPremiumReport, setIsGeneratingPremiumReport] =
-    useState(false);
-  const [isCreatingShareLink, setIsCreatingShareLink] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const feedback = useBarklogFeedback();
@@ -408,8 +391,6 @@ export default function VetVisitPrepScreen() {
           if (isMounted) {
             setEvents(nextEvents);
             setMedications(nextMedications);
-            setGeneratedVetReport(null);
-            setShareLink(null);
             setError(null);
           }
         })
@@ -454,33 +435,21 @@ export default function VetVisitPrepScreen() {
     : null;
   let suggestedQuestions: string[] = [];
 
-  if (generatedVetReport?.questions.length) {
-    suggestedQuestions = generatedVetReport.questions;
-  } else if (reportContext) {
+  if (reportContext) {
     suggestedQuestions = buildLocalVetQuestions(reportContext);
   }
   const reportHtml = selectedDog
     ? buildVetReportHtml({
         dog: selectedDog,
         events,
-        generatedSummary: generatedVetReport?.summary ?? null,
+        generatedSummary: null,
         generatedAt,
         medications,
         suggestedQuestions,
         rangeLabel,
-        shareUrl: shareLink?.url ?? null,
       })
     : "";
   const symptomEvents = events.filter((event) => event.type === "symptom");
-  const userHasPremium = hasPremiumAccess(barklogUser);
-  let premiumSummaryButtonLabel = "Unlock premium report";
-
-  if (isGeneratingPremiumReport) {
-    premiumSummaryButtonLabel = "Generating...";
-  } else if (userHasPremium) {
-    premiumSummaryButtonLabel = "Generate premium summary";
-  }
-
   const handleSharePdf = async () => {
     if (!selectedDog) {
       const message = "Add a dog before generating a report.";
@@ -563,187 +532,6 @@ export default function VetVisitPrepScreen() {
       await HapticManager.error();
       feedback.showError({
         title: "Print not opened",
-        description: message,
-      });
-    }
-  };
-
-  const handleGeneratePremiumReport = async () => {
-    if (!userHasPremium) {
-      openPremiumGate(router, "vet-pdf-reports");
-      return;
-    }
-
-    if (!selectedDog || !reportContext) {
-      const message = "Add a dog before generating a premium vet report.";
-
-      setError(message);
-      await HapticManager.warning();
-      feedback.showWarning({
-        title: "Dog needed",
-        description: message,
-      });
-      return;
-    }
-
-    setError(null);
-    setStatusMessage(null);
-    setIsGeneratingPremiumReport(true);
-
-    try {
-      await HapticManager.selectionChange();
-      const response = await generateVetReport({
-        context: reportContext,
-        dogId: selectedDog.id,
-        user: barklogUser,
-      });
-
-      setGeneratedVetReport(response.report);
-      setStatusMessage("Premium vet report summary is ready.");
-      await HapticManager.success();
-      feedback.showSuccess({
-        title: "Premium report ready",
-        description: "Premium vet report summary is ready.",
-      });
-    } catch (reportError) {
-      const message = getBarklogErrorMessage(reportError, {
-        domain: "ai",
-      });
-
-      setError(message);
-      captureBarklogError(reportError, {
-        source: "vet_report.generate_premium",
-        extra: {
-          dog_id: selectedDog.id,
-        },
-      });
-      await HapticManager.error();
-      feedback.showError({
-        title: "Premium report unavailable",
-        description: message,
-      });
-    } finally {
-      setIsGeneratingPremiumReport(false);
-    }
-  };
-
-  const handleCreateShareLink = async () => {
-    if (!userHasPremium) {
-      openPremiumGate(router, "vet-pdf-reports");
-      return;
-    }
-
-    if (!selectedDog || !barklogUser || !reportContext) {
-      const message = "Sign in and select a dog before creating a share link.";
-
-      setError(message);
-      await HapticManager.warning();
-      feedback.showWarning({
-        title: "Account needed",
-        description: message,
-      });
-      return;
-    }
-
-    if (!generatedVetReport) {
-      const message =
-        "Generate the premium vet report before creating a share link.";
-
-      setError(message);
-      await HapticManager.warning();
-      feedback.showWarning({
-        title: "Report needed",
-        description: message,
-      });
-      return;
-    }
-
-    setError(null);
-    setStatusMessage(null);
-    setIsCreatingShareLink(true);
-
-    try {
-      await HapticManager.selectionChange();
-      const createdLink = await createVetShareLink({
-        dogId: selectedDog.id,
-        rangeEnd: reportContext.range.endIso,
-        rangeStart: reportContext.range.startIso,
-        reportSnapshot: buildVetShareReportSnapshot({
-          context: reportContext,
-          generatedReport: generatedVetReport,
-        }),
-        user: barklogUser,
-      });
-
-      setShareLink(createdLink);
-      setStatusMessage(
-        `Secure vet link created. It expires ${new Date(
-          createdLink.expiresAt,
-        ).toLocaleDateString()}.`,
-      );
-      await Share.share({
-        message: createdLink.url,
-        title: `${selectedDog.name} BarkLog vet report`,
-      });
-      await HapticManager.success();
-      feedback.showSuccess({
-        title: "Share link ready",
-        description: "Secure vet share link created.",
-      });
-    } catch (shareError) {
-      const message = getBarklogErrorMessage(shareError, {
-        domain: "share",
-      });
-
-      setError(message);
-      captureBarklogError(shareError, {
-        source: "vet_report.create_share_link",
-        extra: {
-          dog_id: selectedDog.id,
-        },
-      });
-      await HapticManager.error();
-      feedback.showError({
-        title: "Share link not created",
-        description: message,
-      });
-    } finally {
-      setIsCreatingShareLink(false);
-    }
-  };
-
-  const handleRevokeShareLink = async () => {
-    if (!shareLink) {
-      return;
-    }
-
-    setError(null);
-    setStatusMessage(null);
-
-    try {
-      await revokeVetShareLink(shareLink.id);
-      setShareLink(null);
-      setStatusMessage("Secure vet share link revoked.");
-      await HapticManager.success();
-      feedback.showSuccess({
-        title: "Share link revoked",
-        description: "Secure vet share link revoked.",
-      });
-    } catch (shareError) {
-      const message = getBarklogErrorMessage(shareError, {
-        domain: "share",
-      });
-
-      setError(message);
-      captureBarklogError(shareError, {
-        source: "vet_report.revoke_share_link",
-        extra: {
-          link_id: shareLink.id,
-        },
-      });
-      await HapticManager.error();
-      feedback.showError({
-        title: "Share link not revoked",
         description: message,
       });
     }
@@ -896,76 +684,6 @@ export default function VetVisitPrepScreen() {
               No symptom events recorded in this range.
             </Text>
           )}
-        </View>
-
-        <View style={styles.premiumCard}>
-          <View style={styles.premiumHeader}>
-            <View style={styles.symptomCopy}>
-              <Text style={styles.label}>Premium</Text>
-              <Text style={styles.premiumTitle}>Vet-ready report upgrade</Text>
-            </View>
-            <View style={styles.premiumBadge}>
-              <Text style={styles.premiumBadgeText}>
-                {userHasPremium ? "Unlocked" : "Premium"}
-              </Text>
-            </View>
-          </View>
-          <Text style={styles.premiumBody}>
-            Generate a short, non-diagnostic visit summary and secure,
-            time-limited share link for your vet. Free manual PDF and print
-            export stays available below.
-          </Text>
-          {generatedVetReport ? (
-            <View style={styles.questionsCard}>
-              <Text style={styles.premiumTitle}>Generated summary</Text>
-              <Text style={styles.premiumBody}>
-                {generatedVetReport.summary}
-              </Text>
-            </View>
-          ) : null}
-          {shareLink ? (
-            <Text style={styles.premiumBody}>
-              Share link expires{" "}
-              {new Date(shareLink.expiresAt).toLocaleDateString()}.
-            </Text>
-          ) : null}
-          <View style={styles.premiumActions}>
-            <Pressable
-              accessibilityRole="button"
-              disabled={isGeneratingPremiumReport}
-              style={styles.secondaryButton}
-              onPress={() => {
-                handleGeneratePremiumReport().catch(() => undefined);
-              }}
-            >
-              <Text style={styles.secondaryButtonText}>
-                {premiumSummaryButtonLabel}
-              </Text>
-            </Pressable>
-            <Pressable
-              accessibilityRole="button"
-              disabled={isCreatingShareLink}
-              style={styles.secondaryButton}
-              onPress={() => {
-                handleCreateShareLink().catch(() => undefined);
-              }}
-            >
-              <Text style={styles.secondaryButtonText}>
-                {isCreatingShareLink ? "Creating..." : "Create share link"}
-              </Text>
-            </Pressable>
-            {shareLink ? (
-              <Pressable
-                accessibilityRole="button"
-                style={styles.secondaryButton}
-                onPress={() => {
-                  handleRevokeShareLink().catch(() => undefined);
-                }}
-              >
-                <Text style={styles.secondaryButtonText}>Revoke link</Text>
-              </Pressable>
-            ) : null}
-          </View>
         </View>
 
         <Text style={styles.sectionTitle}>

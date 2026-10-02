@@ -5,6 +5,10 @@
 - Canonical spec: [../source-of-truth/barklog-product-engineering.md](../source-of-truth/barklog-product-engineering.md)
 - If any older BarkLog document conflicts with the canonical spec, the canonical spec wins.
 
+## Current task051 and task052 rebaseline
+
+BarkLog needs no account for journaling. WatermelonDB is the sole journal store. All care records stay on this device; free CSV and PDF exports are the only external copy. Uninstalling the app or deleting its data removes the journal. RevenueCat uses a stable local owner ID. Optional Firebase email/password sign-in enables Atlas AI only. An AI action sends selected summarized context to Atlas, which must enforce a BarkLog context policy; Firebase credentials stay in memory. Training content ships in the app. Native builds use local Expo prebuild, Gradle, and Xcode. Older Supabase and AI descriptions below document former plans and are superseded by this section.
+
 ## Product Summary
 
 - Product: `BarkLog`
@@ -26,7 +30,7 @@
 
 1. One-tap obsessed. Daily actions should fit within three taps.
 2. Dog-only. No multi-species abstractions.
-3. Offline-first logging. Events must save locally before network sync.
+3. Local-only logging. Events save to WatermelonDB without a network.
 4. No medical advice. BarkLog observes patterns and organizes facts.
 5. Data freedom. CSV and PDF export stay available to users.
 6. Fast over fancy. Logging latency matters more than ornamental motion.

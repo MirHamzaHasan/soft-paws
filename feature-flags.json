@@ -1,4 +1,5 @@
 {
+  "aiFeatures": true,
   "enable_ads": true,
   "enable_debug_menu": true,
   "new_onboarding": false,

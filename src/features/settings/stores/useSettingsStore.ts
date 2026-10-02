@@ -10,6 +10,7 @@ type BarklogSettingsState = {
   appearance: BarklogAppearancePreference;
   healthDataConnected: boolean;
   medicationRemindersEnabled: boolean;
+  resetSettings: () => void;
   setAnomalyAlertsEnabled: (enabled: boolean) => void;
   setAppearance: (appearance: BarklogAppearancePreference) => void;
   setHealthDataConnected: (connected: boolean) => void;
@@ -118,6 +119,8 @@ const persistNextSettings = (
 export const useSettingsStore = create<BarklogSettingsState>()((set) => ({
   ...defaultSettings,
   ...readPersistedSettings(),
+  resetSettings: () =>
+    set((state) => persistNextSettings(state, defaultSettings)),
   setAnomalyAlertsEnabled: (anomalyAlertsEnabled) =>
     set((state) => persistNextSettings(state, { anomalyAlertsEnabled })),
   setAppearance: (appearance) =>

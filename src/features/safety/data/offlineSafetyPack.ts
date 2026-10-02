@@ -1,4 +1,4 @@
-import type { BarklogDogRow } from '@/api/auth';
+import type { BarklogDogRow } from '@/api/localProfile';
 import type { MedicationModel } from '@/db';
 
 import {

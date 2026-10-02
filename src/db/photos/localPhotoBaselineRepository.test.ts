@@ -4,16 +4,11 @@ import {
   createPhotoBaselineAttachmentUri,
   deleteLocalPhotoBaseline,
 } from '@/db/photos';
-import { mergeBarklogSyncMetadata } from '@/db/sync';
 
 import { createWatermelonWriteHarness } from '../../../test/utils/watermelon';
 
 jest.mock('@/db/database', () => ({
   getBarklogDatabase: jest.fn(),
-}));
-
-jest.mock('@/db/sync', () => ({
-  mergeBarklogSyncMetadata: jest.fn(),
 }));
 
 type LocalPhotoBaselineWriteRecord = {
@@ -22,7 +17,7 @@ type LocalPhotoBaselineWriteRecord = {
   category?: string;
   createdAt?: number;
   dogId?: string;
-  markAsDeleted?: jest.Mock;
+  destroyPermanently?: jest.Mock;
   notes?: string | null;
   photoUri?: string | null;
   title?: string;
@@ -30,21 +25,19 @@ type LocalPhotoBaselineWriteRecord = {
 };
 
 const getBarklogDatabaseMock = jest.mocked(getBarklogDatabase);
-const mergeBarklogSyncMetadataMock = jest.mocked(mergeBarklogSyncMetadata);
 
 describe('local photo baseline repository', () => {
   const now = Date.parse('2026-04-27T10:00:00.000Z');
 
   beforeEach(() => {
     jest.spyOn(Date, 'now').mockReturnValue(now);
-    mergeBarklogSyncMetadataMock.mockResolvedValue(undefined);
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  it('creates local photo baselines before sync', async () => {
+  it('creates local photo baselines on device', async () => {
     const { database, record } =
       createWatermelonWriteHarness<LocalPhotoBaselineWriteRecord>();
 
@@ -76,14 +69,11 @@ describe('local photo baseline repository', () => {
       title: 'Left ear reference',
       userId: 'user-1',
     });
-    expect(mergeBarklogSyncMetadataMock).toHaveBeenCalledWith(database, {
-      lastLocalWriteAt: now,
-    });
   });
 
-  it('marks local photo baselines deleted before sync', async () => {
+  it('permanently deletes local photo baselines on device', async () => {
     const record: LocalPhotoBaselineWriteRecord = {
-      markAsDeleted: jest.fn(async () => undefined),
+      destroyPermanently: jest.fn(async () => undefined),
     };
     const collection = {
       find: jest.fn(async () => record),
@@ -104,10 +94,7 @@ describe('local photo baseline repository', () => {
     await deleteLocalPhotoBaseline('photo-baseline-1');
 
     expect(collection.find).toHaveBeenCalledWith('photo-baseline-1');
-    expect(record.markAsDeleted).toHaveBeenCalled();
-    expect(mergeBarklogSyncMetadataMock).toHaveBeenCalledWith(database, {
-      lastLocalWriteAt: now,
-    });
+    expect(record.destroyPermanently).toHaveBeenCalled();
   });
 
   it('creates deterministic local placeholder URIs for future native capture', () => {

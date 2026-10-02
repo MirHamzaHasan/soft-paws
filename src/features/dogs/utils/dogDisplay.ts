@@ -1,4 +1,4 @@
-import type { BarklogDogRow } from '@/api/auth';
+import type { BarklogDogRow } from '@/api/localProfile';
 
 const DOG_AVATAR_COLORS = [
   '#173136',

@@ -37,7 +37,7 @@ describe('export builders', () => {
     });
 
     expect(csv).toContain(
-      '"dog_id","dog_name","event_id","type","occurred_at","logged_at","notes","details_json","photo_url","synced"',
+      '"dog_id","dog_name","event_id","type","occurred_at","logged_at","notes","details_json","photo_url"',
     );
     expect(csv).toContain('"Milo ""Bean"""');
     expect(csv).toContain('"Ate ""treats"", then settled"');

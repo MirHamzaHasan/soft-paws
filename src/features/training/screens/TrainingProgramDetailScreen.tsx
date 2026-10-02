@@ -31,13 +31,14 @@ import {
   updateLocalTrainingEnrollment,
 } from '@/db/training';
 import { generateTrainingInsight } from '@/features/insights/api/insightsAiClient';
+import { AI_FEATURES_ENABLED } from '@/config/featureFlags';
 import { getSafeAiErrorMessage } from '@/features/insights/utils/aiSafety';
 import { queueBarklogEvent } from '@/features/observability';
 import { hasPremiumAccess } from '@/features/premium/utils/premiumAccess';
 import { openPremiumGate } from '@/features/premium/utils/premiumNavigation';
 import { SkeletonBlock } from '@/features/states/components/SkeletonBlock';
 import HapticManager from '@/managers/HapticManager';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
 import { barklogTypography } from '@/theme/tokens';
 
 import { useLocalTrainingEnrollments } from '../hooks/useLocalTrainingEnrollments';
@@ -384,9 +385,9 @@ export default function TrainingProgramDetailScreen() {
   const programSlug = Array.isArray(params.programSlug)
     ? params.programSlug[0]
     : params.programSlug;
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const premiumAccess = hasPremiumAccess(barklogUser);
   const programsQuery = useQuery(trainingProgramsQueryOptions());
@@ -713,8 +714,8 @@ export default function TrainingProgramDetailScreen() {
                   lineHeight={20}
                 >
                   {freeWeeklyProgram
-                    ? `This week's free program is ${freeWeeklyProgram.name}. Premium unlocks every program with progress tracking and personalization.`
-                    : 'Premium unlocks every program with progress tracking and personalization.'}
+                    ? `This week's free program is ${freeWeeklyProgram.name}. Premium unlocks every program with progress tracking.`
+                    : 'Premium unlocks every program with progress tracking.'}
                 </Paragraph>
               </YStack>
             </XStack>
@@ -857,8 +858,8 @@ export default function TrainingProgramDetailScreen() {
                   lineHeight={20}
                 >
                   {premiumAccess
-                    ? 'Save enrollment and step progress locally before sync.'
-                    : "Read this week's program free. Premium tracks progress and personalizes insights."}
+                    ? 'Save enrollment and step progress on this device.'
+                    : "Read this week's program free. Premium tracks progress and sessions."}
                 </Paragraph>
               </YStack>
             </XStack>
@@ -935,13 +936,12 @@ export default function TrainingProgramDetailScreen() {
               fontSize={barklogTypography.caption}
               lineHeight={16}
             >
-              Session logs create a Timeline event and are saved locally before
-              sync.
+              Session logs create a Timeline event and are saved on this device.
             </Paragraph>
           </BarklogCard>
         ) : null}
 
-        {effectiveEnrollment ? (
+        {AI_FEATURES_ENABLED && effectiveEnrollment ? (
           <TrainingInsightCard
             premiumAccess={premiumAccess}
             isGenerating={isGeneratingTrainingInsight}

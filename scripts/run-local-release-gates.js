@@ -5,18 +5,13 @@ const { spawnSync } = require('child_process');
 
 const checks = [
   {
-    args: ['scripts/check-eas-release-config.js'],
-    command: process.execPath,
-    label: 'EAS profile and app identity',
-  },
-  {
     args: ['scripts/check-release-env-boundary.js'],
-    command: process.execPath,
+    command: 'node',
     label: 'Client/server environment boundary',
   },
   {
     args: ['scripts/check-native-release-capabilities.js'],
-    command: process.execPath,
+    command: 'node',
     label: 'Native release capabilities',
   },
   {
@@ -24,7 +19,8 @@ const checks = [
       'pnpm',
       'exec',
       'eslint',
-      'scripts/check-eas-release-config.js',
+      'scripts/build-android-release.js',
+      'scripts/ensure-external-pnpm-store-links.js',
       'scripts/check-release-env-boundary.js',
       'scripts/check-native-release-capabilities.js',
       'scripts/check-production-release-readiness.js',
@@ -45,6 +41,7 @@ const results = checks.map((check) => {
 
   const result = spawnSync(check.command, check.args, {
     stdio: 'inherit',
+    shell: process.platform === 'win32',
   });
 
   return {
@@ -65,5 +62,5 @@ if (failures.length > 0) {
 
 console.log('\nLocal release gates passed.');
 console.log(
-  '- External EAS login, service dashboard evidence, device QA, and production sign-off are still tracked separately.',
+  '- Signed native builds, device QA, and store sign-off are tracked separately.',
 );

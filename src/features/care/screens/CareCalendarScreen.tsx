@@ -34,7 +34,7 @@ import { ChevronRightIcon } from '@/features/home/components/HomeIcons';
 import { HomeShell } from '@/features/home/components/HomeShell';
 import { openPremiumGate } from '@/features/premium/utils/premiumNavigation';
 import HapticManager from '@/managers/HapticManager';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
 import {
   CARE_TASK_OPTIONS,
   CARE_TASK_RECURRENCE_OPTIONS,
@@ -398,9 +398,9 @@ function CareTaskRow({
 
 export default function CareCalendarScreen() {
   const router = useRouter();
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const [tasks, setTasks] = useState<CareTaskModel[]>([]);
   const [medications, setMedications] = useState<MedicationModel[]>([]);
@@ -896,8 +896,7 @@ export default function CareCalendarScreen() {
             <View style={styles.taskCopy}>
               <Text style={styles.cardTitle}>Smart care automation</Text>
               <Text style={styles.emptyText}>
-                Premium can sync this calendar, coordinate household tasks, and
-                generate smart checklists later.
+                Premium adds smart recurring care checklists on this device.
               </Text>
             </View>
             <View style={styles.premiumButton}>

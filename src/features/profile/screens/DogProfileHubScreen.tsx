@@ -4,7 +4,6 @@ import {
   CalendarClock,
   GraduationCap,
   ImagePlus,
-  Users,
 } from "lucide-react-native";
 import { useCallback, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -30,9 +29,7 @@ import {
 import { shareTextDocument } from "@/features/export/services/exportDocumentService";
 import { buildEventsCsv } from "@/features/export/utils/exportBuilders";
 import { formatMedicationMeta } from "@/features/medications/utils/medicationSchedule";
-import { SyncStatusPill } from "@/features/sync/components/SyncStatusPill";
-import { useSyncDisplayStatus } from "@/features/sync/hooks/useSyncDisplayStatus";
-import { getSelectedDog, useAuthSessionStore } from "@/stores";
+import { getSelectedDog, useLocalProfileStore } from "@/stores";
 
 import { HomeAvatar } from "../../home/components/HomeAvatar";
 import { HomeShell } from "../../home/components/HomeShell";
@@ -143,8 +140,8 @@ function getTrackedDays(createdAt: string | null | undefined) {
 
 export default function DogProfileHubScreen() {
   const router = useRouter();
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const [medications, setMedications] = useState<MedicationModel[]>([]);
   const [careTasks, setCareTasks] = useState<CareTaskModel[]>([]);
   const [exportStatus, setExportStatus] = useState<string | null>(null);
@@ -169,7 +166,6 @@ export default function DogProfileHubScreen() {
   const dogAvatar = selectedDog
     ? getDogAvatar(selectedDog)
     : { backgroundColor: "#173136", emoji: "🐶" };
-  const syncStatus = useSyncDisplayStatus();
   const upcomingCareTasks = sortCareTasksByDueAt(careTasks).slice(0, 3);
 
   useFocusEffect(
@@ -452,21 +448,9 @@ export default function DogProfileHubScreen() {
           onPress={() => router.push("/photo-baselines" as Href)}
         />
 
-        <ProfileActionCard
-          label="Household Sharing"
-          leading={<Users size={22} />}
-          color="#263136"
-          backgroundColor="#FFFCFA"
-          borderColor="#D7D3CF"
-          showChevron
-          onPress={() => router.push("/household" as Href)}
-        />
-
-        <SyncStatusPill
-          display={syncStatus.display}
-          loading={syncStatus.isLoading}
-          onPress={() => router.push("/sync-backup" as Href)}
-        />
+        <Text style={styles.sectionMessage}>
+          Care records stay on this device. Export a copy regularly to keep them.
+        </Text>
 
         <ProfileActionCard
           label="Data Export"

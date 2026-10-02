@@ -11,7 +11,7 @@ import {
 } from '@/db';
 import { getDogAvatar } from '@/features/dogs/utils/dogDisplay';
 import { buildExpensesCsv } from '@/features/export/utils/exportBuilders';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
 
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { shareTextDocument } from '../../export/services/exportDocumentService';
@@ -271,9 +271,9 @@ function buildMonthlyTrendData(expenses: ExpenseModel[]) {
 
 export default function ExpenseTrackerScreen() {
   const router = useRouter();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const premiumAccess = hasPremiumAccess(barklogUser);
   const [expenses, setExpenses] = useState<ExpenseModel[]>([]);
@@ -375,7 +375,7 @@ export default function ExpenseTrackerScreen() {
       setAmount('');
       setDescription('');
       setDate(formatTodayDate());
-      setStatusMessage('Expense saved locally and ready to sync.');
+      setStatusMessage('Expense saved on this device.');
       await reloadExpenses();
     } catch (saveError) {
       setError(

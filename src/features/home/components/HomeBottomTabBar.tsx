@@ -6,7 +6,6 @@ import {
   ArchiveTabIcon,
   GalleryTabIcon,
   HomeTabIcon,
-  HouseholdTabIcon,
   InsightsTabIcon,
   LedgerTabIcon,
   LogTabIcon,
@@ -20,7 +19,6 @@ type HomeTabKey =
   | 'archive'
   | 'gallery'
   | 'home'
-  | 'household'
   | 'insights'
   | 'ledger'
   | 'log'
@@ -29,14 +27,13 @@ type HomeTabKey =
   | 'profile'
   | 'timeline';
 
-type HomeTabVariant = 'main' | 'care' | 'household' | 'journal';
+type HomeTabVariant = 'main' | 'care' | 'journal';
 type HomeTabRoute =
   | '/'
   | '/home-offline'
   | '/expenses'
   | '/profile'
   | '/insights'
-  | '/household'
   | '/memory-book'
   | '/add-medication'
   | '/photo-journal'
@@ -71,17 +68,6 @@ const CARE_TAB_META: {
   { key: 'profile', label: 'PROFILE', route: '/profile' },
 ];
 
-const HOUSEHOLD_TAB_META: {
-  key: HomeTabKey;
-  label: string;
-  route?: HomeTabRoute;
-}[] = [
-  { key: 'archive', label: 'ARCHIVE', route: '/timeline' },
-  { key: 'household', label: 'HOUSEHOLD', route: '/household' },
-  { key: 'meds', label: 'MEDS', route: '/add-medication' },
-  { key: 'profile', label: 'PROFILE', route: '/profile' },
-];
-
 const JOURNAL_TAB_META: {
   key: HomeTabKey;
   label: string;
@@ -101,8 +87,6 @@ function renderIcon(key: HomeTabKey, color: string) {
       return <GalleryTabIcon color={color} />;
     case 'home':
       return <HomeTabIcon color={color} />;
-    case 'household':
-      return <HouseholdTabIcon color={color} />;
     case 'ledger':
       return <LedgerTabIcon color={color} />;
     case 'log':
@@ -132,8 +116,6 @@ export function HomeBottomTabBar({
 
   if (variant === 'care') {
     tabs = CARE_TAB_META;
-  } else if (variant === 'household') {
-    tabs = HOUSEHOLD_TAB_META;
   } else if (variant === 'journal') {
     tabs = JOURNAL_TAB_META;
   }

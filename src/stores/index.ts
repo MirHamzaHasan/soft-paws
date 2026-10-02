@@ -1,2 +1,2 @@
-export * from './useAuthSessionStore';
+export * from './useLocalProfileStore';
 export * from './useOnboardingDraftStore';

@@ -1,13 +1,14 @@
 import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useShallow } from 'zustand/react/shallow';
 
 import { completeOnboardingForCurrentUser } from '@/api';
 import { BarklogStatusBanner, useBarklogFeedback } from '@/components/ui';
 import HapticManager from '@/managers/HapticManager';
 import {
   getPrimaryDog,
-  useAuthSessionStore,
+  useLocalProfileStore,
   useOnboardingDraftStore,
 } from '@/stores';
 import { getBarklogErrorMessage } from '@/utils/barklogErrorMessages';
@@ -26,7 +27,7 @@ import { OnboardingPillBadge } from '../components/OnboardingPillBadge';
 
 const FEATURES = [
   'Unlimited daily event tracking',
-  'AI-powered health insights',
+  'Care patterns from local logs',
   'Exportable vet reports',
   'Behavioral pattern detection',
 ];
@@ -71,20 +72,22 @@ export default function TrialWelcomeScreen() {
   const router = useRouter();
   const feedback = useBarklogFeedback();
   const resetDraft = useOnboardingDraftStore((state) => state.resetDraft);
-  const onboardingDraft = useOnboardingDraftStore((state) => ({
-    age: state.age,
-    breed: state.breed,
-    healthSyncEnabled: state.healthSyncEnabled,
-    name: state.name,
-    notificationsEnabled: state.notificationsEnabled,
-    sex: state.sex,
-    status: state.status,
-    weight: state.weight,
-    weightUnit: state.weightUnit,
-  }));
-  const session = useAuthSessionStore((state) => state.session);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const setSignedIn = useAuthSessionStore((state) => state.setSignedIn);
+  const onboardingDraft = useOnboardingDraftStore(
+    useShallow((state) => ({
+      age: state.age,
+      breed: state.breed,
+      healthSyncEnabled: state.healthSyncEnabled,
+      name: state.name,
+      notificationsEnabled: state.notificationsEnabled,
+      sex: state.sex,
+      status: state.status,
+      weight: state.weight,
+      weightUnit: state.weightUnit,
+    })),
+  );
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const setDogs = useLocalProfileStore((state) => state.setDogs);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -98,8 +101,8 @@ export default function TrialWelcomeScreen() {
   }, [dogs, onboardingDraft.name]);
 
   const handleStartTracking = async () => {
-    if (!session) {
-      const message = 'Sign in again to complete BarkLog setup.';
+    if (!barklogUser) {
+      const message = 'Your local profile is still loading.';
 
       setSubmitError(message);
       await HapticManager.warning();
@@ -111,10 +114,10 @@ export default function TrialWelcomeScreen() {
 
     try {
       const snapshot = await completeOnboardingForCurrentUser(
-        session,
+        barklogUser.id,
         onboardingDraft,
       );
-      setSignedIn(snapshot);
+      setDogs(snapshot.dogs);
       resetDraft();
       await HapticManager.success();
       feedback.showSuccess({
@@ -124,7 +127,7 @@ export default function TrialWelcomeScreen() {
       router.replace('/(tabs)');
     } catch (error) {
       const message = getBarklogErrorMessage(error, {
-        domain: 'auth',
+        domain: 'local_profile',
         fallback: 'Unable to finish setup right now.',
       });
 
@@ -156,8 +159,8 @@ export default function TrialWelcomeScreen() {
           <View style={styles.copyBlock}>
             <Text style={styles.title}>You&apos;re all set!</Text>
             <Text style={styles.subtitle}>
-              {dogName}&apos;s health journey starts now. We&apos;ve unlocked
-              all features for you.
+              {dogName}&apos;s care journal is ready on this device. Export a
+              copy before deleting the app.
             </Text>
           </View>
         </View>

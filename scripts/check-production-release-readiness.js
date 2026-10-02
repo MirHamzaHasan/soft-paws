@@ -5,15 +5,14 @@ const fs = require('fs');
 const path = require('path');
 
 const rootDir = process.cwd();
-const preflightPath = 'docs/deployment/release-preflight-checklist.md';
+const preflightPath = 'docs/release/preflight-local.md';
 const storeChecklistPath = 'docs/deployment/store-submission-checklist.md';
 
 const requiredReleaseFields = [
   'App version',
-  'Build profile',
-  'iOS build URL',
-  'Android build URL',
-  'Supabase project',
+  'Build method',
+  'iOS artifact path',
+  'Android artifact path',
   'RevenueCat project',
   'Mixpanel project',
   'Sentry project',
@@ -23,11 +22,10 @@ const requiredReleaseFields = [
 
 const requiredRollbackFields = [
   'Last known good app version',
-  'Last known good iOS build URL',
-  'Last known good Android build URL',
-  'Last known good Supabase function versions',
+  'Last known good iOS artifact path',
+  'Last known good Android artifact path',
   'RevenueCat rollback action',
-  'Server rollback action',
+  'Local data rollback action',
   'Store rollback action',
 ];
 
@@ -39,7 +37,7 @@ const requiredStoreChecklistPhrases = [
   'RevenueCat',
   'Mixpanel',
   'Sentry',
-  'Supabase',
+  'local-only',
 ];
 
 const failures = [];

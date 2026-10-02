@@ -9,7 +9,7 @@ import {
   queueBarklogEvent,
 } from "@/features/observability";
 import HapticManager from "@/managers/HapticManager";
-import { getSelectedDog, useAuthSessionStore } from "@/stores";
+import { getSelectedDog, useLocalProfileStore } from "@/stores";
 import { getBarklogErrorMessage } from "@/utils/barklogErrorMessages";
 
 import { PrimaryButton } from "../../../components/ui/PrimaryButton";
@@ -158,10 +158,10 @@ function getPaywallHeadline(input: {
 export default function PaywallScreen() {
   const router = useRouter();
   const params = useLocalSearchParams<{ reason?: string }>();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
-  const setBarklogUser = useAuthSessionStore((state) => state.setBarklogUser);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
+  const setBarklogUser = useLocalProfileStore((state) => state.setBarklogUser);
   const dismissTrialExpiryPaywall = usePremiumPresentationStore(
     (state) => state.dismissTrialExpiryPaywall,
   );
@@ -196,7 +196,7 @@ export default function PaywallScreen() {
 
   const handlePurchase = async (planId: BarklogPremiumPlanId) => {
     if (!barklogUser?.id) {
-      const nextError = "Sign in again to start BarkLog Premium.";
+      const nextError = "Your local profile is still loading.";
 
       setError(nextError);
       setErrorTone("warning");
@@ -281,7 +281,7 @@ export default function PaywallScreen() {
             </OnboardingCirclePlate>
             <Text style={styles.title}>{headline}</Text>
             <Text style={styles.subtitle}>
-              Premium unlocks the intelligence and creation tools. Your core
+              Premium unlocks guided training and care tools. Your core
               care record stays available even if you do not subscribe.
             </Text>
             <View style={styles.pill}>

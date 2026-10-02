@@ -162,6 +162,20 @@ export async function cancelCareTaskReminderNotifications(careTaskId: string) {
   return matchingRequests.length;
 }
 
+export async function cancelAllCareTaskReminderNotifications() {
+  const requests = (await getScheduledNotificationRequests()).filter(
+    isCareTaskReminderRequest,
+  );
+  await Promise.all(
+    requests.map((request) =>
+      Notifications.cancelScheduledNotificationAsync(request.identifier).catch(
+        () => undefined,
+      ),
+    ),
+  );
+  return requests.length;
+}
+
 export async function scheduleCareTaskReminder(
   careTask: CareTaskModel,
 ): Promise<CareReminderResult> {

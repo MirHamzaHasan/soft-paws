@@ -1,10 +1,12 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
-import { useCallback, useMemo, useState } from "react";
+import { useRouter, type Href } from "expo-router";
+import { useCallback, useMemo, useState, useSyncExternalStore } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { trainingProgramsQueryOptions } from "@/api/training";
+import { AI_FEATURES_ENABLED } from "@/config/featureFlags";
+import { getFirebaseAiAuthEmail, subscribeFirebaseAiAuth } from "@/features/auth/services/firebaseAiAuth";
 import { useBarklogFeedback } from "@/components/ui";
 import {
   captureBarklogError,
@@ -20,7 +22,7 @@ import {
   listLocalExpensesForDogYear,
   upsertLocalInsight,
 } from "../../../db";
-import { getSelectedDog, useAuthSessionStore } from "../../../stores";
+import { getSelectedDog, useLocalProfileStore } from "../../../stores";
 import { HomeShell } from "../../home/components/HomeShell";
 import {
   getPremiumFeatureLabel,
@@ -228,10 +230,11 @@ function TrainingInsightSkeletonCard() {
 }
 
 export default function InsightsScreen() {
+  const aiEmail = useSyncExternalStore(subscribeFirebaseAiAuth, getFirebaseAiAuthEmail);
   const router = useRouter();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const premiumAccess = hasPremiumAccess(barklogUser);
   const programsQuery = useQuery(trainingProgramsQueryOptions());
@@ -260,7 +263,7 @@ export default function InsightsScreen() {
   const [isGeneratingTrainingInsight, setIsGeneratingTrainingInsight] =
     useState(false);
   const feedback = useBarklogFeedback();
-  const showExtendedInsightTools = false;
+  const showExtendedInsightTools = AI_FEATURES_ENABLED;
 
   const activeTrainingPair = useMemo(() => {
     if (!programsQuery.data) {
@@ -338,6 +341,10 @@ export default function InsightsScreen() {
       openPremiumGate(router, "weekly-insights");
       return;
     }
+    if (!aiEmail) {
+      router.push('/ai-sign-in?next=insights' as Href);
+      return;
+    }
 
     if (!selectedDog || !snapshot) {
       const message = "Log events before generating a weekly insight.";
@@ -398,6 +405,10 @@ export default function InsightsScreen() {
   const handleGenerateTrainingInsight = async () => {
     if (!premiumAccess) {
       openPremiumGate(router, "training-programs");
+      return;
+    }
+    if (!aiEmail) {
+      router.push('/ai-sign-in?next=insights' as Href);
       return;
     }
 
@@ -474,6 +485,10 @@ export default function InsightsScreen() {
   const handleGenerateCareSummary = async (kind: SummaryKind) => {
     if (!premiumAccess) {
       openPremiumGate(router, "care-summaries");
+      return;
+    }
+    if (!aiEmail) {
+      router.push('/ai-sign-in?next=insights' as Href);
       return;
     }
 
@@ -642,6 +657,12 @@ export default function InsightsScreen() {
       headerAvatarBackgroundColor="#F2E7D9"
     >
       <View style={styles.stack}>
+        {AI_FEATURES_ENABLED && premiumAccess && !aiEmail ? (
+          <View style={styles.actions}>
+            <Text style={styles.subtitle}>Sign in with Firebase before generating AI insights. The selected summary is sent to Atlas.</Text>
+            <PrimaryButton label="Connect BarkLog AI" onPress={() => router.push('/ai-sign-in?next=insights' as Href)} />
+          </View>
+        ) : null}
         <View style={styles.heroRow}>
           <View style={styles.hero}>
             <Text style={styles.title}>Weekly view</Text>
@@ -673,13 +694,13 @@ export default function InsightsScreen() {
         </View>
 
         <InsightsNarrativeCard
-          eyebrow="AI Insight"
+          eyebrow="Care snapshot"
           eyebrowIcon={<SparklesIcon />}
           backgroundColor="#F7F4FF"
           borderColor="#D8CCFF"
           eyebrowColor="#5A34C3"
           bodyColor="#3E2A9E"
-          body={insightBody}
+          body={AI_FEATURES_ENABLED ? insightBody : `${snapshot?.mealCount ?? 0} meals, ${snapshot?.context.thisWeek.eventCounts.poop ?? 0} poop logs, and ${snapshot?.medicationCount ?? 0} medication logs recorded this week. These are caregiver observations, not a diagnosis.`}
         />
 
         {showExtendedInsightTools ? (

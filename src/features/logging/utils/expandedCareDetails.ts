@@ -25,7 +25,7 @@ import {
   type VomitFrequency,
   type WaterSource,
 } from '@/types/events';
-import type { Json } from '@/types/supabase';
+import type { Json } from '@/types/local';
 
 export type ExpandedCareFormState = {
   amountOz: string;

@@ -1,11 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { type Collection, Q } from '@nozbe/watermelondb';
 
-import type { Json } from '@/types/supabase';
+import type { Json } from '@/types/local';
 
 import { getBarklogDatabase } from '../database';
 import type { EventModel } from '../models';
-import { mergeBarklogSyncMetadata } from '../sync';
 
 type UpdateLocalEventInput = {
   details?: Json;
@@ -70,7 +69,6 @@ export async function listLocalEventsForDog(dogId: string) {
 export async function updateLocalEvent(input: UpdateLocalEventInput) {
   const database = getBarklogDatabase();
   const eventCollection = getEventCollection();
-  const now = Date.now();
 
   const event = await database.write(async () => {
     const existingEvent = await eventCollection.find(input.eventId);
@@ -92,13 +90,9 @@ export async function updateLocalEvent(input: UpdateLocalEventInput) {
         record.photoUrl = input.photoUrl;
       }
 
-      record.synced = false;
     });
   }, 'updateLocalEvent');
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return event;
 }
@@ -106,14 +100,10 @@ export async function updateLocalEvent(input: UpdateLocalEventInput) {
 export async function deleteLocalEvent(eventId: string) {
   const database = getBarklogDatabase();
   const eventCollection = getEventCollection();
-  const now = Date.now();
 
   await database.write(async () => {
     const existingEvent = await eventCollection.find(eventId);
-    await existingEvent.markAsDeleted();
+    await existingEvent.destroyPermanently();
   }, 'deleteLocalEvent');
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 }

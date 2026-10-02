@@ -9,11 +9,6 @@ export type BarklogAnalyticsEvent =
   | 'ai_agent_locked'
   | 'ai_agent_opened'
   | 'app_opened'
-  | 'contact_preferences_save_failed'
-  | 'contact_preferences_saved'
-  | 'contact_preferences_skipped'
-  | 'contact_preferences_validation_failed'
-  | 'contact_preferences_viewed'
   | 'detail_log_failed'
   | 'detail_log_saved'
   | 'emergency_action_started'
@@ -63,10 +58,7 @@ function getAppVersion() {
 function getBaseProperties(): AnalyticsProperties {
   return {
     app_version: getAppVersion(),
-    build_channel:
-      Constants.expoConfig?.extra?.eas?.channel ??
-      process.env.EXPO_PUBLIC_APP_ENV ??
-      (__DEV__ ? 'development' : 'production'),
+    build_channel: process.env.EXPO_PUBLIC_APP_ENV ?? (__DEV__ ? 'development' : 'production'),
     platform: Platform.OS,
   };
 }

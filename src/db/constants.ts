@@ -15,5 +15,3 @@ export const BARKLOG_COLLECTIONS = [
 ] as const;
 
 export type BarklogCollectionName = (typeof BARKLOG_COLLECTIONS)[number];
-
-export const BARKLOG_SYNC_COLLECTIONS = [...BARKLOG_COLLECTIONS] as const;

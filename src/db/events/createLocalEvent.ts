@@ -3,7 +3,6 @@ import type { Collection } from '@nozbe/watermelondb';
 
 import { getBarklogDatabase } from '../database';
 import type { EventModel } from '../models';
-import { mergeBarklogSyncMetadata } from '../sync';
 import type { CreateLocalEventInput } from '../types';
 import { toUnixTimestamp } from '../utils';
 
@@ -29,9 +28,6 @@ export async function createLocalEvent(input: CreateLocalEventInput) {
     'createLocalEvent',
   );
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return event;
 }

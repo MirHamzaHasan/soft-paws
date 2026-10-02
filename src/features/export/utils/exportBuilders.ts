@@ -1,4 +1,4 @@
-import type { BarklogDogRow } from '@/api/auth';
+import type { BarklogDogRow } from '@/api/localProfile';
 import type {
   BarklogEventType,
   EventModel,
@@ -42,7 +42,7 @@ import {
   isVomitFrequency,
   isWaterSource,
 } from '@/types/events';
-import type { Json } from '@/types/supabase';
+import type { Json } from '@/types/local';
 
 export type VetReportHtmlInput = {
   dog: BarklogDogRow;
@@ -52,7 +52,6 @@ export type VetReportHtmlInput = {
   medications: MedicationModel[];
   suggestedQuestions?: string[];
   rangeLabel: string;
-  shareUrl?: string | null;
 };
 
 type MemoryBookTextInput = {
@@ -333,7 +332,6 @@ export function buildEventsCsv(input: {
       'notes',
       'details_json',
       'photo_url',
-      'synced',
     ],
     ...input.events.map((event) => [
       input.dog.id,
@@ -345,7 +343,6 @@ export function buildEventsCsv(input: {
       event.notes ?? '',
       event.details,
       event.photoUrl ?? '',
-      event.synced ? 'true' : 'false',
     ]),
   ];
 
@@ -510,11 +507,6 @@ export function buildVetReportHtml(input: VetReportHtmlInput) {
       }
     </tbody>
   </table>
-  ${
-    input.shareUrl
-      ? `<h2>Secure Share Link</h2><p>This report was prepared with a time-limited BarkLog share link: ${htmlEscape(input.shareUrl)}</p>`
-      : ''
-  }
 </body>
 </html>`;
 }

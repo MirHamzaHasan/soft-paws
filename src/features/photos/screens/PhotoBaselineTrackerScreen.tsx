@@ -24,7 +24,7 @@ import { ChevronRightIcon } from '@/features/home/components/HomeIcons';
 import { HomeShell } from '@/features/home/components/HomeShell';
 import { openPremiumGate } from '@/features/premium/utils/premiumNavigation';
 import HapticManager from '@/managers/HapticManager';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
 import {
   getPhotoBaselineCategoryOption,
   PHOTO_BASELINE_CATEGORY_OPTIONS,
@@ -283,9 +283,9 @@ function PhotoBaselineRow({
 
 export default function PhotoBaselineTrackerScreen() {
   const router = useRouter();
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const [baselines, setBaselines] = useState<PhotoBaselineModel[]>([]);
   const [loadState, setLoadState] = useState<'error' | 'idle' | 'loading'>(
@@ -641,8 +641,7 @@ export default function PhotoBaselineTrackerScreen() {
             <View style={styles.baselineCopy}>
               <Text style={styles.cardTitle}>Compare photo history</Text>
               <Text style={styles.helperText}>
-                Premium can compare baselines, sync photo records, and support
-                future non-diagnostic photo summaries through Edge Functions.
+                Premium helps compare your saved baseline photos over time.
               </Text>
             </View>
             <View style={styles.premiumButton}>

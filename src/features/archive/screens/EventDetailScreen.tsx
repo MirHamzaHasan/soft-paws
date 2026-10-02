@@ -10,7 +10,7 @@ import {
   updateLocalEvent,
 } from '@/db';
 import HapticManager from '@/managers/HapticManager';
-import { useAuthSessionStore } from '@/stores';
+import { useLocalProfileStore } from '@/stores';
 import {
   APPETITE_OPTIONS,
   BEHAVIOR_CONTEXT_OPTIONS,
@@ -45,7 +45,7 @@ import {
   VOMIT_FREQUENCY_OPTIONS,
   WATER_SOURCE_OPTIONS,
 } from '@/types/events';
-import type { Json } from '@/types/supabase';
+import type { Json } from '@/types/local';
 
 import { LogDetailLayout } from '../../logging/components/LogDetailLayout';
 import { LogMediaUploadButton } from '../../logging/components/LogMediaUploadButton';
@@ -341,7 +341,7 @@ function EventIcon({ event }: { event: EventModel }) {
 
 export default function EventDetailScreen({ eventId }: EventDetailScreenProps) {
   const router = useRouter();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
   const [event, setEvent] = useState<EventModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);

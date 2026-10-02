@@ -1,4 +1,4 @@
-import type { BarklogDogRow } from '@/api/auth';
+import type { BarklogDogRow } from '@/api/localProfile';
 import type { TrainingProgramWithSteps } from '@/api/training';
 import { listLocalEventsForDogRange } from '@/db';
 import type { TrainingEnrollmentModel } from '@/db/models';

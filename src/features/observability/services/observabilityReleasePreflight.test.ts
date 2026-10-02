@@ -6,11 +6,6 @@ import type * as TelemetryPrivacy from '@/features/observability/services/teleme
 const mockReadClientEnv = jest.fn();
 const mockExpoConstants = {
   expoConfig: {
-    extra: {
-      eas: {
-        channel: 'preview',
-      },
-    },
     name: 'BarkLog',
     slug: 'bark-log',
     version: '1.0.0',
@@ -62,20 +57,23 @@ describe('observability release preflight payloads', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (globalThis as unknown as { __DEV__: boolean }).__DEV__ = false;
+    process.env.EXPO_PUBLIC_APP_ENV = 'preview';
     mockReadClientEnv.mockReturnValue({
       ok: true,
       value: {
         EXPO_PUBLIC_APP_ENV: 'preview',
         EXPO_PUBLIC_MIXPANEL_TOKEN: 'mixpanel-preview-token',
         EXPO_PUBLIC_SENTRY_DSN: 'https://public@sentry.example.invalid/42',
-        EXPO_PUBLIC_SUPABASE_ANON_KEY: 'anon-key',
-        EXPO_PUBLIC_SUPABASE_URL: 'https://example.supabase.co',
       },
     });
     global.fetch = jest.fn(async () => ({
       ok: true,
       text: async () => '{}',
     })) as jest.Mock;
+  });
+
+  afterEach(() => {
+    delete process.env.EXPO_PUBLIC_APP_ENV;
   });
 
   it('sends release-critical Mixpanel events without raw caregiver text', async () => {

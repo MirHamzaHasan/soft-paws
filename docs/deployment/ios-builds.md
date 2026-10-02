@@ -1,5 +1,7 @@
 # Deployment: iOS Builds
 
+Historical remote-build guide. Use [local native builds](../release/local-build.md) for current Xcode signing and artifacts.
+
 ## Preview
 
 ```sh

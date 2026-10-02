@@ -1,35 +1,18 @@
 import { Redirect, Tabs } from 'expo-router';
 
-import { useAuthSessionStore } from '@/stores';
+import { useLocalProfileStore } from '@/stores';
 
 export default function TabsLayout() {
-  const bootstrapStatus = useAuthSessionStore((state) => state.bootstrapStatus);
-  const onboardingStatus = useAuthSessionStore(
+  const profileStatus = useLocalProfileStore((state) => state.profileStatus);
+  const onboardingStatus = useLocalProfileStore(
     (state) => state.onboardingStatus,
   );
-  const contactPreferenceStatus = useAuthSessionStore(
-    (state) => state.contactPreferenceStatus,
-  );
-  const sessionStatus = useAuthSessionStore((state) => state.sessionStatus);
-
-  if (bootstrapStatus !== 'ready') {
+  if (profileStatus === 'loading') {
     return null;
   }
 
-  if (sessionStatus === 'signed_out') {
-    return <Redirect href="/(auth)/welcome" />;
-  }
-
   if (onboardingStatus !== 'complete') {
-    return (
-      <Redirect
-        href={
-          contactPreferenceStatus === 'required'
-            ? '/(onboarding)/contact-preferences'
-            : '/(onboarding)/dog-profile'
-        }
-      />
-    );
+    return <Redirect href="/(onboarding)/dog-profile" />;
   }
 
   return (

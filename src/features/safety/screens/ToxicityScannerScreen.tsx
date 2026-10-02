@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { queueBarklogEvent } from '@/features/observability';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
 
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { HomeShell } from '../../home/components/HomeShell';
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
 
 export default function ToxicityScannerScreen() {
   const params = useLocalSearchParams<{ q?: string }>();
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const dog = {
     name: selectedDog?.name ?? 'your dog',

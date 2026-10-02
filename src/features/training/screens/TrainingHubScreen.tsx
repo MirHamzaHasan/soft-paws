@@ -26,7 +26,7 @@ import { hasPremiumAccess } from '@/features/premium/utils/premiumAccess';
 import { openPremiumGate } from '@/features/premium/utils/premiumNavigation';
 import { SkeletonBlock } from '@/features/states/components/SkeletonBlock';
 import HapticManager from '@/managers/HapticManager';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
 import { barklogTypography } from '@/theme/tokens';
 
 import { useLocalTrainingEnrollments } from '../hooks/useLocalTrainingEnrollments';
@@ -243,9 +243,9 @@ function TrainingProgramCard({
 
 export default function TrainingHubScreen() {
   const router = useRouter();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const premiumAccess = hasPremiumAccess(barklogUser);
   const programsQuery = useQuery(trainingProgramsQueryOptions());
@@ -336,7 +336,7 @@ export default function TrainingHubScreen() {
   return (
     <BarklogScreenShell
       title="Training"
-      subtitle="Browse positive-reinforcement programs, continue active steps, and keep progress saved locally before sync."
+      subtitle="Browse positive-reinforcement programs and keep progress on this device."
     >
       <YStack gap="$lg">
         <BarklogCard tone="ai">
@@ -361,8 +361,8 @@ export default function TrainingHubScreen() {
                 lineHeight={20}
               >
                 {premiumAccess
-                  ? 'Start programs, log sessions, generate insights, and keep progress saved locally before sync.'
-                  : "Read this week's program free. Premium tracks progress and personalizes insights."}
+                  ? 'Start programs, log sessions, and keep progress on this device.'
+                  : "Read this week's program free. Premium tracks progress and sessions."}
               </Paragraph>
             </YStack>
             {!premiumAccess ? <Lock size={20} /> : null}
@@ -436,8 +436,8 @@ export default function TrainingHubScreen() {
                 fontSize={barklogTypography.body}
                 lineHeight={20}
               >
-                Cached for offline reading from this device. Premium tracks
-                progress and personalizes insights.
+                Available offline on this device. Premium tracks progress and
+                training sessions.
               </Paragraph>
             </YStack>
             <TrainingProgramCard
@@ -505,7 +505,7 @@ export default function TrainingHubScreen() {
                     lineHeight={20}
                   >
                     Read this week&apos;s program free. Premium tracks progress
-                    and personalizes insights.
+                    and training sessions.
                   </Paragraph>
                 </YStack>
                 <TrainingProgramCard

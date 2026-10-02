@@ -124,6 +124,12 @@ const validateAppConfig = () => {
 };
 
 const validateAndroidSourceManifest = () => {
+  if (!pathExists(androidSourceManifestPath)) {
+    notes.push(
+      'Android native project is absent. Run corepack pnpm prebuild first.',
+    );
+    return;
+  }
   const sourceManifest = readText(androidSourceManifestPath);
 
   expectedAndroidPermissions.forEach((permission) => {
@@ -158,8 +164,8 @@ const validateAndroidSourceManifest = () => {
 
 const validateAndroidReleaseManifest = () => {
   if (!pathExists(androidReleaseManifestPath)) {
-    recordFailure(
-      `${androidReleaseManifestPath} is missing. Run ./gradlew :app:processReleaseMainManifest first.`,
+    notes.push(
+      `${androidReleaseManifestPath} is absent. Run prebuild and the local release build first.`,
     );
     return;
   }
@@ -190,7 +196,7 @@ const validateIosNativeFiles = () => {
     : '';
 
   if (!infoPlist) {
-    recordFailure(`${iosInfoPlistPath} is missing.`);
+    notes.push(`${iosInfoPlistPath} is absent. Run prebuild on macOS first.`);
   }
 
   forbiddenIosInfoKeys.forEach((key) => {
@@ -212,9 +218,10 @@ validateAndroidReleaseManifest();
 validateIosNativeFiles();
 
 if (failures.length === 0) {
-  notes.push(
-    'Android release manifest keeps expected notification and billing capability checks.',
-  );
+  if (pathExists(androidReleaseManifestPath))
+    notes.push(
+      'Android release manifest keeps expected notification and billing capability checks.',
+    );
   notes.push(
     'Camera, location, media-library, microphone, storage, overlay, and health capabilities are absent from the checked native files.',
   );

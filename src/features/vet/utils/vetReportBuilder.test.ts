@@ -1,7 +1,6 @@
 import {
   buildLocalVetQuestions,
   buildVetReportAiContext,
-  buildVetShareReportSnapshot,
 } from '@/features/vet/utils/vetReportBuilder';
 
 import {
@@ -98,32 +97,5 @@ describe('vet report builder', () => {
 
     expect(questions.join('\n')).toContain('mood or behavior notes');
     expect(questions.join('\n')).toContain('training limits');
-  });
-
-  it('builds a share snapshot without adding diagnostic language', () => {
-    const context = buildVetReportAiContext({
-      dog: makeDogRow(),
-      events: [],
-      medications: [],
-      range: {
-        endIso: '2026-04-27T00:00:00.000Z',
-        label: 'Last 30 days',
-        startIso: '2026-03-29T00:00:00.000Z',
-      },
-    });
-
-    const snapshot = buildVetShareReportSnapshot({
-      context,
-      generatedReport: {
-        generatedAt: '2026-04-27T00:00:00.000Z',
-        promptVersion: 'vet-report-v1',
-        questions: ['Do any logs need follow-up?'],
-        summary:
-          'Milo had caregiver-entered logs available for review in this range.',
-      },
-    });
-
-    expect(snapshot.generatedReport?.summary).not.toMatch(/diagnosed|has/i);
-    expect(snapshot.context.range.label).toBe('Last 30 days');
   });
 });

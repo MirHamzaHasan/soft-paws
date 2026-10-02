@@ -12,30 +12,30 @@ type HomeSecondaryActionButtonProps = {
 
 const styles = StyleSheet.create({
   button: {
-    flex: 1,
-    flexBasis: '47%',
     minWidth: 132,
-    minHeight: 92,
-    borderRadius: 18,
+    minHeight: 64,
+    borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 14,
+    gap: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
   },
   buttonPressed: {
     opacity: 0.88,
     transform: [{ scale: 0.98 }],
   },
   emoji: {
-    fontSize: 24,
-    lineHeight: 28,
+    fontSize: 20,
+    lineHeight: 24,
   },
   label: {
-    fontSize: 14,
+    fontSize: 13,
     lineHeight: 18,
     fontWeight: '500',
+    fontFamily: 'Inter_500Medium',
     textAlign: 'center',
   },
 });

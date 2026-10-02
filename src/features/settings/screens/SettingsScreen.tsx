@@ -1,24 +1,23 @@
-import { type Href, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { signOutCurrentUser } from '@/api';
+import { bootstrapLocalProfile, deleteAllLocalData } from '@/api';
+import { cancelAllCareTaskReminderNotifications } from '@/features/care/services/careTaskReminderService';
 import {
   cancelAllMedicationReminderNotifications,
   rescheduleMedicationRemindersForDog,
 } from '@/features/medications/services/medicationReminderService';
 import { requestNativeCapability } from '@/features/native-integrations';
 import { getPremiumEntitlementState } from '@/features/premium/utils/premiumAccess';
-import { useSyncDisplayStatus } from '@/features/sync/hooks/useSyncDisplayStatus';
 import {
   getSelectedDog,
-  useAuthSessionStore,
+  useLocalProfileStore,
   useOnboardingDraftStore,
 } from '@/stores';
 import { getBarklogErrorMessage } from '@/utils/barklogErrorMessages';
 
 import { ToggleSwitch } from '../../../components/ui/ToggleSwitch';
-import { CloudSyncIcon, OfflineIcon } from '../../home/components/HomeIcons';
 import { HomeShell } from '../../home/components/HomeShell';
 import { SparklesIcon } from '../../insights/components/InsightsIcons';
 import {
@@ -26,7 +25,6 @@ import {
   ProfileMedicationIcon,
 } from '../../profile/components/ProfileIcons';
 import {
-  SettingsEmailIcon,
   SettingsMoonIcon,
   SettingsRulerIcon,
   SettingsSubscriptionIcon,
@@ -83,22 +81,17 @@ const styles = StyleSheet.create({
 
 export default function SettingsScreen() {
   const router = useRouter();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const setSignedOut = useAuthSessionStore((state) => state.setSignedOut);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const setProfile = useLocalProfileStore((state) => state.setProfile);
+  const resetSettings = useSettingsStore((state) => state.resetSettings);
   const resetDraft = useOnboardingDraftStore((state) => state.resetDraft);
-  const anomalyAlertsEnabled = useSettingsStore(
-    (state) => state.anomalyAlertsEnabled,
-  );
   const appearance = useSettingsStore((state) => state.appearance);
   const healthDataConnected = useSettingsStore(
     (state) => state.healthDataConnected,
   );
   const medicationRemindersEnabled = useSettingsStore(
     (state) => state.medicationRemindersEnabled,
-  );
-  const setAnomalyAlertsEnabled = useSettingsStore(
-    (state) => state.setAnomalyAlertsEnabled,
   );
   const setAppearance = useSettingsStore((state) => state.setAppearance);
   const setHealthDataConnected = useSettingsStore(
@@ -109,38 +102,50 @@ export default function SettingsScreen() {
   );
   const setUnits = useSettingsStore((state) => state.setUnits);
   const units = useSettingsStore((state) => state.units);
-  const [signOutError, setSignOutError] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
   const [settingsMessage, setSettingsMessage] = useState<string | null>(null);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const subscriptionState = getPremiumEntitlementState(barklogUser);
-  const syncStatus = useSyncDisplayStatus();
   const [groomingScheduleEnabled, setGroomingScheduleEnabled] = useState(true);
   const showExtendedSettings = false;
-  const syncIcon =
-    syncStatus.capability.canPushToCloud &&
-    syncStatus.display.tone !== 'local' ? (
-      <CloudSyncIcon color="#7C858D" size={24} />
-    ) : (
-      <OfflineIcon color="#7C858D" size={24} />
-    );
 
-  const handleSignOut = async () => {
-    setSignOutError(null);
+  const handleDeleteAllData = async () => {
+    setDeleteError(null);
 
     try {
-      await signOutCurrentUser();
+      await cancelAllMedicationReminderNotifications();
+      await cancelAllCareTaskReminderNotifications();
+      await deleteAllLocalData();
       resetDraft();
-      setSignedOut();
-      router.replace('/(auth)/welcome');
+      resetSettings();
+      setProfile(await bootstrapLocalProfile());
+      router.replace('/(onboarding)/dog-profile');
     } catch (error) {
-      setSignOutError(
+      setDeleteError(
         getBarklogErrorMessage(error, {
-          domain: 'auth',
-          fallback: 'Unable to sign out right now.',
+          domain: 'local_profile',
+          fallback: 'Unable to delete data on this device.',
         }),
       );
     }
+  };
+
+  const confirmDeleteAllData = () => {
+    Alert.alert(
+      'Delete all data on this device?',
+      'This permanently removes your dogs, logs, medications, and care records. Export anything you want to keep first.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete all data',
+          style: 'destructive',
+          onPress: () => {
+            handleDeleteAllData().catch(() => undefined);
+          },
+        },
+      ],
+    );
   };
 
   const handleMedicationReminderToggle = async () => {
@@ -210,12 +215,12 @@ export default function SettingsScreen() {
         ) : null}
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Account</Text>
+          <Text style={styles.sectionTitle}>On this device</Text>
           <SettingsSectionCard>
             <SettingsRow
-              title="Email"
-              subtitle={barklogUser?.email ?? 'No email available'}
-              leading={<SettingsEmailIcon />}
+              title="Local care journal"
+              subtitle="Data stays on this device. Export to keep a copy before deleting the app."
+              leading={<SettingsSubscriptionIcon />}
               showDivider
             />
             <SettingsRow
@@ -225,18 +230,6 @@ export default function SettingsScreen() {
               showDivider
               onPress={() => router.push('/subscription')}
             />
-            {showExtendedSettings ? (
-              <SettingsRow
-                title="Sync and Backup"
-                subtitle={
-                  syncStatus.isLoading
-                    ? 'Checking backup access'
-                    : syncStatus.display.compactTitle
-                }
-                leading={syncIcon}
-                onPress={() => router.push('/sync-backup' as Href)}
-              />
-            ) : null}
           </SettingsSectionCard>
         </View>
 
@@ -256,17 +249,6 @@ export default function SettingsScreen() {
                       );
                     });
                   }}
-                />
-              }
-              showDivider
-            />
-            <SettingsRow
-              title="Weekly Insights"
-              leading={<SparklesIcon color="#7C858D" size={24} />}
-              trailing={
-                <ToggleSwitch
-                  checked={anomalyAlertsEnabled}
-                  onPress={() => setAnomalyAlertsEnabled(!anomalyAlertsEnabled)}
                 />
               }
               showDivider
@@ -322,37 +304,34 @@ export default function SettingsScreen() {
 
         {showExtendedSettings ? (
           <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Privacy and About</Text>
-          <SettingsSectionCard>
-            <SettingsRow
-              title="Privacy"
-              subtitle="Export and account controls"
-              leading={<SettingsSubscriptionIcon />}
-              showDivider
-            />
-            <SettingsRow
-              title="About BarkLog"
-              subtitle="Care journal, not veterinary advice"
-              leading={<SettingsEmailIcon />}
-            />
-          </SettingsSectionCard>
+            <Text style={styles.sectionTitle}>Privacy and About</Text>
+            <SettingsSectionCard>
+              <SettingsRow
+                title="Privacy"
+                subtitle="Export and local data controls"
+                leading={<SettingsSubscriptionIcon />}
+                showDivider
+              />
+              <SettingsRow
+                title="About BarkLog"
+                subtitle="Care journal, not veterinary advice"
+                leading={<SettingsSubscriptionIcon />}
+              />
+            </SettingsSectionCard>
           </View>
         ) : null}
 
-        {showExtendedSettings ? (
-          <Pressable
-            accessibilityRole="button"
-            style={styles.signOutButton}
-            onPress={() => {
-              handleSignOut().catch(() => undefined);
-            }}
-          >
-            <Text style={styles.signOutText}>Sign out</Text>
-          </Pressable>
-        ) : null}
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Delete all data on this device"
+          style={styles.signOutButton}
+          onPress={confirmDeleteAllData}
+        >
+          <Text style={styles.signOutText}>Delete all data on this device</Text>
+        </Pressable>
 
-        {signOutError ? (
-          <Text style={styles.signOutError}>{signOutError}</Text>
+        {deleteError ? (
+          <Text style={styles.signOutError}>{deleteError}</Text>
         ) : null}
       </View>
     </HomeShell>

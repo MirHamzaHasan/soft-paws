@@ -5,8 +5,8 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { PrimaryButton } from "../../../components/ui/PrimaryButton";
 import type { EventModel } from "../../../db";
-import { getSelectedDog, useAuthSessionStore } from "../../../stores";
-import type { Json } from "../../../types/supabase";
+import { getSelectedDog, useLocalProfileStore } from "../../../stores";
+import type { Json } from "../../../types/local";
 import { AssistantAlertIcon } from "../../assistant/components/AssistantIcons";
 import { HomeBottomTabBar } from "../../home/components/HomeBottomTabBar";
 import { LedgerTrendCard } from "../../ledger/components/LedgerTrendCard";
@@ -254,9 +254,9 @@ function getTopSymptoms(events: EventModel[]) {
 
 export default function MonthlyTrendsScreen() {
   const router = useRouter();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const premiumAccess = hasPremiumAccess(barklogUser);
   const [monthOffset, setMonthOffset] = useState(0);

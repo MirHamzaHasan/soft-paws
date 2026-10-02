@@ -1,15 +1,10 @@
 import { getBarklogDatabase } from '@/db/database';
 import { createLocalEvent } from '@/db/events/createLocalEvent';
-import { mergeBarklogSyncMetadata } from '@/db/sync';
 
 import { createWatermelonWriteHarness } from '../../../test/utils/watermelon';
 
 jest.mock('@/db/database', () => ({
   getBarklogDatabase: jest.fn(),
-}));
-
-jest.mock('@/db/sync', () => ({
-  mergeBarklogSyncMetadata: jest.fn(),
 }));
 
 type LocalEventWriteRecord = {
@@ -26,21 +21,19 @@ type LocalEventWriteRecord = {
 };
 
 const getBarklogDatabaseMock = jest.mocked(getBarklogDatabase);
-const mergeBarklogSyncMetadataMock = jest.mocked(mergeBarklogSyncMetadata);
 
 describe('createLocalEvent', () => {
   const now = Date.parse('2026-04-26T12:00:00.000Z');
 
   beforeEach(() => {
     jest.spyOn(Date, 'now').mockReturnValue(now);
-    mergeBarklogSyncMetadataMock.mockResolvedValue(undefined);
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  it('persists a local event before sync and records local write metadata', async () => {
+  it('persists a local event on device', async () => {
     const { database, record } =
       createWatermelonWriteHarness<LocalEventWriteRecord>();
 
@@ -83,9 +76,6 @@ describe('createLocalEvent', () => {
       synced: false,
       type: 'walk',
       userId: 'user-1',
-    });
-    expect(mergeBarklogSyncMetadataMock).toHaveBeenCalledWith(database, {
-      lastLocalWriteAt: now,
     });
   });
 

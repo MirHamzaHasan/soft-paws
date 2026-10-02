@@ -3,7 +3,6 @@ import { type Collection, Q } from '@nozbe/watermelondb';
 
 import { getBarklogDatabase } from '../database';
 import type { InsightModel } from '../models';
-import { mergeBarklogSyncMetadata } from '../sync';
 
 type UpsertLocalInsightInput = {
   content: string;
@@ -57,9 +56,6 @@ export async function upsertLocalInsight(input: UpsertLocalInsightInput) {
     });
   }, 'upsertLocalInsight');
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return insight;
 }

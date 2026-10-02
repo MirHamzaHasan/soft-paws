@@ -1,5 +1,9 @@
 # BarkLog Delivery Workflows
 
+## Current local journal and Atlas AI delivery rule
+
+Task051 keeps owner, dog, and care records in WatermelonDB, with free CSV and PDF export and local native builds. Task052 permits optional Firebase email/password sign-in for Atlas AI. Send only selected context for a user-triggered AI action, require Atlas context-policy evidence, and keep basic logging independent of sign-in and connectivity. No Firebase care sync or direct model-provider calls. Use [local-build.md](../release/local-build.md) for signing. Older Supabase workflow sections below are historical context.
+
 ## Canonical Source
 
 Start every BarkLog task by reading:

@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import {
   BarklogBottomSheet,
@@ -9,9 +9,8 @@ import {
 } from '@/components/ui';
 import { captureBarklogError } from '@/features/observability';
 import { SkeletonBlock } from '@/features/states/components/SkeletonBlock';
-import { useSyncDisplayStatus } from '@/features/sync/hooks/useSyncDisplayStatus';
 import HapticManager from '@/managers/HapticManager';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
 import { barklogEventColors } from '@/theme/tokens';
 import {
   BEHAVIOR_INTENSITY_OPTIONS,
@@ -34,7 +33,6 @@ import { HomeActionRow } from '../components/HomeActionRow';
 import {
   ChevronRightIcon,
   ClockIcon,
-  CloudSyncIcon,
   OfflineIcon,
   WarningIcon,
 } from '../components/HomeIcons';
@@ -157,10 +155,9 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   secondaryRow: {
-    display: 'none',
     flexDirection: 'row',
-    flexWrap: 'wrap',
     gap: 12,
+    paddingRight: 16,
   },
   behaviorStepLabel: {
     color: '#7A4510',
@@ -407,7 +404,7 @@ function getToastCopy(type: HomeInstantLogType) {
   if (type === 'weight') {
     return {
       title: 'Weight checkpoint saved',
-      description: 'Stored locally and ready to sync.',
+      description: 'Saved on this device.',
       tone: 'success' as const,
     };
   }
@@ -694,9 +691,9 @@ function QuickLogGrid({
 export function HomeScreen({ mode }: HomeScreenProps) {
   const router = useRouter();
   const feedback = useBarklogFeedback();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const dogName = selectedDog?.name ?? 'your dog';
   const dogMeta = selectedDog?.breed?.trim() || 'Dog care journal';
@@ -712,10 +709,7 @@ export function HomeScreen({ mode }: HomeScreenProps) {
     useState<BehaviorValue | null>(null);
   const [selectedQuickTrigger, setSelectedQuickTrigger] =
     useState<BehaviorTrigger | null>(null);
-  const syncStatus = useSyncDisplayStatus();
-  const cloudSyncCapability = syncStatus.capability;
   const { isLoading, logInstantEvent, snapshot } = useHomeLoggingLoop({
-    cloudSyncCapability,
     dogId: selectedDog?.id ?? null,
     userId: barklogUser?.id ?? null,
     weightLbs: selectedDog?.weight_lbs ?? null,
@@ -952,8 +946,8 @@ export function HomeScreen({ mode }: HomeScreenProps) {
             <View style={styles.offlineBanner}>
               <OfflineIcon />
               <Text style={styles.offlineBannerText}>
-                You&apos;re offline. BarkLog will save locally first and sync
-                later.
+                You&apos;re offline. Your care journal still saves on this
+                device.
               </Text>
             </View>
           ) : null}
@@ -996,7 +990,11 @@ export function HomeScreen({ mode }: HomeScreenProps) {
             <Text style={styles.medicationPlus}>+</Text>
           </Pressable>
 
-          <View style={styles.secondaryRow}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.secondaryRow}
+          >
             <HomeSecondaryActionButton
               emoji="🤕"
               label="Symptom"
@@ -1049,7 +1047,7 @@ export function HomeScreen({ mode }: HomeScreenProps) {
                 handleOpenBehaviorSheet().catch(() => undefined);
               }}
             />
-          </View>
+          </ScrollView>
 
           {snapshot.warningMessage ? (
             <BarklogStatusBanner
@@ -1067,14 +1065,6 @@ export function HomeScreen({ mode }: HomeScreenProps) {
             />
           ) : null}
 
-          {snapshot.syncError ? (
-            <BarklogStatusBanner
-              tone="warning"
-              title="Sync is paused"
-              description="Your logs are still saved on this device."
-            />
-          ) : null}
-
           {isLoading ? (
             <SummarySkeleton />
           ) : (
@@ -1086,14 +1076,10 @@ export function HomeScreen({ mode }: HomeScreenProps) {
               <View style={styles.summaryDivider} />
 
               <View style={styles.summaryFoot}>
-                {snapshot.unsyncedCount > 0 ? <CloudSyncIcon /> : <ClockIcon />}
+                <ClockIcon />
                 <Text style={styles.summaryFootText}>
-                  {snapshot.unsyncedCount > 0
-                    ? `${snapshot.unsyncedCount} entr${
-                        snapshot.unsyncedCount === 1 ? 'y is' : 'ies are'
-                      } saved locally and waiting to sync.`
-                    : (snapshot.latestEntryLabel ??
-                      'Ready for the next quick log.')}
+                  {snapshot.latestEntryLabel ?? 'Ready for the next quick log.'}{' '}
+                  Saved on this device.
                 </Text>
               </View>
             </View>

@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { BarklogStatusBanner } from "@/components/ui";
 import { captureBarklogError } from "@/features/observability";
 import HapticManager from "@/managers/HapticManager";
-import { getSelectedDog, useAuthSessionStore } from "@/stores";
+import { getSelectedDog, useLocalProfileStore } from "@/stores";
 import { getBarklogErrorMessage } from "@/utils/barklogErrorMessages";
 
 import { PrimaryButton } from "../../../components/ui/PrimaryButton";
@@ -100,10 +100,10 @@ function formatRenewalDate(trialEndsAt: string | null) {
 
 export default function SubscriptionManagementScreen() {
   const router = useRouter();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
-  const setBarklogUser = useAuthSessionStore((state) => state.setBarklogUser);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
+  const setBarklogUser = useLocalProfileStore((state) => state.setBarklogUser);
   const [message, setMessage] = useState<string | null>(null);
   const [messageTone, setMessageTone] = useState<"success" | "warning">(
     "success",
@@ -151,7 +151,7 @@ export default function SubscriptionManagementScreen() {
 
   const handleRestore = async () => {
     if (!barklogUser) {
-      const nextError = "Sign in again to restore purchases.";
+      const nextError = "Your local profile is still loading. Try restoring purchases again.";
 
       setError(nextError);
       setErrorTone("warning");
@@ -259,7 +259,7 @@ export default function SubscriptionManagementScreen() {
             tone={errorTone}
             title={
               errorTone === "warning"
-                ? "Sign-in needed"
+                ? "Profile not ready"
                 : "Subscription unavailable"
             }
             description={error}

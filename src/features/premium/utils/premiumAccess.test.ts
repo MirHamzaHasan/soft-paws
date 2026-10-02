@@ -2,10 +2,10 @@ import {
   BARKLOG_PREMIUM_PLANS,
   FREE_ACCESS_GUARANTEES,
   PREMIUM_FEATURES,
+  PAYWALL_FEATURE_ROWS,
   REVENUECAT_ENTITLEMENT_ID,
 } from '@/features/premium/data/premiumCatalog';
 import {
-  getCloudSyncCapability,
   getPremiumEntitlementState,
   getPremiumFeatureLabel,
   getTrialDaysRemaining,
@@ -104,20 +104,7 @@ describe('premium access rules', () => {
   it('keeps RevenueCat entitlement and premium catalog labels centralized', () => {
     expect(REVENUECAT_ENTITLEMENT_ID).toBe('premium');
     expect(BARKLOG_PREMIUM_PLANS.annual.productId).toBe('barklog_annual');
-    expect(PREMIUM_FEATURES['cloud-sync'].shortValue).toContain('backed up');
-    expect(PREMIUM_FEATURES['ai-agents'].shortValue).toContain(
-      'specialist agents',
-    );
-    expect(PREMIUM_FEATURES['care-summaries'].shortValue).toContain(
-      'Generate short',
-    );
-    expect(PREMIUM_FEATURES['care-automation'].shortValue).toContain(
-      'Sync care calendars',
-    );
-    expect(PREMIUM_FEATURES['weekly-insights'].shortValue).toContain(
-      'weekly pattern narratives',
-    );
-    expect(getPremiumFeatureLabel('cloud-sync')).toBe('Backup and Sync');
+    expect(PREMIUM_FEATURES['care-automation'].shortValue).toContain('on this device');
     expect(getPremiumFeatureLabel('ask-barklog-ai')).toBe('Ask BarkLog AI');
     expect(getPremiumFeatureLabel('ai-agents')).toBe('AI Agent Center');
     expect(getPremiumFeatureLabel('care-automation')).toBe(
@@ -127,45 +114,6 @@ describe('premium access rules', () => {
     expect(getPremiumFeatureLabel('training-programs')).toBe(
       'Training Programs',
     );
-  });
-
-  it('maps entitlement state to cloud sync capability', () => {
-    expect(
-      getCloudSyncCapability(
-        makeUserRow({
-          subscription_tier: 'active',
-          trial_ends_at: null,
-        }),
-        now,
-      ),
-    ).toMatchObject({
-      access: 'premium_enabled',
-      canPullFromCloud: true,
-      canPushToCloud: true,
-      canRestoreFromCloud: true,
-      reason: 'premium',
-    });
-    expect(
-      getCloudSyncCapability(
-        makeUserRow({
-          subscription_tier: 'expired',
-          trial_ends_at: null,
-        }),
-        now,
-      ),
-    ).toMatchObject({
-      access: 'local_only',
-      canPullFromCloud: false,
-      canPushToCloud: false,
-      canRestoreFromCloud: false,
-      reason: 'local_only',
-    });
-    expect(getCloudSyncCapability(null, now)).toMatchObject({
-      access: 'unknown',
-      canPullFromCloud: false,
-      canPushToCloud: false,
-      canRestoreFromCloud: false,
-      reason: 'loading',
-    });
+    expect(PAYWALL_FEATURE_ROWS.join(' ')).not.toMatch(/\b(sync|backup|sharing|AI)\b/i);
   });
 });

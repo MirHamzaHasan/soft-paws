@@ -2,8 +2,8 @@ import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { createDogForCurrentUser } from '@/api/auth';
-import { useAuthSessionStore } from '@/stores';
+import { createDogForCurrentUser } from '@/api/localProfile';
+import { useLocalProfileStore } from '@/stores';
 
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { OnboardingChoiceChip } from '../../onboarding/components/OnboardingChoiceChip';
@@ -70,11 +70,10 @@ const styles = StyleSheet.create({
 
 export default function AddDogScreen() {
   const router = useRouter();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const session = useAuthSessionStore((state) => state.session);
-  const setDogs = useAuthSessionStore((state) => state.setDogs);
-  const setSelectedDogId = useAuthSessionStore(
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const setDogs = useLocalProfileStore((state) => state.setDogs);
+  const setSelectedDogId = useLocalProfileStore(
     (state) => state.setSelectedDogId,
   );
   const premiumAccess = hasPremiumAccess(barklogUser);
@@ -105,8 +104,8 @@ export default function AddDogScreen() {
       return;
     }
 
-    if (!session) {
-      setError('Sign in before adding another dog.');
+    if (!barklogUser) {
+      setError('Your local profile is still loading.');
       return;
     }
 
@@ -114,7 +113,7 @@ export default function AddDogScreen() {
     setIsSaving(true);
 
     try {
-      const result = await createDogForCurrentUser(session, {
+      const result = await createDogForCurrentUser(barklogUser.id, {
         age,
         breed,
         name: trimmedName,

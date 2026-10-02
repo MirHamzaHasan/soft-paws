@@ -6,7 +6,6 @@ import type { CareTaskRecurrence, CareTaskType } from '@/types/care';
 
 import { getBarklogDatabase } from '../database';
 import type { CareTaskModel } from '../models';
-import { mergeBarklogSyncMetadata } from '../sync';
 
 export type LocalCareTaskInput = {
   completedAt?: string | null;
@@ -80,9 +79,6 @@ export async function createLocalCareTask(input: LocalCareTaskInput) {
     'createLocalCareTask',
   );
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return careTask;
 }
@@ -90,7 +86,6 @@ export async function createLocalCareTask(input: LocalCareTaskInput) {
 export async function updateLocalCareTask(input: UpdateLocalCareTaskInput) {
   const database = getBarklogDatabase();
   const careTaskCollection = getCareTaskCollection();
-  const now = Date.now();
 
   const careTask = await database.write(async () => {
     const existingCareTask = await careTaskCollection.find(input.careTaskId);
@@ -134,9 +129,6 @@ export async function updateLocalCareTask(input: UpdateLocalCareTaskInput) {
     });
   }, 'updateLocalCareTask');
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return careTask;
 }
@@ -147,7 +139,6 @@ export async function completeLocalCareTask(input: {
 }) {
   const database = getBarklogDatabase();
   const careTaskCollection = getCareTaskCollection();
-  const now = Date.now();
   const completedAt = input.completedAt ?? new Date();
 
   const careTask = await database.write(async () => {
@@ -168,9 +159,6 @@ export async function completeLocalCareTask(input: {
     });
   }, 'completeLocalCareTask');
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return careTask;
 }

@@ -9,7 +9,6 @@ type AppTabKey =
   | 'archive'
   | 'gallery'
   | 'home'
-  | 'household'
   | 'insights'
   | 'ledger'
   | 'log'
@@ -24,7 +23,6 @@ type HomeTabRoute =
   | '/expenses'
   | '/profile'
   | '/insights'
-  | '/household'
   | '/memory-book'
   | '/add-medication'
   | '/photo-journal'
@@ -40,7 +38,7 @@ type HomeShellProps = {
   headerAvatarBackgroundColor?: string;
   headerDogName?: string;
   headerDogMeta?: string;
-  tabVariant?: 'main' | 'care' | 'household' | 'journal';
+  tabVariant?: 'main' | 'care' | 'journal';
   tabRoutes?: Partial<Record<AppTabKey, HomeTabRoute>>;
   showTabBar?: boolean;
   overlay?: ReactNode;

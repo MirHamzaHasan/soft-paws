@@ -10,7 +10,7 @@ import {
   type LocalMedicationFrequency,
   updateLocalMedication,
 } from '../../../db';
-import { getSelectedDog, useAuthSessionStore } from '../../../stores';
+import { getSelectedDog, useLocalProfileStore } from '../../../stores';
 import { LogNotesCard } from '../../logging/components/LogNotesCard';
 import { LogSwitchRow } from '../../logging/components/LogSwitchRow';
 import { LogUnderlineField } from '../../logging/components/LogUnderlineField';
@@ -133,8 +133,8 @@ export default function AddEditMedicationScreen({
   medicationId,
 }: AddEditMedicationScreenProps) {
   const router = useRouter();
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const medicationRemindersEnabled = useSettingsStore(
     (state) => state.medicationRemindersEnabled,
   );

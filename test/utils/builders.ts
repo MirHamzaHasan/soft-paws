@@ -1,6 +1,4 @@
-import type { Session } from '@supabase/supabase-js';
-
-import type { BarklogDogRow, BarklogUserRow } from '@/api/auth';
+import type { BarklogDogRow, BarklogUserRow } from '@/api/localProfile';
 import type {
   CareTaskModel,
   EventModel,
@@ -39,24 +37,6 @@ export function makeUserRow(
     trial_ends_at: '2099-05-03T00:00:00.000Z',
     ...overrides,
   };
-}
-
-export function makeSession(overrides: Partial<Session> = {}): Session {
-  return {
-    access_token: 'access-token',
-    expires_at: 1_777_593_600,
-    expires_in: 3600,
-    refresh_token: 'refresh-token',
-    token_type: 'bearer',
-    user: {
-      app_metadata: {},
-      aud: 'authenticated',
-      created_at: '2026-04-01T00:00:00.000Z',
-      id: 'auth-user-1',
-      user_metadata: {},
-    },
-    ...overrides,
-  } as Session;
 }
 
 export function makeEventModel(

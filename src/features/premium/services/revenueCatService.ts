@@ -6,7 +6,7 @@ import Purchases, {
   type PurchasesPackage,
 } from 'react-native-purchases';
 
-import { type BarklogUserRow, getSupabaseClient } from '@/api';
+import { type BarklogUserRow, updateLocalUserSubscription } from '@/api';
 import { readClientEnv } from '@/utils/clientEnv';
 
 import {
@@ -236,22 +236,7 @@ async function updateUserSubscriptionState(input: {
   subscriptionTier: BarklogUserRow['subscription_tier'];
   userId: string;
 }) {
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from('users')
-    .update({
-      revenuecat_user_id: input.revenueCatUserId,
-      subscription_tier: input.subscriptionTier,
-    })
-    .eq('id', input.userId)
-    .select('*')
-    .single();
-
-  if (error) {
-    throw error;
-  }
-
-  return data;
+  return updateLocalUserSubscription(input);
 }
 
 async function cacheVerifiedRevenueCatUser(input: {

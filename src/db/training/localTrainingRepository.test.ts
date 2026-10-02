@@ -1,5 +1,4 @@
 import { getBarklogDatabase } from '@/db/database';
-import { mergeBarklogSyncMetadata } from '@/db/sync';
 import {
   createLocalTrainingEnrollment,
   createLocalTrainingSession,
@@ -11,10 +10,6 @@ import { createWatermelonWriteHarness } from '../../../test/utils/watermelon';
 
 jest.mock('@/db/database', () => ({
   getBarklogDatabase: jest.fn(),
-}));
-
-jest.mock('@/db/sync', () => ({
-  mergeBarklogSyncMetadata: jest.fn(),
 }));
 
 type LocalEnrollmentWriteRecord = {
@@ -55,21 +50,19 @@ type LocalTrainingEventWriteRecord = {
 };
 
 const getBarklogDatabaseMock = jest.mocked(getBarklogDatabase);
-const mergeBarklogSyncMetadataMock = jest.mocked(mergeBarklogSyncMetadata);
 
 describe('local training repository', () => {
   const now = Date.parse('2026-04-27T10:00:00.000Z');
 
   beforeEach(() => {
     jest.spyOn(Date, 'now').mockReturnValue(now);
-    mergeBarklogSyncMetadataMock.mockResolvedValue(undefined);
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  it('creates enrollments locally before sync metadata is recorded', async () => {
+  it('creates enrollments locally on device', async () => {
     const { database, record } =
       createWatermelonWriteHarness<LocalEnrollmentWriteRecord>();
     const startedAt = Date.parse('2026-04-26T08:00:00.000Z');
@@ -102,9 +95,6 @@ describe('local training repository', () => {
       startedAt,
       status: 'active',
       userId: 'user-1',
-    });
-    expect(mergeBarklogSyncMetadataMock).toHaveBeenCalledWith(database, {
-      lastLocalWriteAt: now,
     });
   });
 
@@ -139,9 +129,6 @@ describe('local training repository', () => {
       stepId: 'step-1',
       successRating: 4,
       userId: 'user-1',
-    });
-    expect(mergeBarklogSyncMetadataMock).toHaveBeenCalledWith(database, {
-      lastLocalWriteAt: now,
     });
   });
 
@@ -239,9 +226,6 @@ describe('local training repository', () => {
       type: 'training',
       userId: 'user-1',
     });
-    expect(mergeBarklogSyncMetadataMock).toHaveBeenCalledWith(database, {
-      lastLocalWriteAt: now,
-    });
   });
 
   it('does not record sync metadata when the timeline event cannot be prepared', async () => {
@@ -291,10 +275,9 @@ describe('local training repository', () => {
     ).rejects.toThrow('event failed');
 
     expect(database.batch).not.toHaveBeenCalled();
-    expect(mergeBarklogSyncMetadataMock).not.toHaveBeenCalled();
   });
 
-  it('updates enrollment progress locally before sync metadata is recorded', async () => {
+  it('updates enrollment progress locally on device', async () => {
     const record: LocalEnrollmentWriteRecord & {
       update: jest.Mock<
         LocalEnrollmentWriteRecord,
@@ -344,9 +327,6 @@ describe('local training repository', () => {
       completedAt,
       currentStep: 7,
       status: 'completed',
-    });
-    expect(mergeBarklogSyncMetadataMock).toHaveBeenCalledWith(database, {
-      lastLocalWriteAt: now,
     });
   });
 });

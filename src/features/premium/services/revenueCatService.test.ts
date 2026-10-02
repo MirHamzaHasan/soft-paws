@@ -40,24 +40,10 @@ jest.mock('@/utils/clientEnv', () => ({
   readClientEnv: () => mockReadClientEnv(),
 }));
 
-const mockSingle = jest.fn();
-const mockSelect = jest.fn(() => ({
-  single: mockSingle,
-}));
-const mockEq = jest.fn(() => ({
-  select: mockSelect,
-}));
-const mockUpdate = jest.fn(() => ({
-  eq: mockEq,
-}));
-const mockFrom = jest.fn(() => ({
-  update: mockUpdate,
-}));
+const mockUpdateLocalUserSubscription = jest.fn();
 
 jest.mock('@/api', () => ({
-  getSupabaseClient: () => ({
-    from: mockFrom,
-  }),
+  updateLocalUserSubscription: (input: unknown) => mockUpdateLocalUserSubscription(input),
 }));
 
 function makeCustomerInfo(input: {
@@ -157,8 +143,6 @@ describe('RevenueCat premium service', () => {
       value: {
         EXPO_PUBLIC_REVENUECAT_ANDROID_KEY: 'goog_test_key',
         EXPO_PUBLIC_REVENUECAT_IOS_KEY: 'appl_test_key',
-        EXPO_PUBLIC_SUPABASE_ANON_KEY: 'anon-key',
-        EXPO_PUBLIC_SUPABASE_URL: 'https://example.supabase.co',
       },
     });
     setRevenueCatAdapterForTests(null);
@@ -192,10 +176,7 @@ describe('RevenueCat premium service', () => {
       subscription_tier: 'active',
     });
     const adapter = makeAdapter();
-    mockSingle.mockResolvedValue({
-      data: updatedUser,
-      error: null,
-    });
+    mockUpdateLocalUserSubscription.mockResolvedValue(updatedUser);
     setRevenueCatAdapterForTests(adapter);
 
     await expect(
@@ -222,9 +203,10 @@ describe('RevenueCat premium service', () => {
         }),
       }),
     );
-    expect(mockUpdate).toHaveBeenCalledWith({
-      revenuecat_user_id: 'revenuecat-user-1',
-      subscription_tier: 'active',
+    expect(mockUpdateLocalUserSubscription).toHaveBeenCalledWith({
+      revenueCatUserId: 'revenuecat-user-1',
+      subscriptionTier: 'active',
+      userId: 'user-1',
     });
   });
 
@@ -246,7 +228,7 @@ describe('RevenueCat premium service', () => {
       }),
     ).rejects.toThrow('Purchase cancelled. Premium was not activated.');
 
-    expect(mockUpdate).not.toHaveBeenCalled();
+    expect(mockUpdateLocalUserSubscription).not.toHaveBeenCalled();
   });
 
   it('does not unlock premium when purchase lacks the premium entitlement', async () => {
@@ -266,7 +248,7 @@ describe('RevenueCat premium service', () => {
       }),
     ).rejects.toThrow('RevenueCat did not return an active BarkLog Premium');
 
-    expect(mockUpdate).not.toHaveBeenCalled();
+    expect(mockUpdateLocalUserSubscription).not.toHaveBeenCalled();
   });
 
   it('restores active entitlements and caches the verified user state', async () => {
@@ -275,10 +257,7 @@ describe('RevenueCat premium service', () => {
       subscription_tier: 'active',
     });
     const adapter = makeAdapter();
-    mockSingle.mockResolvedValue({
-      data: updatedUser,
-      error: null,
-    });
+    mockUpdateLocalUserSubscription.mockResolvedValue(updatedUser);
     setRevenueCatAdapterForTests(adapter);
 
     await expect(
@@ -292,9 +271,10 @@ describe('RevenueCat premium service', () => {
       user: updatedUser,
     });
 
-    expect(mockUpdate).toHaveBeenCalledWith({
-      revenuecat_user_id: 'revenuecat-user-1',
-      subscription_tier: 'active',
+    expect(mockUpdateLocalUserSubscription).toHaveBeenCalledWith({
+      revenueCatUserId: 'revenuecat-user-1',
+      subscriptionTier: 'active',
+      userId: 'user-1',
     });
   });
 
@@ -310,10 +290,7 @@ describe('RevenueCat premium service', () => {
         }),
       ),
     });
-    mockSingle.mockResolvedValue({
-      data: expiredUser,
-      error: null,
-    });
+    mockUpdateLocalUserSubscription.mockResolvedValue(expiredUser);
     setRevenueCatAdapterForTests(adapter);
 
     await expect(
@@ -329,9 +306,10 @@ describe('RevenueCat premium service', () => {
       user: expiredUser,
     });
 
-    expect(mockUpdate).toHaveBeenCalledWith({
-      revenuecat_user_id: 'revenuecat-user-1',
-      subscription_tier: 'expired',
+    expect(mockUpdateLocalUserSubscription).toHaveBeenCalledWith({
+      revenueCatUserId: 'revenuecat-user-1',
+      subscriptionTier: 'expired',
+      userId: 'user-1',
     });
   });
 });

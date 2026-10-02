@@ -10,7 +10,6 @@ export * from './modelClasses';
 export * from './models';
 export * from './photos';
 export * from './schema';
-export * from './sync';
 export * from './training';
 export * from './types';
 export * from './utils';

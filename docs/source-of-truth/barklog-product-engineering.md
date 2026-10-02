@@ -6,12 +6,16 @@ This document is the canonical source of truth for BarkLog product, design, data
 
 If any older BarkLog doc conflicts with this file, this file wins.
 
+## Current architecture decision: task051 and task052 (2026-10-02)
+
+BarkLog's care journal remains local-only. One local owner and all dog, care, training, and photo records live in WatermelonDB on the device. There is no remote care sync, backup, restore, household collaboration, or vet share link. Free CSV and PDF export is the only way to keep a copy outside the device; uninstalling the app or deleting its data removes the journal. RevenueCat uses the stable local owner ID for purchases. Optional Firebase email/password sign-in is used only for Atlas AI. AI actions send the selected summarized care context to Atlas using a fresh Firebase ID token and BarkLog-specific Atlas app ID. Atlas must pass an enabled, tested BarkLog context policy before generated health text is shown. Sessions stay in process memory and sign out on app restart. AI stays hidden in production until Atlas verifies the RevenueCat entitlement for the Firebase user. Never send provider keys to the client. Native releases use `expo prebuild` and local Gradle or Xcode builds. This section supersedes older Supabase, account, AI, and build instructions below, which remain as historical product context. See [local-build.md](../release/local-build.md) for current build steps.
+
 ## 1. Product Overview
 
 - App name: `BarkLog`
 - Tagline: `Daily dog health, in one tap.`
 - Product type: software-only dog health companion app for iPhone and Android
-- Core promise: one-tap logging, AI-powered health insights, emergency safety tools, and complete dog health management without any hardware requirement
+- Core promise: one-tap care logging, a factual timeline, emergency safety tools, and exportable dog records without hardware or an account
 - Primary audience: US-based Millennial and Gen Z dog parents ages 25-40 who treat their dog as family
 - Secondary audience: senior-dog owners managing medications and chronic conditions
 - Distribution advantage: founder-led launch through an active 83K-follower US-based dog Instagram community
@@ -29,7 +33,7 @@ If any older BarkLog doc conflicts with this file, this file wins.
   - `$49/year`
   - all premium features
   - unlimited dogs
-  - cloud sync, backup, restore, household sharing, and sitter mode
+  - guided training progress, photo compare, smart care automation, and other local Premium features
 - Family plan:
   - future packaging option only
   - not required for v1 household sharing
@@ -40,7 +44,7 @@ Every product, code, and design decision must satisfy these rules:
 
 1. One-tap obsessed. If a daily action takes more than 3 taps, redesign it.
 2. Dog-only. No multi-species surfaces, language, icons, or imagery.
-3. Offline-first for logging. Event taps must persist locally without network and sync later.
+3. Local-only logging. Event taps must persist to WatermelonDB without network.
 4. No medical advice. BarkLog observes patterns and suggests attention, but never diagnoses.
 5. Data freedom always. Users can export everything as CSV and PDF at any time, including free users.
 6. Fast over fancy. Event logging should feel effectively instant.
@@ -64,22 +68,21 @@ Every product, code, and design decision must satisfy these rules:
 
 | Layer | Technology | Notes |
 | --- | --- | --- |
-| Framework | React Native via Expo | SDK 52+, managed workflow, no ejection |
+| Framework | React Native via Expo | Native projects generated locally with `expo prebuild` |
 | Language | TypeScript | Strict mode |
 | Navigation | Expo Router | File-based routing |
 | Styling | Tamagui | Theme tokens and primitives configured through `tamagui.config.ts` |
 | UI state | Zustand | Lightweight client state |
-| Server state | TanStack Query | Query cache and sync orchestration |
-| Local DB | WatermelonDB | Offline-first local persistence |
-| Cloud DB | Supabase | PostgreSQL, Auth, Storage, Edge Functions |
-| Auth | Supabase Auth | Email/password in v1.0, Apple Sign-In in v1.1 |
+| Query cache | TanStack Query | Local repository query cache |
+| Local DB | WatermelonDB | Sole source for owner and care records |
+| Identity | Local owner UUID and optional Firebase Auth | Firebase sign-in is for Atlas AI only; no care-record account |
 | Subscriptions | RevenueCat | Apple and Google billing unification |
-| AI | DeepSeek text AI, OpenAI vision-ready key boundary | Only through Supabase Edge Functions, never from client |
+| AI | Atlas AI router | Firebase ID token plus BarkLog Atlas app ID; required context policy |
 | Push notifications | Expo Notifications | Medication reminders and anomaly alerts |
 | Analytics | Mixpanel | Free tier |
 | Error tracking | Sentry | Free tier |
 | Health data | Apple HealthKit + Google Fit | Activity import |
-| Image storage | Supabase Storage | Signed URLs, 24-hour expiry |
+| Image storage | Device local storage | Owner-observed photo references |
 | Icons | Lucide React Native | 24px stroke |
 | Fonts | Inter | 400 and 500 only |
 | Animations | Reanimated 3 + Moti | Limited, purposeful |

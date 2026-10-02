@@ -1,5 +1,7 @@
 # Phone Preview Build And Test Guide
 
+Historical remote-build guide. Use [local native builds](../release/local-build.md) and the [local release preflight](../release/preflight-local.md) for current device testing.
+
 Use this guide to build BarkLog with EAS and test it on your own Android phone and iPhone from a MacBook.
 
 This is for `preview` builds. Do not use Expo Go as release proof. BarkLog uses native modules and must be tested as an installed app.

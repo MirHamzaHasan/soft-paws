@@ -26,7 +26,7 @@ import { hasPremiumAccess } from '@/features/premium/utils/premiumAccess';
 import { openPremiumGate } from '@/features/premium/utils/premiumNavigation';
 import { SkeletonBlock } from '@/features/states/components/SkeletonBlock';
 import HapticManager from '@/managers/HapticManager';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
 import { barklogTypography } from '@/theme/tokens';
 import { MOOD_OPTIONS, type MoodValue } from '@/types/events';
 
@@ -182,9 +182,9 @@ export default function TrainingSessionLoggerScreen() {
   const programSlug = readSingleParam(params.programSlug);
   const enrollmentId = readSingleParam(params.enrollmentId);
   const stepId = readSingleParam(params.stepId);
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const premiumAccess = hasPremiumAccess(barklogUser);
   const programsQuery = useQuery(trainingProgramsQueryOptions());
@@ -299,7 +299,7 @@ export default function TrainingSessionLoggerScreen() {
       setSavedEventId(result.event.id);
       setNotice({
         description:
-          'The session and its Timeline event are saved locally before sync.',
+          'The session and its Timeline event are saved on this device.',
         title: 'Training session saved',
         tone: 'success',
       });
@@ -352,7 +352,7 @@ export default function TrainingSessionLoggerScreen() {
                 lineHeight={20}
               >
                 You can browse programs for free. Premium saves sessions,
-                progress, and Timeline history locally before sync.
+                progress, and Timeline history on this device.
               </Paragraph>
             </YStack>
           </XStack>

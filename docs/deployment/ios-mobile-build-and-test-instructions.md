@@ -1,5 +1,7 @@
 # iOS Physical Device Testing Guide
 
+Historical remote-build guide. Use [local native builds](../release/local-build.md) and the [local release preflight](../release/preflight-local.md) for current iPhone testing.
+
 Use this guide to get BarkLog onto a real iPhone, run preview QA, and know when it is safe to move to TestFlight.
 
 ## Scope

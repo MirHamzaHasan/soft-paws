@@ -6,7 +6,7 @@ import { PrimaryButton } from "../../../components/ui/PrimaryButton";
 import { OnboardingCirclePlate } from "../../onboarding/components/OnboardingCirclePlate";
 import { PremiumLockIcon } from "../components/PremiumIcons";
 import { PREMIUM_FEATURES } from "../data/premiumCatalog";
-import type { PremiumFeatureKey } from "../utils/premiumAccess";
+import type { AvailablePremiumFeatureKey } from "../data/premiumCatalog";
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -61,8 +61,8 @@ export default function PremiumGateScreen() {
   const params = useLocalSearchParams<{ feature?: string }>();
   const featureKey =
     params.feature && params.feature in PREMIUM_FEATURES
-      ? (params.feature as PremiumFeatureKey)
-      : "weekly-insights";
+      ? (params.feature as AvailablePremiumFeatureKey)
+      : "care-automation";
   const feature = PREMIUM_FEATURES[featureKey];
 
   return (

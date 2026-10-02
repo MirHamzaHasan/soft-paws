@@ -6,6 +6,7 @@
 - BarkLog does not diagnose, prescribe, or replace veterinary care.
 - Emergency, toxicity, and first-aid surfaces escalate to veterinarians, emergency clinics, or poison-control resources.
 - Free users keep basic logging, timeline access, CSV export, and basic PDF export.
+- BarkLog is account-free and local-only. Care records remain on the device. Uninstalling the app or deleting its data removes the journal unless the caregiver kept an export.
 
 ## iOS Store Review
 
@@ -35,8 +36,8 @@
 - Subtitle or short description: care journal and organization language only.
 - Long description: no diagnostic, treatment, or emergency response claims.
 - Screenshots: Home, Timeline, Safety, Vet Prep, Profile, and Paywall match the submitted build.
-- Privacy policy: mentions Supabase account data, optional signup contact preferences, RevenueCat purchases, Mixpanel analytics, Sentry crash reporting, and user export rights.
-- Data safety labels match actual SDKs and collected data, including optional account-owner contact info when the user explicitly opts into setup help or product updates.
+- Privacy policy: explains local-only care storage, no account, free export, loss of unexported data when the app is deleted, RevenueCat purchases, Mixpanel analytics, and Sentry crash reporting.
+- Data safety labels match the shipped SDKs. BarkLog does not collect signup contact preferences.
 
 ## Submission Blockers
 

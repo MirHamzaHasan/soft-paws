@@ -4,16 +4,11 @@ import {
   updateLocalCareTask,
 } from '@/db/care';
 import { getBarklogDatabase } from '@/db/database';
-import { mergeBarklogSyncMetadata } from '@/db/sync';
 
 import { createWatermelonWriteHarness } from '../../../test/utils/watermelon';
 
 jest.mock('@/db/database', () => ({
   getBarklogDatabase: jest.fn(),
-}));
-
-jest.mock('@/db/sync', () => ({
-  mergeBarklogSyncMetadata: jest.fn(),
 }));
 
 type LocalCareTaskWriteRecord = {
@@ -33,21 +28,19 @@ type LocalCareTaskWriteRecord = {
 };
 
 const getBarklogDatabaseMock = jest.mocked(getBarklogDatabase);
-const mergeBarklogSyncMetadataMock = jest.mocked(mergeBarklogSyncMetadata);
 
 describe('local care task repository', () => {
   const now = Date.parse('2026-04-27T10:00:00.000Z');
 
   beforeEach(() => {
     jest.spyOn(Date, 'now').mockReturnValue(now);
-    mergeBarklogSyncMetadataMock.mockResolvedValue(undefined);
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  it('creates local care tasks with refill planning fields before sync', async () => {
+  it('creates local care tasks with refill planning fields on device', async () => {
     const { database, record } =
       createWatermelonWriteHarness<LocalCareTaskWriteRecord>();
 
@@ -83,9 +76,6 @@ describe('local care task repository', () => {
       title: 'Refill Carprofen',
       type: 'medication_refill',
       userId: 'user-1',
-    });
-    expect(mergeBarklogSyncMetadataMock).toHaveBeenCalledWith(database, {
-      lastLocalWriteAt: now,
     });
   });
 

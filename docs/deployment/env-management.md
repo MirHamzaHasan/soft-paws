@@ -1,87 +1,30 @@
 # Deployment: Environment Management
 
-## Canonical Source
+Use [the canonical BarkLog spec](../source-of-truth/barklog-product-engineering.md) and [Firebase and Atlas setup](./firebase-atlas.md). `env.example` is the current client env template. Native builds use [local build instructions](../release/local-build.md).
 
-Primary source: [../source-of-truth/barklog-product-engineering.md](../source-of-truth/barklog-product-engineering.md)
+## Client-safe values
 
-## Client-Safe Variables
-
-These may ship in the Expo bundle:
+Copy `env.example` to an ignored `.env.local` and fill only the values needed by this build:
 
 ```env
-EXPO_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
-EXPO_PUBLIC_SUPABASE_ANON_KEY=replace-with-supabase-anon-public-key
-EXPO_PUBLIC_REVENUECAT_IOS_KEY=replace-with-revenuecat-ios-public-key
-EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=replace-with-revenuecat-android-public-key
-EXPO_PUBLIC_MIXPANEL_TOKEN=replace-with-mixpanel-project-token
-EXPO_PUBLIC_SENTRY_DSN=https://public@sentry.example.invalid/0
 EXPO_PUBLIC_APP_ENV=development
+EXPO_PUBLIC_FIREBASE_API_KEY=
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=
+EXPO_PUBLIC_ATLAS_APP_ID=
+EXPO_PUBLIC_REVENUECAT_IOS_KEY=
+EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=
+EXPO_PUBLIC_MIXPANEL_TOKEN=
+EXPO_PUBLIC_SENTRY_DSN=
 ```
 
-Use plain-text or sensitive EAS visibility for client-side variables. Do not use secret visibility for values that must be embedded in the app bundle; embedded client values are public by definition.
+Firebase's Web API key and project ID and BarkLog's Atlas application UUID are public identifiers embedded in the Expo bundle. Use a **BarkLog-specific** Atlas application; Family Chef's app ID is not interchangeable. Keep provider API keys, Firebase ID/refresh tokens, Firebase service-account credentials, signing keys, and Atlas operator credentials out of Expo env files and source control.
 
-## Server-Only Variables
+The app reads Expo public values at bundle time. Restart Expo and rebuild after changing them. If Firebase or Atlas identifiers are absent or invalid, AI routes stay hidden; local logging and export remain available. AI routes also stay hidden in production until Atlas enforces the RevenueCat entitlement for the Firebase user.
 
-These must never ship in the client, appear in `env.example`, or be placed under `EXPO_PUBLIC_*`:
+## Web bridge
 
-- DeepSeek text AI API secret used by Supabase Edge Functions
-- OpenAI vision AI API secret reserved for future Supabase Edge Function image understanding
-- Supabase privileged admin key used by Supabase Edge Functions
+Deploy the Expo web export and `functions/` together as a Cloudflare Pages project. Set server-side `ATLAS_APP_ID` to the same BarkLog UUID embedded in the web build. Optionally set server-side `ATLAS_BASE_URL=https://api.atlas.dracoarts.com`. These are Pages environment bindings, not `EXPO_PUBLIC_*` variables. A real browser AI call requires the same-origin `/api/atlas-chat` Function; Expo's local web dev server does not provide it.
 
-The server secret names currently read by `supabase/functions/_shared/env.ts` are:
+## Validation
 
-```env
-BARKLOG_TEXT_AI_PROVIDER=deepseek
-BARKLOG_TEXT_AI_BASE_URL=https://api.deepseek.com
-BARKLOG_TEXT_AI_API_KEY=replace-with-deepseek-server-key
-BARKLOG_TEXT_AI_MODEL=deepseek-v4-flash
-BARKLOG_TEXT_AI_THINKING=disabled
-BARKLOG_VISION_AI_PROVIDER=openai
-BARKLOG_VISION_AI_BASE_URL=https://api.openai.com/v1
-BARKLOG_VISION_AI_API_KEY=replace-with-openai-server-key
-BARKLOG_VISION_AI_MODEL=gpt-5.4-nano
-SUPABASE_URL=https://your-project-ref.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=replace-with-supabase-service-role-key
-```
-
-Set them through Supabase project secret management for each remote environment.
-Legacy `ANTHROPIC_API_KEY` and `ANTHROPIC_MODEL` values are unsupported by default.
-
-## Environment Tiers
-
-### Local Development
-
-- Copy `env.example` to `.env.local`.
-- Fill only client-safe `EXPO_PUBLIC_*` values in `.env.local`.
-- Keep `.env.local` untracked. It is ignored by `.gitignore`.
-- For local Supabase Edge Function work, place server-only values in an ignored file such as `.env.supabase.local` and pass it to the Supabase CLI. Do not put server-only values in `.env.local`, because Expo loads that file for app exports.
-
-### Preview
-
-- `eas.json` sets `EXPO_PUBLIC_APP_ENV=preview` for preview builds.
-- `eas.json` maps the `preview` build profile to the EAS `preview` environment.
-- Configure preview Supabase, RevenueCat, Mixpanel, and Sentry values in the EAS `preview` environment.
-- Configure preview text AI, future vision AI, and Supabase privileged admin secrets in the preview Supabase project before testing Edge Functions.
-- Use separate preview projects/keys from production.
-
-### Production
-
-- `eas.json` sets `EXPO_PUBLIC_APP_ENV=production` for production builds.
-- `eas.json` maps the `production` build profile to the EAS `production` environment.
-- Configure production client-safe values in the production EAS environment.
-- Configure production server-only secrets in the production Supabase project only.
-- Rotate production secrets outside the repository and never commit generated key material.
-
-## Config Review
-
-- `app.json` must not define server secrets or static environment values.
-- `eas.json` may define `EXPO_PUBLIC_APP_ENV` and the selected EAS environment; other client-safe values should come from that selected EAS environment.
-- Supabase Edge Functions may read server-only secrets with `Deno.env`, but app and `src/` code must not.
-
-## Rules
-
-- Store server-only secrets in Supabase Edge Function or deployment secret management.
-- Never place server-only secrets in `EXPO_PUBLIC_*` variables.
-- Keep staging and production keys separate.
-- Validate required variables during deployment and startup.
-- Before release, verify `corepack pnpm exec expo export --platform web` completes without adding server-only values to the bundle.
+Run `corepack pnpm release:check-local`, then build a signed native artifact for device QA. Verify Firebase sign-in, Atlas context headers, one real AI answer, and offline journaling independently. See [task052](../../tasks/task052-firebase-atlas-ai.md) for the remaining production checks.

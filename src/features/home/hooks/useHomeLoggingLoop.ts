@@ -3,13 +3,9 @@ import { startTransition, useEffect, useState } from 'react';
 
 import {
   type BarklogEventType,
-  createCloudSyncCapability,
   createLocalEvent,
   type EventModel,
   getBarklogDatabase,
-  getBarklogSyncStatusSnapshot,
-  syncBarklogData,
-  type SyncCapability,
 } from '@/db';
 import {
   getBehaviorEmoji,
@@ -23,7 +19,7 @@ import {
   isExpandedCareEventType,
   isMoodValue,
 } from '@/types/events';
-import type { Json } from '@/types/supabase';
+import type { Json } from '@/types/local';
 import { getBarklogErrorMessage } from '@/utils/barklogErrorMessages';
 
 const CORE_SUMMARY_EVENT_TYPES = ['meal', 'pee', 'poop', 'walk'] as const;
@@ -52,9 +48,7 @@ export type HomeLoggingSnapshot = {
   latestEntryLabel: string | null;
   recentEvents: HomeRecentEvent[];
   summaryCounts: Record<(typeof CORE_SUMMARY_EVENT_TYPES)[number], number>;
-  syncError: string | null;
   todayEventCount: number;
-  unsyncedCount: number;
   warningMessage: string | null;
 };
 
@@ -68,9 +62,7 @@ const defaultSnapshot: HomeLoggingSnapshot = {
     poop: 0,
     walk: 0,
   },
-  syncError: null,
   todayEventCount: 0,
-  unsyncedCount: 0,
   warningMessage: null,
 };
 
@@ -224,7 +216,7 @@ async function loadHomeSnapshot(dogId: string) {
   const eventCollection = database.get('events') as Collection<EventModel>;
   const startOfToday = getStartOfToday();
 
-  const [todayEvents, recentEvents, lastPoopEvents, syncStatus] =
+  const [todayEvents, recentEvents, lastPoopEvents] =
     await Promise.all([
       eventCollection
         .query(
@@ -248,7 +240,6 @@ async function loadHomeSnapshot(dogId: string) {
           Q.take(1),
         )
         .fetch(),
-      getBarklogSyncStatusSnapshot(database),
     ]);
 
   const summaryCounts = todayEvents.reduce<
@@ -284,22 +275,17 @@ async function loadHomeSnapshot(dogId: string) {
       : null,
     recentEvents: recentEvents.map(formatRecentEvent),
     summaryCounts,
-    syncError: syncStatus.lastSyncError ?? null,
     todayEventCount: todayEvents.length,
-    unsyncedCount: todayEvents.filter((event) => event.syncStatus !== 'synced')
-      .length,
     warningMessage: hasPoopGap ? "Hasn't pooped in 24 hours" : null,
   } satisfies HomeLoggingSnapshot;
 }
 
 export function useHomeLoggingLoop(input: {
-  cloudSyncCapability?: SyncCapability;
   dogId: string | null;
   userId: string | null;
   weightLbs?: number | null;
 }) {
   const {
-    cloudSyncCapability = createCloudSyncCapability('unknown', 'loading'),
     dogId,
     userId,
     weightLbs,
@@ -354,16 +340,9 @@ export function useHomeLoggingLoop(input: {
     };
   }, [dogId]);
 
-  const refresh = async (options?: { sync?: boolean }) => {
+  const refresh = async () => {
     if (!dogId) {
       return;
-    }
-
-    if (options?.sync !== false) {
-      await syncBarklogData({
-        capability: cloudSyncCapability,
-        trigger: 'manual',
-      });
     }
 
     const nextSnapshot = await loadHomeSnapshot(dogId);
@@ -397,17 +376,11 @@ export function useHomeLoggingLoop(input: {
       notes: options?.notes ?? null,
       occurredAt: options?.occurredAt ?? Date.now(),
       source: 'instant',
-      synced: false,
       type,
       userId,
     });
 
-    await refresh({ sync: false });
-
-    syncBarklogData({
-      capability: cloudSyncCapability,
-      trigger: 'local_write',
-    }).catch(() => undefined);
+    await refresh();
   };
 
   return {

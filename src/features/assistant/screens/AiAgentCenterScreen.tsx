@@ -43,7 +43,7 @@ import { hasPremiumAccess } from '@/features/premium/utils/premiumAccess';
 import { openPremiumGate } from '@/features/premium/utils/premiumNavigation';
 import { SkeletonBlock } from '@/features/states/components/SkeletonBlock';
 import HapticManager from '@/managers/HapticManager';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
 import { barklogTypography } from '@/theme/tokens';
 
 type ContextLoadState = 'error' | 'idle' | 'loading';
@@ -226,9 +226,9 @@ function AgentCard({
 
 export default function AiAgentCenterScreen() {
   const router = useRouter();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const premiumAccess = hasPremiumAccess(barklogUser);
   const [snapshot, setSnapshot] = useState<WeeklyDashboardSnapshot | null>(
@@ -371,7 +371,7 @@ export default function AiAgentCenterScreen() {
                 lineHeight={20}
               >
                 {premiumAccess
-                  ? 'Agents use local BarkLog context and approved Supabase Edge Functions. AI quota is Premium-only in this release.'
+                  ? 'AI agents are unavailable in this local-only build.'
                   : 'Free users keep offline logging, Timeline access, and manual export. Premium unlocks AI agents.'}
               </Paragraph>
             </YStack>

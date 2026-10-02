@@ -20,6 +20,8 @@ type BarklogInputProps = {
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   autoCorrect?: boolean;
   onChangeText: (value: string) => void;
+  accessibilityLabel?: string;
+  autoComplete?: 'email' | 'password';
 };
 
 export function BarklogInput({
@@ -34,6 +36,8 @@ export function BarklogInput({
   autoCapitalize,
   autoCorrect,
   onChangeText,
+  accessibilityLabel,
+  autoComplete,
 }: BarklogInputProps) {
   return (
     <YStack gap="$xs">
@@ -64,6 +68,8 @@ export function BarklogInput({
         {leading}
         <Input
           unstyled
+          accessibilityLabel={accessibilityLabel ?? label}
+          autoComplete={autoComplete}
           flex={1}
           color="$inputText"
           fontFamily="$body"

@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useShallow } from 'zustand/react/shallow';
 
 import {
   getHealthActivityCapabilityLabel,
@@ -41,11 +42,13 @@ const styles = StyleSheet.create({
 export default function PermissionsScreen() {
   const router = useRouter();
   const { healthSyncEnabled, notificationsEnabled, patchDraft } =
-    useOnboardingDraftStore((state) => ({
-      healthSyncEnabled: state.healthSyncEnabled,
-      notificationsEnabled: state.notificationsEnabled,
-      patchDraft: state.patchDraft,
-    }));
+    useOnboardingDraftStore(
+      useShallow((state) => ({
+        healthSyncEnabled: state.healthSyncEnabled,
+        notificationsEnabled: state.notificationsEnabled,
+        patchDraft: state.patchDraft,
+      })),
+    );
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const healthActivityLabel = getHealthActivityCapabilityLabel();
 

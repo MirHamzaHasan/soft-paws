@@ -1,8 +1,8 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
+import { useRouter, type Href } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { trainingProgramsQueryOptions } from "@/api/training";
 import { useBarklogFeedback } from "@/components/ui";
@@ -11,7 +11,7 @@ import { useLocalTrainingEnrollments } from "@/features/training/hooks/useLocalT
 import { getActiveTrainingProgramPairs } from "@/features/training/utils/trainingPresentation";
 import HapticManager from "@/managers/HapticManager";
 
-import { getSelectedDog, useAuthSessionStore } from "../../../stores";
+import { getSelectedDog, useLocalProfileStore } from "../../../stores";
 import { askBarkLogAi } from "../../insights/api/insightsAiClient";
 import {
   BARKLOG_AI_EMERGENCY_ESCALATION,
@@ -78,9 +78,9 @@ type AssistantThreadMessage = {
 
 export default function AskBarkLogAiScreen() {
   const router = useRouter();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const premiumAccess = hasPremiumAccess(barklogUser);
   const programsQuery = useQuery(trainingProgramsQueryOptions());
@@ -269,6 +269,14 @@ export default function AskBarkLogAiScreen() {
       onBackPress={() => router.back()}
     >
       <View style={styles.stack}>
+        <Pressable
+          accessibilityLabel="Manage AI sign-in"
+          accessibilityRole="button"
+          hitSlop={12}
+          onPress={() => router.push('/ai-sign-in' as Href)}
+        >
+          <Text style={styles.statusText}>AI account</Text>
+        </Pressable>
         <AssistantContextPill
           label={`Using ${selectedDog?.name ?? "Dog"}'s Data`}
           icon={<AssistantHistoryIcon />}

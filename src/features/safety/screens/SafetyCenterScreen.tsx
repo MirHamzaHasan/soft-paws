@@ -6,7 +6,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { listActiveMedicationsForDog, type MedicationModel } from '@/db';
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
 
 import { HomeShell } from '../../home/components/HomeShell';
 import { ShareIcon } from '../../insights/components/InsightsIcons';
@@ -158,8 +158,8 @@ function getHazardsById(ids: string[]) {
 
 export default function SafetyCenterScreen() {
   const router = useRouter();
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const [medications, setMedications] = useState<MedicationModel[]>([]);
   const [medicationState, setMedicationState] = useState<

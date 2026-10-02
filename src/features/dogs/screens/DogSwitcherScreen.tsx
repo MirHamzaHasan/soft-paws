@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { getSelectedDog, useAuthSessionStore } from '@/stores';
+import { getSelectedDog, useLocalProfileStore } from '@/stores';
 
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { CloseIcon } from '../../auth/components/AuthIcons';
@@ -101,10 +101,10 @@ const styles = StyleSheet.create({
 
 export default function DogSwitcherScreen() {
   const router = useRouter();
-  const barklogUser = useAuthSessionStore((state) => state.barklogUser);
-  const dogs = useAuthSessionStore((state) => state.dogs);
-  const selectedDogId = useAuthSessionStore((state) => state.selectedDogId);
-  const setSelectedDogId = useAuthSessionStore(
+  const barklogUser = useLocalProfileStore((state) => state.barklogUser);
+  const dogs = useLocalProfileStore((state) => state.dogs);
+  const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
+  const setSelectedDogId = useLocalProfileStore(
     (state) => state.setSelectedDogId,
   );
   const premiumAccess = hasPremiumAccess(barklogUser);

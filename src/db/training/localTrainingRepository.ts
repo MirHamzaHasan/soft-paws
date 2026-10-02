@@ -13,7 +13,6 @@ import type {
   TrainingEnrollmentModel,
   TrainingSessionModel,
 } from '../models';
-import { mergeBarklogSyncMetadata } from '../sync';
 import type { UnixTimestampInput } from '../types';
 import { toUnixTimestamp } from '../utils';
 
@@ -107,9 +106,6 @@ export async function createLocalTrainingEnrollment(
     'createLocalTrainingEnrollment',
   );
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return enrollment;
 }
@@ -119,7 +115,6 @@ export async function updateLocalTrainingEnrollment(
 ) {
   const database = getBarklogDatabase();
   const enrollmentCollection = getTrainingEnrollmentCollection();
-  const now = Date.now();
 
   const enrollment = await database.write(async () => {
     const existingEnrollment = await enrollmentCollection.find(
@@ -145,9 +140,6 @@ export async function updateLocalTrainingEnrollment(
     });
   }, 'updateLocalTrainingEnrollment');
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return enrollment;
 }
@@ -176,9 +168,6 @@ export async function createLocalTrainingSession(
     'createLocalTrainingSession',
   );
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return session;
 }
@@ -242,9 +231,6 @@ export async function createLocalTrainingSessionWithEvent(
     return { event, session };
   }, 'createLocalTrainingSessionWithEvent');
 
-  await mergeBarklogSyncMetadata(database, {
-    lastLocalWriteAt: now,
-  });
 
   return result;
 }

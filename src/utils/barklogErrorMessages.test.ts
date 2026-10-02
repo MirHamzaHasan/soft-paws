@@ -4,24 +4,16 @@ import {
 } from './barklogErrorMessages';
 
 describe('BarkLog safe error messages', () => {
-  it('keeps approved auth copy for bad credentials', () => {
-    expect(
-      getBarklogErrorMessage(new Error('Invalid email or password'), {
-        domain: 'auth',
-      }),
-    ).toBe('Invalid email or password');
-  });
-
-  it('does not expose raw auth provider details', () => {
+  it('does not expose raw local database details', () => {
     expect(
       getBarklogErrorMessage(
-        new Error('Supabase auth failed with jwt stack details'),
+        new Error('SQLite failed with stack details'),
         {
-          domain: 'auth',
+          domain: 'local_profile',
         },
       ),
     ).toBe(
-      'Unable to complete that account action right now. Please try again.',
+      'Unable to open your local care journal right now. Please try again.',
     );
   });
 
