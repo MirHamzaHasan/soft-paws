@@ -13,13 +13,17 @@ EXPO_PUBLIC_FIREBASE_PROJECT_ID=
 EXPO_PUBLIC_ATLAS_APP_ID=
 EXPO_PUBLIC_REVENUECAT_IOS_KEY=
 EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=
+EXPO_PUBLIC_GAMEANALYTICS_ANDROID_GAME_KEY=
+EXPO_PUBLIC_GAMEANALYTICS_ANDROID_SECRET_KEY=
+EXPO_PUBLIC_GAMEANALYTICS_IOS_GAME_KEY=
+EXPO_PUBLIC_GAMEANALYTICS_IOS_SECRET_KEY=
 EXPO_PUBLIC_MIXPANEL_TOKEN=
 EXPO_PUBLIC_SENTRY_DSN=
 ```
 
-Firebase's Web API key and project ID and BarkLog's Atlas application UUID are public identifiers embedded in the Expo bundle. Use a **BarkLog-specific** Atlas application; Family Chef's app ID is not interchangeable. Keep provider API keys, Firebase ID/refresh tokens, Firebase service-account credentials, signing keys, and Atlas operator credentials out of Expo env files and source control.
+Firebase's Web API key and project ID and BarkLog's Atlas application UUID are public identifiers embedded in the Expo bundle. Use a **BarkLog-specific** Atlas application; Family Chef's app ID is not interchangeable. GameAnalytics Collection API game keys and their paired secret keys are also client-visible integration credentials. Create a separate GameAnalytics game for Android and iOS; both fields for that platform are required to enable it. The app sends only fixed event names and a pseudonymous local-owner identifier, not dog IDs or care text. Leave RevenueCat and Mixpanel blank for the free v1.0.0 build unless Mixpanel is intentionally enabled. Keep AI provider API keys, Firebase ID/refresh tokens, Firebase service-account credentials, signing keys, and Atlas operator credentials out of Expo env files and source control.
 
-The app reads Expo public values at bundle time. Restart Expo and rebuild after changing them. If Firebase or Atlas identifiers are absent or invalid, AI routes stay hidden; local logging and export remain available. AI routes also stay hidden in production until Atlas enforces the RevenueCat entitlement for the Firebase user.
+The app reads Expo public values at bundle time. Restart Expo and rebuild after changing them. If Firebase or Atlas identifiers are absent or invalid, Atlas AI routes stay hidden; local logging and export remain available. Atlas AI also stays hidden in production until its server policy supports this free release and BarkLog health context checks pass.
 
 ## Web bridge
 
@@ -27,4 +31,4 @@ Deploy the Expo web export and `functions/` together as a Cloudflare Pages proje
 
 ## Validation
 
-Run `corepack pnpm release:check-local`, then build a signed native artifact for device QA. Verify Firebase sign-in, Atlas context headers, one real AI answer, and offline journaling independently. See [task052](../../tasks/task052-firebase-atlas-ai.md) for the remaining production checks.
+Run `corepack pnpm release:check-local`, then build a signed native artifact for device QA. Verify offline journaling first. If GameAnalytics is configured, verify events on both platforms in their own dashboard. Firebase sign-in, Atlas context headers, and a real AI answer remain separate optional non-production checks until server policy is ready. See [task052](../../tasks/task052-firebase-atlas-ai.md).

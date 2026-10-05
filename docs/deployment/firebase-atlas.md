@@ -1,10 +1,10 @@
 # Firebase Auth and Atlas AI setup
 
-BarkLog stores owner and care records in WatermelonDB on the device. Firebase is optional sign-in for Premium AI. Each user-triggered AI request sends selected summarized context to Atlas. There is no Firebase care-record sync.
+BarkLog stores owner and care records in WatermelonDB on the device. Supported factual Ask AI questions run through an optional downloaded model on native devices. Firebase is optional sign-in for Atlas fallback. Only a user-triggered action that needs Atlas sends selected summarized context. There is no Firebase care-record sync. See [local-ai-models.md](../engineering/local-ai-models.md).
 
 ## Firebase
 
-Use the intended Firebase project and enable Authentication → Email/Password. Register BarkLog's web origin and native package/bundle IDs as needed (`com.dracoarts.barklog`). Put the project's public Web API key and project ID in an ignored `.env.local`:
+Use the intended Firebase project and enable Authentication → Email/Password. Register BarkLog's web origin and native identifiers as needed (Android `com.draco.arts.apps.bark.log.dogs.journal`, iOS `com.dracoarts.barklog`). Put the project's public Web API key and project ID in an ignored `.env.local`:
 
 ```env
 EXPO_PUBLIC_FIREBASE_API_KEY=
@@ -30,4 +30,4 @@ Native iOS and Android call Atlas directly. Browser AI calls same-origin `/api/a
 
 ## Release checks
 
-AI routes remain hidden in `EXPO_PUBLIC_APP_ENV=production` until paid entitlement linkage is complete. Before enabling paid AI in production, link BarkLog's stable local RevenueCat owner ID with the Atlas Firebase user/IAP identity and verify the entitlement at the server boundary. Client-side Premium checks alone do not protect model spend. Test a signed-in account on a native device against the current Atlas deployment, including a real Ask AI answer, a care summary, an expired token retry, Atlas denial, offline logging, and sign-out. Basic logging, timeline, Safety Center, and free export must still work without sign-in or network.
+Atlas-backed AI routes remain hidden in `EXPO_PUBLIC_APP_ENV=production` until paid entitlement linkage is complete. The native local Ask AI route can appear without Atlas identifiers; its current Premium gate remains until packaging is decided. Before enabling paid Atlas AI in production, link BarkLog's stable local RevenueCat owner ID with the Atlas Firebase user/IAP identity and verify the entitlement at the server boundary. Client-side Premium checks alone do not protect model spend. Test a signed-in account on a native device against the current Atlas deployment, including a real Ask AI fallback answer, a care summary, an expired token retry, Atlas denial, offline logging, and sign-out. Basic logging, timeline, Safety Center, and free export must still work without sign-in or network.

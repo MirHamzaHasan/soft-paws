@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { bootstrapLocalProfile, deleteAllLocalData } from '@/api';
+import { FREE_V1_RELEASE } from '@/config/releaseMode';
 import { cancelAllCareTaskReminderNotifications } from '@/features/care/services/careTaskReminderService';
 import {
   cancelAllMedicationReminderNotifications,
@@ -223,13 +224,15 @@ export default function SettingsScreen() {
               leading={<SettingsSubscriptionIcon />}
               showDivider
             />
-            <SettingsRow
-              title="Subscription"
-              subtitle={subscriptionState.label}
-              leading={<SettingsSubscriptionIcon />}
-              showDivider
-              onPress={() => router.push('/subscription')}
-            />
+            {!FREE_V1_RELEASE ? (
+              <SettingsRow
+                title="Subscription"
+                subtitle={subscriptionState.label}
+                leading={<SettingsSubscriptionIcon />}
+                showDivider
+                onPress={() => router.push('/subscription')}
+              />
+            ) : null}
           </SettingsSectionCard>
         </View>
 

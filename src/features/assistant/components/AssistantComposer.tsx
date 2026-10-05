@@ -5,7 +5,8 @@ import { AssistantSendIcon } from "./AssistantIcons";
 type AssistantComposerProps = {
   value: string;
   onChangeText: (value: string) => void;
-  questionsRemaining: number;
+  placeholder: string;
+  metaText: string;
   onUpgradePress?: () => void;
   onSendPress?: () => void;
 };
@@ -77,7 +78,8 @@ const styles = StyleSheet.create({
 export function AssistantComposer({
   value,
   onChangeText,
-  questionsRemaining,
+  placeholder,
+  metaText,
   onUpgradePress,
   onSendPress,
 }: AssistantComposerProps) {
@@ -87,13 +89,14 @@ export function AssistantComposer({
         <TextInput
           value={value}
           multiline
-          placeholder="Ask about Max's health, habits, or records."
+          placeholder={placeholder}
           placeholderTextColor="#848B93"
           style={styles.input}
           onChangeText={onChangeText}
         />
 
         <Pressable
+          accessibilityLabel="Send question"
           accessibilityRole="button"
           style={styles.sendButton}
           onPress={onSendPress}
@@ -103,12 +106,12 @@ export function AssistantComposer({
       </View>
 
       <View style={styles.metaRow}>
-        <Text style={styles.meta}>
-          {questionsRemaining} Questions Remaining
-        </Text>
-        <Pressable accessibilityRole="button" onPress={onUpgradePress}>
-          <Text style={styles.upgrade}>Upgrade</Text>
-        </Pressable>
+        <Text style={styles.meta}>{metaText}</Text>
+        {onUpgradePress ? (
+          <Pressable accessibilityRole="button" onPress={onUpgradePress}>
+            <Text style={styles.upgrade}>Upgrade</Text>
+          </Pressable>
+        ) : null}
       </View>
     </View>
   );

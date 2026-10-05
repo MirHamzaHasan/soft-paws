@@ -10,9 +10,9 @@ Record actual artifact paths, device evidence, and a release decision before pro
 | Build method | Local Expo prebuild, Gradle, and Xcode |
 | iOS artifact path |  |
 | Android artifact path |  |
-| RevenueCat project |  |
-| Mixpanel project |  |
-| Sentry project |  |
+| Billing model | Free v1.0.0; no in-app purchases |
+| GameAnalytics Android game |  |
+| GameAnalytics iOS game |  |
 | Release owner |  |
 | Decision | Blocked: signed builds and device QA pending |
 
@@ -20,11 +20,14 @@ Record actual artifact paths, device evidence, and a release decision before pro
 
 | Gate | Evidence | Status |
 | --- | --- | --- |
-| Local automated checks | `corepack pnpm release:check-local`, `corepack pnpm check-types`, and 129 Jest tests passed on 2026-10-03 | Passed |
-| Android signed AAB and APK | Local QA artifacts in `android/app/build/outputs/`; APK v2 and AAB JAR signatures verified 2026-10-03 | Debug key passed; production upload key pending |
-| Android offline device smoke | API 36 emulator: fresh install, dog onboarding, four log types, timeline, restart persistence, PDF share sheet, Safety Center, toxicity, first aid, emergency card, and local deletion passed on 2026-10-03 | Emulator passed; physical device pending |
+| Local automated checks | `corepack pnpm release:check-local`, TypeScript, and 143 Jest tests passed 2026-10-05 | Passed |
+| Android signed AAB and APK | Earlier disposable-key artifacts used the old Android ID and do not count for this release. Build fresh AAB/APK with the permanent upload key. | Pending new ID and production key |
+| Android offline device smoke | Earlier API 36 emulator flow used the old Android ID; repeat on the new v1.0.0 artifact, then test a physical device. | Pending current artifact and physical device |
 | iOS signed archive and device smoke | Mac Xcode archive, install, same offline flow | Pending |
-| RevenueCat sandbox | Purchase, expiry, restore, entitlement gates | Pending |
+| Free access | No paywall, purchase, trial expiry, or ads; formerly gated features open | Pending device QA |
+| Native manifest check | Run `corepack pnpm release:check-native-capabilities` after clean prebuild and signed Android build; verify no Play billing | Pending |
+| GameAnalytics protocol | Signed sandbox `init` and `events` requests with synthetic session/design events returned HTTP 200 on 2026-10-05 | Passed |
+| GameAnalytics events | Set separate Android/iOS game key and secret pairs; verify a real launch, quick log, and export in each dashboard with no care details | Pending |
 | Store privacy and data safety | Local-only copy and shipped SDK labels | Pending |
 
 ## Rollback And Hotfix Gate
@@ -34,6 +37,5 @@ Record actual artifact paths, device evidence, and a release decision before pro
 | Last known good app version |  |
 | Last known good iOS artifact path |  |
 | Last known good Android artifact path |  |
-| RevenueCat rollback action |  |
 | Local data rollback action | Preserve on-device database; provide free export path |
 | Store rollback action |  |

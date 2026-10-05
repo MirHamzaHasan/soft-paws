@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
+import { FREE_V1_RELEASE } from '@/config/releaseMode';
 import {
   type CareTaskModel,
   completeLocalCareTask,
@@ -887,24 +888,26 @@ export default function CareCalendarScreen() {
         {renderTaskSection('Upcoming', upcomingTasks)}
         {renderTaskSection('Recently completed', completedTasks.slice(-3))}
 
-        <Pressable
-          accessibilityRole="button"
-          style={[styles.card, styles.premiumCard]}
-          onPress={() => openPremiumGate(router, 'care-automation')}
-        >
-          <View style={styles.cardHeader}>
-            <View style={styles.taskCopy}>
-              <Text style={styles.cardTitle}>Smart care automation</Text>
-              <Text style={styles.emptyText}>
-                Premium adds smart recurring care checklists on this device.
-              </Text>
+        {!FREE_V1_RELEASE ? (
+          <Pressable
+            accessibilityRole="button"
+            style={[styles.card, styles.premiumCard]}
+            onPress={() => openPremiumGate(router, 'care-automation')}
+          >
+            <View style={styles.cardHeader}>
+              <View style={styles.taskCopy}>
+                <Text style={styles.cardTitle}>Smart care automation</Text>
+                <Text style={styles.emptyText}>
+                  Premium adds smart recurring care checklists on this device.
+                </Text>
+              </View>
+              <View style={styles.premiumButton}>
+                <Sparkles size={20} />
+                <ChevronRightIcon color="#534AB7" />
+              </View>
             </View>
-            <View style={styles.premiumButton}>
-              <Sparkles size={20} />
-              <ChevronRightIcon color="#534AB7" />
-            </View>
-          </View>
-        </Pressable>
+          </Pressable>
+        ) : null}
 
         <Text style={styles.emptyText}>
           BarkLog stores local care tasks as planning reminders only. Follow

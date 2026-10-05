@@ -1,5 +1,7 @@
 # BarkLog Native Build Runbook For AI Assistants
 
+Historical assistant handoff from the EAS/Supabase phase. Use [local-build.md](../release/local-build.md) and [preflight-local.md](../release/preflight-local.md) for v1.0.0; the package IDs, backend, purchases, and signing steps below are obsolete.
+
 Use this file as a handoff prompt/runbook for ChatGPT, Claude, Codex, or any other assistant helping build BarkLog locally or for device testing.
 
 The main purpose is to avoid confusing a development client with the finished app, avoid leaking environment secrets, and make clear which external accounts are actually required.

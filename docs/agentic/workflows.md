@@ -1,8 +1,12 @@
 # BarkLog Delivery Workflows
 
-## Current local journal and Atlas AI delivery rule
+## Current local journal and local-first AI delivery rule
 
-Task051 keeps owner, dog, and care records in WatermelonDB, with free CSV and PDF export and local native builds. Task052 permits optional Firebase email/password sign-in for Atlas AI. Send only selected context for a user-triggered AI action, require Atlas context-policy evidence, and keep basic logging independent of sign-in and connectivity. No Firebase care sync or direct model-provider calls. Use [local-build.md](../release/local-build.md) for signing. Older Supabase workflow sections below are historical context.
+Task051 keeps owner, dog, and care records in WatermelonDB, with free CSV and PDF export and local native builds. Task053 routes supported factual Ask AI questions through a user-downloaded ONNX model on the native device and builds answers from local journal summaries. Do not use the model for diagnosis, triage, toxicity, dosing, or urgent guidance. Task052 permits optional Firebase email/password sign-in for Atlas fallback. Send only selected context for a user-triggered Atlas action, require Atlas context-policy evidence, and keep basic logging independent of sign-in and connectivity. No Firebase care sync or direct model-provider calls. Use [local-build.md](../release/local-build.md) for signing. Older Supabase workflow sections below are historical context.
+
+For v1.0.0, implemented local features are free and ads, trial expiry, and purchase flows are off. The founder runs and signs local native builds. Use [preflight-local.md](../release/preflight-local.md) for release evidence; older monetization and EAS steps below are historical.
+
+Task054 adds optional local generation for bounded journal questions and local photo captions in Ask AI. Keep the starter factual answer first, reject unsafe or unsupported local output, then use Atlas for text only when its checks pass. Do not send selected photos to the current text-only Atlas endpoint. Do not interpret Photo Baseline records as medical evidence.
 
 ## Canonical Source
 

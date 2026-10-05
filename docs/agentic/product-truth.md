@@ -5,9 +5,15 @@
 - Canonical spec: [../source-of-truth/barklog-product-engineering.md](../source-of-truth/barklog-product-engineering.md)
 - If any older BarkLog document conflicts with the canonical spec, the canonical spec wins.
 
-## Current task051 and task052 rebaseline
+## Version 1.0.0 release
 
-BarkLog needs no account for journaling. WatermelonDB is the sole journal store. All care records stay on this device; free CSV and PDF exports are the only external copy. Uninstalling the app or deleting its data removes the journal. RevenueCat uses a stable local owner ID. Optional Firebase email/password sign-in enables Atlas AI only. An AI action sends selected summarized context to Atlas, which must enforce a BarkLog context policy; Firebase credentials stay in memory. Training content ships in the app. Native builds use local Expo prebuild, Gradle, and Xcode. Older Supabase and AI descriptions below document former plans and are superseded by this section.
+The first store release is free, without ads, paywalls, or subscriptions. All implemented local features are included. Android uses `com.draco.arts.apps.bark.log.dogs.journal`; iOS retains `com.dracoarts.barklog`. Atlas AI remains off in production until its server policy supports free access and passes BarkLog health context checks. The founder runs and signs the native builds locally. Older Premium and trial sections below describe later packaging.
+
+## Current task051 to task054 rebaseline
+
+BarkLog needs no account for journaling. WatermelonDB is the sole journal store. All care records stay on this device; free CSV and PDF exports are the only external copy. Uninstalling the app or deleting its data removes the journal. RevenueCat purchase flows are off for v1.0.0. Native Ask AI is local-first for supported factual log questions after an optional on-device ONNX model download. The starter model selects an intent; factual answer text comes from local logs. Firebase email/password sign-in enables the Atlas fallback only. An Atlas action sends selected summarized context to Atlas, which must enforce a BarkLog context policy; Firebase credentials stay in memory. Atlas remains hidden in production until that policy supports free access. Training content ships in the app. Native builds use local Expo prebuild, Gradle, and Xcode. Older Supabase and AI descriptions below document former plans and are superseded by this section.
+
+Native Ask AI also offers separate optional downloads for bounded local journal conversation and on-device photo captions. It attempts starter facts, then local conversation, then Atlas text fallback. Photos are described locally as scenes only; the current Atlas contract has no vision fallback. Model files stay outside WatermelonDB and load only when used. Photo Baseline records remain manual and observational.
 
 ## Product Summary
 

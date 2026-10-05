@@ -2,6 +2,7 @@
 import { type Collection, Q } from '@nozbe/watermelondb';
 
 import { getBarklogDatabase } from '@/db/database';
+import { FREE_V1_RELEASE } from '@/config/releaseMode';
 import type { DogModel, UserModel } from '@/db/models';
 import type { OnboardingDraftState } from '@/stores/useOnboardingDraftStore';
 import type { Database } from '@/types/local';
@@ -89,8 +90,10 @@ async function readOrCreateLocalOwner(): Promise<BarklogUserRow> {
     userCollection().create((record) => {
       record.email = '';
       record.createdAt = now;
-      record.subscriptionTier = 'trial';
-      record.trialEndsAt = now + BARKLOG_TRIAL_DURATION_DAYS * 86_400_000;
+      record.subscriptionTier = FREE_V1_RELEASE ? null : 'trial';
+      record.trialEndsAt = FREE_V1_RELEASE
+        ? null
+        : now + BARKLOG_TRIAL_DURATION_DAYS * 86_400_000;
       record.revenuecatUserId = null;
     }),
   );

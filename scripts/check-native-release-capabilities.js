@@ -5,9 +5,13 @@ const fs = require('fs');
 const path = require('path');
 
 const rootDir = process.cwd();
+const { freeLaunchV1 } = require('../feature-flags.json');
+
+const configOnly = process.argv.includes('--config-only');
 
 const appConfigPath = 'app.json';
 const androidSourceManifestPath = 'android/app/src/main/AndroidManifest.xml';
+const androidGradlePath = 'android/app/build.gradle';
 const androidReleaseManifestPath =
   'android/app/build/intermediates/merged_manifest/release/processReleaseMainManifest/AndroidManifest.xml';
 const iosInfoPlistPath = 'ios/BarkLog/Info.plist';
@@ -15,10 +19,11 @@ const iosEntitlementsPath = 'ios/BarkLog/BarkLog.entitlements';
 
 const expectedAndroidPermissions = [
   'android.permission.POST_NOTIFICATIONS',
-  'com.android.vending.BILLING',
+  ...(!freeLaunchV1 ? ['com.android.vending.BILLING'] : []),
 ];
 
 const removableAndroidPermissions = [
+  ...(freeLaunchV1 ? ['com.android.vending.BILLING'] : []),
   'android.permission.READ_EXTERNAL_STORAGE',
   'android.permission.SYSTEM_ALERT_WINDOW',
   'android.permission.WRITE_EXTERNAL_STORAGE',
@@ -44,7 +49,6 @@ const forbiddenIosInfoKeys = [
   'NSLocationWhenInUseUsageDescription',
   'NSMicrophoneUsageDescription',
   'NSPhotoLibraryAddUsageDescription',
-  'NSPhotoLibraryUsageDescription',
 ];
 
 const forbiddenIosEntitlements = [
@@ -70,6 +74,7 @@ const recordFailure = (message) => {
 };
 
 const getExpoConfig = () => readJson(appConfigPath).expo || {};
+const expectedAndroidPackage = 'com.draco.arts.apps.bark.log.dogs.journal';
 
 const hasPermissionDeclaration = (text, permission) =>
   text.includes(`android:name="${permission}"`);
@@ -90,6 +95,12 @@ const validateAppConfig = () => {
   const androidConfig = expoConfig.android || {};
   const androidPermissions = androidConfig.permissions || [];
   const blockedAndroidPermissions = androidConfig.blockedPermissions || [];
+
+  if (androidConfig.package !== expectedAndroidPackage) {
+    recordFailure(
+      'app.json android.package does not match the v1.0.0 application ID.',
+    );
+  }
 
   expectedAndroidPermissions.forEach((permission) => {
     if (!androidPermissions.includes(permission)) {
@@ -162,6 +173,16 @@ const validateAndroidSourceManifest = () => {
   });
 };
 
+const validateAndroidGradle = () => {
+  if (!pathExists(androidGradlePath)) return;
+  const gradle = readText(androidGradlePath);
+  if (!gradle.includes(`applicationId '${expectedAndroidPackage}'`)) {
+    recordFailure(
+      `${androidGradlePath} does not use the v1.0.0 Android application ID.`,
+    );
+  }
+};
+
 const validateAndroidReleaseManifest = () => {
   if (!pathExists(androidReleaseManifestPath)) {
     notes.push(
@@ -171,6 +192,11 @@ const validateAndroidReleaseManifest = () => {
   }
 
   const releaseManifest = readText(androidReleaseManifestPath);
+  if (!releaseManifest.includes(`package="${expectedAndroidPackage}"`)) {
+    recordFailure(
+      `${androidReleaseManifestPath} has the wrong Android application ID.`,
+    );
+  }
 
   expectedAndroidPermissions.forEach((permission) => {
     if (!hasActivePermissionDeclaration(releaseManifest, permission)) {
@@ -213,14 +239,23 @@ const validateIosNativeFiles = () => {
 };
 
 validateAppConfig();
-validateAndroidSourceManifest();
-validateAndroidReleaseManifest();
-validateIosNativeFiles();
+if (configOnly) {
+  notes.push(
+    'Generated native manifests were not checked. Run the full capability check after a clean prebuild and release build.',
+  );
+} else {
+  validateAndroidSourceManifest();
+  validateAndroidGradle();
+  validateAndroidReleaseManifest();
+  validateIosNativeFiles();
+}
 
-if (failures.length === 0) {
+if (failures.length === 0 && !configOnly) {
   if (pathExists(androidReleaseManifestPath))
     notes.push(
-      'Android release manifest keeps expected notification and billing capability checks.',
+      freeLaunchV1
+        ? 'Android release manifest keeps notifications and excludes Play billing.'
+        : 'Android release manifest keeps expected notification and billing capability checks.',
     );
   notes.push(
     'Camera, location, media-library, microphone, storage, overlay, and health capabilities are absent from the checked native files.',

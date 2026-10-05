@@ -1,4 +1,5 @@
 import type { BarklogUserRow } from '@/api';
+import { FREE_V1_RELEASE } from '@/config/releaseMode';
 
 export type PremiumFeatureKey =
   | 'ai-agents'
@@ -33,7 +34,7 @@ export type PremiumEntitlementState =
   | {
       daysRemaining: number;
       hasAccess: true;
-      kind: 'premium' | 'trial';
+      kind: 'included' | 'premium' | 'trial';
       label: string;
     }
   | {
@@ -70,6 +71,15 @@ export function getPremiumEntitlementState(
   user: BarklogUserRow | null | undefined,
   now = new Date(),
 ): PremiumEntitlementState {
+  if (FREE_V1_RELEASE) {
+    return {
+      daysRemaining: 0,
+      hasAccess: true,
+      kind: 'included',
+      label: 'Included in v1.0.0',
+    };
+  }
+
   if (!user) {
     return {
       daysRemaining: 0,

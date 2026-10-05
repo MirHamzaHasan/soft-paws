@@ -2,6 +2,8 @@ import * as Crypto from 'expo-crypto';
 import { z } from 'zod';
 
 import type { BarklogUserRow } from '@/api';
+import { tryAnswerLocalChat } from '@/features/local-ai/localChatEngine';
+import { tryAnswerLocalQuestion } from '@/features/local-ai/localQuestionEngine';
 import type {
   GeneratedVetReport,
   VetReportAiContext,
@@ -19,7 +21,10 @@ import {
   type CareSummaryContext,
   type GeneratedSummary,
 } from '../utils/generatedSummaries';
-import type { WeeklyInsightContext } from '../utils/insightSummaries';
+import type {
+  WeeklyDashboardSnapshot,
+  WeeklyInsightContext,
+} from '../utils/insightSummaries';
 import { requestAtlasChat } from './atlasClient';
 
 export const WEEKLY_INSIGHT_PROMPT_VERSION = 'weekly-insight-v1';
@@ -50,12 +55,14 @@ export type AskBarkLogAiRequest = {
   };
   dogId: string;
   question: string;
+  snapshot?: WeeklyDashboardSnapshot;
   user: BarklogUserRow | null | undefined;
 };
 
 export type AskBarkLogAiResponse = {
   content: string;
   promptVersion: typeof ASK_BARKLOG_AI_PROMPT_VERSION;
+  source: 'atlas' | 'device' | 'safety';
 };
 
 export type GenerateTrainingInsightRequest = {
@@ -149,7 +156,44 @@ export async function askBarkLogAi(
       content:
         'This could be urgent. Please contact a veterinarian now or use Emergency SOS.',
       promptVersion: ASK_BARKLOG_AI_PROMPT_VERSION,
+      source: 'safety',
     };
+  }
+  if (input.snapshot) {
+    try {
+      const localAnswer = await tryAnswerLocalQuestion({
+        question: input.question,
+        snapshot: input.snapshot,
+      });
+      if (localAnswer) {
+        return {
+          content: localAnswer,
+          promptVersion: ASK_BARKLOG_AI_PROMPT_VERSION,
+          source: 'device',
+        };
+      }
+    } catch {
+      // Continue to the other local model if the starter model fails.
+    }
+  }
+  try {
+    const localChatAnswer = await tryAnswerLocalChat({
+      question: input.question,
+      context: {
+        dogName: input.context.dog.name,
+        last30DaysSummary: input.context.last30DaysSummary,
+        trainingContextSummary: input.context.trainingContextSummary,
+      },
+    });
+    if (localChatAnswer) {
+      return {
+        content: safeText(localChatAnswer),
+        promptVersion: ASK_BARKLOG_AI_PROMPT_VERSION,
+        source: 'device',
+      };
+    }
+  } catch {
+    // A failed local generation may use Atlas when configured.
   }
   const content = safeText(
     await requestAtlasChat({
@@ -158,7 +202,11 @@ export async function askBarkLogAi(
       user: { question: input.question.slice(0, 1000), context: input.context },
     }),
   );
-  return { content, promptVersion: ASK_BARKLOG_AI_PROMPT_VERSION };
+  return {
+    content,
+    promptVersion: ASK_BARKLOG_AI_PROMPT_VERSION,
+    source: 'atlas',
+  };
 }
 
 export async function generateTrainingInsight(

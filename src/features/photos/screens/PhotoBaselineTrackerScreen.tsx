@@ -13,6 +13,7 @@ import {
 
 import { BarklogStatusBanner } from '@/components/ui';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
+import { FREE_V1_RELEASE } from '@/config/releaseMode';
 import {
   createLocalPhotoBaseline,
   createPhotoBaselineAttachmentUri,
@@ -632,24 +633,26 @@ export default function PhotoBaselineTrackerScreen() {
           />
         ))}
 
-        <Pressable
-          accessibilityRole="button"
-          style={[styles.card, styles.premiumCard]}
-          onPress={() => openPremiumGate(router, 'photo-compare')}
-        >
-          <View style={styles.cardHeader}>
-            <View style={styles.baselineCopy}>
-              <Text style={styles.cardTitle}>Compare photo history</Text>
-              <Text style={styles.helperText}>
-                Premium helps compare your saved baseline photos over time.
-              </Text>
+        {!FREE_V1_RELEASE ? (
+          <Pressable
+            accessibilityRole="button"
+            style={[styles.card, styles.premiumCard]}
+            onPress={() => openPremiumGate(router, 'photo-compare')}
+          >
+            <View style={styles.cardHeader}>
+              <View style={styles.baselineCopy}>
+                <Text style={styles.cardTitle}>Compare photo history</Text>
+                <Text style={styles.helperText}>
+                  Premium helps compare your saved baseline photos over time.
+                </Text>
+              </View>
+              <View style={styles.premiumButton}>
+                <Sparkles size={20} />
+                <ChevronRightIcon color="#534AB7" />
+              </View>
             </View>
-            <View style={styles.premiumButton}>
-              <Sparkles size={20} />
-              <ChevronRightIcon color="#534AB7" />
-            </View>
-          </View>
-        </Pressable>
+          </Pressable>
+        ) : null}
 
         <Text style={styles.helperText}>
           Photo baselines are owner observations for organization and vet

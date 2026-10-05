@@ -1,139 +1,49 @@
 # BarkLog
 
-[![CI](https://github.com/MirHamzaHasan/bark-log/actions/workflows/ci.yml/badge.svg)](https://github.com/MirHamzaHasan/bark-log/actions/workflows/ci.yml)
-
 > Daily dog health, in one tap.
 
-BarkLog is an offline-first dog care companion for iPhone and Android. It helps dog parents log daily care quickly, keep a trustworthy timeline, prepare clean records for vet visits, and access carefully bounded safety tools—without requiring a wearable or other hardware.
+BarkLog is a local dog care journal for iPhone and Android. It helps caregivers log observations, review timelines, prepare records for vet visits, and find bounded safety guidance. It does not diagnose or replace veterinary care.
 
-> [!IMPORTANT]
-> BarkLog organizes owner observations and care records. It does not diagnose conditions or replace a veterinarian. Urgent safety actions and local record access are never placed behind a paywall.
+## Version 1.0.0
 
-## Product status
+The first release is free: no ads, trial expiry, subscription, or purchase flow. All implemented local features are included. Care records stay in WatermelonDB on the device. Export CSV or PDF to keep a copy before uninstalling or clearing app data. Android uses `com.draco.arts.apps.bark.log.dogs.journal`; iOS uses `com.dracoarts.barklog`.
 
-BarkLog is code-complete for preview validation, but it is **not yet store-release signed off**. The local implementation and automated release gates are in place; EAS preview builds, service-dashboard verification, physical-device QA, store evidence, and final production feedback checks remain tracked in the release checklist.
+Native Ask AI uses optional, separately downloaded on-device models for supported factual journal questions and scene captions. Firebase sign-in is only for the optional Atlas fallback. Atlas AI remains hidden in production until BarkLog's server policy supports this free release and its health context checks pass. There is no Firebase care-record sync.
 
-- Product and engineering source of truth: [docs/source-of-truth/barklog-product-engineering.md](docs/source-of-truth/barklog-product-engineering.md)
-- Current task status: [tasks/README.md](tasks/README.md)
-- Release decision record: [docs/deployment/release-preflight-checklist.md](docs/deployment/release-preflight-checklist.md)
-- Feature and roadmap overview: [docs/product/current-feature-status-and-market-roadmap.md](docs/product/current-feature-status-and-market-roadmap.md)
+The source and local automated checks are being prepared for the founder's signed native builds. Device QA and store sign-off are still pending. See [local build instructions](docs/release/local-build.md), [release preflight](docs/release/preflight-local.md), and the [task index](tasks/README.md).
 
-## What is included
+## Stack
 
-- One-tap Poop, Pee, Meal, and Walk logging
-- Detailed symptom, medication, mood, behavior, and expanded care logs
-- WatermelonDB-backed offline persistence with Premium Supabase sync
-- Timeline, event details, local CSV/PDF export, and vet-prep tools
-- Medication reminders and a local care/refill calendar
-- Free offline Safety Center, toxicity lookup, first-aid basics, and emergency actions
-- Free local Photo Baseline Tracker for dated owner observations
-- Static weekly training content plus Premium progress and personalization
-- RevenueCat entitlement checks, Premium AI summaries, and Ask BarkLog AI
-- Secure vet share links, household sharing, caregiver roles, and sitter mode
-- Supabase migrations and Edge Functions with server-only AI provider access
+Expo Router, React Native, TypeScript, Tamagui, Zustand, TanStack Query, and local WatermelonDB. GameAnalytics is optional native analytics. Notifications, local export, and on-device AI use native modules, so a native build is needed for full QA.
 
-The free tier preserves basic logging, on-device timeline access, manual export, and urgent safety tooling. Premium focuses on intelligence, automation, collaboration, and cloud-backed features.
+## Start locally
 
-## Tech stack
+Install Node.js 20.19.4 or newer, Corepack, and Android Studio or Xcode. Then:
 
-| Layer | Technology |
-| --- | --- |
-| App | Expo SDK 54, React Native, TypeScript |
-| Navigation | Expo Router |
-| UI | Tamagui with BarkLog design tokens |
-| Client state | Zustand |
-| Server state | TanStack Query |
-| Offline data | WatermelonDB |
-| Backend | Supabase Auth, Postgres, Storage, and Edge Functions |
-| Subscriptions | RevenueCat |
-| Notifications | Expo Notifications |
-| Testing | Jest and React Native Testing Library |
-
-## Getting started
-
-### Prerequisites
-
-- Node.js 20.19.4 or newer
-- Corepack enabled
-- Xcode for iOS development or Android Studio for Android development
-- A Supabase project for authenticated and cloud-backed flows
-
-### Install and run
-
-```bash
+```sh
 corepack enable
 corepack pnpm install
-cp env.example .env.local
 corepack pnpm start
 ```
 
-From the Expo terminal, open an available simulator/device, or run a platform command directly:
+Copy `env.example` to an ignored `.env.local` for optional public integration values. See [environment management](docs/deployment/env-management.md). A Firebase, Atlas, GameAnalytics, Mixpanel, Sentry, or RevenueCat account is not required for basic local journaling. `corepack pnpm web` is useful for route visibility, but native builds are required to validate device behavior.
 
-```bash
-corepack pnpm web
-corepack pnpm android
-corepack pnpm ios
-```
+## Validate
 
-WatermelonDB and other native modules require a development/native build for complete device behavior. The web target is useful for UI and route visibility, not as a substitute for native QA.
-
-## Environment configuration
-
-Copy `env.example` to `.env.local` and replace the placeholders with client-safe public values:
-
-```env
-EXPO_PUBLIC_SUPABASE_URL=
-EXPO_PUBLIC_SUPABASE_ANON_KEY=
-EXPO_PUBLIC_REVENUECAT_IOS_KEY=
-EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=
-EXPO_PUBLIC_MIXPANEL_TOKEN=
-EXPO_PUBLIC_SENTRY_DSN=
-EXPO_PUBLIC_APP_ENV=development
-```
-
-Only client-safe values belong in `EXPO_PUBLIC_*` variables. AI provider keys and Supabase privileged credentials must be configured as Supabase Edge Function secrets and must never be committed or shipped in the Expo client. See [docs/deployment/env-management.md](docs/deployment/env-management.md).
-
-## Validation
-
-Run the standard checks before opening a pull request:
-
-```bash
+```sh
 corepack pnpm check-types
-corepack pnpm lint
 corepack pnpm test
 corepack pnpm release:check-local
 ```
 
-The full local release gate validates EAS/app identity, client/server secret boundaries, native capabilities, release scripts, and TypeScript. Signed builds, service configuration, native-device behavior, and store submission evidence are validated separately.
+`release:check-local` checks source and Expo config. After clean prebuild and a signed Android build, run `corepack pnpm release:check-native-capabilities` against the generated manifests. The founder runs and signs the final builds; [local-build.md](docs/release/local-build.md) has the commands and device checklist.
 
-## Repository structure
+## Repository
 
-```text
-app/                  Expo Router route files
-src/                  Features, UI, state, data, and services
-src/db/               WatermelonDB schema, repositories, and sync
-supabase/              SQL migrations and Edge Functions
-assets/                App icons, splash assets, and Inter fonts
-docs/                  Product, architecture, design, and release docs
-tasks/                 Delivery backlog and acceptance records
-test/                  Shared test helpers
-scripts/               Validation and release checks
-```
+`app/` contains Expo Router routes; `src/` contains features and local data; `assets/` contains app assets; `docs/` holds the canonical spec and current release guides; `tasks/` retains the numbered work history and active backlog; `scripts/` holds validation and build tooling. Generated native projects, caches, local env files, signing credentials, and test output are ignored.
 
-Generated `ios/` and `android/` projects are intentionally ignored and reproduced through Expo tooling. Local env files, build artifacts, caches, signing credentials, and Supabase CLI temp state are also excluded.
-
-## Engineering guardrails
-
-- Persist logs locally before attempting remote sync.
-- Keep Expo Router files thin; reusable implementation belongs in `src/`.
-- Use Tamagui and BarkLog tokens—do not add a parallel styling system.
-- Keep free logging, timeline access, export rights, and urgent safety tools available.
-- Route every AI provider call through a Supabase Edge Function.
-- Keep health narratives factual, non-diagnostic, and escalation-aware.
-- Treat Home and the one-tap logging loop as the highest-priority surfaces.
-
-Start with [AGENTS.md](AGENTS.md) and the [developer guide](docs/developer/developer-guide.md) before making implementation changes.
+Read [AGENTS.md](AGENTS.md) and the [canonical product and engineering spec](docs/source-of-truth/barklog-product-engineering.md) before changing product behavior. Use Tamagui and BarkLog tokens, keep Home polished, store care records locally, and keep safety guidance observational and escalation aware.
 
 ## License
 
-Released under the [MIT License](LICENSE).
+[MIT](LICENSE)

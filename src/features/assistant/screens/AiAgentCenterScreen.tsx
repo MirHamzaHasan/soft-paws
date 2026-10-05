@@ -362,7 +362,7 @@ export default function AiAgentCenterScreen() {
                 lineHeight={24}
                 fontWeight="500"
               >
-                {premiumAccess ? 'Premium agents ready' : 'Browse every agent'}
+                {premiumAccess ? 'AI agents' : 'Browse every agent'}
               </Paragraph>
               <Paragraph
                 color="$textMuted"

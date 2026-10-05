@@ -1,5 +1,7 @@
 # WatermelonDB to Supabase Sync Smoke Test
 
+Historical sync test. Care records remain local-only in v1.0.0. Use [native-device-qa-checklist.md](native-device-qa-checklist.md) for current offline persistence QA.
+
 Run this against a staging Supabase project after applying all migrations and
 deploying the `barklog-sync` Edge Function.
 

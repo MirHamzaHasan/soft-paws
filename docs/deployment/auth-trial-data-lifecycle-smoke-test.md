@@ -1,5 +1,7 @@
 # Auth, Trial, and Data Lifecycle Smoke Test
 
+Historical Supabase/trial test. v1.0.0 has a local owner, no care-record account, and no trial. Use [native-device-qa-checklist.md](native-device-qa-checklist.md) for current QA.
+
 Run this against a staging Supabase project before marking auth lifecycle work release-ready.
 
 ## Setup

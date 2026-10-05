@@ -4,6 +4,14 @@ const keys = [
   'EXPO_PUBLIC_FIREBASE_API_KEY',
   'EXPO_PUBLIC_FIREBASE_PROJECT_ID',
   'EXPO_PUBLIC_ATLAS_APP_ID',
+  'EXPO_PUBLIC_REVENUECAT_IOS_KEY',
+  'EXPO_PUBLIC_REVENUECAT_ANDROID_KEY',
+  'EXPO_PUBLIC_MIXPANEL_TOKEN',
+  'EXPO_PUBLIC_GAMEANALYTICS_ANDROID_GAME_KEY',
+  'EXPO_PUBLIC_GAMEANALYTICS_ANDROID_SECRET_KEY',
+  'EXPO_PUBLIC_GAMEANALYTICS_IOS_GAME_KEY',
+  'EXPO_PUBLIC_GAMEANALYTICS_IOS_SECRET_KEY',
+  'EXPO_PUBLIC_SENTRY_DSN',
 ] as const;
 
 describe('optional Firebase and Atlas public config', () => {
@@ -27,7 +35,14 @@ describe('optional Firebase and Atlas public config', () => {
     resetClientEnvCache();
     const result = readClientEnv();
     expect(result.ok).toBe(true);
-    const appId = result.ok ? result.value.EXPO_PUBLIC_ATLAS_APP_ID : 'invalid';
-    expect(appId).toBeUndefined();
+    expect(
+      result.ok ? result.value.EXPO_PUBLIC_ATLAS_APP_ID : null,
+    ).toBeUndefined();
+    expect(
+      result.ok ? result.value.EXPO_PUBLIC_MIXPANEL_TOKEN : null,
+    ).toBeUndefined();
+    expect(
+      result.ok ? result.value.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY : null,
+    ).toBeUndefined();
   });
 });

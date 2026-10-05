@@ -3,11 +3,17 @@ import { Platform } from 'react-native';
 
 import { readClientEnv } from '@/utils/clientEnv';
 
+import {
+  startGameAnalyticsSession,
+  stopGameAnalyticsSession,
+  trackGameAnalyticsEvent,
+} from './gameAnalyticsService';
 import { sanitizeTelemetryProperties } from './telemetryPrivacy';
 
 export type BarklogAnalyticsEvent =
   | 'ai_agent_locked'
   | 'ai_agent_opened'
+  | 'ai_answered'
   | 'app_opened'
   | 'detail_log_failed'
   | 'detail_log_saved'
@@ -15,6 +21,11 @@ export type BarklogAnalyticsEvent =
   | 'export_completed'
   | 'export_failed'
   | 'export_started'
+  | 'local_ai_model_download_failed'
+  | 'local_ai_model_download_started'
+  | 'local_ai_model_download_succeeded'
+  | 'local_ai_model_removed'
+  | 'onboarding_completed'
   | 'free_training_program_opened'
   | 'permission_result'
   | 'permission_requested'
@@ -58,7 +69,9 @@ function getAppVersion() {
 function getBaseProperties(): AnalyticsProperties {
   return {
     app_version: getAppVersion(),
-    build_channel: process.env.EXPO_PUBLIC_APP_ENV ?? (__DEV__ ? 'development' : 'production'),
+    build_channel:
+      process.env.EXPO_PUBLIC_APP_ENV ??
+      (__DEV__ ? 'development' : 'production'),
     platform: Platform.OS,
   };
 }
@@ -120,6 +133,7 @@ export function queueBarklogEvent(
   event: BarklogAnalyticsEvent,
   properties: AnalyticsProperties = {},
 ) {
+  trackGameAnalyticsEvent(event, properties);
   trackBarklogEvent(event, properties).catch(() => undefined);
 }
 
@@ -137,6 +151,7 @@ export function identifyAnalyticsUser(
   analyticsState.distinctId = distinctId;
 
   if (distinctId) {
+    startGameAnalyticsSession(distinctId, getAppVersion());
     queueBarklogEvent('app_opened', {
       ...properties,
       identified: true,
@@ -146,6 +161,7 @@ export function identifyAnalyticsUser(
 
 export function resetAnalyticsUser() {
   analyticsState.distinctId = null;
+  stopGameAnalyticsSession();
 }
 
 export function trackScreenView(

@@ -1,7 +1,6 @@
 import {
   assertPremiumAiAccess,
   BARKLOG_AI_EMERGENCY_ESCALATION,
-  BARKLOG_AI_PREMIUM_REQUIRED_MESSAGE,
   BARKLOG_AI_SAFE_FAILURE_MESSAGE,
   containsDiagnosticClaim,
   containsEmergencyLanguage,
@@ -26,7 +25,7 @@ describe('AI safety helpers', () => {
     );
   });
 
-  it('allows premium and active trial users but blocks free users', () => {
+  it('includes AI access for free v1.0.0 users', () => {
     expect(() =>
       assertPremiumAiAccess(
         makeUserRow({
@@ -44,7 +43,7 @@ describe('AI safety helpers', () => {
         }),
         'weekly-insights',
       ),
-    ).toThrow(BARKLOG_AI_PREMIUM_REQUIRED_MESSAGE);
+    ).not.toThrow();
   });
 
   it('keeps AI provider failures on the safe fallback copy', () => {

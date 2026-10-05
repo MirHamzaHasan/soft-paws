@@ -1,42 +1,22 @@
-# Observability Preview Checklist
+# Observability QA
 
-## Setup
+GameAnalytics is the preferred optional native analytics path for v1.0.0. Create separate Android and iOS games and enter each game's key/secret pair in the ignored build environment. Its Collection API credentials are bundled client values. [Environment management](env-management.md) lists the fields. Mixpanel and Sentry remain optional and can be left blank.
 
-Use preview client-safe environment values:
+## GameAnalytics live check
 
-```env
-EXPO_PUBLIC_APP_ENV=preview
-EXPO_PUBLIC_MIXPANEL_TOKEN=replace-with-preview-mixpanel-token
-EXPO_PUBLIC_SENTRY_DSN=https://public@sentry.example.invalid/0
-```
+Use a native QA build with network access and the correct platform game. GameAnalytics' [Collection API setup](https://docs.gameanalytics.com/event-tracking-and-integrations/sdks-and-collection-api/api/setup/) says Live Events normally appear within seconds after collection.
 
-Server-only AI and Supabase privileged keys must remain in Supabase function secrets only.
+| Caregiver action | Expected design event |
+| --- | --- |
+| Launch and onboard | `BarkLog:app_opened`, `BarkLog:onboarding_completed` |
+| Save a walk from Home | `BarkLog:quick_log_saved:walk` |
+| Open a known tab | `BarkLog:screen_viewed:<screen>` |
+| Complete PDF or CSV export | `BarkLog:export_completed:pdf` or `BarkLog:export_completed:csv` |
 
-## Mixpanel Verification
+- [ ] Android events appear in the Android game and iOS events in the iOS game.
+- [ ] Session start and end events appear; repeated launch increments session number.
+- [ ] Event payload contains no dog ID, care note, symptom text, prompt, answer, CSV/PDF content, or export filename.
+- [ ] Offline care actions remain available. The bounded queue can send analytics later when online.
+- [ ] A bad or missing analytics key never blocks logging, safety, or export.
 
-| Flow | Expected Event | Required Properties | Forbidden Properties |
-| ---- | -------------- | ------------------- | -------------------- |
-| Open app and navigate between tabs | `screen_viewed` | `screen_name`, `route_group`, `platform`, `app_version`, `build_channel` | notes, symptoms, prompts, answers |
-| Save a Home quick log | `quick_log_saved` | dog id, event type, sync status where available | free-form note text |
-| Trigger a failed local quick log in a controlled test state | `quick_log_failed` | failure source and event type | raw error text containing caregiver health details |
-| Export CSV or text | `export_started`, `export_completed` | `export_type`, `surface` | CSV rows, PDF text, report body, raw export content |
-
-## Sentry Verification
-
-| Flow | Expected Result | Required Privacy Check |
-| ---- | --------------- | ---------------------- |
-| Trigger a controlled preview-only JS error | Sentry receives one event | message and context are sanitized |
-| Trigger a render error through the app boundary | fallback screen appears | no raw caregiver notes or prompts in event extra |
-| Disable network and retry a user flow | user flow still works or fails with UI copy | telemetry failure does not block caregiver action |
-
-## Required Evidence
-
-- Mixpanel dashboard screenshot or event export showing `screen_viewed`.
-- Mixpanel dashboard screenshot or event export showing `quick_log_saved`.
-- Mixpanel dashboard screenshot or event export showing `export_started` and `export_completed`.
-- Sentry issue link or screenshot for the controlled preview error.
-- Confirmation that payload search finds no raw notes, symptoms, prompts, answers, CSV content, PDF text, or export content.
-
-## Local Automated Coverage
-
-`src/features/observability/services/observabilityReleasePreflight.test.ts` verifies that release-critical Mixpanel and Sentry payloads pass through BarkLog telemetry redaction before network delivery.
+If Mixpanel or Sentry is enabled, verify the relevant dashboard separately and apply the same payload privacy check. Record evidence in [preflight-local.md](../release/preflight-local.md).

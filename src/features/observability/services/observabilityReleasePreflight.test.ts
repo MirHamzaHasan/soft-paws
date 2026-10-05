@@ -41,10 +41,14 @@ jest.mock(
 );
 
 jest.mock('react-native', () => ({
+  AppState: { addEventListener: jest.fn() },
   Platform: {
     OS: 'ios',
   },
 }));
+
+jest.mock('expo-crypto', () => ({ randomUUID: () => 'test-session-id' }));
+jest.mock('react-native-mmkv', () => ({ createMMKV: jest.fn() }));
 
 const { trackBarklogEvent } =
   require('@/features/observability/services/analyticsService') as typeof AnalyticsService;

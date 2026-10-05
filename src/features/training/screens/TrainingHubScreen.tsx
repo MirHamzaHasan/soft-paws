@@ -21,6 +21,7 @@ import {
   BarklogCard,
   BarklogScreenShell,
 } from '@/components/ui';
+import { FREE_V1_RELEASE } from '@/config/releaseMode';
 import { queueBarklogEvent } from '@/features/observability';
 import { hasPremiumAccess } from '@/features/premium/utils/premiumAccess';
 import { openPremiumGate } from '@/features/premium/utils/premiumNavigation';
@@ -248,6 +249,9 @@ export default function TrainingHubScreen() {
   const selectedDogId = useLocalProfileStore((state) => state.selectedDogId);
   const selectedDog = getSelectedDog(dogs, selectedDogId);
   const premiumAccess = hasPremiumAccess(barklogUser);
+  let trainingHeroTitle = 'Free training every week';
+  if (FREE_V1_RELEASE) trainingHeroTitle = 'Guided training included';
+  else if (premiumAccess) trainingHeroTitle = 'Guided training is Premium';
   const programsQuery = useQuery(trainingProgramsQueryOptions());
   const cachedFreeWeeklyProgram = useMemo(
     () => getCachedFreeWeeklyTrainingProgram(),
@@ -350,9 +354,7 @@ export default function TrainingHubScreen() {
                 lineHeight={24}
                 fontWeight="500"
               >
-                {premiumAccess
-                  ? 'Guided training is Premium'
-                  : 'Free training every week'}
+                {trainingHeroTitle}
               </Paragraph>
               <Paragraph
                 color="$textMuted"
@@ -428,7 +430,7 @@ export default function TrainingHubScreen() {
                 lineHeight={24}
                 fontWeight="500"
               >
-                Free this week
+                {FREE_V1_RELEASE ? 'Featured this week' : 'Free this week'}
               </Paragraph>
               <Paragraph
                 color="$textMuted"
@@ -436,8 +438,9 @@ export default function TrainingHubScreen() {
                 fontSize={barklogTypography.body}
                 lineHeight={20}
               >
-                Available offline on this device. Premium tracks progress and
-                training sessions.
+                {FREE_V1_RELEASE
+                  ? 'Available offline on this device. Reconnect to load the full training catalog.'
+                  : 'Available offline on this device. Premium tracks progress and training sessions.'}
               </Paragraph>
             </YStack>
             <TrainingProgramCard
@@ -496,7 +499,7 @@ export default function TrainingHubScreen() {
                     lineHeight={24}
                     fontWeight="500"
                   >
-                    Free this week
+                    {FREE_V1_RELEASE ? 'Featured this week' : 'Free this week'}
                   </Paragraph>
                   <Paragraph
                     color="$textMuted"
@@ -504,8 +507,9 @@ export default function TrainingHubScreen() {
                     fontSize={barklogTypography.body}
                     lineHeight={20}
                   >
-                    Read this week&apos;s program free. Premium tracks progress
-                    and training sessions.
+                    {FREE_V1_RELEASE
+                      ? 'Read programs and save progress on this device.'
+                      : "Read this week's program free. Premium tracks progress and training sessions."}
                   </Paragraph>
                 </YStack>
                 <TrainingProgramCard

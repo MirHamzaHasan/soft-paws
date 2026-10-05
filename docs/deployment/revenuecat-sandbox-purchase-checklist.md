@@ -1,5 +1,7 @@
 # RevenueCat Sandbox Purchase Checklist
 
+Historical purchase test. v1.0.0 is free and has no purchase flow; this checklist is not a release gate. Use [preflight-local.md](../release/preflight-local.md).
+
 Use this checklist for preview builds before marking `task021` or release
 preflight complete. RevenueCat is the premium source of truth; Supabase
 `users.subscription_tier = active` is only a cached result after the RevenueCat

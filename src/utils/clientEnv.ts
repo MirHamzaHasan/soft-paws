@@ -1,12 +1,23 @@
 import { z } from 'zod';
 
 const emptyToUndefined = (value: unknown) => (value === '' ? undefined : value);
+const optionalNonEmpty = z.preprocess(
+  emptyToUndefined,
+  z.string().min(1).optional(),
+);
 
 const clientEnvSchema = z.object({
-  EXPO_PUBLIC_REVENUECAT_IOS_KEY: z.string().min(1).optional(),
-  EXPO_PUBLIC_REVENUECAT_ANDROID_KEY: z.string().min(1).optional(),
-  EXPO_PUBLIC_MIXPANEL_TOKEN: z.string().min(1).optional(),
-  EXPO_PUBLIC_SENTRY_DSN: z.string().url().optional(),
+  EXPO_PUBLIC_REVENUECAT_IOS_KEY: optionalNonEmpty,
+  EXPO_PUBLIC_REVENUECAT_ANDROID_KEY: optionalNonEmpty,
+  EXPO_PUBLIC_MIXPANEL_TOKEN: optionalNonEmpty,
+  EXPO_PUBLIC_GAMEANALYTICS_ANDROID_GAME_KEY: optionalNonEmpty,
+  EXPO_PUBLIC_GAMEANALYTICS_ANDROID_SECRET_KEY: optionalNonEmpty,
+  EXPO_PUBLIC_GAMEANALYTICS_IOS_GAME_KEY: optionalNonEmpty,
+  EXPO_PUBLIC_GAMEANALYTICS_IOS_SECRET_KEY: optionalNonEmpty,
+  EXPO_PUBLIC_SENTRY_DSN: z.preprocess(
+    emptyToUndefined,
+    z.string().url().optional(),
+  ),
   EXPO_PUBLIC_APP_ENV: z
     .enum(['development', 'preview', 'production'])
     .optional(),
@@ -44,6 +55,14 @@ function collectClientEnv() {
     EXPO_PUBLIC_REVENUECAT_ANDROID_KEY:
       process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY,
     EXPO_PUBLIC_MIXPANEL_TOKEN: process.env.EXPO_PUBLIC_MIXPANEL_TOKEN,
+    EXPO_PUBLIC_GAMEANALYTICS_ANDROID_GAME_KEY:
+      process.env.EXPO_PUBLIC_GAMEANALYTICS_ANDROID_GAME_KEY,
+    EXPO_PUBLIC_GAMEANALYTICS_ANDROID_SECRET_KEY:
+      process.env.EXPO_PUBLIC_GAMEANALYTICS_ANDROID_SECRET_KEY,
+    EXPO_PUBLIC_GAMEANALYTICS_IOS_GAME_KEY:
+      process.env.EXPO_PUBLIC_GAMEANALYTICS_IOS_GAME_KEY,
+    EXPO_PUBLIC_GAMEANALYTICS_IOS_SECRET_KEY:
+      process.env.EXPO_PUBLIC_GAMEANALYTICS_IOS_SECRET_KEY,
     EXPO_PUBLIC_SENTRY_DSN: process.env.EXPO_PUBLIC_SENTRY_DSN,
     EXPO_PUBLIC_APP_ENV: process.env.EXPO_PUBLIC_APP_ENV,
     EXPO_PUBLIC_FIREBASE_API_KEY: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,

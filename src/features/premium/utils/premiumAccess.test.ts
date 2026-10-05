@@ -15,6 +15,8 @@ import {
 
 import { makeUserRow } from '../../../../test/utils/builders';
 
+jest.mock('@/config/releaseMode', () => ({ FREE_V1_RELEASE: false }));
+
 describe('premium access rules', () => {
   const now = new Date('2026-04-26T00:00:00.000Z');
 

@@ -1,30 +1,102 @@
+import { tryAnswerLocalChat } from '@/features/local-ai/localChatEngine';
+import { tryAnswerLocalQuestion } from '@/features/local-ai/localQuestionEngine';
+
 import { makeUserRow } from '../../../../test/utils/builders';
 import { requestAtlasChat } from './atlasClient';
 import { askBarkLogAi, generateWeeklyInsight } from './insightsAiClient';
 
 jest.mock('expo-crypto', () => ({ randomUUID: () => 'test-id' }));
 jest.mock('./atlasClient', () => ({ requestAtlasChat: jest.fn() }));
+jest.mock('@/features/local-ai/localQuestionEngine', () => ({
+  tryAnswerLocalQuestion: jest.fn(),
+}));
+jest.mock('@/features/local-ai/localChatEngine', () => ({
+  tryAnswerLocalChat: jest.fn(),
+}));
 
-describe('Atlas-backed BarkLog AI', () => {
-  beforeEach(() => jest.mocked(requestAtlasChat).mockReset());
+describe('local-first BarkLog AI', () => {
+  beforeEach(() => {
+    jest.mocked(requestAtlasChat).mockReset();
+    jest.mocked(tryAnswerLocalQuestion).mockReset();
+    jest.mocked(tryAnswerLocalChat).mockReset();
+  });
 
-  it('keeps free users and urgent questions away from Atlas', async () => {
+  it('keeps urgent questions from free users away from Atlas', async () => {
     const free = makeUserRow({
       subscription_tier: 'expired',
       trial_ends_at: null,
     });
-    await expect(askBarkLogAi({ user: free } as never)).rejects.toThrow(
-      'Premium',
-    );
+    const urgent = await askBarkLogAi({
+      user: free,
+      question: 'My dog ate grapes and collapsed',
+    } as never);
+    expect(urgent.content).toContain('veterinarian');
+    expect(requestAtlasChat).not.toHaveBeenCalled();
+    expect(tryAnswerLocalQuestion).not.toHaveBeenCalled();
+  });
+
+  it('answers a supported journal question on device without contacting Atlas', async () => {
     const premium = makeUserRow({
       subscription_tier: 'active',
       trial_ends_at: null,
     });
-    const urgent = await askBarkLogAi({
+    jest
+      .mocked(tryAnswerLocalQuestion)
+      .mockResolvedValue('You logged two walks.');
+    const response = await askBarkLogAi({
       user: premium,
-      question: 'My dog ate grapes and collapsed',
+      question: 'How many walks this week?',
+      snapshot: { context: { dog: { name: 'Milo' } } },
     } as never);
-    expect(urgent.content).toContain('veterinarian');
+    expect(response).toMatchObject({
+      source: 'device',
+      content: 'You logged two walks.',
+    });
+    expect(requestAtlasChat).not.toHaveBeenCalled();
+  });
+
+  it('uses Atlas for questions outside local capability', async () => {
+    const premium = makeUserRow({
+      subscription_tier: 'active',
+      trial_ends_at: null,
+    });
+    jest.mocked(tryAnswerLocalQuestion).mockResolvedValue(null);
+    jest
+      .mocked(requestAtlasChat)
+      .mockResolvedValue('Ask your veterinarian about the new symptom.');
+    const response = await askBarkLogAi({
+      user: premium,
+      question: 'What could this symptom mean?',
+      context: { dog: { name: 'Milo' } },
+      snapshot: { context: { dog: { name: 'Milo' } } },
+    } as never);
+    expect(response.source).toBe('atlas');
+    expect(requestAtlasChat).toHaveBeenCalledTimes(1);
+  });
+
+  it('uses the local conversation model before Atlas when the starter cannot answer', async () => {
+    const premium = makeUserRow({
+      subscription_tier: 'active',
+      trial_ends_at: null,
+    });
+    jest.mocked(tryAnswerLocalQuestion).mockResolvedValue(null);
+    jest
+      .mocked(tryAnswerLocalChat)
+      .mockResolvedValue('Milo had two walks in the recent logs.');
+    const response = await askBarkLogAi({
+      user: premium,
+      question: 'How has Milo been doing lately?',
+      context: {
+        dog: { name: 'Milo' },
+        last30DaysSummary: 'Two walks were logged.',
+        trainingContextSummary: 'No training sessions logged.',
+      },
+      snapshot: { context: { dog: { name: 'Milo' } } },
+    } as never);
+    expect(response).toMatchObject({
+      source: 'device',
+      content: 'Milo had two walks in the recent logs.',
+    });
     expect(requestAtlasChat).not.toHaveBeenCalled();
   });
 

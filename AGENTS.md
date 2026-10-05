@@ -15,10 +15,12 @@
 - Logging and profiles are local-only. Persist all care records to WatermelonDB on the device.
 - Do not present BarkLog as a veterinary authority. Organize facts and patterns, then escalate when appropriate.
 - Do not lock basic logging, timeline access, or export rights behind a paywall.
+- Version 1.0.0 has no ads, trial expiry, subscriptions, or paywalls. All implemented local features are included without a purchase. Android uses `com.draco.arts.apps.bark.log.dogs.journal`.
 - Keep Home as the most polished and highest-priority screen in the app.
 - Use `Inter` 400 and 500 only, BarkLog design tokens only, and no decorative gradients or shadows.
-- Firebase Auth signs users in for optional Atlas AI only. The local owner and care journal remain in WatermelonDB; there is no Firebase care-record sync.
-- Atlas is the AI router. Send a fresh Firebase ID token and BarkLog's own Atlas app ID to Atlas; never put AI provider keys or Firebase tokens in client configuration or local storage. Require Atlas context checks for generated health content.
+- On native devices, supported AI actions use a downloaded on-device ONNX model first. Model files are optional and separate from WatermelonDB care records. Do not preload models on Home or automatically download them.
+- Firebase Auth signs users in for optional Atlas fallback only. The local owner and care journal remain in WatermelonDB; there is no Firebase care-record sync.
+- Atlas is the remote AI fallback when online and configured. Send a fresh Firebase ID token and BarkLog's own Atlas app ID to Atlas; never put AI provider keys or Firebase tokens in client configuration or local storage. Require Atlas context checks for generated health content.
 
 ## Skill Routing
 
@@ -53,15 +55,15 @@ Use the repo-local Tamagui implementation skill for codebase discovery and imple
 - `task038` local vet report export remains; cloud share links were removed.
 - `task039` household sharing and sitter mode were removed.
 - `task040` Safety Center offline pack is completed.
-- `task041` care calendar and refill planning is completed with `/care-calendar`, local `care_tasks`, opt-in reminders, Home/Profile entry points, and a Premium smart automation gate.
-- `task042` Photo Baseline Tracker is completed at `/photo-baselines` with local `photo_baselines`, Home/Profile entry points, and a Premium photo-compare gate.
-- `task051` rebaselines care data and native builds as local-only. `task052` adds optional Firebase sign-in for Atlas AI; cloud sync, backup, restore, and sharing remain unavailable.
-- AI routes are hidden without BarkLog Firebase/Atlas identifiers and in production until paid entitlement linkage is verified by Atlas.
-- Mood and behavior logging are free care-record features. RevenueCat gates training enrollment, progress and sessions, photo compare, and smart care automation.
-- Free users can read one deterministic static training program per ISO week. All training progress tracking and session logging remain Premium.
+- `task041` care calendar and refill planning is completed with `/care-calendar`, local `care_tasks`, opt-in reminders, and Home/Profile entry points. Smart automation is not implemented for v1.0.0.
+- `task042` Photo Baseline Tracker is completed at `/photo-baselines` with local `photo_baselines` and Home/Profile entry points. Photo compare is not implemented for v1.0.0.
+- `task051` rebaselines care data and native builds as local-only. `task052` adds optional Firebase sign-in for Atlas AI; `task053` adds the first on-device AI model path; `task054` adds optional local journal conversation and photo captions. Cloud sync, backup, restore, and sharing remain unavailable.
+- Native local Ask AI is available without Firebase when its optional model is downloaded. Atlas-backed AI routes are hidden without BarkLog Firebase/Atlas identifiers and in production until Atlas supports this free release and passes BarkLog context checks.
+- Mood and behavior logging, training enrollment/progress/sessions, multi-dog, trends, and other implemented local features are included in v1.0.0. RevenueCat purchase UI is off.
+- The deterministic weekly training rotation remains as a featured program; the full local training catalog and progress tracking are included in v1.0.0.
 - Manual CSV and PDF exports remain free. Losing or deleting the device data loses the journal unless the caregiver exported a copy.
 - Safety Center is a free offline-first safety surface at `/safety`, with `/safety-center` as an alias. Urgent actions, first-aid basics, core toxicity lookup, and the local emergency card must not be Premium-gated.
-- Photo Baseline Tracker is free local recordkeeping. It organizes owner-observed visual references only; photo compare is Premium.
+- Photo Baseline Tracker is free local recordkeeping. It organizes owner-observed visual references only; the unimplemented photo-compare upsell is hidden.
 
 ## Current Repo Notes
 

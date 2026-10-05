@@ -23,10 +23,10 @@ describe('native capability configuration', () => {
 
     expect(androidPermissions).toEqual([
       'android.permission.POST_NOTIFICATIONS',
-      'com.android.vending.BILLING',
     ]);
     expect(blockedAndroidPermissions).toEqual(
       expect.arrayContaining([
+        'com.android.vending.BILLING',
         'android.permission.READ_EXTERNAL_STORAGE',
         'android.permission.SYSTEM_ALERT_WINDOW',
         'android.permission.WRITE_EXTERNAL_STORAGE',

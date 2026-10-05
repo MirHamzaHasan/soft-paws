@@ -1,45 +1,48 @@
-import { useFocusEffect } from "@react-navigation/native";
-import { useQuery } from "@tanstack/react-query";
-import { useRouter, type Href } from "expo-router";
-import { useCallback, useMemo, useState, useSyncExternalStore } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
+import { useQuery } from '@tanstack/react-query';
+import { type Href, useRouter } from 'expo-router';
+import { useCallback, useMemo, useState, useSyncExternalStore } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { trainingProgramsQueryOptions } from "@/api/training";
-import { AI_FEATURES_ENABLED } from "@/config/featureFlags";
-import { getFirebaseAiAuthEmail, subscribeFirebaseAiAuth } from "@/features/auth/services/firebaseAiAuth";
-import { useBarklogFeedback } from "@/components/ui";
+import { trainingProgramsQueryOptions } from '@/api/training';
+import { useBarklogFeedback } from '@/components/ui';
+import { AI_FEATURES_ENABLED, LOCAL_AI_ENABLED } from '@/config/featureFlags';
+import {
+  getFirebaseAiAuthEmail,
+  subscribeFirebaseAiAuth,
+} from '@/features/auth/services/firebaseAiAuth';
 import {
   captureBarklogError,
   queueBarklogEvent,
-} from "@/features/observability";
-import HapticManager from "@/managers/HapticManager";
+} from '@/features/observability';
+import HapticManager from '@/managers/HapticManager';
 
-import { PrimaryButton } from "../../../components/ui/PrimaryButton";
+import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import {
   type ExpenseModel,
   getLocalInsightForWeek,
   type InsightModel,
   listLocalExpensesForDogYear,
   upsertLocalInsight,
-} from "../../../db";
-import { getSelectedDog, useLocalProfileStore } from "../../../stores";
-import { HomeShell } from "../../home/components/HomeShell";
+} from '../../../db';
+import { getSelectedDog, useLocalProfileStore } from '../../../stores';
+import { HomeShell } from '../../home/components/HomeShell';
 import {
   getPremiumFeatureLabel,
   hasPremiumAccess,
-} from "../../premium/utils/premiumAccess";
-import { openPremiumGate } from "../../premium/utils/premiumNavigation";
-import { useLocalTrainingEnrollments } from "../../training/hooks/useLocalTrainingEnrollments";
+} from '../../premium/utils/premiumAccess';
+import { openPremiumGate } from '../../premium/utils/premiumNavigation';
+import { useLocalTrainingEnrollments } from '../../training/hooks/useLocalTrainingEnrollments';
 import {
   hasEnoughTrainingInsightActivity,
   loadTrainingInsightContext,
-} from "../../training/utils/trainingInsightContext";
-import { getActiveTrainingProgramPairs } from "../../training/utils/trainingPresentation";
+} from '../../training/utils/trainingInsightContext';
+import { getActiveTrainingProgramPairs } from '../../training/utils/trainingPresentation';
 import {
   generateCareSummary,
   generateTrainingInsight,
   generateWeeklyInsight,
-} from "../api/insightsAiClient";
+} from '../api/insightsAiClient';
 import {
   ExportIcon,
   MealsIcon,
@@ -48,22 +51,22 @@ import {
   ShareIcon,
   SparklesIcon,
   WalksIcon,
-} from "../components/InsightsIcons";
-import { InsightsLineChartCard } from "../components/InsightsLineChartCard";
-import { InsightsNarrativeCard } from "../components/InsightsNarrativeCard";
-import { InsightsSnapshotCard } from "../components/InsightsSnapshotCard";
-import { getSafeAiErrorMessage } from "../utils/aiSafety";
+} from '../components/InsightsIcons';
+import { InsightsLineChartCard } from '../components/InsightsLineChartCard';
+import { InsightsNarrativeCard } from '../components/InsightsNarrativeCard';
+import { InsightsSnapshotCard } from '../components/InsightsSnapshotCard';
+import { getSafeAiErrorMessage } from '../utils/aiSafety';
 import {
   buildCareSummaryContext,
   type GeneratedSummary,
   hasEnoughDataForSummary,
   SUMMARY_DEFINITIONS,
   type SummaryKind,
-} from "../utils/generatedSummaries";
+} from '../utils/generatedSummaries';
 import {
   loadWeeklyDashboardSnapshot,
   type WeeklyDashboardSnapshot,
-} from "../utils/insightSummaries";
+} from '../utils/insightSummaries';
 
 const styles = StyleSheet.create({
   stack: {
@@ -73,13 +76,13 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   heroRow: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
     gap: 18,
   },
   weekControls: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 10,
   },
   weekButton: {
@@ -87,37 +90,37 @@ const styles = StyleSheet.create({
     minHeight: 44,
     borderRadius: 22,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#D8D2CC",
-    backgroundColor: "#FFFCFA",
-    alignItems: "center",
-    justifyContent: "center",
+    borderColor: '#D8D2CC',
+    backgroundColor: '#FFFCFA',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   weekButtonText: {
-    color: "#0A0A0A",
+    color: '#0A0A0A',
     fontSize: 24,
     lineHeight: 28,
-    fontWeight: "400",
+    fontWeight: '400',
   },
   title: {
-    color: "#0A0A0A",
+    color: '#0A0A0A',
     fontSize: 28,
     lineHeight: 34,
-    fontWeight: "500",
+    fontWeight: '500',
     letterSpacing: -1.1,
   },
   subtitle: {
-    color: "#5F6670",
+    color: '#5F6670',
     fontSize: 14,
     lineHeight: 20,
-    fontWeight: "400",
+    fontWeight: '400',
   },
   tileGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 16,
   },
   tileCell: {
-    flexBasis: "46%",
+    flexBasis: '46%',
     flexGrow: 1,
     minWidth: 140,
   },
@@ -126,32 +129,32 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   statusText: {
-    color: "#687079",
+    color: '#687079',
     fontSize: 15,
     lineHeight: 22,
-    fontWeight: "400",
+    fontWeight: '400',
   },
   skeletonCard: {
     borderRadius: 28,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#D8CCFF",
-    backgroundColor: "#F7F4FF",
+    borderColor: '#D8CCFF',
+    backgroundColor: '#F7F4FF',
     paddingHorizontal: 22,
     paddingVertical: 22,
     gap: 14,
   },
   skeletonEyebrow: {
-    color: "#5A34C3",
+    color: '#5A34C3',
     fontSize: 12,
     lineHeight: 16,
-    fontWeight: "500",
+    fontWeight: '500',
     letterSpacing: 1.2,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
   },
   skeletonLine: {
     height: 16,
     borderRadius: 8,
-    backgroundColor: "#E6DFFF",
+    backgroundColor: '#E6DFFF',
   },
   trainingInsightStack: {
     gap: 12,
@@ -163,23 +166,23 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   sectionTitle: {
-    color: "#0A0A0A",
+    color: '#0A0A0A',
     fontSize: 22,
     lineHeight: 28,
-    fontWeight: "500",
+    fontWeight: '500',
     letterSpacing: -0.4,
   },
   sectionBody: {
-    color: "#5F6670",
+    color: '#5F6670',
     fontSize: 15,
     lineHeight: 22,
-    fontWeight: "400",
+    fontWeight: '400',
   },
   summaryCard: {
     borderRadius: 24,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#E5E1DB",
-    backgroundColor: "#FFFCFA",
+    borderColor: '#E5E1DB',
+    backgroundColor: '#FFFCFA',
     paddingHorizontal: 18,
     paddingVertical: 18,
     gap: 14,
@@ -188,30 +191,30 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   summaryEyebrow: {
-    color: "#5A34C3",
+    color: '#5A34C3',
     fontSize: 11,
     lineHeight: 15,
-    fontWeight: "500",
+    fontWeight: '500',
     letterSpacing: 1,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
   },
   summaryTitle: {
-    color: "#0A0A0A",
+    color: '#0A0A0A',
     fontSize: 19,
     lineHeight: 25,
-    fontWeight: "500",
+    fontWeight: '500',
   },
   summaryBody: {
-    color: "#5F6670",
+    color: '#5F6670',
     fontSize: 15,
     lineHeight: 23,
-    fontWeight: "400",
+    fontWeight: '400',
   },
   summaryError: {
-    color: "#9A6800",
+    color: '#9A6800',
     fontSize: 14,
     lineHeight: 20,
-    fontWeight: "400",
+    fontWeight: '400',
   },
 });
 
@@ -222,15 +225,18 @@ function TrainingInsightSkeletonCard() {
       style={styles.skeletonCard}
     >
       <Text style={styles.skeletonEyebrow}>TRAINING INSIGHT</Text>
-      <View style={[styles.skeletonLine, { width: "96%" }]} />
-      <View style={[styles.skeletonLine, { width: "88%" }]} />
-      <View style={[styles.skeletonLine, { width: "64%" }]} />
+      <View style={[styles.skeletonLine, { width: '96%' }]} />
+      <View style={[styles.skeletonLine, { width: '88%' }]} />
+      <View style={[styles.skeletonLine, { width: '64%' }]} />
     </View>
   );
 }
 
 export default function InsightsScreen() {
-  const aiEmail = useSyncExternalStore(subscribeFirebaseAiAuth, getFirebaseAiAuthEmail);
+  const aiEmail = useSyncExternalStore(
+    subscribeFirebaseAiAuth,
+    getFirebaseAiAuthEmail,
+  );
   const router = useRouter();
   const barklogUser = useLocalProfileStore((state) => state.barklogUser);
   const dogs = useLocalProfileStore((state) => state.dogs);
@@ -319,12 +325,12 @@ export default function InsightsScreen() {
       .catch((loadError) => {
         if (isMounted) {
           captureBarklogError(loadError, {
-            source: "insights.dashboard_load",
+            source: 'insights.dashboard_load',
             extra: {
               dog_id: selectedDog.id,
             },
           });
-          setError("Unable to load insight data.");
+          setError('Unable to load insight data.');
           setIsLoading(false);
         }
       });
@@ -338,7 +344,7 @@ export default function InsightsScreen() {
 
   const handleGenerateInsight = async () => {
     if (!premiumAccess) {
-      openPremiumGate(router, "weekly-insights");
+      openPremiumGate(router, 'weekly-insights');
       return;
     }
     if (!aiEmail) {
@@ -347,12 +353,12 @@ export default function InsightsScreen() {
     }
 
     if (!selectedDog || !snapshot) {
-      const message = "Log events before generating a weekly insight.";
+      const message = 'Log events before generating a weekly insight.';
 
       setError(message);
       await HapticManager.warning();
       feedback.showWarning({
-        title: "More logs needed",
+        title: 'More logs needed',
         description: message,
       });
       return;
@@ -379,22 +385,22 @@ export default function InsightsScreen() {
       setSavedInsight(insight);
       await HapticManager.success();
       feedback.showSuccess({
-        title: "Insight ready",
-        description: "Weekly insight was saved locally.",
+        title: 'Insight ready',
+        description: 'Weekly insight was saved locally.',
       });
     } catch (generateError) {
       const message = getSafeAiErrorMessage(generateError);
 
       setError(message);
       captureBarklogError(generateError, {
-        source: "insights.weekly_generate",
+        source: 'insights.weekly_generate',
         extra: {
           dog_id: selectedDog.id,
         },
       });
       await HapticManager.error();
       feedback.showError({
-        title: "Insight unavailable",
+        title: 'Insight unavailable',
         description: message,
       });
     } finally {
@@ -404,7 +410,7 @@ export default function InsightsScreen() {
 
   const handleGenerateTrainingInsight = async () => {
     if (!premiumAccess) {
-      openPremiumGate(router, "training-programs");
+      openPremiumGate(router, 'training-programs');
       return;
     }
     if (!aiEmail) {
@@ -414,12 +420,12 @@ export default function InsightsScreen() {
 
     if (!selectedDog || !activeTrainingPair) {
       const message =
-        "Start a training program and log a session before generating a training insight.";
+        'Start a training program and log a session before generating a training insight.';
 
       setTrainingInsightError(message);
       await HapticManager.warning();
       feedback.showWarning({
-        title: "Training context needed",
+        title: 'Training context needed',
         description: message,
       });
       return;
@@ -439,13 +445,13 @@ export default function InsightsScreen() {
 
       if (!hasEnoughTrainingInsightActivity(context)) {
         const message =
-          "Log at least one training session before generating a training insight.";
+          'Log at least one training session before generating a training insight.';
 
         setTrainingInsight(null);
         setTrainingInsightError(message);
         await HapticManager.warning();
         feedback.showWarning({
-          title: "Training log needed",
+          title: 'Training log needed',
           description: message,
         });
         return;
@@ -459,22 +465,22 @@ export default function InsightsScreen() {
       setTrainingInsight(response.observation);
       await HapticManager.success();
       feedback.showSuccess({
-        title: "Training insight ready",
-        description: "Personalized training observation is ready.",
+        title: 'Training insight ready',
+        description: 'Personalized training observation is ready.',
       });
     } catch (trainingError) {
       const message = getSafeAiErrorMessage(trainingError);
 
       setTrainingInsightError(message);
       captureBarklogError(trainingError, {
-        source: "insights.training_generate",
+        source: 'insights.training_generate',
         extra: {
           dog_id: selectedDog.id,
         },
       });
       await HapticManager.error();
       feedback.showError({
-        title: "Training insight unavailable",
+        title: 'Training insight unavailable',
         description: message,
       });
     } finally {
@@ -484,7 +490,7 @@ export default function InsightsScreen() {
 
   const handleGenerateCareSummary = async (kind: SummaryKind) => {
     if (!premiumAccess) {
-      openPremiumGate(router, "care-summaries");
+      openPremiumGate(router, 'care-summaries');
       return;
     }
     if (!aiEmail) {
@@ -493,7 +499,7 @@ export default function InsightsScreen() {
     }
 
     if (!selectedDog || !snapshot) {
-      const message = "Log events before generating this summary.";
+      const message = 'Log events before generating this summary.';
 
       setSummaryErrors((current) => ({
         ...current,
@@ -501,7 +507,7 @@ export default function InsightsScreen() {
       }));
       await HapticManager.warning();
       feedback.showWarning({
-        title: "More logs needed",
+        title: 'More logs needed',
         description: message,
       });
       return;
@@ -513,7 +519,7 @@ export default function InsightsScreen() {
       );
       const message =
         definition?.emptyMessage ??
-        "Add more local logs before generating this summary.";
+        'Add more local logs before generating this summary.';
 
       setSummaryErrors((current) => ({
         ...current,
@@ -521,7 +527,7 @@ export default function InsightsScreen() {
       }));
       await HapticManager.warning();
       feedback.showWarning({
-        title: "More data needed",
+        title: 'More data needed',
         description: message,
       });
       return;
@@ -532,7 +538,7 @@ export default function InsightsScreen() {
       ...current,
       [kind]: undefined,
     }));
-    queueBarklogEvent("summary_generation_started", {
+    queueBarklogEvent('summary_generation_started', {
       dog_id: selectedDog.id,
       summary_kind: kind,
     });
@@ -555,16 +561,16 @@ export default function InsightsScreen() {
         ...current,
         [kind]: response.summary,
       }));
-      queueBarklogEvent("summary_generation_succeeded", {
+      queueBarklogEvent('summary_generation_succeeded', {
         dog_id: selectedDog.id,
         summary_kind: kind,
       });
       await HapticManager.success();
       feedback.showSuccess({
-        title: "Summary ready",
+        title: 'Summary ready',
         description: `${
           SUMMARY_DEFINITIONS.find((summary) => summary.kind === kind)?.title ??
-          "Care"
+          'Care'
         } summary is ready.`,
       });
     } catch (summaryError) {
@@ -574,12 +580,12 @@ export default function InsightsScreen() {
         ...current,
         [kind]: message,
       }));
-      queueBarklogEvent("summary_generation_failed", {
+      queueBarklogEvent('summary_generation_failed', {
         dog_id: selectedDog.id,
         summary_kind: kind,
       });
       captureBarklogError(summaryError, {
-        source: "insights.care_summary_generate",
+        source: 'insights.care_summary_generate',
         extra: {
           dog_id: selectedDog.id,
           summary_kind: kind,
@@ -587,7 +593,7 @@ export default function InsightsScreen() {
       });
       await HapticManager.error();
       feedback.showError({
-        title: "Summary unavailable",
+        title: 'Summary unavailable',
         description: message,
       });
     } finally {
@@ -598,7 +604,7 @@ export default function InsightsScreen() {
   const insightBody = (() => {
     if (!premiumAccess) {
       return `${getPremiumFeatureLabel(
-        "weekly-insights",
+        'weekly-insights',
       )} turns recent logs into short, non-diagnostic observations.`;
     }
 
@@ -607,25 +613,25 @@ export default function InsightsScreen() {
     }
 
     if (isLoading) {
-      return "Loading local BarkLog history...";
+      return 'Loading local BarkLog history...';
     }
 
-    return "Generate a short observation from this week and last week of logs.";
+    return 'Generate a short observation from this week and last week of logs.';
   })();
-  const walkHours = snapshot ? (snapshot.walkMinutes / 60).toFixed(1) : "0.0";
+  const walkHours = snapshot ? (snapshot.walkMinutes / 60).toFixed(1) : '0.0';
   const poopAverage = snapshot?.poopAverage ?? 0;
-  let generateInsightLabel = "Unlock AI insights";
+  let generateInsightLabel = 'Unlock AI insights';
 
   if (premiumAccess) {
     generateInsightLabel = isGenerating
-      ? "Generating..."
-      : "Generate weekly insight";
+      ? 'Generating...'
+      : 'Generate weekly insight';
   }
 
   const trainingInsightBody = (() => {
     if (!premiumAccess) {
       return `${getPremiumFeatureLabel(
-        "training-programs",
+        'training-programs',
       )} adds personalized observations from training, behavior, and mood logs.`;
     }
 
@@ -639,14 +645,14 @@ export default function InsightsScreen() {
 
     return activeTrainingPair
       ? `Generate a short observation for ${activeTrainingPair.program.name}.`
-      : "Start a training program to unlock training insights.";
+      : 'Start a training program to unlock training insights.';
   })();
-  let trainingInsightLabel = "Unlock training insights";
+  let trainingInsightLabel = 'Unlock training insights';
 
   if (premiumAccess) {
     trainingInsightLabel = isGeneratingTrainingInsight
-      ? "Generating..."
-      : "Generate training insight";
+      ? 'Generating...'
+      : 'Generate training insight';
   }
 
   return (
@@ -659,15 +665,21 @@ export default function InsightsScreen() {
       <View style={styles.stack}>
         {AI_FEATURES_ENABLED && premiumAccess && !aiEmail ? (
           <View style={styles.actions}>
-            <Text style={styles.subtitle}>Sign in with Firebase before generating AI insights. The selected summary is sent to Atlas.</Text>
-            <PrimaryButton label="Connect BarkLog AI" onPress={() => router.push('/ai-sign-in?next=insights' as Href)} />
+            <Text style={styles.subtitle}>
+              Sign in with Firebase before generating AI insights. The selected
+              summary is sent to Atlas.
+            </Text>
+            <PrimaryButton
+              label="Connect BarkLog AI"
+              onPress={() => router.push('/ai-sign-in?next=insights' as Href)}
+            />
           </View>
         ) : null}
         <View style={styles.heroRow}>
           <View style={styles.hero}>
             <Text style={styles.title}>Weekly view</Text>
             <Text style={styles.subtitle}>
-              {snapshot?.weekLabel ?? "This week"}
+              {snapshot?.weekLabel ?? 'This week'}
             </Text>
           </View>
 
@@ -700,8 +712,19 @@ export default function InsightsScreen() {
           borderColor="#D8CCFF"
           eyebrowColor="#5A34C3"
           bodyColor="#3E2A9E"
-          body={AI_FEATURES_ENABLED ? insightBody : `${snapshot?.mealCount ?? 0} meals, ${snapshot?.context.thisWeek.eventCounts.poop ?? 0} poop logs, and ${snapshot?.medicationCount ?? 0} medication logs recorded this week. These are caregiver observations, not a diagnosis.`}
+          body={
+            AI_FEATURES_ENABLED
+              ? insightBody
+              : `${snapshot?.mealCount ?? 0} meals, ${snapshot?.context.thisWeek.eventCounts.poop ?? 0} poop logs, and ${snapshot?.medicationCount ?? 0} medication logs recorded this week. These are caregiver observations, not a diagnosis.`
+          }
         />
+
+        {LOCAL_AI_ENABLED ? (
+          <PrimaryButton
+            label="Ask about recent logs on device"
+            onPress={() => router.push('/ask-ai' as Href)}
+          />
+        ) : null}
 
         {showExtendedInsightTools ? (
           <>
@@ -748,8 +771,8 @@ export default function InsightsScreen() {
               <View style={styles.sectionHeader}>
                 <Text style={styles.sectionTitle}>Care summaries</Text>
                 <Text style={styles.sectionBody}>
-                  Raw logs stay local and exportable. Premium turns them into
-                  short, non-diagnostic summaries.
+                  Raw logs stay local and exportable. Summaries organize
+                  observations without diagnosing.
                 </Text>
               </View>
 
@@ -786,34 +809,34 @@ export default function InsightsScreen() {
                 })();
                 const label = (() => {
                   if (!premiumAccess) {
-                    return "Unlock summaries";
+                    return 'Unlock summaries';
                   }
 
                   if (isGeneratingSummary) {
-                    return "Generating...";
+                    return 'Generating...';
                   }
 
                   if (!hasEnoughData) {
-                    return "Needs logs";
+                    return 'Needs logs';
                   }
 
                   return generatedSummary
-                    ? "Refresh summary"
-                    : "Generate summary";
+                    ? 'Refresh summary'
+                    : 'Generate summary';
                 })();
 
                 return (
                   <View key={definition.kind} style={styles.summaryCard}>
                     <View style={styles.summaryCardHeader}>
-                      <Text style={styles.summaryEyebrow}>Premium Summary</Text>
+                      <Text style={styles.summaryEyebrow}>Care summary</Text>
                       <Text style={styles.summaryTitle}>
                         {definition.title}
                       </Text>
                     </View>
                     {isGeneratingSummary ? (
                       <>
-                        <View style={[styles.skeletonLine, { width: "96%" }]} />
-                        <View style={[styles.skeletonLine, { width: "72%" }]} />
+                        <View style={[styles.skeletonLine, { width: '96%' }]} />
+                        <View style={[styles.skeletonLine, { width: '72%' }]} />
                       </>
                     ) : (
                       <Text
@@ -874,7 +897,7 @@ export default function InsightsScreen() {
               detail={
                 poopAverage > 0
                   ? `AVG QUALITY SCORE: ${poopAverage}`
-                  : "NO QUALITY DATA"
+                  : 'NO QUALITY DATA'
               }
             />
           </View>
@@ -891,14 +914,14 @@ export default function InsightsScreen() {
 
         <InsightsLineChartCard
           title="Walk Duration"
-          labels={snapshot?.chartLabels ?? ["M", "T", "W", "T", "F", "S", "S"]}
+          labels={snapshot?.chartLabels ?? ['M', 'T', 'W', 'T', 'F', 'S', 'S']}
           values={snapshot?.walkValues ?? [0, 0, 0, 0, 0, 0, 0]}
           strokeColor="#1B73D1"
         />
 
         <InsightsLineChartCard
           title="Poop Quality Trend"
-          labels={snapshot?.chartLabels ?? ["M", "T", "W", "T", "F", "S", "S"]}
+          labels={snapshot?.chartLabels ?? ['M', 'T', 'W', 'T', 'F', 'S', 'S']}
           values={snapshot?.poopValues ?? [0, 0, 0, 0, 0, 0, 0]}
           strokeColor="#A94840"
           dotColor="#A94840"
@@ -913,8 +936,8 @@ export default function InsightsScreen() {
             bodyColor="#5C3F0F"
             body={
               snapshot?.anomalyAlerts.length
-                ? snapshot.anomalyAlerts.join(" ")
-                : "No unusual local patterns were flagged for this week."
+                ? snapshot.anomalyAlerts.join(' ')
+                : 'No unusual local patterns were flagged for this week.'
             }
           />
         ) : null}
@@ -924,7 +947,7 @@ export default function InsightsScreen() {
             label="Export vet report"
             size="large"
             leadingIcon={<ExportIcon />}
-            onPress={() => router.push("/vet-prep")}
+            onPress={() => router.push('/vet-prep')}
           />
           <PrimaryButton
             label="Share with vet"
@@ -933,7 +956,7 @@ export default function InsightsScreen() {
             backgroundColor="#FFFCFA"
             borderColor="#0A0A0A"
             labelColor="#0A0A0A"
-            onPress={() => router.push("/vet-prep")}
+            onPress={() => router.push('/vet-prep')}
           />
         </View>
       </View>

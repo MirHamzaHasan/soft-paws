@@ -10,7 +10,7 @@ const checks = [
     label: 'Client/server environment boundary',
   },
   {
-    args: ['scripts/check-native-release-capabilities.js'],
+    args: ['scripts/check-native-release-capabilities.js', '--config-only'],
     command: 'node',
     label: 'Native release capabilities',
   },

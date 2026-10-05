@@ -3,6 +3,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { freeLaunchV1 } = require('../feature-flags.json');
 
 const rootDir = process.cwd();
 const preflightPath = 'docs/release/preflight-local.md';
@@ -13,9 +14,9 @@ const requiredReleaseFields = [
   'Build method',
   'iOS artifact path',
   'Android artifact path',
-  'RevenueCat project',
-  'Mixpanel project',
-  'Sentry project',
+  freeLaunchV1 ? 'Billing model' : 'RevenueCat project',
+  'GameAnalytics Android game',
+  'GameAnalytics iOS game',
   'Release owner',
   'Decision',
 ];
@@ -24,7 +25,7 @@ const requiredRollbackFields = [
   'Last known good app version',
   'Last known good iOS artifact path',
   'Last known good Android artifact path',
-  'RevenueCat rollback action',
+  ...(freeLaunchV1 ? [] : ['RevenueCat rollback action']),
   'Local data rollback action',
   'Store rollback action',
 ];
@@ -32,11 +33,12 @@ const requiredRollbackFields = [
 const requiredStoreChecklistPhrases = [
   'BarkLog is a dog care journal',
   'does not diagnose',
-  'Free users keep basic logging',
+  freeLaunchV1
+    ? 'Version 1.0.0 includes all implemented local features for free'
+    : 'Free users keep basic logging',
   'Privacy policy',
-  'RevenueCat',
-  'Mixpanel',
-  'Sentry',
+  ...(!freeLaunchV1 ? ['RevenueCat'] : []),
+  'GameAnalytics',
   'local-only',
 ];
 

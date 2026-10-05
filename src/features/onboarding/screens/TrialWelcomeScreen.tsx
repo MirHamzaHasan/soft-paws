@@ -5,6 +5,7 @@ import { useShallow } from 'zustand/react/shallow';
 
 import { completeOnboardingForCurrentUser } from '@/api';
 import { BarklogStatusBanner, useBarklogFeedback } from '@/components/ui';
+import { queueBarklogEvent } from '@/features/observability';
 import HapticManager from '@/managers/HapticManager';
 import {
   getPrimaryDog,
@@ -118,6 +119,7 @@ export default function TrialWelcomeScreen() {
         onboardingDraft,
       );
       setDogs(snapshot.dogs);
+      queueBarklogEvent('onboarding_completed');
       resetDraft();
       await HapticManager.success();
       feedback.showSuccess({
@@ -152,7 +154,7 @@ export default function TrialWelcomeScreen() {
           </OnboardingCirclePlate>
 
           <OnboardingPillBadge
-            label="FREE TRIAL ACTIVE"
+            label="ALL FEATURES INCLUDED"
             icon={<TrialBadgeIcon />}
           />
 

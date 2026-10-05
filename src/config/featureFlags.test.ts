@@ -1,5 +1,7 @@
 import { areAiFeaturesEnabled } from './featureFlags';
 
+jest.mock('react-native', () => ({ Platform: { OS: 'android' } }));
+
 jest.mock('@/features/auth/services/firebaseAiAuth', () => ({
   isFirebaseAiAuthConfigured: () => true,
 }));
