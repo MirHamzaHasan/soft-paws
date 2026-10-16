@@ -1,73 +1,127 @@
-# BarkLog Agent Guide
+# BarkLog KMP Agent Guide
 
-## Start Here
+## Start here
 
-- Treat [docs/source-of-truth/barklog-product-engineering.md](docs/source-of-truth/barklog-product-engineering.md) as the canonical source of truth.
-- Use [docs/agentic/product-truth.md](docs/agentic/product-truth.md) for the condensed BarkLog truth summary.
-- Use [docs/agentic/workflows.md](docs/agentic/workflows.md) as the delivery playbook.
-- Use [docs/design/components.md](docs/design/components.md) as the reusable component registry.
+- [Canonical product and engineering spec](docs/source-of-truth/barklog-product-engineering.md)
+- [Condensed product truth](docs/agentic/product-truth.md)
+- [Architecture and file map](docs/architecture.md)
+- [Delivery workflow](docs/agentic/workflows.md)
+- [Engineering instructions inherited from the KMP base](docs/engineering-instructions.md)
+- [Component registry](docs/design/components.md)
+- [Fresh rebuild backlog](tasks/README.md)
 
-## Hard Guardrails
+The owner requested a fresh Kotlin Multiplatform rebuild on 2026-10-14. Earlier
+Expo, React Native, Tamagui, WatermelonDB and pnpm instructions are superseded.
+Old implementation status is not evidence that a KMP feature exists.
 
-- Build BarkLog with `Expo Router`, `Tamagui`, `TypeScript`, `Zustand`, `TanStack Query`, and local `WatermelonDB`.
-- Do not introduce NativeWind, Tailwind, or a parallel styling system.
-- Do not treat the previous manager-first prototype architecture as the source of truth.
-- Logging and profiles are local-only. Persist all care records to WatermelonDB on the device.
-- Do not present BarkLog as a veterinary authority. Organize facts and patterns, then escalate when appropriate.
-- Do not lock basic logging, timeline access, or export rights behind a paywall.
-- Version 1.0.0 has no ads, trial expiry, subscriptions, or paywalls. All implemented local features are included without a purchase. Android uses `com.draco.arts.apps.bark.log.dogs.journal`.
-- Keep Home as the most polished and highest-priority screen in the app.
-- Use `Inter` 400 and 500 only, BarkLog design tokens only, and no decorative gradients or shadows.
-- On native devices, supported AI actions use a downloaded on-device ONNX model first. Model files are optional and separate from WatermelonDB care records. Do not preload models on Home or automatically download them.
-- Firebase Auth signs users in for optional Atlas fallback only. The local owner and care journal remain in WatermelonDB; there is no Firebase care-record sync.
-- Atlas is the remote AI fallback when online and configured. Send a fresh Firebase ID token and BarkLog's own Atlas app ID to Atlas; never put AI provider keys or Firebase tokens in client configuration or local storage. Require Atlas context checks for generated health content.
+## Hard guardrails
 
-## Skill Routing
+- Use Kotlin Multiplatform, shared Compose Multiplatform UI, Coroutines/Flow and
+  Gradle Kotlin DSL from the Draco KMP base. SwiftUI hosts shared Compose on iOS.
+- Keep presentation, domain and data separate. AppContainer wires dependencies;
+  ModuleRegistry owns startup and cleanup. Reuse the base where it fits.
+- SQLDelight with local SQLite is the selected care persistence direction.
+  Schema v4 and the repository are implemented, with preserving v1/v2/v3 migrations.
+  Keep the existing database filename. Preferences are for UI settings only.
+- Journal use requires no account, network or service credential.
+- v1.0.0 is free: no ads, subscriptions, trial expiry, billing SDK or paywalls.
+  Basic logging, timeline and CSV/PDF export must remain free.
+- No cloud journal sync, backup, household sharing or vet share links.
+- No new hosted analytics or paid integrations without the owner's request.
+  Base auth/analytics/ads/purchases entries stay disabled; their providers were removed.
+- Home is the highest-priority screen. Commit local writes before success feedback.
+  Network, telemetry and model loading never block logging.
+- Match the owner-selected current web board: Bricolage Grotesque 700/800 for
+  display/numbers, Inter 400/500 for reading, BarkLog tokens and clear borders.
+  No decorative shadows/gradients. The 2026-10-16 exact-board decision supersedes
+  the earlier Inter-only rule; native font/layout parity is still task022 work.
+- Organize caregiver observations; never diagnose or prescribe.
+- Future reminders are explicit and opt-in. Permission denial must not block saves.
+- Future AI uses explicitly downloaded on-device models first, loaded only on demand.
+  Optional Atlas fallback requires fresh Firebase identity and context-policy checks;
+  it is deferred and disabled in Release until approved server support exists.
+- Android ID: com.draco.arts.apps.bark.log.dogs.journal.
+  iOS ID: com.dracoarts.barklog. Do not change identity casually.
+- Never uninstall or clear an existing device journal as a build troubleshooting step.
+  The new KMP shell does not migrate WatermelonDB records; see migration notes.
 
-- Use `$barklog-feature-workflow` for planning, backlog slicing, and acceptance criteria.
-- Use `$barklog-health-safety` for toxicity, triage, symptoms, first aid, vet exports, and AI health boundaries.
-- Use `$barklog-ios-android-readiness` for notifications, camera, permissions, location, Apple Health, and Google Fit.
-- Use `$barklog-monetization-engagement` for trials, paywalls, premium gates, reminders, and subscription flows.
+## Implementation
 
-Use the repo-local Tamagui implementation skill for codebase discovery and implementation patterns. The canonical BarkLog spec overrides older prototype documents for product decisions.
+Use [.agents/skills/kmp-template/SKILL.md](.agents/skills/kmp-template/SKILL.md)
+for product implementation and integration changes. The old RN-specific skills
+were retired with the previous app. Product safety/design rules are in the new docs.
 
-## Default Delivery Flow
+Start with one task and implement its complete vertical slice: success,
+loading/empty, offline, failure/cancellation, accessibility and native behavior.
+Do not add fake repositories to make incomplete features look implemented.
+Update task status and actual feature status together.
 
-1. Read the canonical spec and identify the exact route, screen ID, or system section involved.
-2. Define the vertical slice:
-   - happy path
-   - loading, empty, error, and offline states
-   - premium / free behavior
-   - accessibility and analytics hooks
-3. Implement the smallest end-to-end slice that proves value.
-4. Validate with typecheck, targeted lint/tests, and route preview where relevant.
+## Design skill routing
 
-## Current Feature Backlog
+The owner selected [Ungenerated](https://github.com/iammirrr/ungenerated) for
+visual design enhancement. Its 28 skills are installed in
+`/Users/mirhamzahasan/.codex/skills/` at revision
+`7e337c9e425c35e3096e3e4e858165a296a93f79`.
 
-- Task backlog lives in [tasks/README.md](tasks/README.md).
-- `task025` mood check-in is completed locally and documented as the first Mood, Behavior, and Training slice.
-- `task026` behavior logging is completed locally and documented.
-- `task027` through `task030` provide local training content, screens, and session logging. Training AI from `task031` uses the optional Atlas adapter when configured.
-- `task032` and `task033` describe the former cloud sync path, removed by `task051`.
-- `task034` expanded offline log types is completed.
-- `task035` AI Agent Center is available when optional AI is configured. `task036` deterministic health and behavior summaries remain available offline.
-- `task037` static free training program rotation is completed.
-- `task038` local vet report export remains; cloud share links were removed.
-- `task039` household sharing and sitter mode were removed.
-- `task040` Safety Center offline pack is completed.
-- `task041` care calendar and refill planning is completed with `/care-calendar`, local `care_tasks`, opt-in reminders, and Home/Profile entry points. Smart automation is not implemented for v1.0.0.
-- `task042` Photo Baseline Tracker is completed at `/photo-baselines` with local `photo_baselines` and Home/Profile entry points. Photo compare is not implemented for v1.0.0.
-- `task051` rebaselines care data and native builds as local-only. `task052` adds optional Firebase sign-in for Atlas AI; `task053` adds the first on-device AI model path; `task054` adds optional local journal conversation and photo captions. Cloud sync, backup, restore, and sharing remain unavailable.
-- Native local Ask AI is available without Firebase when its optional model is downloaded. Atlas-backed AI routes are hidden without BarkLog Firebase/Atlas identifiers and in production until Atlas supports this free release and passes BarkLog context checks.
-- Mood and behavior logging, training enrollment/progress/sessions, multi-dog, trends, and other implemented local features are included in v1.0.0. RevenueCat purchase UI is off.
-- The deterministic weekly training rotation remains as a featured program; the full local training catalog and progress tracking are included in v1.0.0.
-- Manual CSV and PDF exports remain free. Losing or deleting the device data loses the journal unless the caregiver exported a copy.
-- Safety Center is a free offline-first safety surface at `/safety`, with `/safety-center` as an alias. Urgent actions, first-aid basics, core toxicity lookup, and the local emergency card must not be Premium-gated.
-- Photo Baseline Tracker is free local recordkeeping. It organizes owner-observed visual references only; the unimplemented photo-compare upsell is hidden.
+- For requested visual redesigns, start with `app-design-workflow` and select its
+  relevant design, motion, interaction, accessibility and visual QA skills.
+- Review the live board before implementing approved screens. Board HTML/CSS/JS
+  is a design prototype only; production UI stays shared Compose Multiplatform.
+- The canonical BarkLog spec overrides generic skill suggestions: retain BarkLog
+  tokens, the current board font pairing, no decorative shadows/gradients, accessible controls and
+  reduced motion. Do not introduce accounts, paywalls or subscription flows.
+- The owner requested the current-screen redesign on 2026-10-14. The live
+  prototype lives in `design/board/`. The complete current-screen direction and
+  Firm interaction were approved on 2026-10-14 for task020's native port.
+  The owner authorized all approved board product screens and local logic in
+  task021 on 2026-10-15. See docs/native-board-port.md for mapping and evidence.
+  On 2026-10-16 the owner rejected simplified native equivalents and selected the
+  existing web board exactly, including typography. task022 and
+  tasks/native-parity/ track every board screen/state/flow. Feature implementation
+  is not visual parity: require paired board/native evidence and individual review.
+  Future new directions still require review. Installing skills alone never
+  authorizes a redesign.
+  Later on 2026-10-16 the owner reviewed and liked task023's named Home care strip,
+  then requested animated Earlier/Latest controls. That requested refinement
+  replaces Home's stacked icon representation only; see
+  tasks/task023-readable-care-and-native-motion.md. Keep the rest of the selected
+  board and task022's individual evidence/approval gates intact.
 
-## Current Repo Notes
+## Later 2026-10-16 board direction
 
-- The repo still contains legacy prototype code and docs from the earlier stack direction.
-- `pnpm check-types` is the current reliable validation baseline.
-- `pnpm lint` may still report inherited debt outside the touched slice.
-- `pnpm web` remains useful for flow visibility, but it is not a substitute for the canonical BarkLog mobile architecture.
+The owner subsequently requested a board-only proposal with required Firebase
+login, richer onboarding, opt-in native permission flows and paid AI chat/features,
+while retaining a usable free tier. This explicitly overrides the earlier
+no-account/no-paywall design restriction for task024 and its task025/task026 refinements. Prices remain undecided by
+the owner's reply. See `design/board/premium/index.html` and
+`tasks/task024-premium-ai-onboarding-board.md` and
+`tasks/task025-light-and-flexible-dog-onboarding.md` and
+`tasks/task026-home-mascot-and-care-card.md`. The existing KMP app's free/local
+behavior, disabled integrations and task022 reference remain unchanged. Do not
+implement authentication, billing, network AI or new native screens from this
+proposal until the owner reviews it and authorizes the native slice.
+
+## task027 native authorization · 2026-10-16
+
+The owner authorized the complete task024–026 chapter in shared Compose, backup
+cleanup and pushing all accumulated work to main. This supersedes the board-only
+restriction above. The owner then explicitly requested demo sign-in and demo AI
+responses for this pass; real credentials are deferred. Label the demo honestly,
+keep real care/context/conversations in SQLite, retain undecided prices and
+unavailable purchases, and never treat a local demo identity as real Firebase auth.
+No simulator launch is authorized for this pass; run noninteractive builds/tests.
+Native visual parity and physical-device QA remain unverified. See task027.
+Keep routine work in this project and ignored `.verify-build/` output. Do not
+create additional sibling backup projects; use Git history for source checkpoints.
+The owner requested removal of the earlier sibling backups and board archives.
+
+## Validation
+
+- python3 tools/verify.py --metadata-only
+- python3 tools/verify.py
+- python3 tools/verify.py --ios (macOS; Debug and Release simulator hosts)
+- Targeted JVM tests and platform/device journeys from docs/validation.md.
+
+Open iosApp/iosApp.xcodeproj with the iosApp scheme. No Expo prebuild, CocoaPods,
+Metro, Node or API credential is needed. Signing and physical-device/store QA
+remain separate from simulator compilation. Do not claim speed gains without profiling.

@@ -1,0 +1,8 @@
+Starting testing
+Starting iteration: 1
+Starting test suite: com.dracoarts.shared.NativeCollectionsRegressionTest
+Starting test case: removingAndReinsertingCollidingNativeKeysDoesNotDuplicateKeys (com.dracoarts.shared.NativeCollectionsRegressionTest)
+Passed: removingAndReinsertingCollidingNativeKeysDoesNotDuplicateKeys (com.dracoarts.shared.NativeCollectionsRegressionTest)
+Test suite finished: com.dracoarts.shared.NativeCollectionsRegressionTest
+Iteration finished: 1
+Testing finished

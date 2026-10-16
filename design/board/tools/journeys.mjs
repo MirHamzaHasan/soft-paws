@@ -1,0 +1,182 @@
+// Smoke the high-value interactive journeys with board-only Chromium and CDP.
+import { spawn } from 'node:child_process';
+import { existsSync, readdirSync, mkdtempSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { homedir, tmpdir } from 'node:os';
+const base=process.argv[2]||'http://localhost:4278/';
+const cache=join(homedir(),'Library/Caches/ms-playwright'),candidates=[];
+if(existsSync(cache))for(const d of readdirSync(cache).filter(x=>x.startsWith('chromium_headless_shell-')))candidates.push(join(cache,d,'chrome-mac/headless_shell'));
+const chrome=process.env.CHROME||candidates.find(existsSync)||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+if(!existsSync(chrome))throw new Error('Board-only Chromium is not installed.');
+let port=0;const profile=mkdtempSync(join(tmpdir(),'barklog-journeys-')),proc=spawn(chrome,['--headless=new','--disable-gpu','--remote-debugging-port=0','--window-size=390,844','--user-data-dir='+profile,'about:blank'],{stdio:'ignore'});
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));let ws;
+for(let i=0;i<80&&!ws;i++){try{port=Number(readFileSync(join(profile,'DevToolsActivePort'),'utf8').split('\n')[0]);const pages=await(await fetch(`http://127.0.0.1:${port}/json`)).json();const page=pages.find(x=>x.type==='page');if(page)ws=new WebSocket(page.webSocketDebuggerUrl);}catch{}if(!ws)await sleep(100);}
+if(!ws)throw new Error('Chromium did not expose DevTools. Run Node with --experimental-websocket.');
+await new Promise(r=>ws.onopen=r);let serial=0;const pending=new Map(),problems=[];
+ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id&&pending.has(m.id)){pending.get(m.id)(m);pending.delete(m.id);}};
+const send=(method,params={})=>new Promise(resolve=>{const id=++serial;pending.set(id,resolve);ws.send(JSON.stringify({id,method,params}));});
+await send('Runtime.enable');await send('Page.enable');
+const value=async expression=>{const r=await send('Runtime.evaluate',{expression,returnByValue:true});if(r.result.exceptionDetails)throw new Error(r.result.exceptionDetails.exception?.description||r.result.exceptionDetails.text);return r.result.result.value;};
+let openCount=0;
+const open=async id=>{await send('Page.navigate',{url:`${base}?journey=${id}-${++openCount}&reducedMotion=false#play-${id}`});await sleep(500);};
+const screen=()=>value(`(document.querySelector('.player .ph')||document.querySelector('.ph'))?.dataset.screen`);
+const click=async text=>{const found=await value(`(()=>{const root=document.querySelector('.player')||document;const b=[...root.querySelectorAll('button')].find(x=>x.textContent.trim().includes(${JSON.stringify(text)}));if(!b)return false;b.click();return true;})()`);if(!found)throw new Error('Button not found: '+text);await sleep(760);};
+const expect=async(name,actual,want)=>{if(actual!==want)problems.push(`${name}: expected ${want}, got ${actual}`);else console.log('PASS '+name);};
+let runCount=0;
+const run=async(name,fn)=>{if(process.env.JOURNEY_FILTER&&!new RegExp(process.env.JOURNEY_FILTER).test(name))return;runCount++;try{await fn();}catch(e){problems.push(`${name}: ${e.message}`);}};
+
+await run('board views, theme, Replay, Pick and Note',async()=>{
+  await send('Page.navigate',{url:`${base}?journey=board-${++openCount}`});await sleep(700);
+  for(const view of ['Research','Kit','Screens','Transitions']){const ok=await value(`(()=>{const b=[...document.querySelectorAll('button.view')].find(x=>x.textContent.trim()===${JSON.stringify(view)});if(!b)return false;b.click();return true;})()`);if(!ok)throw new Error(view+' view missing');await sleep(120);}
+  const themed=await value(`(()=>{const b=[...document.querySelectorAll('.bseg button')].find(x=>x.textContent.trim()==='Dark');b?.click();return document.documentElement.dataset.theme;})()`);if(themed!=='dark')throw new Error('theme switch failed');
+  const replayed=await value(`(()=>{document.querySelector('button[title="Replay"]')?.click();return true;})()`);if(!replayed)throw new Error('Replay missing');
+  const picked=await value(`(()=>{const b=document.querySelector('.is-pick');if(!b)return false;b.click();return true;})()`);if(!picked)throw new Error('Pick missing');await sleep(500);
+  const pickedState=await value(`!!document.querySelector('.card.is-picked')`);if(!pickedState)throw new Error('Pick did not apply');await value(`document.querySelector('.card.is-picked .is-pick').click()`);await sleep(500);
+  await value(`document.querySelector('.is-note').click()`);await sleep(100);const note=await value(`!!document.querySelector('.modal textarea')`);if(!note)throw new Error('Note editor did not open');await value(`document.querySelector('.modal').click()`);
+  const before=await value(`F.reduced()`);await value(`document.querySelector('.motion-preview').click()`);await sleep(700);
+  const motion=await value(`({setting:new URLSearchParams(location.search).get('reducedMotion'),reduced:F.reduced()})`);
+  if(motion.setting!==String(!before)||motion.reduced===before)throw new Error('Motion preview toggle did not change the board setting');
+  console.log('PASS board views, theme, Replay, Pick and Note');
+});
+await run('first run → Home',async()=>{await open('dog-setup');await value(`(()=>{const i=document.querySelector('.player input');i.value='Milo';i.dispatchEvent(new Event('input',{bubbles:true}));return true;})()`);await sleep(500);await click('Start Milo’s journal');await sleep(400);await expect('first run → coach on Home',await screen(),'home-coach');const named=await value(`document.querySelector('.player h1')?.textContent`);if(named!=='Milo’s day')problems.push('first run: Home heading is '+named);await sleep(700);await click('Start logging');await expect('first run → Home',await screen(),'home');});
+await run('quick log commits visible feedback',async()=>{await open('home');const before=await value(`document.querySelector('.player .v3-count-n').textContent`);await value(`document.querySelector('.player .v3-care').click()`);await sleep(1100);const after=await value(`document.querySelector('.player .v3-count-n').textContent`);const said=await value(`document.querySelector('.player .v3-day-status').textContent`);const undo=await value(`!!document.querySelector('.player .v3-undo')`);if(before===after)problems.push('quick log: count did not change');else if(!/logged at/.test(said)||!undo)problems.push('quick log: no inline confirmation with Undo');else{await value(`document.querySelector('.player .v3-undo').click()`);await sleep(400);const undone=await value(`document.querySelector('.player .v3-count-n').textContent`);if(undone!==before)problems.push('quick log: Undo did not restore the count');else console.log('PASS quick log commits visible feedback, Undo restores');}});
+await run('dog reacts to every committed quick log and settles after repeats',async()=>{
+  await open('home');await sleep(800);
+  const before=await value(`Number(document.querySelector('.player .v3-count-n').textContent)`);
+  const reaction=()=>value(`(()=>{const dog=document.querySelector('.player .bl-dog-character');return {body:dog.getAnimations().filter(a=>a.playState==='running'&&a.effect.getKeyframes().some(k=>k.scale)).length,head:dog.querySelector('.dog-character-head').getAnimations().some(a=>a.playState==='running'),tail:dog.querySelector('.dog-character-tail').getAnimations().some(a=>a.playState==='running')};})()`);
+  for(let i=0;i<4;i++){
+    await value(`document.querySelectorAll('.player .v3-care')[${i}].click()`);await sleep(790);
+    const pose=await reaction();if(pose.body!==1||!pose.head||!pose.tail)throw new Error('No complete dog reaction for quick tile '+i);
+    if(await value(`Number(document.querySelector('.player .v3-count-n').textContent)`)!==before+i+1)throw new Error('Dog reacted before visible save '+i);
+    await sleep(750);
+  }
+  await value(`document.querySelector('.player .v3-care').click()`);await sleep(180);await value(`document.querySelectorAll('.player .v3-care')[1].click()`);await sleep(810);
+  if((await reaction()).body!==1)throw new Error('Rapid logs stacked competing dog poses');await sleep(850);
+  if((await reaction()).body!==0)throw new Error('Dog kept bouncing after the log');
+  const saved=await value(`Number(document.querySelector('.player .v3-count-n').textContent)`);if(saved!==before+6)throw new Error('Rapid logs lost a record');
+  await value(`document.querySelector('.player .v3-care').click()`);await sleep(160);await value(`document.querySelector('.player .v3-undo').click()`);await sleep(700);
+  if((await reaction()).body!==0)throw new Error('Dog celebrated an undone log');
+  if(await value(`Number(document.querySelector('.player .v3-count-n').textContent)`)!==saved)throw new Error('Fast Undo lost the saved total');
+  await send('Page.navigate',{url:`${base}?journey=log-dog-reduced&reducedMotion=true#play-home`});await sleep(700);
+  const reducedBefore=await value(`Number(document.querySelector('.player .v3-count-n').textContent)`);await value(`document.querySelector('.player .v3-care').click()`);await sleep(120);
+  if(await value(`Number(document.querySelector('.player .v3-count-n').textContent)`)!==reducedBefore+1)throw new Error('Reduced motion lost save feedback');
+  if(await value(`document.querySelector('.player .bl-dog-character').getAnimations({subtree:true}).some(a=>a.playState==='running')`))throw new Error('Reduced motion animated the saved dog');
+  console.log('PASS all four log reactions, rapid saves, fast Undo and reduced motion');
+});
+await run('Timeline → detail → edit',async()=>{await open('timeline');await value(`document.querySelector('.player .bl-row').click()`);await sleep(760);await expect('Timeline → detail',await screen(),'record-detail');await click('Edit record');await expect('detail → edit',await screen(),'record-edit');});
+await run('delete confirmation keeps record',async()=>{await open('record-detail');await click('Delete record');const dialog=await value(`!!document.querySelector('.player [role=dialog]')`);if(!dialog)throw new Error('dialog did not open');await click('Keep record');const closed=await value(`!document.querySelector('.player [role=dialog]')`);if(!closed)throw new Error('dialog did not close');console.log('PASS delete confirmation keeps record');});
+await run('switch dog updates destination',async()=>{await open('dog-switcher');await click('Luna');await expect('dog switch destination',await screen(),'profile-hub');const copy=await value(`document.querySelector('.player .ph').textContent`);if(!copy.includes('Luna'))throw new Error('Luna not visible after switch');console.log('PASS switch dog updates destination');});
+await run('medication administration',async()=>{await open('medication-detail');await click('Mark given');await expect('medication administration',await screen(),'medication-given');});
+await run('reminder remains optional',async()=>{await open('reminder-opt-in');await click('Continue to system permission');const toast=await value(`document.querySelector('.player .bl-toast')?.textContent||''`);if(!toast.includes('platform handoff'))throw new Error('system handoff was not labeled');await open('reminder-denied');const denied=await value(`document.querySelector('.player .ph').textContent`);if(!denied.includes('Task saved'))throw new Error('denial lost the saved task');console.log('PASS reminder remains optional');});
+await run('trends → scoped export',async()=>{await open('insights-overview');await click('Prepare a vet report');await expect('trends → report scope',await screen(),'vet-prep');await click('Preview report');await expect('scope → preview',await screen(),'report-preview');await click('Choose file format');await click('PDF');await sleep(1700);await expect('export completes',await screen(),'export-complete');});
+await run('offline toxicity known/unknown',async()=>{await open('toxicity-search');await value(`(()=>{const i=document.querySelector('.player input');i.value='chocolate';return true;})()`);await click('Search');await expect('known toxicity',await screen(),'toxicity-result');await open('toxicity-search');await value(`(()=>{const i=document.querySelector('.player input');i.value='onion powder';return true;})()`);await click('Search');await expect('unknown toxicity',await screen(),'toxicity-unknown');});
+await run('training saves one result',async()=>{await open('training-session');await click('Finish session');await expect('training summary',await screen(),'training-summary');});
+await run('photo cancellation and fallback',async()=>{await open('photo-picker');await click('Cancel');await expect('photo cancel',await screen(),'photo-journal');await open('photo-missing');const copy=await value(`document.querySelector('.player .ph').textContent`);if(!copy.includes('caption and date remain'))throw new Error('missing-file fallback absent');console.log('PASS photo cancellation and fallback');});
+await run('expense edit',async()=>{await open('expense-detail');await click('Edit expense');await expect('expense edit',await screen(),'expense-form');});
+await run('Memory Book trace',async()=>{await open('memory-book');await click('Open highlight');await expect('Memory Book trace',await screen(),'memory-highlight');});
+const fill=async(key,text)=>value(`(()=>{const i=document.querySelector('.player [data-field='+${JSON.stringify(key)}+']');if(!i)throw new Error('Missing field '+${JSON.stringify(key)});i.value=${JSON.stringify(text)};i.dispatchEvent(new Event('input',{bubbles:true}));return true;})()`);
+await run('detailed log retains note, context and attachment through edit',async()=>{
+  await open('form-walk');await fill('duration','27');await fill('notes','Paused by the river. Calm around cyclists.');await click('Easy stroll');
+  await value(`document.querySelector('.player summary').click()`);await sleep(120);await fill('location','Riverside path');
+  await click('Attach a photo');await click('Use sample photo');await click('Save walk');await sleep(700);
+  await expect('detailed save → record',await screen(),'record-detail');
+  let copy=await value(`document.querySelector('.player .ph').textContent`);for(const s of ['Paused by the river','27','Riverside path','Sample attachment'])if(!copy.includes(s))throw new Error('Saved detail missing: '+s);
+  await click('Edit record');const note=await value(`document.querySelector('.player [data-field=notes]').value`);if(note!=='Paused by the river. Calm around cyclists.')throw new Error('Edit lost the note');
+  await fill('notes','Updated: chose the quiet path.');await click('Save changes');await sleep(700);
+  copy=await value(`document.querySelector('.player .ph').textContent`);if(!copy.includes('Updated: chose the quiet path.'))throw new Error('Edited note did not save');
+  await click('Back');copy=await value(`document.querySelector('.player .ph').textContent`);if(!copy.includes('Updated: chose the quiet path.'))throw new Error('Timeline did not show the saved note');
+  await click('Home');await sleep(200);
+  if(!await value(`document.querySelector('.player .bl-dog-character').getAnimations().some(a=>a.playState==='running'&&a.effect.getKeyframes().some(k=>k.scale))`))throw new Error('Detailed save did not greet on Home');
+  await click('Timeline');await click('Home');await sleep(300);
+  if(await value(`document.querySelector('.player .bl-dog-character').getAnimations().some(a=>a.playState==='running'&&a.effect.getKeyframes().some(k=>k.scale))`))throw new Error('Detailed save replayed its dog reaction twice');
+  console.log('PASS note, context, photo, edit, Timeline and one Home dog reaction');
+});
+await run('care draft survives closing and reopening',async()=>{
+  await open('form-meal');await fill('notes','Ate slowly after the walk.');await fill('food','Chicken kibble');await click('Close');await click('Keep draft');
+  await expect('draft → care library',await screen(),'log-chooser');await click('Meal draft');
+  const note=await value(`document.querySelector('.player [data-field=notes]').value`);if(note!=='Ate slowly after the walk.')throw new Error('Draft note lost');
+  const food=await value(`document.querySelector('.player [data-field=food]').value`);if(food!=='Chicken kibble')throw new Error('Draft food lost');console.log('PASS care draft restored');
+});
+await run('required measurement validation preserves note',async()=>{
+  await open('form-weight');await fill('notes','Measured at home.');await click('Save weight');
+  if(await screen()!=='form-weight')throw new Error('Invalid weight saved');const copy=await value(`document.querySelector('.player .bl-error').textContent`);if(!copy.includes('above zero'))throw new Error('Validation explanation missing');
+  const note=await value(`document.querySelector('.player [data-field=notes]').value`);if(note!=='Measured at home.')throw new Error('Validation lost the note');console.log('PASS validation preserves note');
+});
+await run('standalone board card carries its written note into player',async()=>{
+  await send('Page.navigate',{url:`${base}?journey=standalone&reducedMotion=false#only-form-walk`});await sleep(500);
+  await value(`(()=>{const i=document.querySelector('[data-field=notes]');i.value='Written on the individual board card.';i.dispatchEvent(new Event('input',{bubbles:true}));document.querySelector('.v4-editor-footer button').click();return true;})()`);await sleep(1550);
+  const copy=await value(`document.querySelector('.player .ph')?.textContent||''`);if(!copy.includes('Written on the individual board card.'))throw new Error('Individual card lost its state when opening the player');console.log('PASS individual card preview state carried');
+});
+await run('helper sheet contains focus and Escape returns to editor',async()=>{
+  await open('form-walk');await click('What could I add?');
+  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Tab',code:'Tab',windowsVirtualKeyCode:9});await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Tab',code:'Tab',windowsVirtualKeyCode:9});
+  if(!await value(`!!document.activeElement.closest('.v4-sheet')`))throw new Error('Tab escaped the sheet');
+  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});
+  if(await value(`!!document.querySelector('.v4-sheet')`))throw new Error('Sheet stayed open');if(!await value(`!!document.querySelector('.player')`))throw new Error('Escape closed the whole player');console.log('PASS sheet keyboard focus and Escape');
+});
+const setField=async(label,text)=>value(`(()=>{const r=document.querySelector('.player .ph');const box=[...r.querySelectorAll('.bl-field')].find(e=>e.querySelector('label')?.textContent===${JSON.stringify(label)});const i=box?.querySelector('input,textarea');if(!i)throw new Error('Field missing: '+${JSON.stringify(label)});i.value=${JSON.stringify(text)};i.dispatchEvent(new Event('input',{bubbles:true}));return true;})()`);
+const step=async text=>{await click(text);await sleep(420);};
+await run('guided onboarding reuses identity and shortcuts without saving practice',async()=>{
+  await open('dog-setup');await setField('Dog’s name','Milo');await sleep(500);await step('Make it yours');await step('Show me around');await step('Keep illustration');await step('Mixed breed');await step('4–7 years');await step('Training');await step('Photos');await step('Continue');
+  await expect('guided practice screen',await screen(),'onboarding-practice');await step('Log a practice walk');await step('Add a note');await setField('Practice note','Chose the shaded route and stopped for water.');await step('Preview in Timeline');
+  if(!await value(`document.querySelector('.player .guide-note-paper').textContent.includes('shaded route')`))throw new Error('Practice note lost');
+  await step('Continue');await step('Open our journal');await step('Go to Home');await sleep(600);await step('Start logging');
+  const home=await value(`document.querySelector('.player .ph').textContent`);if(!home.includes('Milo’s day')||!home.includes('Your shortcuts')||!home.includes('Photos'))throw new Error('Choices did not reach Home');
+  if(await value(`document.querySelector('.player .v3-count-n').textContent`)!=='0')throw new Error('Practice was saved as real care');
+  await step('Profile');const profile=await value(`document.querySelector('.player .ph').textContent`);if(!profile.includes('Mixed breed')||!profile.includes('4–7 years'))throw new Error('Identity not reused in Profile');console.log('PASS guided onboarding, practice isolation and answer reuse');
+});
+await run('guided setup skips directly without a permission gate',async()=>{await open('onboarding-breed');await step('Skip setup');await expect('guided skip → real Home coach',await screen(),'home-coach');});
+await run('dog records remain isolated and restore after switching back',async()=>{
+  await open('home');await value(`document.querySelector('.player .v3-care').click()`);await sleep(1000);const count=await value(`document.querySelector('.player .v3-count-n').textContent`);
+  await step('Profile');await value(`document.querySelector('.player .v3-profile-hero').click()`);await sleep(1100);await step('Luna');await step('Home');
+  if(await value(`document.querySelector('.player .v3-count-n').textContent`)!=='0')throw new Error('Bruno records leaked into Luna');
+  await step('Profile');await value(`document.querySelector('.player .v3-profile-hero').click()`);await sleep(1100);await step('Bruno');await step('Home');if(await value(`document.querySelector('.player .v3-count-n').textContent`)!==count)throw new Error('Switching back lost care');console.log('PASS per-dog records');
+});
+await run('task completion commits Timeline result',async()=>{await open('care-task-detail');await step('Mark complete');await expect('task → completion',await screen(),'care-task-complete');await step('View Timeline');if(!await value(`document.querySelector('.player .ph').textContent.includes('Completed: Example medication')`))throw new Error('Task not saved to Timeline');console.log('PASS task and Timeline committed together');});
+await run('reminder retry preserves task',async()=>{await open('reminder-failure');await step('Try reminder again');await expect('reminder retry',await screen(),'reminder-scheduled');});
+await run('trend range carries to report and filename',async()=>{await open('trends-month');await step('7 days');await step('Use this range in report');const range=await value(`document.querySelector('.player input').value`);if(range!=='2026-10-08')throw new Error('Range lost');await step('Preview report');const text=await value(`document.querySelector('.player .bl-report').textContent`);if(!text.includes('2026-10-08 to 2026-10-14'))throw new Error('Report scope lost');console.log('PASS functional range and report scope');});
+await run('receipt attachment retains expense fields',async()=>{await open('expense-form');await setField('Description','Evening clinic');await setField('Amount','8250.75');await step('Attach receipt');await step('Use sample receipt');const amount=await value(`[...document.querySelectorAll('.player .bl-field')].find(x=>x.querySelector('label')?.textContent==='Amount').querySelector('input').value`);if(amount!=='8250.75')throw new Error('Receipt picker lost amount');await step('Save expense');const text=await value(`document.querySelector('.player .ph').textContent`);if(!text.includes('Evening clinic')||!text.includes('8,250.75'))throw new Error('Expense edit not saved');console.log('PASS receipt, money precision and saved details');});
+await run('photo caption survives edit and save',async()=>{await open('photo-form');await setField('Caption','On the blue blanket after the park');await step('Save photo entry');if(!await value(`document.querySelector('.player h1').textContent.includes('after the park')`))throw new Error('Photo caption lost');await step('Edit details');const caption=await value(`[...document.querySelectorAll('.player .bl-field')].find(x=>x.querySelector('label')?.textContent==='Caption').querySelector('input').value`);if(!caption.includes('after the park'))throw new Error('Photo edit lost caption');console.log('PASS photo metadata round trip');});
+await run('Memory Book caption is caregiver editable',async()=>{await open('memory-highlight');await step('Edit caption');await setField('Highlight caption','Our quiet evening loop');await step('Save caption');if(!await value(`document.querySelector('.player h1').textContent.includes('Our quiet evening loop')`))throw new Error('Memory caption lost');console.log('PASS Memory Book caption');});
+await run('record confirmed deletion changes only preview state',async()=>{await open('record-detail');await step('Delete record');await step('Delete permanently');await expect('record deletion → Timeline',await screen(),'timeline');const text=await value(`document.querySelector('.player .bl-records').textContent`);if(text.includes('Evening loop · 24 minutes'))throw new Error('Deleted record remained');console.log('PASS confirmed preview deletion');});
+await run('whole-flow playback starts at the opening',async()=>{await send('Page.navigate',{url:`${base}?journey=whole-flow&reducedMotion=true#play`});await sleep(700);await expect('whole-flow first screen',await screen(),'opening-value');});
+await run('optional photo is visibly reused in Profile',async()=>{await open('onboarding-identity');await step('Choose a photo');await step('Use local sample');await step('Skip setup');await sleep(600);await step('Start logging');await step('Profile');if(!await value(`!!document.querySelector('.player .guide-avatar-sample')`))throw new Error('Selected sample photo did not reach Profile');console.log('PASS optional photo answer reuse');});
+await run('in-phone recurrence choice survives save',async()=>{await open('care-task-form');await step('Every day');const sheet=await value(`!!document.querySelector('.player .v4-sheet')`);if(!sheet)throw new Error('Choice escaped phone');await step('Every week');await setField('Task name','Brush after the park');await step('Save task');await step('Not now');const copy=await value(`document.querySelector('.player .ph').textContent`);if(!copy.includes('Brush after the park'))throw new Error('Task fields not reused');console.log('PASS in-phone choice and task save');});
+await run('expense categories recalculate recorded totals',async()=>{await open('expenses-list');await step('Food');const amount=await value(`document.querySelector('.player .bl-money').textContent`);if(amount!=='PKR 4,450.00')throw new Error('Food sum is '+amount);const list=await value(`document.querySelector('.player .bl-menu').textContent`);if(list.includes('Clinic visit'))throw new Error('Filter did not remove vet record');console.log('PASS expense category and sum');});
+await run('Memory Book selection changes collection and share scope',async()=>{await open('memory-collection');await value(`document.querySelector('.player .bl-toggle').click()`);await step('Keep selected highlights');const visible=await value(`document.querySelectorAll('.player .bl-card:not([hidden])').length`);if(visible!==1)throw new Error('Selection did not change collection');await step('Export this month');if(!await value(`document.querySelector('.player .bl-heading .bl-sub').textContent.includes('1 selected')`))throw new Error('Selection lost before share');console.log('PASS local collection scope');});
+await run('destructive dialog Escape returns to record',async()=>{await open('record-detail');await step('Delete record');await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});if(!await value(`!!document.querySelector('.player')`))throw new Error('Dialog Escape closed player');if(await value(`!!document.querySelector('.player .bl-dialog')`))throw new Error('Dialog stayed open');console.log('PASS destructive dialog Escape');});
+await run('Kit slider follows drag and keyboard steps',async()=>{
+  await open('kit-controls');
+  const p=await value(`(()=>{const r=document.querySelector('.player .slider').getBoundingClientRect();return {x:r.left+r.width*.4,end:r.left+r.width*.8,y:r.top+r.height/2};})()`);
+  await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:p.x,y:p.y});
+  await send('Input.dispatchMouseEvent',{type:'mousePressed',x:p.x,y:p.y,button:'left',clickCount:1});
+  await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:p.end,y:p.y,button:'left',buttons:1});
+  await send('Input.dispatchMouseEvent',{type:'mouseReleased',x:p.end,y:p.y,button:'left',clickCount:1});
+  await sleep(420);
+  const dragged=await value(`Number(document.querySelector('.player .slider-thumb').getAttribute('aria-valuenow'))`);
+  if(dragged!==8)throw new Error('Drag landed on '+dragged+' instead of 8');
+  await value(`document.querySelector('.player .slider-thumb').focus()`);
+  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39});
+  await send('Input.dispatchKeyEvent',{type:'keyUp',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39});
+  const stepped=await value(`Number(document.querySelector('.player .slider-thumb').getAttribute('aria-valuenow'))`);
+  if(stepped!==9)throw new Error('Keyboard step landed on '+stepped+' instead of 9');
+  console.log('PASS slider drag, visible value and keyboard step');
+});
+await run('dog illustration responds without advancing setup',async()=>{
+  await open('onboarding-route');await sleep(700);
+  const p=await value(`(()=>{const b=document.querySelector('.player .guide-character'),r=b.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,label:b.getAttribute('aria-label')};})()`);
+  if(!p.label.includes('Bruno'))throw new Error('Dog button has no identity label');
+  await send('Input.dispatchMouseEvent',{type:'mousePressed',x:p.x,y:p.y,button:'left',clickCount:1});await sleep(90);
+  await send('Input.dispatchMouseEvent',{type:'mouseReleased',x:p.x,y:p.y,button:'left',clickCount:1});await sleep(100);
+  if(await screen()!=='onboarding-route')throw new Error('Greeting advanced setup');
+  if(!await value(`document.querySelector('.player .dog-character-head').getAnimations().some(a=>a.playState==='running')`))throw new Error('Dog did not respond to tap');
+  await sleep(600);await value(`document.querySelector('.player .guide-character').focus()`);
+  await send('Input.dispatchKeyEvent',{type:'keyDown',key:' ',code:'Space',windowsVirtualKeyCode:32});
+  await send('Input.dispatchKeyEvent',{type:'keyUp',key:' ',code:'Space',windowsVirtualKeyCode:32});await sleep(100);
+  if(!await value(`document.querySelector('.player .dog-character-tail').getAnimations().some(a=>a.playState==='running')`))throw new Error('Dog did not respond to keyboard');
+  await send('Page.navigate',{url:`${base}?journey=dog-reduced&reducedMotion=true#play-onboarding-route`});await sleep(700);
+  await value(`document.querySelector('.player .guide-character').click()`);await sleep(100);
+  if(await value(`document.querySelectorAll('.player .dog-character-head,.player .dog-character-tail').length!==2||[...document.querySelectorAll('.player .dog-character-head,.player .dog-character-tail')].some(el=>el.getAnimations().some(a=>a.playState==='running'))`))throw new Error('Reduced motion still animated the dog');
+  console.log('PASS dog tap, keyboard, no navigation and reduced motion');
+});
+proc.kill();console.log(JSON.stringify({journeys:runCount,problems},null,2));process.exit(problems.length?1:0);

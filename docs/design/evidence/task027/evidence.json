@@ -1,0 +1,40 @@
+{
+  "scope": "task027 native companion implementation and accumulated main delivery",
+  "verifiedAtUtc": "2026-10-16T17:35:49.081740+00:00",
+  "nativeFingerprint": "ea5013f806692ca18de27b64c90aa26b8a08c2a8fc8cb55586b6bd88cd2ea72a",
+  "originalReferenceFingerprint": "0044317079110dc33db9b5551b6309a26302efc0a177ee3b6857b1eb2aed1321",
+  "boardRoutes": 54,
+  "nativeRoutes": 54,
+  "jvmTests": 75,
+  "pythonTests": 23,
+  "lint": {
+    "errors": 0,
+    "warnings": 13
+  },
+  "schemaVersion": 4,
+  "command": "python3 tools/verify.py --ios",
+  "result": "passed",
+  "simulatorLaunched": false,
+  "deviceInstalledOrCleared": false,
+  "realLogin": false,
+  "realAIService": false,
+  "purchasesAvailable": false,
+  "prices": "undecided",
+  "nativeVisualParity": "pending; original task022 matched count stays zero",
+  "diffHygieneCommand": "git -c diff.renames=false -c core.whitespace=cr-at-eol,-blank-at-eof diff --cached --check -- . ':!**/*OFL.txt'",
+  "diffHygieneNotes": "Retains CRLF wrapper, blank EOF in pinned original sources and bundled vendor license whitespace.",
+  "diagnostics": "An earlier 3 GiB compiler heap failed Native Release devirtualization; the complete verification passed with the tracked 6 GiB build heap.",
+  "iosArm64SourceCompilation": "passed; no physical device run",
+  "files": {
+    "checks/cleanup-summary.json": "a80d5f8852bed9a127be8e9531195e7439dfd7ae7f93e1636a7dec17afe586c7",
+    "checks/companion-tests.xml": "6aa4e0535651425e36c99f157911ea890d4be7760ca31b02de348ea005b143fa",
+    "checks/diff-hygiene.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "checks/fetch-main.txt": "ae5a5c23b6ccdf98b00760d5b349a29f4df728934b60f096b3edde164fe5ad41",
+    "checks/full-verification.txt": "e4a0a38ee8f75bbef340f5b7145f61b9da16a0101bfb298abcd04284d0889c64",
+    "checks/ios-arm64-compile.txt": "5c38e0a65cc004845db65184a7e9960a3334c4c5017030d963e2678010ce3aff",
+    "checks/jvm-summary.json": "04f081e0524c867d2adbfcbd03359309ef7f0ca680c6c0c64dc2feb8b7b65a20",
+    "checks/lint-summary.json": "4c61b71bcab982a062746df76b15638ac384a3f69875c87bda51ca797bd8b3c2",
+    "checks/metadata-delivery.txt": "3da650d60281c570842175ec3e4ae9bb092bbd408cd0a4dfb3e442d94af26a69",
+    "checks/route-coverage.json": "96b4bdfd4a426edfa62f12267d898d3a18030e61313a23c1006724b7d203ee3c"
+  }
+}

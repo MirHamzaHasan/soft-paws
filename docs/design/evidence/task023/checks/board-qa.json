@@ -1,0 +1,38 @@
+[
+  {
+    "name": "light",
+    "entries": 7,
+    "clippedLabels": 0,
+    "smallTargets": [],
+    "atLatest": true,
+    "quickSaveUndo": true,
+    "errors": []
+  },
+  {
+    "name": "dark",
+    "entries": 7,
+    "clippedLabels": 0,
+    "smallTargets": [],
+    "atLatest": true,
+    "quickSaveUndo": true,
+    "errors": []
+  },
+  {
+    "name": "compact-text130",
+    "entries": 7,
+    "clippedLabels": 0,
+    "smallTargets": [],
+    "atLatest": true,
+    "quickSaveUndo": true,
+    "errors": []
+  },
+  {
+    "name": "reduced",
+    "entries": 7,
+    "clippedLabels": 0,
+    "smallTargets": [],
+    "atLatest": true,
+    "quickSaveUndo": true,
+    "errors": []
+  }
+]

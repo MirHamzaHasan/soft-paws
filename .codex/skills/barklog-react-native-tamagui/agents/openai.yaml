@@ -1,4 +1,0 @@
-interface:
-  display_name: "BarkLog React Native"
-  short_description: "Implement BarkLog in Expo Router and Tamagui"
-  default_prompt: "Use $barklog-react-native-tamagui to implement BarkLog screens and flows with Expo Router and Tamagui."

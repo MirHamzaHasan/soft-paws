@@ -1,0 +1,1028 @@
+{
+  "checks": [
+    "Care strip is inside the dog card; dog is larger, beside count; fixed AI entry reserves measured space",
+    "Shuffled six-action bags contain each idle exactly once and prevent immediate repeats across bags",
+    "28 real-time frames across all six idle actions and the save reaction; parts stay separate from count, labels and care rail",
+    "Keyboard greeting works; a save interrupts idle with one animation owner per part",
+    "Earlier/Latest still browse and a named record opens detail and returns Home",
+    "All four care controls scroll fully above AI entry; real preview log earns a mascot reaction and Undo restores records",
+    "Natural idle scheduling produces different actions after quiet gaps",
+    "Enabling reduced motion mid-animation cancels all mascot movement; greeting remains still",
+    "Leaving Home disposes controller timers, observers and tracked animation"
+  ],
+  "frames": [
+    {
+      "requestedAction": "curious",
+      "targetMs": 250,
+      "actualMs": 259.6000000014901,
+      "action": "curious",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999658, -0.0261574, 0.0261574, 0.999658, -0.149888, -0.149888)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(0.999873, 0.0159483, -0.0159483, 0.999873, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(0.999964, -0.00846069, 0.00846069, 0.999964, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "curious",
+      "targetMs": 550,
+      "actualMs": 558.8000000044703,
+      "action": "curious",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.984808, -0.173648, 0.173648, 0.984808, -1, -1)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(0.999799, -0.020063, 0.020063, 0.999799, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(0.999475, 0.0324148, -0.0324148, 0.999475, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "curious",
+      "targetMs": 850,
+      "actualMs": 859.9000000059605,
+      "action": "curious",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999924, 0.0123075, -0.0123075, 0.999924, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(1, -2.1573e-05, 2.1573e-05, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(1, 0.00056758, -0.00056758, 1, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "curious",
+      "targetMs": 1750,
+      "actualMs": 1758,
+      "action": "rest",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "requestedAction": "glance",
+      "targetMs": 250,
+      "actualMs": 258.5,
+      "action": "glance",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(0.998679, -0.0513821, 0.0513821, 0.998679, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.99998, -0.00635419, 0.00635419, 0.99998, -0.242714, 0)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "glance",
+      "targetMs": 550,
+      "actualMs": 558.3999999985099,
+      "action": "glance",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(0.999588, 0.0287085, -0.0287085, 0.999588, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.998857, -0.047808, 0.047808, 0.998857, -1.82683, 0)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "requestedAction": "glance",
+      "targetMs": 850,
+      "actualMs": 858.0999999940395,
+      "action": "glance",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(1, 0.000582209, -0.000582209, 1, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.996349, -0.0853687, 0.0853687, 0.996349, -3.26482, 0)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "requestedAction": "glance",
+      "targetMs": 1750,
+      "actualMs": 1762.1999999955297,
+      "action": "rest",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "requestedAction": "ears",
+      "targetMs": 250,
+      "actualMs": 257.6000000014901,
+      "action": "ears",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999983, 0.00586628, -0.00586628, 0.999983, 0, -0.224077)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(0.999257, 0.0385448, -0.0385448, 0.999257, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(0.999791, -0.0204326, 0.0204326, 0.999791, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "ears",
+      "targetMs": 550,
+      "actualMs": 558.9000000059605,
+      "action": "ears",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999512, 0.0312296, -0.0312296, 0.999512, 0, -1.51585)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(0.999801, -0.0199368, 0.0199368, 0.999801, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(0.999492, 0.0318843, -0.0318843, 0.999492, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "ears",
+      "targetMs": 850,
+      "actualMs": 858.9000000059605,
+      "action": "ears",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999981, -0.0061304, 0.0061304, 0.999981, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(1, -2.02796e-05, 2.02796e-05, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(1, 0.000560358, -0.000560358, 1, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "ears",
+      "targetMs": 1750,
+      "actualMs": 1758.9000000059605,
+      "action": "rest",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "requestedAction": "sniff",
+      "targetMs": 250,
+      "actualMs": 260.5,
+      "action": "sniff",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(0.999336, -0.0364242, 0.0364242, 0.999336, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999973, -0.00734511, 0.00734511, 0.999973, 0, 0.420848)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "sniff",
+      "targetMs": 550,
+      "actualMs": 559.1000000014901,
+      "action": "sniff",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(0.999764, 0.0217237, -0.0217237, 0.999764, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.998158, -0.0606672, 0.0606672, 0.998158, 0.239054, 3.47811)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "requestedAction": "sniff",
+      "targetMs": 850,
+      "actualMs": 858.8999999985099,
+      "action": "sniff",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(0.999973, 0.00728299, -0.00728299, 0.999973, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999013, -0.0444211, 0.0444211, 0.999013, 0.636494, 3.18247)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "requestedAction": "sniff",
+      "targetMs": 1750,
+      "actualMs": 1758.3999999985099,
+      "action": "rest",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "requestedAction": "wave",
+      "targetMs": 250,
+      "actualMs": 257.29999999701977,
+      "action": "wave",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(0.99741, -0.0719251, 0.0719251, 0.99741, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "matrix(0.970769, -0.240017, 0.240017, 0.970769, 0, 0)"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999951, -0.00989865, 0.00989865, 0.999951, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(0.999906, 0.0136822, -0.0136822, 0.999906, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(0.999974, -0.00725974, 0.00725974, 0.999974, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "wave",
+      "targetMs": 550,
+      "actualMs": 564,
+      "action": "wave",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(0.970776, 0.239989, -0.239989, 0.970776, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "matrix(-0.132377, -0.991199, 0.991199, -0.132377, 0, 0)"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.99683, -0.0795672, 0.0795672, 0.99683, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(0.999799, -0.0200701, 0.0200701, 0.999799, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(0.999467, 0.0326376, -0.0326376, 0.999467, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "wave",
+      "targetMs": 850,
+      "actualMs": 858.6000000014901,
+      "action": "wave",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(0.999745, 0.0225687, -0.0225687, 0.999745, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "matrix(0.778046, -0.628207, 0.628207, 0.778046, 0, 0)"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999648, 0.026546, -0.026546, 0.999648, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(1, -2.16695e-05, 2.16695e-05, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(1, 0.000568112, -0.000568112, 1, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "wave",
+      "targetMs": 1750,
+      "actualMs": 1758.5,
+      "action": "rest",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "requestedAction": "stretch",
+      "targetMs": 250,
+      "actualMs": 259.19999999552965,
+      "action": "stretch",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "matrix(0.998183, 0, 0, 1.00187, 0, -0.121106)"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999995, 0.00317054, -0.00317054, 0.999995, 0, -0.121106)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(0.999873, 0.0159616, -0.0159616, 0.999873, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(0.999964, -0.00846913, 0.00846913, 0.999964, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "stretch",
+      "targetMs": 550,
+      "actualMs": 555.8999999985099,
+      "action": "stretch",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "matrix(0.986369, 0, 0, 1.01405, 0, -0.908759)"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999717, 0.023789, -0.023789, 0.999717, 0, -0.908759)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(0.999797, -0.0201649, 0.0201649, 0.999797, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(0.999502, 0.0315607, -0.0315607, 0.999502, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "stretch",
+      "targetMs": 850,
+      "actualMs": 857.8999999985099,
+      "action": "stretch",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "matrix(0.975559, 0, 0, 1.0252, 0, -1.6294)"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.99909, 0.0426447, -0.0426447, 0.99909, 0, -1.6294)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(1, -2.15818e-05, 2.15818e-05, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(1, 0.000567629, -0.000567629, 1, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "stretch",
+      "targetMs": 1750,
+      "actualMs": 1756.3999999985099,
+      "action": "rest",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "requestedAction": "celebrate",
+      "targetMs": 250,
+      "actualMs": 255.89999999850988,
+      "action": "celebrate",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "matrix(0.985339, 0, 0, 1.01489, 0, -6.94204)"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(0.995286, -0.096979, 0.096979, 0.995286, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999606, -0.0280816, 0.0280816, 0.999606, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(0.999835, 0.0181636, -0.0181636, 0.999835, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(0.999958, -0.00917128, 0.00917128, 0.999958, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "celebrate",
+      "targetMs": 550,
+      "actualMs": 556.1999999955297,
+      "action": "celebrate",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "matrix(0.999179, 0, 0, 1.00082, 0, 0)"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(0.9876, -0.156988, 0.156988, 0.9876, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(0.999858, 0.0168702, -0.0168702, 0.999858, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(0.999705, -0.024295, 0.024295, 0.999705, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(0.999878, -0.0155886, 0.0155886, 0.999878, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "celebrate",
+      "targetMs": 850,
+      "actualMs": 859.0999999940395,
+      "action": "celebrate",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "matrix(1.00003, 0, 0, 0.999973, 0, 0)"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "matrix(0.999975, 0.00702498, -0.00702498, 0.999975, 0, 0)"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "matrix(1, 4.95155e-08, -4.95155e-08, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "matrix(1, -2.40445e-05, 2.40445e-05, 1, 0, 0)"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "matrix(1, 0.000580925, -0.000580925, 1, 0, 0)"
+        }
+      ]
+    },
+    {
+      "requestedAction": "celebrate",
+      "targetMs": 1750,
+      "actualMs": 1756.3999999985099,
+      "action": "rest",
+      "parts": [
+        {
+          "part": "n-mascot-body",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-tail",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-left",
+          "transform": "none"
+        },
+        {
+          "part": "n-mascot-paw is-right",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-head",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-left",
+          "transform": "none"
+        },
+        {
+          "part": "dog-character-ear is-right",
+          "transform": "none"
+        }
+      ]
+    }
+  ],
+  "automatic": [
+    "curious",
+    "glance"
+  ],
+  "errors": []
+}

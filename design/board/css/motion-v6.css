@@ -1,0 +1,12 @@
+/* Motion v6 · board-only helpers for js/motion-v6.js. No layout changes at rest. */
+.v6-w { display: inline-block; }
+.v6-reel { display: inline-block; position: relative; height: 1lh; overflow: hidden; vertical-align: bottom; font-variant-numeric: tabular-nums; }
+.v6-reel-hold { display: block; height: 1lh; visibility: hidden; }
+.v6-reel-col { position: absolute; inset: 0 0 auto 0; display: block; }
+.v6-reel-col > span { display: block; height: 1lh; line-height: 1lh; text-align: center; }
+.v6-reel-ch { white-space: pre; }
+.v6-eye, .v6-gesture { transform-box: fill-box; transform-origin: 50% 50%; }
+.bl-status > .v6-gesture[data-icon="bell"], .bl-status > .v6-gesture[data-icon="alarm-clock"], .v6-gesture[data-icon="phone"] { transform-origin: 50% 8%; }
+/* Until the pass starts, only the chrome is visible: no finished frame flashes before its entrance. */
+.v6-pending .bl-stack > :not(.bl-brand, .bl-back, .guide-nav, .v4-editor-top) { opacity: 0; }
+.v6-pending .v4-editor-footer { opacity: 0; }

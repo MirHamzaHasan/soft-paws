@@ -1,0 +1,145 @@
+{
+  "frames": [
+    {
+      "name": "plan",
+      "targetMs": 225,
+      "actualMs": 227,
+      "screen": "next-plan",
+      "textVisible": 1
+    },
+    {
+      "name": "plan",
+      "targetMs": 450,
+      "actualMs": 455,
+      "screen": "next-plan",
+      "textVisible": 1
+    },
+    {
+      "name": "plan",
+      "targetMs": 675,
+      "actualMs": 676,
+      "screen": "next-plan",
+      "textVisible": 1
+    },
+    {
+      "name": "plan",
+      "targetMs": 1800,
+      "actualMs": 1801,
+      "screen": "next-plan",
+      "textVisible": 1
+    },
+    {
+      "name": "pick-and-page",
+      "targetMs": 90,
+      "actualMs": 98,
+      "screen": "next-stage",
+      "textVisible": 1
+    },
+    {
+      "name": "pick-and-page",
+      "targetMs": 180,
+      "actualMs": 208,
+      "screen": "next-stage",
+      "textVisible": 1
+    },
+    {
+      "name": "pick-and-page",
+      "targetMs": 340,
+      "actualMs": 341,
+      "screen": "next-stage",
+      "textVisible": 1
+    },
+    {
+      "name": "pick-and-page",
+      "targetMs": 580,
+      "actualMs": 582,
+      "screen": "next-breed",
+      "textVisible": 1
+    },
+    {
+      "name": "pick-and-page",
+      "targetMs": 920,
+      "actualMs": 922,
+      "screen": "next-breed",
+      "textVisible": 1
+    },
+    {
+      "name": "practice",
+      "targetMs": 115,
+      "actualMs": 116,
+      "screen": "next-practice",
+      "textVisible": 1
+    },
+    {
+      "name": "practice",
+      "targetMs": 230,
+      "actualMs": 232,
+      "screen": "next-practice",
+      "textVisible": 1
+    },
+    {
+      "name": "practice",
+      "targetMs": 345,
+      "actualMs": 346,
+      "screen": "next-practice",
+      "textVisible": 1
+    },
+    {
+      "name": "practice",
+      "targetMs": 650,
+      "actualMs": 651,
+      "screen": "next-practice",
+      "textVisible": 1
+    },
+    {
+      "name": "reply",
+      "targetMs": 160,
+      "actualMs": 162,
+      "screen": "next-chat",
+      "textVisible": 1
+    },
+    {
+      "name": "reply",
+      "targetMs": 400,
+      "actualMs": 401,
+      "screen": "next-chat",
+      "textVisible": 1
+    },
+    {
+      "name": "reply",
+      "targetMs": 720,
+      "actualMs": 722,
+      "screen": "next-chat",
+      "textVisible": 1
+    },
+    {
+      "name": "reply",
+      "targetMs": 1700,
+      "actualMs": 1700,
+      "screen": "next-chat",
+      "textVisible": 1
+    }
+  ],
+  "reduced": [
+    {
+      "transform": "none",
+      "opacity": "1"
+    },
+    {
+      "transform": "none",
+      "opacity": "1"
+    },
+    {
+      "transform": "none",
+      "opacity": "1"
+    },
+    {
+      "transform": "none",
+      "opacity": "1"
+    },
+    {
+      "transform": "none",
+      "opacity": "1"
+    }
+  ]
+}

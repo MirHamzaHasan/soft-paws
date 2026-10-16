@@ -1,0 +1,33 @@
+{
+  "flows": [
+    {
+      "index": 0,
+      "id": "0f538b27-9afb-4f7f-8c52-d10f51e3218e",
+      "name": "Chats",
+      "actions": [],
+      "screen_count": 3,
+      "mobbin_url": "https://mobbin.com/flows/0f538b27-9afb-4f7f-8c52-d10f51e3218e",
+      "app_name": "ChatGPT",
+      "platform": "ios",
+      "screens": [
+        {
+          "screen_id": "15f81149-38a2-45fa-aa37-58edfe23f5a7",
+          "image_url": "https://mobbin.com/api/mcp/short/scCR4OF0",
+          "position": 1
+        },
+        {
+          "screen_id": "c4725fda-de1b-4431-9667-9673b669e7a6",
+          "image_url": "https://mobbin.com/api/mcp/short/UOC8p8dG",
+          "position": 2
+        },
+        {
+          "screen_id": "0bc8ba87-c419-4587-afae-d2cbd17230ae",
+          "image_url": "https://mobbin.com/api/mcp/short/JWJTAN74",
+          "position": 3
+        }
+      ]
+    }
+  ],
+  "page": 1,
+  "has_next_page": true
+}

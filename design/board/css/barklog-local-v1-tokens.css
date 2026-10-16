@@ -1,0 +1,62 @@
+/* Proposed local-v1 board tokens. Kept separate from the October 14 approved native export. */
+:root {
+  /* Board-only visual direction. These do not feed the approved Compose token export. */
+  --ground: #FFF8F1; --panel: #FFFDF9; --inset: #F4EAE1; --hover: #EADBCF; --sunken: #F7EEE6;
+  --hair: #E4D4C7; --hair-2: #9B7868; --ink-strong: #2B1913; --ink: #3B271F; --ink-muted: #705A50; --ink-quiet: #80685D;
+  --accent: #B94728; --accent-text: #A23E24; --accent-soft: #F9E1D5; --accent-line: #C96A4B;
+  --btn: #A84228; --btn-down: #8E321E; --btn-ink: #FFFDFC;
+  --good: #1F6B47; --bad: #B52B35; --warn: #855800; --info: #315C9B;
+  --good-soft: #DDEFE5; --bad-soft: #F8DEE0; --warn-soft: #F8E9C5; --info-soft: #DFE9F7;
+  --glass: #FFFDF9; --glass-line: #E4D4C7; --home-ind: #2B1913;
+  --r-card: 22px; --r-row: 18px; --r-tile: 14px; --control: 54px; --gutter: 22px;
+  --poop-bg: #F9E2D4; --poop-line: #DCA98A; --poop-ink: #703619;
+  --pee-bg: #DCEBFA; --pee-line: #A8C9EA; --pee-ink: #164770;
+  --meal-bg: #E3EED1; --meal-line: #B9D192; --meal-ink: #34531B;
+  --walk-bg: #FCE7B5; --walk-line: #E5BE68; --walk-ink: #684607;
+  --mood-bg: #EDE2F7; --mood-line: #C8AEDF; --mood-ink: #583B80;
+  --symptom-bg: #F7DDDF; --symptom-line: #DFA2A8; --symptom-ink: #7B2631;
+  --behavior-bg: #F9E0C8; --behavior-line: #E4B37E; --behavior-ink: #74410D;
+  --grooming-bg: #D9EEE6; --grooming-line: #A0CDBE; --grooming-ink: #175843;
+  --weight-bg: #EDE7D9; --weight-line: #C9BEA4; --weight-ink: #4C4433;
+  --medication-bg: #E8E1F7; --medication-line: #C1AFE4; --medication-ink: #493478;
+  --training-bg: #DDEEE1; --training-line: #A9D0B1; --training-ink: #245B32;
+  --photo-bg: #DDEAF5; --photo-line: #ACC9E0; --photo-ink: #234F72;
+  --status-good: #1F6B47; --status-good-soft: #DDEFE5;
+  --status-bad: #A82933; --status-bad-soft: #F8DEE0;
+  --status-warn: #7B5200; --status-warn-soft: #F8E9C5;
+  --status-info: #315C9B; --status-info-soft: #DFE9F7;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --ground: #17100D; --panel: #211714; --inset: #30211C; --hover: #443029; --sunken: #1B1210;
+    --hair: #4A342C; --hair-2: #B99382; --ink-strong: #FFF4EC; --ink: #F2E3DA; --ink-muted: #C0A89B; --ink-quiet: #A98F82;
+    --accent: #FF9A70; --accent-text: #FFA47C; --accent-soft: #43261D; --accent-line: #D86F49;
+    --btn: #F08158; --btn-down: #D96C45; --btn-ink: #24120C;
+    --good: #8BD3A8; --bad: #FF9A9F; --warn: #F1C66B; --info: #9CBEF1;
+    --good-soft: #193126; --bad-soft: #402124; --warn-soft: #3B2E13; --info-soft: #1E2D43;
+    --glass: #211714; --glass-line: #4A342C; --home-ind: #FFF4EC;
+    --medication-bg: #302844; --medication-line: #61517F; --medication-ink: #D9C8FA;
+    --training-bg: #1D3224; --training-line: #3D6949; --training-ink: #B9E2C2;
+    --photo-bg: #1C3040; --photo-line: #3B617A; --photo-ink: #B6D8EE;
+    --status-good: #9CDEB7; --status-good-soft: #193126;
+    --status-bad: #FFB2B7; --status-bad-soft: #402124;
+    --status-warn: #F1C66B; --status-warn-soft: #3B2E13;
+    --status-info: #B6D2F8; --status-info-soft: #1E2D43;
+  }
+}
+:root[data-theme='dark'] {
+  --ground: #17100D; --panel: #211714; --inset: #30211C; --hover: #443029; --sunken: #1B1210;
+  --hair: #4A342C; --hair-2: #B99382; --ink-strong: #FFF4EC; --ink: #F2E3DA; --ink-muted: #C0A89B; --ink-quiet: #A98F82;
+  --accent: #FF9A70; --accent-text: #FFA47C; --accent-soft: #43261D; --accent-line: #D86F49;
+  --btn: #F08158; --btn-down: #D96C45; --btn-ink: #24120C;
+  --good: #8BD3A8; --bad: #FF9A9F; --warn: #F1C66B; --info: #9CBEF1;
+  --good-soft: #193126; --bad-soft: #402124; --warn-soft: #3B2E13; --info-soft: #1E2D43;
+  --glass: #211714; --glass-line: #4A342C; --home-ind: #FFF4EC;
+  --medication-bg: #302844; --medication-line: #61517F; --medication-ink: #D9C8FA;
+  --training-bg: #1D3224; --training-line: #3D6949; --training-ink: #B9E2C2;
+  --photo-bg: #1C3040; --photo-line: #3B617A; --photo-ink: #B6D8EE;
+  --status-good: #9CDEB7; --status-good-soft: #193126;
+  --status-bad: #FFB2B7; --status-bad-soft: #402124;
+  --status-warn: #F1C66B; --status-warn-soft: #3B2E13;
+  --status-info: #B6D2F8; --status-info-soft: #1E2D43;
+}

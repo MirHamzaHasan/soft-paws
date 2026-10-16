@@ -1,0 +1,77 @@
+/* Guided first run: original BarkLog art, real parts, user-paced motion. */
+.ph.bark { --task-bg:var(--grooming-bg); --task-ink:var(--grooming-ink); --task-line:var(--grooming-line); }
+.v5-select-btn { display:flex; align-items:center; justify-content:space-between; width:100%; text-align:left; min-height:52px; color:var(--ink); gap:10px; }
+.v5-select-btn > span { min-width:0; overflow-wrap:anywhere; }
+.v5-select-btn > svg { flex:none; }
+.bark.guide .bl-stack { gap:22px; }
+.guide-nav { display:flex; align-items:center; gap:12px; min-height:48px; }
+.guide-nav .bl-link { flex:none; }
+.guide-track { height:3px; background:var(--hair); flex:1; border-radius:3px; overflow:hidden; }
+.guide-track > i { display:block; height:100%; background:var(--accent); transform-origin:left; }
+.guide-kicker { color:var(--ink-muted); font-size:calc(10px * var(--text-scale)); letter-spacing:1.6px; font-weight:500; }
+.guide-avatar-sample { display:block; overflow:hidden; border-radius:28%; flex:none; }
+.guide-avatar-sample .bl-photo,.guide-avatar-sample .bl-photo-scene { width:100%; height:100%; min-height:0; border-radius:inherit; }
+.guide-avatar-sample .bl-photo-dog { width:85%; height:90%; }
+.guide-avatar-sample .bl-photo-dog svg { width:100%; height:100%; }
+.guide-avatar-sample figcaption { display:none; }
+.guide .bl-heading h1 { font-size:calc(36px * var(--text-scale)); line-height:1.07; letter-spacing:-1.5px; }
+.guide .bl-heading .bl-sub { font-size:calc(13px * var(--text-scale)); }
+.guide-identity { display:flex; align-items:center; gap:15px; }
+.guide-dog { display:grid; place-items:center; width:100px; height:100px; border-radius:34px; background:var(--meal-bg); border:1px solid var(--meal-line); flex:none; }
+.guide .bl-btn { width:100%; }
+.guide-options { display:flex; flex-direction:column; gap:10px; }
+.guide-option { display:flex; align-items:center; text-align:left; gap:13px; width:100%; padding:16px !important; border-radius:20px; border:1px solid var(--hair) !important; background:var(--panel) !important; color:var(--ink) !important; min-height:76px; isolation:isolate; overflow:hidden; }
+.guide-option .v4-log-mark { width:45px; height:45px; border-radius:15px; }
+.guide-option-copy { display:flex; flex-direction:column; flex:1; gap:3px; }
+.guide-option strong { font-size:calc(15px * var(--text-scale)); font-weight:500; }
+.guide-option small { font-size:calc(11px * var(--text-scale)); line-height:1.4; color:var(--ink-muted); }
+.guide-option[aria-pressed='true'] { border-color:var(--accent) !important; background:var(--accent-soft) !important; }
+.guide-option-check { width:22px; height:22px; display:grid; place-items:center; border:1px solid var(--hair-2); border-radius:50%; flex:none; }
+.guide-option[aria-pressed='true'] .guide-option-check { color:var(--btn-ink); background:var(--btn); border-color:var(--btn); }
+.guide-option-check svg { visibility:hidden; }
+.guide-option[aria-pressed='true'] .guide-option-check svg { visibility:visible; }
+.guide-breeds { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.guide-breed { display:flex; flex-direction:column; align-items:center; gap:12px; padding:20px 10px !important; min-height:155px; border:1px solid var(--hair) !important; background:var(--panel) !important; color:var(--ink) !important; border-radius:24px; font-size:calc(13px * var(--text-scale)); }
+.guide-breed:nth-child(2) { background:var(--walk-bg) !important; }
+.guide-breed:nth-child(3) { background:var(--photo-bg) !important; }
+.guide-breed:nth-child(4) { background:var(--mood-bg) !important; }
+.guide-breed[aria-pressed='true'] { outline:2px solid var(--accent); outline-offset:2px; }
+.guide-practice { position:relative; border:1px solid var(--walk-line); background:var(--walk-bg); border-radius:26px; padding:20px; display:flex; flex-direction:column; gap:12px; }
+.guide-practice h2,.guide-practice .bl-caption { color:var(--walk-ink); }
+.guide-practice .v4-log-mark { align-self:center; width:76px; height:76px; border-radius:24px; }
+.guide-practice .dl { margin-top:6px; }
+.guide-notes textarea { min-height:144px; line-height:1.7; }
+.guide-record { border-radius:24px; border:1px solid var(--hair); background:var(--panel); overflow:hidden; }
+.guide-record-top { display:flex; gap:10px; padding:18px; align-items:center; border-bottom:1px solid var(--hair); }
+.guide-record .v3-row { border:0; width:100%; }
+.guide-note-paper { padding:0 20px 20px; font-size:calc(14px * var(--text-scale)); line-height:1.6; color:var(--ink); white-space:pre-wrap; overflow-wrap:anywhere; }
+.guide-storage { background:var(--photo-bg); color:var(--photo-ink); border:1px solid var(--photo-line); border-radius:28px; padding:25px 20px; display:flex; flex-direction:column; align-items:center; gap:16px; }
+.guide-file { width:92px; height:108px; border:2px solid var(--photo-ink); border-radius:13px 29px 13px 13px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:var(--panel); color:var(--photo-ink); transform:rotate(-6deg); }
+.guide-file small { font-size:calc(10px * var(--text-scale)); }
+.guide-facts { display:flex; flex-direction:column; gap:15px; }
+.guide-fact { display:flex; align-items:flex-start; gap:12px; font-size:calc(13px * var(--text-scale)); line-height:1.6; }
+.guide-fact svg { flex:none; margin-top:3px; color:var(--accent-text); }
+.guide-fact strong { display:block; font-weight:500; }
+.guide-home-shortcuts { display:flex; flex-direction:column; gap:10px; }
+.guide-home-shortcuts > div { display:flex; gap:8px; flex-wrap:wrap; }
+.guide-home-shortcuts button { display:flex; align-items:center; gap:8px; min-height:48px; background:var(--panel) !important; border:1px solid var(--hair) !important; border-radius:15px; padding:10px 13px !important; font-size:calc(12px * var(--text-scale)); }
+.guide-home-shortcuts svg { color:var(--accent-text); }
+.guide-ready-values { display:flex; flex-wrap:wrap; gap:8px; }
+.guide-ready-values span { padding:8px 12px; border:1px solid var(--hair); background:var(--panel); border-radius:12px; font-size:calc(12px * var(--text-scale)); }
+.guide-photo .bl-photo { max-height:180px; }
+@media(max-height:720px) { .guide .bl-stack { gap:18px; } }
+/* Real phone-size reflow is opt-in via ?phone=375x667, not a scaled 390px screenshot. */
+.solo { width:var(--review-phone-width,390px); height:var(--review-phone-height,844px); }
+.solo > .ph,.player-fit > .ph { width:100%; height:100%; }
+.player-fit { width:var(--review-phone-width,390px); height:var(--review-phone-height,844px); }
+.player-frame { width:calc(var(--review-phone-width,390px) * var(--ps)); height:calc(var(--review-phone-height,844px) * var(--ps)); }
+:root[data-phone='compact'] .v3-open { padding:56px 20px 32px; overflow:auto; }
+:root[data-phone='compact'] .v3-open > * { flex-shrink:0; }
+:root[data-phone='compact'] .v3-open-stage { flex:none; height:auto; min-height:0; display:flex; flex-direction:column; gap:12px; align-items:center; margin-bottom:18px; }
+:root[data-phone='compact'] .v3-open-dog { position:relative; left:auto; top:auto; width:84px; height:92px; margin-left:0; }
+:root[data-phone='compact'] .v3-open-dog svg { width:80px; height:80px; }
+:root[data-phone='compact'] .v3-open-card { position:relative; top:auto; width:100%; padding:12px; }
+:root[data-phone='compact'] .v3-open-card .dl-track { height:64px; }
+:root[data-phone='compact'] .v3-open-words { min-height:0; }
+:root[data-phone='compact'] .v3-open-src { top:86px; }
+:root[data-phone='compact'] .v3-open-card-head { flex-wrap:wrap; gap:0 8px; }

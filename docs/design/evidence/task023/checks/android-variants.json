@@ -1,0 +1,37 @@
+[
+  {
+    "variant": "light",
+    "textScale": 1,
+    "dark": false,
+    "screen": "home",
+    "sha256": "a066d601cd145996bfd33af3c3290fbd3c3bab3ccbbb570ca8ec3adf69a1549f"
+  },
+  {
+    "variant": "dark",
+    "textScale": 1,
+    "dark": true,
+    "screen": "home",
+    "sha256": "3e2dc2b0857e99dc5f9d537b195c1c191de66e94e7fc6925e0c7c539eb757c41"
+  },
+  {
+    "variant": "text130",
+    "textScale": 1.3,
+    "dark": false,
+    "screen": "home",
+    "sha256": "915c72b9f5029e872e187edc06d15cb3ba790371ff60a98854f17e7e1bfce48c"
+  },
+  {
+    "variant": "reduced",
+    "textScale": 1,
+    "dark": false,
+    "screen": "reduced-motion-state",
+    "sha256": "0ea6e6a1ecb375bce45651d189c62bde1cc3f611ab1c7e0176c837425c45ce42"
+  },
+  {
+    "variant": "empty",
+    "textScale": 1,
+    "dark": false,
+    "screen": "home-empty",
+    "sha256": "b70601149eeeb7a3b1a58b4691a8dafc71eb863e8a5fb5aec5142c64dc0d4a12"
+  }
+]

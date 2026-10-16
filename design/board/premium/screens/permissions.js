@@ -1,0 +1,27 @@
+(() => {
+  const N=window.NEXT,{F,B,h}=N;
+  N.def({id:'next-permissions',section:'next-onboarding',name:'Notifications · permission and on/off switches',intent:'A notification switch opens the native authorization preview and reflects the returned result. Reminder types are separate choices; denial remains usable.',build(ctx){
+    const s=N.state(ctx),body=N.frame(ctx,{back:'next-reminder',step:16});s.notifyTypes??={checkIn:true,tasks:false,medication:false};if(!s.days.length)s.notifyTypes.checkIn=false;let pending=false;
+    const status=h('p.n-permission-status',{role:'status','aria-live':'polite'}),preview=h('div.n-notification-preview',{'aria-label':'Example care notification'},h('span.n-notification-icon',B.paw(22)),h('div',h('div.n-notification-title',h('strong','BarkLog'),h('small',s.time)),h('strong','A moment for '+N.name(ctx)),h('p','A quick check-in, then back to your day.'))),preferences=h('div.n-notification-options');
+    const changeFromSettings=()=>{
+      const settingsStatus=h('p.bl-caption'),control=N.switch(ctx,{label:'Allow notifications in Settings preview',on:s.notifications==='allowed',onToggle:()=>{const on=s.notifications!=='allowed';s.notifications=on?'allowed':'denied';s.remindersEnabled=on;control.set(on);settingsStatus.textContent=on?'Notifications allowed':'Notifications not allowed';paint();}});
+      settingsStatus.textContent=s.notifications==='allowed'?'Notifications allowed':'Notifications not allowed';
+      N.modal(ctx,{title:'Notifications · Settings preview',body:[h('p.bl-caption','System Settings → BarkLog → Notifications'),h('div.n-switch-row',h('div',h('strong','Allow notifications'),h('p.bl-caption','This preview models the change in Settings.')),control.button),settingsStatus],actions:close=>[N.button(ctx,'Return to setup',close)]});
+    };
+    const permission=N.switch(ctx,{label:'Care notifications',on:s.notifications==='allowed'&&s.remindersEnabled,onToggle:()=>{
+      if(pending)return;
+      if(s.notifications==='allowed'){s.remindersEnabled=!s.remindersEnabled;paint();return;}
+      if(s.notifications==='denied'){changeFromSettings();return;}
+      pending=true;paint();N.native(ctx,'notifications',result=>{pending=false;s.notifications=result;s.remindersEnabled=result==='allowed';paint();if(result==='allowed'&&!F.reduced())F.move(preview,{y:10,o:.5},{y:0,o:1},{duration:420,curve:'emph',ctx,fill:'backwards'});});
+    }});
+    const settings=N.link(ctx,'Open Settings',changeFromSettings);
+    const rows=[['checkIn','Daily check-in',s.days.length?`${s.days.length} days · ${s.time}`:'Choose check-in days first'],['tasks','Care tasks & appointments','For the reminders you add to a task'],['medication','Medication plans','For reminders in your existing care plans']];
+    rows.forEach(([key,title,sub])=>{const control=N.switch(ctx,{label:title,on:s.notifyTypes[key],onToggle:()=>{if(key==='checkIn'&&!s.days.length){B.toast(ctx,'Choose check-in days first.');return;}s.notifyTypes[key]=!s.notifyTypes[key];control.set(s.notifyTypes[key]);}});preferences.append(h('div.n-switch-row',h('div',h('strong',title),h('p.bl-caption',sub)),control.button));});
+    const paint=()=>{const enabled=s.notifications==='allowed'&&s.remindersEnabled;permission.set(enabled,{pending});status.textContent=pending?'Waiting for your choice in the system sheet…':s.notifications==='denied'?'Not allowed · you can change this in Settings.':s.notifications==='allowed'?(enabled?'Allowed · choose your reminder types below.':'Permission allowed · reminders are off.'):'Off · turn on to choose access in the system sheet.';settings.hidden=s.notifications!=='denied';preferences.hidden=!enabled;};
+    const notification=h('section.n-permission.n-notification-card',h('div.n-switch-row',h('div',h('strong','Care notifications'),h('p.bl-caption','The reminders you choose, at the times you set.')),permission.button),preview,status,settings,preferences);paint();
+    const photoStatus=h('p.bl-caption',s.photo?'Photo selected':'No photo selected'),photoAdded=()=>photoStatus.textContent='Photo selected';
+    const cameraStatus=h('p.bl-caption',s.camera==='allowed'?'Camera allowed':s.camera==='denied'?'Camera not allowed':'Camera not requested');
+    const camera=()=>{if(s.camera==='allowed'){N.picker(ctx,photoAdded);return;}if(s.camera==='denied'){N.modal(ctx,{title:'Camera access is off',body:[h('p','Camera access can be changed in your phone’s Settings. You can still choose a photo instead.')],actions:close=>[N.button(ctx,'Choose a photo',()=>{close();N.picker(ctx,photoAdded);}),N.button(ctx,'Back to setup',close,{secondary:true})]});return;}N.native(ctx,'camera',result=>{s.camera=result;cameraStatus.textContent=result==='allowed'?'Camera allowed':result==='denied'?'Camera not allowed':'Camera not requested';if(result==='allowed')N.picker(ctx,photoAdded);});};
+    body.append(N.head('A nudge when it helps.','Turn notifications on, then choose what you want.'),notification,h('section.n-permission',h('div.n-permission-head',N.icon('image',25),h('div',h('strong','Their photo, your choice'),h('p.bl-caption','Choose one photo or take a new one.'))),h('div.n-photo-actions',N.button(ctx,'Choose photo',()=>N.picker(ctx,photoAdded),{secondary:true}),N.button(ctx,'Take photo',camera,{secondary:true})),photoStatus,cameraStatus),N.foot(N.button(ctx,'Review dog details',()=>N.go(ctx,'next-context-review'))));N.enter(ctx,body);
+  }});
+})();

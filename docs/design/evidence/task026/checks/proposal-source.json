@@ -1,0 +1,18 @@
+{
+  "fingerprint": "444a36811ac85165d3a341ba17dfcd279086dfabb4f4c32a89c5aab84f514d96",
+  "files": {
+    "design/board/premium/config.js": "0b3c307c0b56b449fc4747ddf0405414a6619f6710eac26c80aa0853f15b0e62",
+    "design/board/premium/context.js": "cc6ef5888ec35adb0268a704c29729f8327068c9cb05d590f013e44bb74b518e",
+    "design/board/premium/index.html": "ce881a1ebf53f96197d22e2d3013c8a6c4c7e8c010b3e4ce6f33b10c18540b63",
+    "design/board/premium/mascot.js": "9fbc991c84db2a81dd371a2d02f40202a82a7200e5d42d14c003eb0a55134ac6",
+    "design/board/premium/parts.js": "18ae0b15fccc50dc973c12f14109a80a2512b0ee7f5eda206315636265eac1a0",
+    "design/board/premium/premium.css": "4219a5e96b349f8bd293d663f9c48a95d67879f3267f29732b4fef8da8796ea3",
+    "design/board/premium/review.js": "96ad6f1e56cc01851f52b534f40cd570b75cd07f4f36727b6d605751827c11b1",
+    "design/board/premium/screens/account.js": "3d77e26f6dcdeaf2b179edce7ba5365bbc399309ccafc13127ff0e1387fec21d",
+    "design/board/premium/screens/chat.js": "5d780c01f3cb9e57420e5f8bcf3028721c0b695f156bfc4c6485c75bf156a289",
+    "design/board/premium/screens/dog-details.js": "b3e9149206588d7ba021df8bdba7acf1824a003d23bd2ab3d0245720437dbffe",
+    "design/board/premium/screens/onboarding.js": "496a502457fc85f85745b3c1afcc95aca422a81986b2f3c315c686388abdd476",
+    "design/board/premium/screens/permissions.js": "fb53d4b28e4601e3a70e7006fc9b2cd638499b8ce2423d9df24ae0c83e676907",
+    "design/board/premium/screens/premium.js": "4701713ba79528d8327d3f17d5a63127e0edbb92a3ccfe5ae52b47f7134d7eda"
+  }
+}

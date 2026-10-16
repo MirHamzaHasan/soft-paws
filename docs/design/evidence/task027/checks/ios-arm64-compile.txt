@@ -1,0 +1,45 @@
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:downloadKotlinNativeDistribution UP-TO-DATE
+> Task :shared:convertXmlValueResourcesForAppleMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForAppleMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForAppleMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForAppleMain NO-SOURCE
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain UP-TO-DATE
+> Task :shared:prepareComposeResourcesTaskForCommonMain UP-TO-DATE
+> Task :shared:generateResourceAccessorsForCommonMain UP-TO-DATE
+> Task :shared:convertXmlValueResourcesForIosArm64Main NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForIosArm64Main NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForIosArm64Main NO-SOURCE
+> Task :shared:generateResourceAccessorsForIosArm64Main NO-SOURCE
+> Task :shared:convertXmlValueResourcesForIosMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForIosMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForIosMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForIosMain NO-SOURCE
+> Task :shared:convertXmlValueResourcesForNativeMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForNativeMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForNativeMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForNativeMain NO-SOURCE
+> Task :shared:generateActualResourceCollectorsForIosArm64Main UP-TO-DATE
+> Task :shared:generateCommonMainBarkLogDatabaseInterface UP-TO-DATE
+> Task :shared:generateComposeResClass UP-TO-DATE
+> Task :shared:generateExpectResourceCollectorsForCommonMain UP-TO-DATE
+
+> Task :shared:compileKotlinIosArm64
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionAccount.kt:54:78 Unnecessary non-null assertion (!!) on a non-null receiver of type 'String'.
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/components/BarkIcon.kt:46:5 'when' is exhaustive so 'else' is redundant here.
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/TimelineScreen.kt:85:193 Unnecessary non-null assertion (!!) on a non-null receiver of type 'Long'.
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/TimelineScreen.kt:85:265 Unnecessary non-null assertion (!!) on a non-null receiver of type 'Long'.
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/iosMain/kotlin/com/dracoarts/shared/IosDeviceServices.kt:277:29 This cast can never succeed.
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/iosMain/kotlin/com/dracoarts/shared/IosDeviceServices.kt:289:55 This cast can never succeed.
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/iosMain/kotlin/com/dracoarts/shared/IosDeviceServices.kt:292:34 This cast can never succeed.
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/iosMain/kotlin/com/dracoarts/shared/IosDeviceServices.kt:294:57 This cast can never succeed.
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/iosMain/kotlin/com/dracoarts/shared/IosDeviceServices.kt:297:62 This cast can never succeed.
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/iosMain/kotlin/com/dracoarts/shared/IosDeviceServices.kt:299:44 This cast can never succeed.
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/iosMain/kotlin/com/dracoarts/shared/IosDeviceServices.kt:303:26 This cast can never succeed.
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/iosMain/kotlin/com/dracoarts/shared/IosDeviceServices.kt:315:71 This cast can never succeed.
+w: file:///Users/mirhamzahasan/Documents/DracoArts/draco-apps/bark-log/shared/src/iosMain/kotlin/com/dracoarts/shared/IosDeviceServices.kt:316:36 This cast can never succeed.
+
+BUILD SUCCESSFUL in 15s
+10 actionable tasks: 2 executed, 8 up-to-date

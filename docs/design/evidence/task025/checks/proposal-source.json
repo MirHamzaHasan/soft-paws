@@ -1,0 +1,17 @@
+{
+  "fingerprint": "730028274d55a26120285fea166a43aa741f35d72c5b30476548eb1b7d07de6c",
+  "files": {
+    "design/board/premium/config.js": "0b3c307c0b56b449fc4747ddf0405414a6619f6710eac26c80aa0853f15b0e62",
+    "design/board/premium/context.js": "cc6ef5888ec35adb0268a704c29729f8327068c9cb05d590f013e44bb74b518e",
+    "design/board/premium/index.html": "6f8f23a12a9f6eda7f09e6baf31579f7187c94531729f80d1d97b46c9f784897",
+    "design/board/premium/parts.js": "18ae0b15fccc50dc973c12f14109a80a2512b0ee7f5eda206315636265eac1a0",
+    "design/board/premium/premium.css": "ce534a9541540ca82362eece1956ff30db365df2283384ab00d7efe5a0b99a44",
+    "design/board/premium/review.js": "96ad6f1e56cc01851f52b534f40cd570b75cd07f4f36727b6d605751827c11b1",
+    "design/board/premium/screens/account.js": "3d77e26f6dcdeaf2b179edce7ba5365bbc399309ccafc13127ff0e1387fec21d",
+    "design/board/premium/screens/chat.js": "9729c782072e2cf8ff9b6c5515cda25569e99d3138336fa360935da1eb733d9d",
+    "design/board/premium/screens/dog-details.js": "b3e9149206588d7ba021df8bdba7acf1824a003d23bd2ab3d0245720437dbffe",
+    "design/board/premium/screens/onboarding.js": "496a502457fc85f85745b3c1afcc95aca422a81986b2f3c315c686388abdd476",
+    "design/board/premium/screens/permissions.js": "fb53d4b28e4601e3a70e7006fc9b2cd638499b8ce2423d9df24ae0c83e676907",
+    "design/board/premium/screens/premium.js": "4701713ba79528d8327d3f17d5a63127e0edbb92a3ccfe5ae52b47f7134d7eda"
+  }
+}

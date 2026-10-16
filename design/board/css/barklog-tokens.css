@@ -1,0 +1,56 @@
+@font-face { font-family: Inter; src: url('../assets/fonts/inter_regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: Inter; src: url('../assets/fonts/inter_medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+:root {
+  --font: Inter, system-ui, sans-serif; --font-display: var(--font);
+  --ground: #FAFAFA; --panel: #FAFAFA; --inset: #F5F5F4; --hover: #E7E5E4; --sunken: #F5F5F4;
+  --hair: #E7E5E4; --hair-2: #737373; --ink-strong: #0A0A0A; --ink: #0A0A0A; --ink-muted: #737373; --ink-quiet: #737373;
+  --accent: #0A0A0A; --accent-text: #0A0A0A; --accent-soft: #F5F5F4; --accent-line: #737373;
+  --btn: #0A0A0A; --btn-down: #222221; --btn-ink: #FAFAFA;
+  --good: #16A34A; --bad: #DC2626; --warn: #D97706; --info: #534AB7;
+  --good-soft: #EEF8EE; --bad-soft: #FCEBEB; --warn-soft: #FBF1DD; --info-soft: #F3F0FB;
+  --float: none; --sheet-shadow: none; --glass: #FAFAFA; --glass-line: #E7E5E4; --home-ind: #0A0A0A;
+  --r-card: 14px; --r-row: 12px; --r-tile: 8px; --control: 52px; --gutter: 24px;
+  --poop-bg: #FDF3EC; --poop-line: #EDDCCE; --poop-ink: #6B3418;
+  --pee-bg: #EEF4FB; --pee-line: #D7E4F2; --pee-ink: #1E3A5F;
+  --meal-bg: #F0F5E8; --meal-line: #DCE6C8; --meal-ink: #2F4017;
+  --walk-bg: #FBF1DD; --walk-line: #EEDCB4; --walk-ink: #5C3F0F;
+  --mood-bg: #F5F0FF; --mood-line: #E0D4F5; --mood-ink: #4A3580;
+  --symptom-bg: #FCEBEB; --symptom-line: #F7C1C1; --symptom-ink: #791F1F;
+  --behavior-bg: #FFF5EC; --behavior-line: #FFE0C2; --behavior-ink: #7A4510;
+  --grooming-bg: #E1F5EE; --grooming-line: #9FE1CB; --grooming-ink: #085041;
+  --weight-bg: #F1EFE8; --weight-line: #D3D1C7; --weight-ink: #444441;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --ground: #141414; --panel: #141414; --inset: #222221; --hover: #3A3A38; --sunken: #222221;
+    --hair: #3A3A38; --hair-2: #B5B5B5; --ink-strong: #FAFAFA; --ink: #FAFAFA; --ink-muted: #B5B5B5; --ink-quiet: #B5B5B5;
+    --accent: #FAFAFA; --accent-text: #FAFAFA; --accent-soft: #222221; --accent-line: #B5B5B5;
+    --btn: #FAFAFA; --btn-down: #E7E5E4; --btn-ink: #141414; --bad: #FF8A8A;
+    --glass: #141414; --glass-line: #3A3A38; --home-ind: #FAFAFA;
+    --poop-bg: #2E241E; --poop-line: #59412F; --poop-ink: #F3C7A8;
+    --pee-bg: #1C2733; --pee-line: #30475F; --pee-ink: #B6D0EE;
+    --meal-bg: #252C1E; --meal-line: #405033; --meal-ink: #CBDEAC;
+    --walk-bg: #302A1B; --walk-line: #594B2A; --walk-ink: #EFDBA5;
+    --mood-bg: #2A2335; --mood-line: #4C3B61; --mood-ink: #D8C3F1;
+    --symptom-bg: #332022; --symptom-line: #603537; --symptom-ink: #F6B5B5;
+    --behavior-bg: #31271F; --behavior-line: #604731; --behavior-ink: #F1CCAB;
+    --grooming-bg: #1A2C26; --grooming-line: #2D5848; --grooming-ink: #ADE0CD;
+    --weight-bg: #292820; --weight-line: #4C4A3C; --weight-ink: #DAD7C4;
+  }
+}
+:root[data-theme='dark'] {
+  --ground: #141414; --panel: #141414; --inset: #222221; --hover: #3A3A38; --sunken: #222221;
+  --hair: #3A3A38; --hair-2: #B5B5B5; --ink-strong: #FAFAFA; --ink: #FAFAFA; --ink-muted: #B5B5B5; --ink-quiet: #B5B5B5;
+  --accent: #FAFAFA; --accent-text: #FAFAFA; --accent-soft: #222221; --accent-line: #B5B5B5;
+  --btn: #FAFAFA; --btn-down: #E7E5E4; --btn-ink: #141414; --bad: #FF8A8A;
+  --glass: #141414; --glass-line: #3A3A38; --home-ind: #FAFAFA;
+  --poop-bg: #2E241E; --poop-line: #59412F; --poop-ink: #F3C7A8;
+  --pee-bg: #1C2733; --pee-line: #30475F; --pee-ink: #B6D0EE;
+  --meal-bg: #252C1E; --meal-line: #405033; --meal-ink: #CBDEAC;
+  --walk-bg: #302A1B; --walk-line: #594B2A; --walk-ink: #EFDBA5;
+  --mood-bg: #2A2335; --mood-line: #4C3B61; --mood-ink: #D8C3F1;
+  --symptom-bg: #332022; --symptom-line: #603537; --symptom-ink: #F6B5B5;
+  --behavior-bg: #31271F; --behavior-line: #604731; --behavior-ink: #F1CCAB;
+  --grooming-bg: #1A2C26; --grooming-line: #2D5848; --grooming-ink: #ADE0CD;
+  --weight-bg: #292820; --weight-line: #4C4A3C; --weight-ink: #DAD7C4;
+}

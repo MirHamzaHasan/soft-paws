@@ -1,0 +1,37 @@
+[versions]
+# Bundles R8 8.13.19, required to shrink the Kotlin 2.3 native-runtime fix safely.
+agp = "8.13.2"
+# KT-82783 fixes native HashMap corruption that crashed Compose layout-node removal in QA.
+kotlin = "2.3.20"
+compose = "1.9.3"
+activity = "1.10.1"
+core = "1.18.0"
+coroutines = "1.10.2"
+serialization = "1.7.3"
+sqldelight = "2.1.0"
+datetime = "0.7.1"
+test-runner = "1.6.2"
+test-junit = "1.2.1"
+
+[libraries]
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
+androidx-core = { module = "androidx.core:core", version.ref = "core" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
+sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-jdbc = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
+androidx-test-runner = { module = "androidx.test:runner", version.ref = "test-runner" }
+androidx-test-junit = { module = "androidx.test.ext:junit", version.ref = "test-junit" }
+
+[plugins]
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+androidMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

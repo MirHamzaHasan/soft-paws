@@ -1,0 +1,217 @@
+CREATE TABLE journal_metadata (
+  singleton INTEGER NOT NULL PRIMARY KEY CHECK (singleton = 1),
+  format TEXT NOT NULL,
+  format_version INTEGER NOT NULL
+);
+
+INSERT INTO journal_metadata VALUES (1, 'barklog-kmp', 1);
+
+CREATE TABLE local_owner (
+  singleton INTEGER NOT NULL PRIMARY KEY CHECK (singleton = 1),
+  id TEXT NOT NULL UNIQUE,
+  created_at INTEGER NOT NULL CHECK (created_at >= 0)
+);
+
+CREATE TABLE dogs (
+  id TEXT NOT NULL PRIMARY KEY,
+  owner_id TEXT NOT NULL REFERENCES local_owner(id),
+  name TEXT NOT NULL CHECK (length(trim(name)) BETWEEN 1 AND 80),
+  created_at INTEGER NOT NULL CHECK (created_at >= 0),
+  details_json TEXT NOT NULL DEFAULT '{}',
+  revision INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE INDEX dogs_owner ON dogs(owner_id, created_at, id);
+
+CREATE TABLE care_events (
+  id TEXT NOT NULL PRIMARY KEY,
+  dog_id TEXT NOT NULL REFERENCES dogs(id),
+  type TEXT NOT NULL CHECK (type IN ('poop', 'pee', 'meal', 'walk', 'medication', 'symptom', 'mood', 'behavior', 'grooming', 'weight', 'training', 'task')),
+  occurred_at INTEGER NOT NULL CHECK (occurred_at >= 0),
+  created_at INTEGER NOT NULL CHECK (created_at >= 0),
+  note TEXT CHECK (length(note) <= 2000),
+  details_json TEXT,
+  revision INTEGER NOT NULL DEFAULT 1,
+  updated_at INTEGER NOT NULL DEFAULT 0,
+  context_json TEXT NOT NULL DEFAULT '{}'
+);
+
+CREATE INDEX events_dog_time ON care_events(dog_id, occurred_at DESC, created_at DESC, id DESC);
+CREATE INDEX events_dog_type_time ON care_events(dog_id, type, occurred_at DESC);
+
+CREATE TABLE care_items (
+  id TEXT NOT NULL PRIMARY KEY,
+  dog_id TEXT NOT NULL REFERENCES dogs(id),
+  kind TEXT NOT NULL CHECK (kind IN ('medication', 'administration', 'vaccination', 'task', 'completion', 'enrollment', 'session', 'photo', 'expense', 'memory')),
+  occurred_at INTEGER NOT NULL CHECK (occurred_at >= 0),
+  created_at INTEGER NOT NULL CHECK (created_at >= 0),
+  updated_at INTEGER NOT NULL CHECK (updated_at >= 0),
+  revision INTEGER NOT NULL DEFAULT 1,
+  data_json TEXT NOT NULL CHECK (length(data_json) <= 32768)
+);
+
+CREATE INDEX items_dog_kind_time ON care_items(dog_id, kind, occurred_at DESC, id);
+
+CREATE TABLE care_drafts (
+  dog_id TEXT NOT NULL REFERENCES dogs(id),
+  slot TEXT NOT NULL,
+  value_json TEXT NOT NULL CHECK (length(value_json) <= 32768),
+  photo_ids_json TEXT NOT NULL DEFAULT '[]',
+  PRIMARY KEY (dog_id, slot)
+);
+
+CREATE TABLE device_cleanup (
+  kind TEXT NOT NULL CHECK (kind IN ('photo', 'reminder')),
+  reference TEXT NOT NULL,
+  generation INTEGER NOT NULL DEFAULT 1,
+  PRIMARY KEY (kind, reference)
+);
+
+metadata:
+SELECT * FROM journal_metadata WHERE singleton = 1;
+
+owner:
+SELECT * FROM local_owner WHERE singleton = 1;
+
+insertOwner:
+INSERT INTO local_owner(singleton, id, created_at) VALUES (1, ?, ?);
+
+allDogs:
+SELECT * FROM dogs ORDER BY created_at, id;
+
+dogById:
+SELECT * FROM dogs WHERE id = ?;
+
+insertDog:
+INSERT INTO dogs(id, owner_id, name, created_at, details_json) VALUES (?, ?, ?, ?, ?);
+
+eventsForDog:
+SELECT * FROM care_events WHERE dog_id = ? ORDER BY occurred_at DESC, created_at DESC, id DESC;
+
+insertEvent:
+INSERT INTO care_events(id, dog_id, type, occurred_at, created_at, note, details_json, revision, updated_at, context_json) VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?, ?);
+
+eventById:
+SELECT * FROM care_events WHERE dog_id = ? AND id = ?;
+
+eventByRequestId:
+SELECT * FROM care_events WHERE id = ?;
+
+updateEvent:
+UPDATE care_events SET occurred_at = ?, note = ?, details_json = ?, revision = revision + 1, updated_at = ?, context_json = ?
+WHERE dog_id = ? AND id = ? AND revision = ?;
+
+deleteEvent:
+DELETE FROM care_events WHERE dog_id = ? AND id = ? AND revision = ?;
+
+changedRows:
+SELECT changes();
+
+timeline:
+SELECT * FROM care_events WHERE dog_id = :dogId
+AND (:eventType IS NULL OR type = :eventType)
+AND (:fromTime IS NULL OR occurred_at >= :fromTime)
+AND (:untilTime IS NULL OR occurred_at < :untilTime)
+ORDER BY occurred_at DESC, created_at DESC, id DESC LIMIT :rowLimit;
+
+timelineCount:
+SELECT count(*) FROM care_events WHERE dog_id = :dogId
+AND (:eventType IS NULL OR type = :eventType)
+AND (:fromTime IS NULL OR occurred_at >= :fromTime)
+AND (:untilTime IS NULL OR occurred_at < :untilTime);
+
+recentEvents:
+SELECT * FROM care_events WHERE dog_id = ? ORDER BY occurred_at DESC, created_at DESC, id DESC LIMIT 3;
+
+dogEventCount:
+SELECT count(*) FROM care_events WHERE dog_id = ?;
+
+dailyCounts:
+SELECT type, count(*) AS event_count FROM care_events WHERE dog_id = ? AND occurred_at >= ? AND occurred_at < ? GROUP BY type;
+
+dayEvents:
+SELECT * FROM care_events WHERE dog_id = ? AND occurred_at >= ? AND occurred_at < ? ORDER BY occurred_at, id;
+
+updateDog:
+UPDATE dogs SET name = ?, details_json = ?, revision = revision + 1 WHERE id = ? AND revision = ?;
+
+deleteDogEvents:
+DELETE FROM care_events WHERE dog_id = ?;
+
+deleteDogItems:
+DELETE FROM care_items WHERE dog_id = ?;
+
+deleteDog:
+DELETE FROM dogs WHERE id = ?;
+
+itemsForDog:
+SELECT * FROM care_items WHERE dog_id = ? ORDER BY occurred_at DESC, id DESC;
+
+itemById:
+SELECT * FROM care_items WHERE dog_id = ? AND id = ?;
+
+insertItem:
+INSERT INTO care_items(id, dog_id, kind, occurred_at, created_at, updated_at, revision, data_json) VALUES (?, ?, ?, ?, ?, ?, 1, ?);
+
+updateItem:
+UPDATE care_items SET occurred_at = ?, updated_at = ?, data_json = ?, revision = revision + 1 WHERE dog_id = ? AND id = ? AND revision = ?;
+
+deleteItem:
+DELETE FROM care_items WHERE dog_id = ? AND id = ? AND revision = ?;
+
+draft:
+SELECT * FROM care_drafts WHERE dog_id = ? AND slot = ?;
+
+saveDraft:
+INSERT OR REPLACE INTO care_drafts(dog_id, slot, value_json, photo_ids_json) VALUES (?, ?, ?, ?);
+
+discardDraft:
+DELETE FROM care_drafts WHERE dog_id = ? AND slot = ?;
+
+dogDrafts:
+SELECT * FROM care_drafts WHERE dog_id = ?;
+
+deleteDogDrafts:
+DELETE FROM care_drafts WHERE dog_id = ?;
+
+allItems:
+SELECT * FROM care_items;
+
+allDrafts:
+SELECT * FROM care_drafts;
+
+queueCleanup:
+INSERT OR REPLACE INTO device_cleanup(kind, reference, generation) VALUES (:kind, :reference, COALESCE((SELECT generation + 1 FROM device_cleanup WHERE kind = :kind AND reference = :reference), 1));
+
+pendingCleanup:
+SELECT * FROM device_cleanup;
+
+acknowledgeCleanup:
+DELETE FROM device_cleanup WHERE kind = ? AND reference = ? AND generation = ?;
+
+photoEventContexts:
+SELECT context_json FROM care_events WHERE context_json LIKE '%' || :fileId || '%';
+
+dogPhotoContexts:
+SELECT context_json FROM care_events WHERE dog_id = ?;
+
+CREATE TABLE local_documents (
+  id TEXT NOT NULL PRIMARY KEY,
+  dog_id TEXT REFERENCES dogs(id),
+  value_json TEXT NOT NULL CHECK (length(value_json) <= 4194304)
+);
+
+document:
+SELECT value_json FROM local_documents WHERE id = ?;
+
+saveDocument:
+INSERT OR REPLACE INTO local_documents(id, dog_id, value_json) VALUES (?, ?, ?);
+
+deleteDocuments:
+DELETE FROM local_documents WHERE substr(id, 1, :prefixLength) = :prefixText;
+
+deleteDogDocuments:
+DELETE FROM local_documents WHERE dog_id = ?;
+
+documentsReferencingPhoto:
+SELECT count(*) FROM local_documents WHERE value_json LIKE '%' || :fileId || '%';

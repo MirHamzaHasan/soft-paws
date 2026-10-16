@@ -1,0 +1,2014 @@
+{
+  "ids": [
+    "next-opening",
+    "next-dog",
+    "next-stage",
+    "next-age",
+    "next-breed",
+    "next-sex",
+    "next-size",
+    "next-experience",
+    "next-goals",
+    "next-rhythm",
+    "next-focus",
+    "next-personality",
+    "next-activities",
+    "next-food",
+    "next-care-notes",
+    "next-reminder",
+    "next-permissions",
+    "next-context-review",
+    "next-practice",
+    "next-ai-demo",
+    "next-login",
+    "next-email",
+    "next-check-email",
+    "next-email-expired",
+    "next-auth-offline",
+    "next-account-settings",
+    "next-dog-profile",
+    "next-delete-account",
+    "next-plan",
+    "next-paywall",
+    "next-trial",
+    "next-ready",
+    "next-premium-ready",
+    "next-ai-gate",
+    "next-restore",
+    "next-manage-plan",
+    "next-cancel",
+    "next-store-manage",
+    "next-ended",
+    "next-home",
+    "next-home-premium",
+    "next-home-empty",
+    "next-ai-privacy",
+    "next-chat",
+    "next-chat-answer",
+    "next-chat-empty",
+    "next-chat-offline",
+    "next-chat-error",
+    "next-chat-limit",
+    "next-threads",
+    "next-thread-readonly",
+    "next-weekly-recap",
+    "next-vet-questions",
+    "next-memory-caption"
+  ],
+  "results": [
+    {
+      "id": "next-stage",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-opening",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-dog",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-breed",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-sex",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-size",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-experience",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-goals",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-rhythm",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-focus",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-personality",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-activities",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-food",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-care-notes",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-reminder",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-practice",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ai-demo",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-login",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-email",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-check-email",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-email-expired",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-auth-offline",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-account-settings",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-dog-profile",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-delete-account",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-paywall",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-trial",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-plan",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ready",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-premium-ready",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ai-gate",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-restore",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-manage-plan",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-cancel",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-store-manage",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ended",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home-premium",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home-empty",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ai-privacy",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-answer",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-empty",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-offline",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-error",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-threads",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-limit",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-thread-readonly",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-weekly-recap",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-vet-questions",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-memory-caption",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-stage",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-opening",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-dog",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-sex",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-breed",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-size",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-experience",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-goals",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-rhythm",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-focus",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-personality",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-activities",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-food",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-care-notes",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-reminder",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-practice",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ai-demo",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-login",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-email",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-check-email",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-email-expired",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-auth-offline",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-account-settings",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-dog-profile",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-delete-account",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-paywall",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-trial",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-plan",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ready",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-premium-ready",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-restore",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ai-gate",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-manage-plan",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-cancel",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-store-manage",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ended",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home-premium",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home-empty",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ai-privacy",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-answer",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-empty",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-offline",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-error",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-limit",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-threads",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-thread-readonly",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-weekly-recap",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-vet-questions",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-memory-caption",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-stage",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-dog",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-opening",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-sex",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-breed",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-goals",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-experience",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-size",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-personality",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-rhythm",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-focus",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-activities",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-care-notes",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-food",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-reminder",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ai-demo",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-practice",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-login",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-email",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-email-expired",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-check-email",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-auth-offline",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-account-settings",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-dog-profile",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-delete-account",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-paywall",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-trial",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ready",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-plan",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-premium-ready",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ai-gate",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-restore",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-manage-plan",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-cancel",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-store-manage",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ended",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home-premium",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home-empty",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ai-privacy",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-answer",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-empty",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-offline",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-error",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-limit",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-threads",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-thread-readonly",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-weekly-recap",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-vet-questions",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-memory-caption",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-opening",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-stage",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-dog",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-sex",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-breed",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-size",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-experience",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-goals",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-rhythm",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-focus",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-personality",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-activities",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-food",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-care-notes",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-reminder",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-practice",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ai-demo",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-login",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-email",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-check-email",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-email-expired",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-auth-offline",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-account-settings",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-dog-profile",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-delete-account",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-paywall",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-trial",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ready",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-plan",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-premium-ready",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ai-gate",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-restore",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-manage-plan",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-cancel",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-store-manage",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ended",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home-premium",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home-empty",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-ai-privacy",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-answer",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-empty",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-offline",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-error",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-chat-limit",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-threads",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-thread-readonly",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-weekly-recap",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-vet-questions",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-memory-caption",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-permissions",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-context-review",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-age",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-permissions",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-age",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-context-review",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-permissions",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-age",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-context-review",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-context-review",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-permissions",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-age",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    }
+  ],
+  "errors": [],
+  "recaptures": {
+    "screens": [
+      "next-age",
+      "next-permissions",
+      "next-context-review"
+    ],
+    "variants": 4,
+    "reason": "Final unknown-age validation and switch/focus contrast hardening"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "checks": [
+    "Opening mascot greets on tap; first practice beat reacts without writing a care record",
+    "Small practice mascot reacts and the next step works; practice remains outside the journal",
+    "Reduced-motion opening advances with readable feedback and no mascot animation"
+  ],
+  "errors": []
+}

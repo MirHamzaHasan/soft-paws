@@ -1,0 +1,4 @@
+Performing Streamed Install
+Success
+
+Navigation, interruption, cover/Back and committed quick-log/Undo passed.

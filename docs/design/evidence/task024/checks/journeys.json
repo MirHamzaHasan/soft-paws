@@ -1,0 +1,12 @@
+{
+  "passed": [
+    "Personal onboarding → denied permissions → cancelled OAuth → email validation/link → plan → undecided pricing → free journal → committed preview log/Undo → AI gate",
+    "Premium consent → no-record response → explicit context → stream/stop/regenerate → source record → history/new chat → emergency boundary → weekly recap",
+    "Plan → optional cancellation reason → store handoff → simulated ended entitlement → retained read-only history",
+    "next-chat-offline → message kept → successful retry",
+    "next-chat-error → message kept → successful retry",
+    "Android permission approval → reminder off retains OS authorization",
+    "Expired email link → resend recovery"
+  ],
+  "errors": []
+}

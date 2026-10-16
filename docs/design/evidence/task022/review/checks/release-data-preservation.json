@@ -1,0 +1,97 @@
+{
+  "reviewFixtureCountsUnchanged": true,
+  "before": {
+    "Library/Application Support/BarkLogJournal/barklog_review_park_day_v1.db": {
+      "journal_metadata": 1,
+      "local_owner": 1,
+      "dogs": 1,
+      "care_events": 7,
+      "care_items": 0,
+      "care_drafts": 0,
+      "device_cleanup": 0
+    },
+    "Library/Application Support/BarkLogJournal/barklog_review_park_contexts_v1.db": {
+      "journal_metadata": 1,
+      "local_owner": 1,
+      "dogs": 2,
+      "care_events": 16,
+      "care_items": 18,
+      "care_drafts": 0,
+      "device_cleanup": 0
+    },
+    "Library/Application Support/BarkLogJournal/barklog_review_park_no_dog_v1.db": {
+      "journal_metadata": 1,
+      "local_owner": 1,
+      "dogs": 0,
+      "care_events": 0,
+      "care_items": 0,
+      "care_drafts": 0,
+      "device_cleanup": 0
+    },
+    "Library/Application Support/BarkLogJournal/barklog_review_park_full_v1.db": {
+      "journal_metadata": 1,
+      "local_owner": 1,
+      "dogs": 2,
+      "care_events": 13,
+      "care_items": 17,
+      "care_drafts": 0,
+      "device_cleanup": 0
+    },
+    "Library/Application Support/BarkLogJournal/barklog_review_park_empty_v1.db": {
+      "journal_metadata": 1,
+      "local_owner": 1,
+      "dogs": 1,
+      "care_events": 0,
+      "care_items": 0,
+      "care_drafts": 0,
+      "device_cleanup": 0
+    }
+  },
+  "after": {
+    "Library/Application Support/BarkLogJournal/barklog_review_park_day_v1.db": {
+      "journal_metadata": 1,
+      "local_owner": 1,
+      "dogs": 1,
+      "care_events": 7,
+      "care_items": 0,
+      "care_drafts": 0,
+      "device_cleanup": 0
+    },
+    "Library/Application Support/BarkLogJournal/barklog_review_park_contexts_v1.db": {
+      "journal_metadata": 1,
+      "local_owner": 1,
+      "dogs": 2,
+      "care_events": 16,
+      "care_items": 18,
+      "care_drafts": 0,
+      "device_cleanup": 0
+    },
+    "Library/Application Support/BarkLogJournal/barklog_review_park_no_dog_v1.db": {
+      "journal_metadata": 1,
+      "local_owner": 1,
+      "dogs": 0,
+      "care_events": 0,
+      "care_items": 0,
+      "care_drafts": 0,
+      "device_cleanup": 0
+    },
+    "Library/Application Support/BarkLogJournal/barklog_review_park_full_v1.db": {
+      "journal_metadata": 1,
+      "local_owner": 1,
+      "dogs": 2,
+      "care_events": 13,
+      "care_items": 17,
+      "care_drafts": 0,
+      "device_cleanup": 0
+    },
+    "Library/Application Support/BarkLogJournal/barklog_review_park_empty_v1.db": {
+      "journal_metadata": 1,
+      "local_owner": 1,
+      "dogs": 1,
+      "care_events": 0,
+      "care_items": 0,
+      "care_drafts": 0,
+      "device_cleanup": 0
+    }
+  }
+}

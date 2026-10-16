@@ -1,0 +1,5 @@
+CREATE TABLE local_documents (
+  id TEXT NOT NULL PRIMARY KEY,
+  dog_id TEXT REFERENCES dogs(id),
+  value_json TEXT NOT NULL CHECK (length(value_json) <= 4194304)
+);

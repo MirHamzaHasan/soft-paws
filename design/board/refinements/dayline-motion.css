@@ -1,0 +1,21 @@
+/* Review 09. Isolated proposal: the selected board remains unchanged. */
+.care-rail { margin-top: 6px; min-width: 0; }
+.care-rail-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:48px; }
+.care-rail-heading strong { font:500 calc(12px * var(--text-scale,1))/1.4 Inter,sans-serif; color:var(--ink-muted); }
+.care-rail-heading button { border:1px solid var(--hair); border-radius:50px; background:var(--panel); color:var(--ink); min-width:48px; min-height:48px; display:flex; align-items:center; gap:5px; padding:0 9px; font:500 calc(12px * var(--text-scale,1))/1.4 Inter,sans-serif; cursor:pointer; }
+.care-rail-heading button:disabled { opacity:.35; cursor:default; }
+.care-rail-scroll { display:flex; gap:10px; overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:none; padding:2px 1px 4px; }
+.care-rail-scroll::-webkit-scrollbar { display:none; }
+.care-rail-entry { flex:0 0 auto; min-width:92px; min-height:72px; border:1px solid var(--hair); border-radius:18px; background:var(--panel); color:var(--ink-strong); padding:9px 12px; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:7px; scroll-snap-align:start; cursor:pointer; font:500 calc(13px * var(--text-scale,1))/1.4 Inter,sans-serif; }
+.care-rail-entry:focus-visible,.care-rail-heading button:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
+.care-rail-entry time { color:var(--ink-muted); font:500 calc(12px * var(--text-scale,1))/1.2 Inter,sans-serif; font-variant-numeric:tabular-nums; }
+.care-rail-label { display:flex; align-items:center; gap:7px; white-space:nowrap; }
+.care-rail-mark { display:grid; place-items:center; width:26px; height:26px; flex:none; border-radius:50%; color:white; }
+.care-rail-entry:last-child { border-color:var(--event-line); background:var(--event-bg); color:var(--event-ink); }
+.care-rail-entry:last-child time { color:var(--event-ink); }
+.care-rail-empty { color:var(--ink-muted); font-size:calc(13px * var(--text-scale,1)); line-height:1.5; margin:5px 0 10px; }
+.care-rail.is-loading .care-rail-entry { background:var(--inset); border-color:var(--inset); min-width:94px; }
+.care-rail-loading-head { height:48px; display:flex; justify-content:space-between; align-items:center; }
+.care-rail-loading-head span { width:76px; height:40px; border-radius:50px; background:var(--inset); }
+.care-rail-loading-head span:nth-child(2) { width:64px; height:12px; }
+@media (prefers-reduced-motion:reduce) { .care-rail-scroll { scroll-behavior:auto; } }

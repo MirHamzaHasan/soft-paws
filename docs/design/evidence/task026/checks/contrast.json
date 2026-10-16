@@ -1,0 +1,946 @@
+{
+  "method": "Computed values from the live proposal, including the current Park/Feel cascade",
+  "pairs": 94,
+  "results": [
+    {
+      "theme": "light",
+      "foreground": "ink",
+      "background": "ground",
+      "fg": "#1D2620",
+      "bg": "#F3F1EA",
+      "ratio": 13.76,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "ink-strong",
+      "background": "ground",
+      "fg": "#121A15",
+      "bg": "#F3F1EA",
+      "ratio": 15.69,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "ink-muted",
+      "background": "ground",
+      "fg": "#55605A",
+      "bg": "#F3F1EA",
+      "ratio": 5.79,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "ink-quiet",
+      "background": "ground",
+      "fg": "#646E68",
+      "bg": "#F3F1EA",
+      "ratio": 4.68,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "ink",
+      "background": "panel",
+      "fg": "#1D2620",
+      "bg": "#FFFFFF",
+      "ratio": 15.55,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "ink-muted",
+      "background": "panel",
+      "fg": "#55605A",
+      "bg": "#FFFFFF",
+      "ratio": 6.55,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "ink-quiet",
+      "background": "panel",
+      "fg": "#646E68",
+      "bg": "#FFFFFF",
+      "ratio": 5.29,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "ink",
+      "background": "inset",
+      "fg": "#1D2620",
+      "bg": "#ECE9E0",
+      "ratio": 12.81,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "ink-muted",
+      "background": "inset",
+      "fg": "#55605A",
+      "bg": "#ECE9E0",
+      "ratio": 5.39,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "btn-ink",
+      "background": "btn",
+      "fg": "#FFFFFF",
+      "bg": "#121A15",
+      "ratio": 17.73,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "ball-ink",
+      "background": "ball",
+      "fg": "#121A15",
+      "bg": "#D2EE4A",
+      "ratio": 13.57,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "accent-text",
+      "background": "accent-soft",
+      "fg": "#3B5200",
+      "bg": "#EEF7C4",
+      "ratio": 7.83,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "info",
+      "background": "panel",
+      "fg": "#2563B8",
+      "bg": "#FFFFFF",
+      "ratio": 5.91,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "tab-ink",
+      "background": "tab-bg",
+      "fg": "#B9C2BC",
+      "bg": "#121A15",
+      "ratio": 9.72,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "status-good",
+      "background": "status-good-soft",
+      "fg": "#1D7A3A",
+      "bg": "#DFF3E2",
+      "ratio": 4.63,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "status-bad",
+      "background": "status-bad-soft",
+      "fg": "#B3203A",
+      "bg": "#FFE1E5",
+      "ratio": 5.39,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "status-warn",
+      "background": "status-warn-soft",
+      "fg": "#7A4F00",
+      "bg": "#FFF0C6",
+      "ratio": 6.29,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "status-info",
+      "background": "status-info-soft",
+      "fg": "#22599F",
+      "bg": "#DFEBFF",
+      "ratio": 5.83,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "poop-ink",
+      "background": "poop-bg",
+      "fg": "#5C3215",
+      "bg": "#F5E6D8",
+      "ratio": 8.94,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "pee-ink",
+      "background": "pee-bg",
+      "fg": "#0E3F73",
+      "bg": "#DDEEFF",
+      "ratio": 8.98,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "meal-ink",
+      "background": "meal-bg",
+      "fg": "#7E2B0B",
+      "bg": "#FFE4D6",
+      "ratio": 7.74,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "walk-ink",
+      "background": "walk-bg",
+      "fg": "#1B5216",
+      "bg": "#DDF4D7",
+      "ratio": 7.94,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "mood-ink",
+      "background": "mood-bg",
+      "fg": "#45279A",
+      "bg": "#ECE4FF",
+      "ratio": 8.51,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "symptom-ink",
+      "background": "symptom-bg",
+      "fg": "#861532",
+      "bg": "#FFDFE5",
+      "ratio": 7.82,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "behavior-ink",
+      "background": "behavior-bg",
+      "fg": "#0B4F46",
+      "bg": "#D9F3EE",
+      "ratio": 8.11,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "grooming-ink",
+      "background": "grooming-bg",
+      "fg": "#761A60",
+      "bg": "#FBE3F4",
+      "ratio": 8.34,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "weight-ink",
+      "background": "weight-bg",
+      "fg": "#263446",
+      "bg": "#E6EAF0",
+      "ratio": 10.46,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "medication-ink",
+      "background": "medication-bg",
+      "fg": "#263493",
+      "bg": "#E2E6FF",
+      "ratio": 8.52,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "training-ink",
+      "background": "training-bg",
+      "fg": "#5F4200",
+      "bg": "#FFEFC2",
+      "ratio": 8.11,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "photo-ink",
+      "background": "photo-bg",
+      "fg": "#094760",
+      "bg": "#D9F0FA",
+      "ratio": 8.55,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "note-ink",
+      "background": "note-bg",
+      "fg": "#2E352F",
+      "bg": "#ECE9E0",
+      "ratio": 10.38,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "poop-dot",
+      "fg": "#FFFFFF",
+      "bg": "#8F532A",
+      "ratio": 6.11,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "pee-dot",
+      "fg": "#FFFFFF",
+      "bg": "#2369BF",
+      "ratio": 5.46,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "meal-dot",
+      "fg": "#FFFFFF",
+      "bg": "#C74A16",
+      "ratio": 4.75,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "walk-dot",
+      "fg": "#FFFFFF",
+      "bg": "#2C7F33",
+      "ratio": 5.01,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "mood-dot",
+      "fg": "#FFFFFF",
+      "bg": "#6C47D6",
+      "ratio": 5.98,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "symptom-dot",
+      "fg": "#FFFFFF",
+      "bg": "#C52C55",
+      "ratio": 5.43,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "behavior-dot",
+      "fg": "#FFFFFF",
+      "bg": "#0F7B70",
+      "ratio": 5.14,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "grooming-dot",
+      "fg": "#FFFFFF",
+      "bg": "#A93289",
+      "ratio": 5.99,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "weight-dot",
+      "fg": "#FFFFFF",
+      "bg": "#4E5F77",
+      "ratio": 6.51,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "medication-dot",
+      "fg": "#FFFFFF",
+      "bg": "#4153CC",
+      "ratio": 6.3,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "training-dot",
+      "fg": "#FFFFFF",
+      "bg": "#966A00",
+      "ratio": 4.82,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "photo-dot",
+      "fg": "#FFFFFF",
+      "bg": "#16708F",
+      "ratio": 5.6,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "white glyph",
+      "background": "note-dot",
+      "fg": "#FFFFFF",
+      "bg": "#5C655F",
+      "ratio": 6.03,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "ink",
+      "background": "ground",
+      "fg": "#E3E8E0",
+      "bg": "#0E1210",
+      "ratio": 15.18,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "ink-strong",
+      "background": "ground",
+      "fg": "#F2F5EE",
+      "bg": "#0E1210",
+      "ratio": 17.14,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "ink-muted",
+      "background": "ground",
+      "fg": "#A9B3AB",
+      "bg": "#0E1210",
+      "ratio": 8.74,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "ink-quiet",
+      "background": "ground",
+      "fg": "#98A29A",
+      "bg": "#0E1210",
+      "ratio": 7.16,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "ink",
+      "background": "panel",
+      "fg": "#E3E8E0",
+      "bg": "#181E1A",
+      "ratio": 13.62,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "ink-muted",
+      "background": "panel",
+      "fg": "#A9B3AB",
+      "bg": "#181E1A",
+      "ratio": 7.84,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "ink-quiet",
+      "background": "panel",
+      "fg": "#98A29A",
+      "bg": "#181E1A",
+      "ratio": 6.43,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "ink",
+      "background": "inset",
+      "fg": "#E3E8E0",
+      "bg": "#222A25",
+      "ratio": 11.84,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "ink-muted",
+      "background": "inset",
+      "fg": "#A9B3AB",
+      "bg": "#222A25",
+      "ratio": 6.82,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "btn-ink",
+      "background": "btn",
+      "fg": "#121A15",
+      "bg": "#D2EE4A",
+      "ratio": 13.57,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "ball-ink",
+      "background": "ball",
+      "fg": "#121A15",
+      "bg": "#D2EE4A",
+      "ratio": 13.57,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "accent-text",
+      "background": "accent-soft",
+      "fg": "#D9F25F",
+      "bg": "#2B3412",
+      "ratio": 10.49,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "info",
+      "background": "panel",
+      "fg": "#8DB8FF",
+      "bg": "#181E1A",
+      "ratio": 8.42,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "tab-ink",
+      "background": "tab-bg",
+      "fg": "#A9B3AB",
+      "bg": "#222A25",
+      "ratio": 6.82,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "status-good",
+      "background": "status-good-soft",
+      "fg": "#8FE0A8",
+      "bg": "#15291C",
+      "ratio": 9.81,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "status-bad",
+      "background": "status-bad-soft",
+      "fg": "#FF9DAD",
+      "bg": "#3A1820",
+      "ratio": 8.02,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "status-warn",
+      "background": "status-warn-soft",
+      "fg": "#F6C866",
+      "bg": "#33270B",
+      "ratio": 9.31,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "status-info",
+      "background": "status-info-soft",
+      "fg": "#9EC3FF",
+      "bg": "#172840",
+      "ratio": 8.28,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "poop-ink",
+      "background": "poop-bg",
+      "fg": "#F2CBA9",
+      "bg": "#2C2018",
+      "ratio": 10.47,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "pee-ink",
+      "background": "pee-bg",
+      "fg": "#B4D6FF",
+      "bg": "#13263B",
+      "ratio": 10.24,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "meal-ink",
+      "background": "meal-bg",
+      "fg": "#FFC3A3",
+      "bg": "#33190D",
+      "ratio": 10.57,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "walk-ink",
+      "background": "walk-bg",
+      "fg": "#B2E8A6",
+      "bg": "#14291A",
+      "ratio": 11,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "mood-ink",
+      "background": "mood-bg",
+      "fg": "#D3C4FF",
+      "bg": "#221A3D",
+      "ratio": 10.22,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "symptom-ink",
+      "background": "symptom-bg",
+      "fg": "#FFB3C3",
+      "bg": "#36141E",
+      "ratio": 9.79,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "behavior-ink",
+      "background": "behavior-bg",
+      "fg": "#A6E6DA",
+      "bg": "#0F2B27",
+      "ratio": 10.72,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "grooming-ink",
+      "background": "grooming-bg",
+      "fg": "#F6B8E5",
+      "bg": "#33152C",
+      "ratio": 10.05,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "weight-ink",
+      "background": "weight-bg",
+      "fg": "#C9D3E0",
+      "bg": "#1C232D",
+      "ratio": 10.45,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "medication-ink",
+      "background": "medication-bg",
+      "fg": "#C3CBFF",
+      "bg": "#1A1F3D",
+      "ratio": 10.18,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "training-ink",
+      "background": "training-bg",
+      "fg": "#F6D88A",
+      "bg": "#2F240A",
+      "ratio": 10.97,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "photo-ink",
+      "background": "photo-bg",
+      "fg": "#A8DDF0",
+      "bg": "#0F2833",
+      "ratio": 10.4,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "note-ink",
+      "background": "note-bg",
+      "fg": "#D7DDD4",
+      "bg": "#222A25",
+      "ratio": 10.65,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "poop-dot",
+      "fg": "#FFFFFF",
+      "bg": "#B9784A",
+      "ratio": 3.59,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "pee-dot",
+      "fg": "#FFFFFF",
+      "bg": "#3F86D9",
+      "ratio": 3.73,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "meal-dot",
+      "fg": "#FFFFFF",
+      "bg": "#E0662F",
+      "ratio": 3.44,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "walk-dot",
+      "fg": "#FFFFFF",
+      "bg": "#3E9A45",
+      "ratio": 3.55,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "mood-dot",
+      "fg": "#FFFFFF",
+      "bg": "#8264E8",
+      "ratio": 4.25,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "symptom-dot",
+      "fg": "#FFFFFF",
+      "bg": "#E04A72",
+      "ratio": 3.89,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "behavior-dot",
+      "fg": "#FFFFFF",
+      "bg": "#19978A",
+      "ratio": 3.6,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "grooming-dot",
+      "fg": "#FFFFFF",
+      "bg": "#C44BA2",
+      "ratio": 4.31,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "weight-dot",
+      "fg": "#FFFFFF",
+      "bg": "#6B7C94",
+      "ratio": 4.25,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "medication-dot",
+      "fg": "#FFFFFF",
+      "bg": "#5B6CE0",
+      "ratio": 4.5,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "training-dot",
+      "fg": "#FFFFFF",
+      "bg": "#B48A16",
+      "ratio": 3.19,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "photo-dot",
+      "fg": "#FFFFFF",
+      "bg": "#1E8BB0",
+      "ratio": 3.91,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "white glyph",
+      "background": "note-dot",
+      "fg": "#FFFFFF",
+      "bg": "#7A847D",
+      "ratio": 3.87,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "switch outline",
+      "background": "panel",
+      "fg": "#8A8578",
+      "bg": "#FFFFFF",
+      "ratio": 3.68,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "switch outline",
+      "background": "inset",
+      "fg": "#8A8578",
+      "bg": "#ECE9E0",
+      "ratio": 3.03,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "foreground": "switch outline",
+      "background": "ground",
+      "fg": "#8A8578",
+      "bg": "#F3F1EA",
+      "ratio": 3.26,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "switch outline",
+      "background": "panel",
+      "fg": "#8E978F",
+      "bg": "#181E1A",
+      "ratio": 5.63,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "switch outline",
+      "background": "inset",
+      "fg": "#8E978F",
+      "bg": "#222A25",
+      "ratio": 4.89,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "foreground": "switch outline",
+      "background": "ground",
+      "fg": "#8E978F",
+      "bg": "#0E1210",
+      "ratio": 6.27,
+      "minimum": 3,
+      "pass": true
+    }
+  ]
+}

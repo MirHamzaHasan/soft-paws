@@ -1,0 +1,5 @@
+{
+  "result": "passed",
+  "journey": "Edit existing dog setup → retain original record → sign out → sign in → same record",
+  "records": 1
+}

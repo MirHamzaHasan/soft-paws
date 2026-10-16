@@ -1,0 +1,259 @@
+{
+  "boardDirectory": ".verify-build/task022/board",
+  "batches": [
+    {
+      "name": "ios-home-reviewed",
+      "platform": "ios",
+      "variant": "light",
+      "format": "labeled-rest",
+      "directory": ".verify-build/task022/delivered-home/ios",
+      "sourceFingerprint": "c6190e2d47710380eba5b50836ccc8dd6267e0fcbbb6ce18031f41050ee7cb26"
+    },
+    {
+      "name": "android-home-reviewed",
+      "platform": "android",
+      "variant": "light",
+      "format": "labeled-rest",
+      "directory": ".verify-build/task022/delivered-home/android",
+      "sourceFingerprint": "c6190e2d47710380eba5b50836ccc8dd6267e0fcbbb6ce18031f41050ee7cb26"
+    },
+    {
+      "name": "android-context-reviewed",
+      "platform": "android",
+      "variant": "light",
+      "format": "android-rest",
+      "directory": ".verify-build/task022/android-context-current",
+      "sourceFingerprint": "c6190e2d47710380eba5b50836ccc8dd6267e0fcbbb6ce18031f41050ee7cb26",
+      "stage": "Scoped operation context; explicit action where required"
+    },
+    {
+      "name": "ios-editors-reviewed",
+      "platform": "ios",
+      "variant": "light",
+      "format": "xcresult-attachments",
+      "directory": ".verify-build/task022/reviewed-editors-light-attachments",
+      "sourceFingerprint": "c6190e2d47710380eba5b50836ccc8dd6267e0fcbbb6ce18031f41050ee7cb26",
+      "prefix": "visual-"
+    },
+    {
+      "name": "ios-editors-text135-reviewed",
+      "platform": "ios",
+      "variant": "text135",
+      "format": "xcresult-attachments",
+      "directory": ".verify-build/task022/reviewed-editors-text135-attachments",
+      "sourceFingerprint": "c6190e2d47710380eba5b50836ccc8dd6267e0fcbbb6ce18031f41050ee7cb26",
+      "prefix": "visual-"
+    },
+    {
+      "name": "android-editors-reviewed",
+      "platform": "android",
+      "variant": "light",
+      "format": "android-rest",
+      "directory": ".verify-build/task022/android-rest-final/editors-current",
+      "sourceFingerprint": "c6190e2d47710380eba5b50836ccc8dd6267e0fcbbb6ce18031f41050ee7cb26"
+    },
+    {
+      "name": "android-editors-text130-reviewed",
+      "platform": "android",
+      "variant": "text130",
+      "format": "android-rest",
+      "directory": ".verify-build/task022/android-rest-final/editors-text130",
+      "sourceFingerprint": "c6190e2d47710380eba5b50836ccc8dd6267e0fcbbb6ce18031f41050ee7cb26"
+    },
+    {
+      "name": "android-light-entry-batch",
+      "platform": "android",
+      "variant": "light",
+      "format": "android-rest",
+      "directory": ".verify-build/task022/android-rest-final/light-final",
+      "sourceFingerprint": "0e3f7cc7153ee6fe3a40de02885d6047aee608be70bf6ca619df618487c8c9bc",
+      "stage": "Entry/rest; precedes editor type and setup scroll correction"
+    },
+    {
+      "name": "ios-recovery-reviewed",
+      "platform": "ios",
+      "variant": "light",
+      "format": "xcresult-attachments",
+      "directory": ".verify-build/task022/reviewed-editors-recovery-attachments",
+      "sourceFingerprint": "c6190e2d47710380eba5b50836ccc8dd6267e0fcbbb6ce18031f41050ee7cb26",
+      "prefix": "",
+      "stage": "After explicit one-shot failure action",
+      "names": {
+        "save-error-retained-values": "save-error",
+        "stale-record-retained-draft": "stale-record",
+        "export-real-native-share": "share-handoff"
+      }
+    },
+    {
+      "name": "ios-compact-guided-reviewed",
+      "platform": "ios",
+      "variant": "compact",
+      "format": "xcresult-attachments",
+      "directory": ".verify-build/task022/reviewed-compact-first-run-attachments",
+      "sourceFingerprint": "c6190e2d47710380eba5b50836ccc8dd6267e0fcbbb6ce18031f41050ee7cb26",
+      "prefix": "native-first-run-",
+      "stage": "Real guided setup; long QA dog name; practice remains unsaved",
+      "names": {
+        "native-first-run-opening": "opening-value",
+        "native-first-run-name": "dog-setup",
+        "native-first-run-route": "onboarding-route",
+        "native-first-run-photo-optional": "onboarding-identity",
+        "native-first-run-identity": "onboarding-shortcuts",
+        "native-first-run-shortcuts": "onboarding-shortcuts",
+        "native-first-run-practice": "onboarding-practice",
+        "native-first-run-note": "onboarding-notes",
+        "native-first-run-timeline-preview": "onboarding-timeline",
+        "native-first-run-local-storage": "onboarding-storage",
+        "native-first-run-ready": "onboarding-ready",
+        "native-first-run-home": "home-coach"
+      }
+    },
+    {
+      "name": "ios-light-current",
+      "platform": "ios",
+      "variant": "light",
+      "format": "xcresult-attachments",
+      "directory": ".verify-build/task022/final-ios-light-attachments",
+      "sourceFingerprint": "0e3f7cc7153ee6fe3a40de02885d6047aee608be70bf6ca619df618487c8c9bc",
+      "prefix": "visual-",
+      "stage": "rest"
+    },
+    {
+      "name": "ios-dark-current",
+      "platform": "ios",
+      "variant": "dark",
+      "format": "xcresult-attachments",
+      "directory": ".verify-build/task022/final-ios-dark-attachments",
+      "sourceFingerprint": "0e3f7cc7153ee6fe3a40de02885d6047aee608be70bf6ca619df618487c8c9bc",
+      "prefix": "visual-",
+      "stage": "rest"
+    },
+    {
+      "name": "ios-compact-current",
+      "platform": "ios",
+      "variant": "compact",
+      "format": "xcresult-attachments",
+      "directory": ".verify-build/task022/final-ios-compact-attachments",
+      "sourceFingerprint": "0e3f7cc7153ee6fe3a40de02885d6047aee608be70bf6ca619df618487c8c9bc",
+      "prefix": "visual-",
+      "stage": "rest"
+    },
+    {
+      "name": "ios-wide-current",
+      "platform": "ios",
+      "variant": "wide",
+      "format": "xcresult-attachments",
+      "directory": ".verify-build/task022/final-ios-wide-attachments",
+      "sourceFingerprint": "0e3f7cc7153ee6fe3a40de02885d6047aee608be70bf6ca619df618487c8c9bc",
+      "prefix": "visual-",
+      "stage": "rest"
+    },
+    {
+      "name": "ios-text135-current",
+      "platform": "ios",
+      "variant": "text135",
+      "format": "xcresult-attachments",
+      "directory": ".verify-build/task022/final-ios-text135-attachments",
+      "sourceFingerprint": "0e3f7cc7153ee6fe3a40de02885d6047aee608be70bf6ca619df618487c8c9bc",
+      "prefix": "visual-",
+      "stage": "Rest; iOS XXXL \u2248135% for text135"
+    },
+    {
+      "name": "ios-light-families",
+      "platform": "ios",
+      "variant": "light",
+      "format": "xcresult-attachments",
+      "directory": ".verify-build/task022/frozen-visual-light-attachments",
+      "sourceFingerprint": "56245684b91b64762514232de77ff696f78e90f0c8945e43e64b888ee430f7d8",
+      "prefix": "visual-",
+      "device": "Owned iPhone 14 visual simulator"
+    },
+    {
+      "name": "ios-light-journal",
+      "platform": "ios",
+      "variant": "light",
+      "format": "xcresult-attachments",
+      "directory": ".verify-build/task022/frozen-functional-attachments",
+      "sourceFingerprint": "56245684b91b64762514232de77ff696f78e90f0c8945e43e64b888ee430f7d8",
+      "prefix": "parity-",
+      "stage": "Rest captured within a functional journey"
+    },
+    {
+      "name": "ios-light-recovery",
+      "platform": "ios",
+      "variant": "light",
+      "format": "xcresult-attachments",
+      "directory": ".verify-build/task022/frozen-functional-attachments",
+      "sourceFingerprint": "56245684b91b64762514232de77ff696f78e90f0c8945e43e64b888ee430f7d8",
+      "prefix": "",
+      "stage": "Explicit recovery action; no automatic success",
+      "names": {
+        "save-error-retained-values": "save-error",
+        "stale-record-retained-draft": "stale-record"
+      }
+    },
+    {
+      "name": "android-dark-prior-tile-leading",
+      "platform": "android",
+      "variant": "dark",
+      "format": "android-rest",
+      "directory": ".verify-build/task022/android-rest-final/dark-current",
+      "sourceFingerprint": "5bfafca976291568d7aeb5b4dcf83c6dba8cb25dfdf423fb24a833b43db600be",
+      "device": "Owned API 35 Android emulator; 390x844 unless variant says otherwise"
+    },
+    {
+      "name": "android-compact-prior-tile-leading",
+      "platform": "android",
+      "variant": "compact",
+      "format": "android-rest",
+      "directory": ".verify-build/task022/android-rest-final/compact-current",
+      "sourceFingerprint": "5bfafca976291568d7aeb5b4dcf83c6dba8cb25dfdf423fb24a833b43db600be",
+      "device": "Owned API 35 Android emulator; 390x844 unless variant says otherwise"
+    },
+    {
+      "name": "android-wide-prior-tile-leading",
+      "platform": "android",
+      "variant": "wide",
+      "format": "android-rest",
+      "directory": ".verify-build/task022/android-rest-final/wide-current",
+      "sourceFingerprint": "5bfafca976291568d7aeb5b4dcf83c6dba8cb25dfdf423fb24a833b43db600be",
+      "device": "Owned API 35 Android emulator; 390x844 unless variant says otherwise"
+    },
+    {
+      "name": "android-text130-prior-tile-leading",
+      "platform": "android",
+      "variant": "text130",
+      "format": "android-rest",
+      "directory": ".verify-build/task022/android-rest-final/text130-current",
+      "sourceFingerprint": "5bfafca976291568d7aeb5b4dcf83c6dba8cb25dfdf423fb24a833b43db600be",
+      "device": "Owned API 35 Android emulator; 390x844 unless variant says otherwise"
+    },
+    {
+      "name": "android-reduced-prior-tile-leading",
+      "platform": "android",
+      "variant": "reduced",
+      "format": "android-rest",
+      "directory": ".verify-build/task022/android-rest-final/reduced-current",
+      "sourceFingerprint": "5bfafca976291568d7aeb5b4dcf83c6dba8cb25dfdf423fb24a833b43db600be",
+      "device": "Owned API 35 Android emulator; 390x844 unless variant says otherwise"
+    }
+  ],
+  "notes": [
+    "Every native capture uses an explicitly selected synthetic SQLite fixture on owned QA devices. Existing journals were not reset or uninstalled.",
+    "Batches retain their own source fingerprints. Earlier batches are diagnostic evidence and cannot close current-source parity gates.",
+    "iOS light uses an owned iPhone 14 with real status/safe-area chrome. Android compact is 375x667, wide is 430x932 and larger text is OS font_scale 1.3. These are sampled family checks, not all child-state acceptance.",
+    "The board and QA data are not fully matched across every entry. Native source dates, counts, retained QA drafts and the blue synthetic photo may differ from the board examples. No data/art difference is approved.",
+    "Native system share, picker and notification surfaces belong to the OS. This pack does not replace physical VoiceOver/TalkBack, haptics, frame pacing, older-OS compatibility or individual owner review.",
+    "Motion, keyboard, validation and required states remain open unless the corresponding journey evidence records them. Missing captures are displayed explicitly.",
+    "The existing board caps its wide phone at 390px inside the requested 430x932 viewport. Its actual 390x932 frame is retained; native 430x932 is not squeezed to fit it. This difference remains for review.",
+    "iOS text135 uses the standard XXXL content size (about 135% of default). It is displayed separately from Android exact 130%; no exact iOS 130% check is inferred."
+  ],
+  "boardVariants": {
+    "dark": ".verify-build/task022/board-dark",
+    "compact": ".verify-build/task022/board-compact",
+    "wide": ".verify-build/task022/board-wide",
+    "text130": ".verify-build/task022/board-text130",
+    "text135": ".verify-build/task022/board-text135",
+    "reduced": ".verify-build/task022/board-reduced"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "errors": 0,
+  "warnings": 13,
+  "issues": [
+    {
+      "id": "ExifInterface",
+      "severity": "Warning",
+      "message": "Avoid using `android.media.ExifInterface`; use `androidx.exifinterface.media.ExifInterface` instead"
+    },
+    {
+      "id": "ExifInterface",
+      "severity": "Warning",
+      "message": "Avoid using `android.media.ExifInterface`; use `androidx.exifinterface.media.ExifInterface` instead"
+    },
+    {
+      "id": "ExifInterface",
+      "severity": "Warning",
+      "message": "Avoid using `android.media.ExifInterface`; use `androidx.exifinterface.media.ExifInterface` instead"
+    },
+    {
+      "id": "OldTargetApi",
+      "severity": "Warning",
+      "message": "Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the `android.os.Build.VERSION_CODES` javadoc for details."
+    },
+    {
+      "id": "UnsafeProtectedBroadcastReceiver",
+      "severity": "Warning",
+      "message": "This broadcast receiver declares an intent-filter for a protected broadcast action string, which can only be sent by the system, not third-party applications. However, the receiver's onReceive method does not appear to call getAction to ensure that the received Intent's action string matches the expected value, potentially making it possible for another actor to send a spoofed intent with no action string or a different action string and cause undesired behavior. In this case, it is possible that the onReceive method passed the received Intent to another method that checked the action string. If so, this finding can safely be ignored."
+    },
+    {
+      "id": "UseKtx",
+      "severity": "Warning",
+      "message": "Use the KTX function `createBitmap` instead?"
+    },
+    {
+      "id": "UseKtx",
+      "severity": "Warning",
+      "message": "Use the KTX extension function `String.toUri` instead?"
+    },
+    {
+      "id": "UseKtx",
+      "severity": "Warning",
+      "message": "Use the KTX extension function `String.toUri` instead?"
+    },
+    {
+      "id": "UseKtx",
+      "severity": "Warning",
+      "message": "Use the KTX extension function `String.toUri` instead?"
+    },
+    {
+      "id": "UseKtx",
+      "severity": "Warning",
+      "message": "Use the KTX extension function `String.toUri` instead?"
+    },
+    {
+      "id": "UseKtx",
+      "severity": "Warning",
+      "message": "Use the KTX extension function `SharedPreferences.edit` instead?"
+    },
+    {
+      "id": "UseKtx",
+      "severity": "Warning",
+      "message": "Use the KTX extension function `SharedPreferences.edit` instead?"
+    },
+    {
+      "id": "UseKtx",
+      "severity": "Warning",
+      "message": "Use the KTX extension function `SharedPreferences.edit` instead?"
+    }
+  ]
+}

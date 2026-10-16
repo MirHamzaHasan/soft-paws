@@ -1,32 +1,39 @@
-# BarkLog current feature status and roadmap
+# Current KMP feature status
 
-## Release status
+Reset date: 2026-10-14. The former RN feature list is reference only.
 
-BarkLog v1.0.0 is being prepared for founder-run local Android and iOS builds. Source checks and automated tests pass; signed production artifacts, physical-device QA, platform GameAnalytics evidence, and store submission remain to be recorded in [local preflight](../release/preflight-local.md).
+| Feature | Status | Rebuild task |
+| --- | --- | --- |
+| Detailed onboarding, optional demo login and companion chat | 54 native routes; real local profiles/history, demo replies; no real credentials/billing; visual/device QA open | [task027](../../tasks/task027-native-companion-board-and-main.md) |
+| Native KMP/Compose hosts and brand | Implemented foundation | task001 |
+| Home/Timeline/Insights/Profile navigation | Implemented native routes; real local data | task001/task003 |
+| Retryable startup, lifecycle, haptics | Implemented foundation | task001 |
+| Local SQLite and care repository | Implemented; JVM and native driver tested | task002 |
+| Dog setup, quick logs, basic timeline | Implemented; simulator journeys pass; platform gates remain | task003 |
+| Detailed logs, event edits/filters | Implemented; simulator journeys pass; platform gates remain | task004 |
+| Multiple dogs and settings/deletion | Implemented; physical QA pending | task005 |
+| Medication/vaccination records | Implemented; physical QA pending | task006 |
+| Care Calendar and reminders | Implemented; opt-in native adapters; physical delivery QA pending | task007 |
+| Deterministic summaries/trends | Implemented; physical QA pending | task008 |
+| Offline Safety Center | Implemented; physical QA pending | task009 |
+| CSV/PDF and vet prep | Implemented; physical QA pending | task010 |
+| Training catalog/progress/sessions | Implemented; physical QA pending | task011 |
+| Photos/baselines | Implemented; physical QA pending | task012 |
+| Expenses | Implemented; physical QA pending | task013 |
+| Local AI/model lifecycle | Not implemented | task014 |
+| Legacy journal import/update compatibility | Not implemented | task015 |
+| Physical-device/store/performance sign-off | Pending | task016 |
+| Local conversation and captions | Local demo conversation/history implemented in task027; real on-device inference still deferred | task017/task027 |
+| Optional Firebase/Atlas fallback | Deferred, disabled | task018 |
+| Memory Book | Implemented; physical QA pending | task019 |
+| Earlier Ungenerated native design foundation | Implemented foundation; current visual parity incomplete | task020 |
+| Local-v1 board feature application | Functional implementation verified; not exact visual/motion parity | task021 |
+| Exact current web-board parity | In progress; shared parts, Home/setup and product families being ported; 123 product entries, zero matched | [task022](../../tasks/task022-exact-board-native-parity.md) |
+| Readable Home strip and shared motion refinement | Implemented; Android/iOS simulator checks pass; physical feel review remains | [task023](../../tasks/task023-readable-care-and-native-motion.md) |
 
-The first release is free, with no ads, trial expiry, purchase flow, or paywall. The Android application ID is `com.draco.arts.apps.bark.log.dogs.journal`; iOS remains `com.dracoarts.barklog`.
-
-## Included in v1.0.0
-
-- Local dog profiles and unlimited local dog care logging, including quick logs, symptoms, medications, mood, behavior, and expanded event types.
-- WatermelonDB timeline and event details, local care calendar and opt-in reminders, training content and progress, trends, Memory Book, expenses, and dated photo baselines.
-- Free CSV and PDF export for the journal and vet prep. Export before uninstalling or deleting app data; there is no cloud care-record backup or sync.
-- Offline Safety Center, toxicity lookup, first-aid basics, and emergency card, with escalation to veterinary help.
-- Optional downloaded on-device AI models for supported factual journal answers, bounded conversation, and selected-photo scene captions. No model preloads on Home.
-- Optional GameAnalytics integration using separate Android/iOS games. Mixpanel and Sentry remain optional build choices.
-
-## Deferred or removed
-
-- Photo compare and smart care automation are not implemented; their former Premium upsell cards are hidden.
-- Household sharing, sitter mode, cloud care sync/backup, and vet share links were removed from the local-only release plan.
-- Atlas-backed AI stays hidden in production until its server policy supports free access and BarkLog health context checks pass. Firebase sign-in is only for that optional fallback and never syncs care records.
-- RevenueCat purchase flows, ads, and paid packaging are off for v1.0.0.
-
-## Immediate next work
-
-1. Founder configures optional GameAnalytics Android and iOS game keys, private signing materials, and the production public env file.
-2. Founder makes local signed Android AAB/APK and iOS archive using [local-build.md](../release/local-build.md).
-3. Run [native device QA](../deployment/native-device-qa-checklist.md), inspect the generated Android manifest, and verify configured analytics events.
-4. Complete [store metadata and privacy checks](../deployment/store-submission-checklist.md) and record the release decision in [preflight-local.md](../release/preflight-local.md).
-
-The numbered [task index](../../tasks/README.md) retains earlier work history. The [canonical spec](../source-of-truth/barklog-product-engineering.md) controls product decisions.
+Work next: task015 compatibility policy and task016 physical-device, assistive,
+exhaustive motion-frame, performance/signing and release checks.
+The owner requested the whole approved board in the application on 2026-10-15.
+See [native board port](../native-board-port.md) for the actual scope and limits.
+Optional AI and remote services remain separate. No cloud backup/sync, household
+sharing, smart automation, ads or paid packaging is scheduled.

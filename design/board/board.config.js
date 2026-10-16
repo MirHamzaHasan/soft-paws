@@ -1,0 +1,91 @@
+/* BarkLog's local-v1 design board. Research informs structure, never visual copying. */
+window.BOARD = {
+  id: 'barklog-local-v1-board-02', name: 'BarkLog · guided design 05 · example journal', startView: 'screens',
+  sections: [
+    { id: 'kit', view: 'kit', title: 'BarkLog kit · design 05', intent: 'Mobbin-informed structure, original BarkLog art: editorial type, expressive care marks, colored feature folios, a living day line and informative logging. Inter 400/500, Firm controls, native-parity motion.' },
+    { id: 'onboarding', title: 'Opening & guided first run', intent: 'A six-second optional opening and name-only fast start, or a user-paced, skippable path: identity → shortcuts → practice → notes → Timeline → local storage → ready. No permissions or account gate.' },
+    { id: 'setup', title: 'Name-only start', intent: 'The existing fast path: enter the dog’s name, then open the local journal. No additional setup gate.' },
+    { id: 'home', title: 'Home · a day with your dog', intent: 'Dog-first composition, four fast actions, a living day line, a complete log editor and notes. Proposed review direction; the October 14 native source stays pinned.' },
+    { id: 'forms', title: 'Create a log · observations & notes', intent: 'Nine expressive editors: key observations, generous notes, optional context, sample attachments, drafts, validation, saving and committed record detail.' },
+    { id: 'timeline', title: 'Timeline · approved + scope', intent: 'Approved reading path and filters, extended with multi-dog scope and local-v1 event presentations.' },
+    { id: 'records', title: 'Record lifecycle', intent: 'Approved detail, edit and confirmed deletion, plus retry and stale-revision handling.' },
+    { id: 'profile', title: 'Profile & early Insights · approved', intent: 'October 14 references kept intact for comparison; they do not claim later features are implemented.' },
+    { id: 'profiles', title: 'Profiles & settings', intent: 'Dog switching, later details, local storage, accessibility and deliberate deletion with export available first.' },
+    { id: 'medications', title: 'Medication & vaccination', intent: 'Caregiver-entered plans and factual history. No calculator, recommendation or automatic permission prompt.' },
+    { id: 'calendar', title: 'Care calendar & reminders', intent: 'Tasks save locally even when reminder permission is declined or scheduling fails.' },
+    { id: 'insights', title: 'Insights & trends', intent: 'Factual, accessible summaries with text equivalents. Missing observations never become health judgments.' },
+    { id: 'safety', title: 'Offline Safety Center', intent: 'Bounded emergency organization with visible source/version status. No diagnosis, dose or AI decision.' },
+    { id: 'exports', title: 'Vet preparation & exports', intent: 'Choose dog, date and content; preview; export CSV/PDF; then hand off to the real system share or print surface.' },
+    { id: 'training', title: 'Training', intent: 'Short positive-reinforcement sessions; completion and Timeline save are one committed result.' },
+    { id: 'photos', title: 'Photo journal & baselines', intent: 'User-triggered native picker, local example photos and descriptive baselines without comparison claims.' },
+    { id: 'expenses', title: 'Expenses', intent: 'Explicit date, currency and precision; receipts remain local attachments.' },
+    { id: 'memory', title: 'Memory Book', intent: 'Local highlights trace back to real example records or photos; no generated medical narrative.' },
+    { id: 'states', title: 'Global states', intent: 'Content-shaped loading, calm recovery, offline reassurance, permission denial, conflicts and reduced-motion finals.' },
+    { id: 'motion', view: 'transitions', title: 'Motion & continuity', intent: 'Firm press/release and calm shared-element journeys. Reduced motion lands directly on the final state.' },
+  ],
+  researchTitles: {park:'Park day · Mobbin study 06','colour-and-onboarding':'Colour & onboarding · Mobbin study 05',mobbin:'Care & logging · Mobbin study 04'},
+  research: {
+    park: [
+      {title:'Finch, BitePal, Alan · character beside the facts',took:'A character gives a daily overview personality. BarkLog uses its own sitting dog beside the count; the park scenery was removed after review so every care fact stays on a plain ground.',url:'https://mobbin.com/screens/99094ecd-8045-4de7-a865-13ea77b3a9f0'},
+      {title:'Structured, Oura · the day as a thread',took:'Large typed marks on one vertical line with the time beside each. Timeline now threads its care stickers the same way.',url:'https://mobbin.com/screens/311b1ac6-d551-4318-b7a1-b7a19f86cb47'},
+      {title:'Brick, Fitbit, Opal · one number, then a sentence',took:'Lead a summary with one big figure and plain words; bars support it. Insights and totals use display numerals that roll.',url:'https://mobbin.com/screens/cf442781-3a85-4de9-8c0b-2a169eec4767'},
+      {title:'Jomo, Oura · the floating tab bar',took:'A dark floating bar keeps the four tabs reachable over content; the selected pill travels.',url:'https://mobbin.com/screens/f31ba09e-bc7e-4283-9312-78d8504b2a18'},
+      {title:'Fi, Finch · the pet as an ID card',took:'The profile opens on the pet itself, like a card you would carry. BarkLog’s Profile is Bruno’s ID card with a ball-green band.',url:'https://mobbin.com/screens/74611f73-63bb-4130-a089-bb400fa5dd7f'},
+      {title:'Lifesum · choices bloom from the button',took:'Logging options open from where the finger is. Noted for a later quick-add pass; Home keeps its four one-tap tiles.',url:'https://mobbin.com/screens/167ac79d-8ebd-4aed-842b-6eb8fd84857e'},
+      {title:'Type decision · Bricolage display, Inter reading',took:'BitePal and Alan show that chunky display type reads friendly. BarkLog pairs Bricolage Grotesque (OFL) for headings and numbers with Inter for reading text. Owner-approved trial; native port needs the spec updated.'},
+    ],
+    'colour-and-onboarding': [
+      {title:'Headspace · saturated art, quiet reading ground',took:'Separate a bold illustration field from the headline and primary action. BarkLog keeps warm paper, a terracotta action and original dog art—not Headspace’s characters or palette.',src:'assets/research/mobbin/headspace-welcome.webp',url:'https://mobbin.com/screens/7dba3826-1195-4066-a96d-a894870048ec'},
+      {title:'Gentler Streak · illustration is not the data',took:'Use a bounded illustrated scene above readable records. Reject its health judgments, gradients and shadows: BarkLog only describes what the caregiver recorded.',src:'assets/research/mobbin/gentler-rest.webp',url:'https://mobbin.com/screens/89addee0-a199-4220-bf7c-5fc6b916e1da'},
+      {title:'Finch · a choice becomes the next surface',took:'Reuse optional choices in the actual product. BarkLog’s selected shortcuts arrive on Home, while dog details arrive in Profile. No questionnaire without a visible use.',src:'assets/research/mobbin/finch-goals.webp',url:'https://mobbin.com/screens/a06ac851-6e51-427f-bdb8-1ddce6f0e64a'},
+      {title:'Finch · answers become a recognizable result',took:'Carry identity and selected values into a final journal preview. Keep an immediate fast-start route and no streak, reward economy, paywall or notification request.',src:'assets/research/mobbin/finch-reveal.webp',url:'https://mobbin.com/screens/c229ad54-ed26-4dec-80d1-399d54964f31'},
+      {title:'Colour decision · warm ground, meaningful families',took:'Terracotta is the single action accent. Green identifies everyday care, lavender medication, blue photos/reports, amber planning, and rose safety. Every family also has a name and icon. Dark mode uses dedicated ink/background pairs.'},
+      {title:'Research boundary · not every pet flow fits',took:'Mobbin’s pet-profile search returned Amazon Shopping and Walmart commerce flows. We excluded them as a structural model: BarkLog has no shopping funnel, account wall or profile-completion target.'},
+    ],
+    mobbin: [
+      {title:'Fi · pet identity before the data',took:'Put the selected dog and a bounded Today summary before secondary tools; use factual context rather than a health score.',src:'assets/research/mobbin/fi-daily.webp',url:'https://mobbin.com/screens/0664355c-9bc5-4a8a-8b06-ea31593f8601'},
+      {title:'Finch · character beside the action',took:'Connect one recognizable character to the daily action, with one small response when the person records something.',src:'assets/research/mobbin/finch-daily.webp',url:'https://mobbin.com/screens/13d6c98d-d362-4ae2-971f-d63601dcd598'},
+      {title:'Visible · a note deserves its own space',took:'Keep date, a generous writing surface, character count and a clear save action together; surface the saved note in the daily record.',src:'assets/research/mobbin/visible-note.webp',url:'https://mobbin.com/screens/2d46b0bd-9934-4d13-8d48-4c404c79d6fb'},
+      {title:'Clue · structured observation, then detail',took:'Use labeled single-choice observations and progressive detail beside a persistent save action; colour always has a text equivalent.',src:'assets/research/mobbin/clue-observations.webp',url:'https://mobbin.com/screens/1804377c-5636-4b61-b21d-0921f8e60260'},
+    ],
+    onboarding: [
+      { title: 'Apple HIG · Onboarding', took: 'Keep guidance brief, optional and tied to a useful first action.', url: 'https://developer.apple.com/design/human-interface-guidelines/onboarding' },
+      { title: 'Ungenerated pattern notes · opening hook', took: 'Carry one recognizable object through the value beat, setup and first useful surface.' },
+      { title: 'BarkLog product truth', took: 'A local journal starts with only a dog name—no account, purchase, questionnaire or permission wall.' },
+    ],
+    home: [
+      { title: 'Approved BarkLog H1', took: 'Preserve the four fast care actions, detailed-log entry and readable recent records.' },
+      { title: '11pets · functional grouping', took: 'Use care, records, preventive health, measurements, expenses and export as navigation families only.', url: 'https://www.11pets.com/en/feature' },
+    ],
+    timeline: [
+      { title: 'Approved BarkLog T1/T2', took: 'Keep bounded loading, explicit filters and factual detail/edit/delete.' },
+      { title: 'Ungenerated · one reading path', took: 'Use one column and quiet separators; type colour is supporting information, never the only label.' },
+    ],
+    profiles: [
+      { title: 'BarkLog local-v1 scope', took: 'Dog switching changes every dog-scoped destination; storage boundaries stay visible.' },
+      { title: 'Ungenerated · destructive actions', took: 'Name the exact dog or journal, offer export first, and keep the safe action visually primary.' },
+    ],
+    calendar: [
+      { title: 'Android · permissions in context', took: 'Ask only after the person turns on a reminder; task saving must not depend on permission.', url: 'https://developer.android.com/topic/performance/issues/permissions' },
+      { title: 'Ungenerated · permission primer', took: 'Explain what reminders do and do not do before opening the native permission sheet.' },
+    ],
+    insights: [
+      { title: 'Apple HIG · Charts', took: 'Pair marks with labels, context and a text summary; support larger type without hiding meaning.', url: 'https://developer.apple.com/design/human-interface-guidelines/charts' },
+      { title: 'BarkLog safety boundary', took: 'Describe recorded frequency and range only; do not infer wellness from missing or sparse observations.' },
+    ],
+    safety: [
+      { title: 'AVMA · Pet First Aid', took: 'Prioritize professional contact, safe transport and short observable facts.', url: 'https://ebusiness.avma.org/files/ProductDownloads/mcm-client-brochures-pet-first-aid-2025.pdf' },
+      { title: 'ASPCA · Poison Control', took: 'An unknown search is never reassurance; suspected exposure escalates to a veterinarian or poison-control service.', url: 'https://www.aspca.org/pet-care/aspca-poison-control' },
+      { title: 'Merck Veterinary Manual · emergencies', took: 'Use bounded first-aid topics and do not replace veterinary assessment.', url: 'https://www.merckvetmanual.com/special-pet-topics/emergencies/what-to-do-in-a-dog-or-cat-emergency' },
+    ],
+    exports: [{ title: 'BarkLog export requirement', took: 'CSV and PDF remain free, local and scoped before generation; system share/print stays a platform handoff.' }],
+    photos: [
+      { title: 'Android · minimal permission surface', took: 'Open a user-triggered system picker rather than asking for broad photo-library access.', url: 'https://developer.android.com/topic/performance/issues/permissions' },
+      { title: 'BarkLog observation boundary', took: 'A baseline is a caregiver label and dated photo, never an automated health comparison.' },
+    ],
+  },
+  answers: {
+    dog: 'Bruno', selectedDogId: 'bruno', permissions: { reminders: 'not-requested', photos: 'not-requested' },
+    dogs: [{ id: 'bruno', name: 'Bruno', detail: 'Labrador mix · 4 years' }, { id: 'luna', name: 'Luna', detail: 'Terrier · 2 years' }],
+  },
+};

@@ -1,0 +1,14 @@
+{
+  "fingerprint": "81cccf1d8c1e0b30ffab79e113e3c6cba7fda87f4c6121c1ecdae9ca29ab5c8c",
+  "files": {
+    "config.js": "fc9aa81fc78cdc8d8816aa37556769855358f2e1d31bb36c28f07b4b641315e8",
+    "index.html": "d52eecfc8210c9a2a1405fe886477923306e615ca2913143a29d089c2ec75128",
+    "parts.js": "b156e0df1037025586bdbcdf2c5091ac3850d211c319368dece1c3762d9e81ee",
+    "premium.css": "2c75e2f12f86e88491c6c477b10e95c467a04112c831716efe157822207cd3ef",
+    "review.js": "0e591b56862335a9dc7d39c4f92d48df36428e78f10dbed10fb47208eacc5c96",
+    "screens/account.js": "7a45d15e83481f81a65d71239dad560d1db4d897ec44a9e6b48117d51fc2250a",
+    "screens/chat.js": "4deb5584ae4533cde2fb715413d2124eb87f3d46879fd4d3476b7e09b907c4b6",
+    "screens/onboarding.js": "9e83e91c83d532583ef1ac369e505b7e50eef8721aacec5b0c38f79ce112d83a",
+    "screens/premium.js": "dcd7715c72836ca9d32a353a68c38914ce1f6a6cf7227ea6c99d884cb3bf34c5"
+  }
+}

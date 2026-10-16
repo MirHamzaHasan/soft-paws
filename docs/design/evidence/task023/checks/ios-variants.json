@@ -1,0 +1,37 @@
+[
+  {
+    "variant": "light",
+    "appearance": "light",
+    "contentSize": "large",
+    "screen": "home",
+    "sha256": "492ad643703c1ffc765a40808a1280436b4a9adc9178ca51d8b30265bbc3e1df"
+  },
+  {
+    "variant": "dark",
+    "appearance": "dark",
+    "contentSize": "large",
+    "screen": "home",
+    "sha256": "eaf4ddffdd968b368726690425bb3d410e8526a9f2ad387fbc41059cb149f11d"
+  },
+  {
+    "variant": "text135",
+    "appearance": "light",
+    "contentSize": "extra-extra-extra-large",
+    "screen": "home",
+    "sha256": "c7870c22715594011514377c31fc7c7b3bd2df1b8bc161c9a020688c7e1292f3"
+  },
+  {
+    "variant": "reduced",
+    "appearance": "light",
+    "contentSize": "large",
+    "screen": "reduced-motion-state",
+    "sha256": "492ad643703c1ffc765a40808a1280436b4a9adc9178ca51d8b30265bbc3e1df"
+  },
+  {
+    "variant": "empty",
+    "appearance": "light",
+    "contentSize": "large",
+    "screen": "home-empty",
+    "sha256": "2133fa7c0debd547e0e12f5209dcce2030cda1d43d3afeb3bc7c24aca97ff59a"
+  }
+]

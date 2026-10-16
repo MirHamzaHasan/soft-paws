@@ -1,0 +1,12 @@
+{
+  "passed": [
+    "Fresh system-dark browser defaults to light; an explicit Dark choice survives reload",
+    "iOS notification switch waits for Allow; Escape/denial/Settings, per-type switches, off/on with permission retained, camera and picker cancellation",
+    "Full dog setup validates age/weight, preserves three breeds including Unicode/custom entries, all goals, multiple routines/topics, personality, activities, diet and care notes; review edits and email recovery preserve context",
+    "Undecided-price paywall retains a working free journal, preview log/Undo and paid AI gate",
+    "Expanded profile and care notes require explicit AI context; actual values and an immutable source snapshot are used; removing profile context prevents its use",
+    "Chat stop/regenerate, record sources, history/new conversation, urgent boundary and offline/failure retries remain working",
+    "Subscription management and ended free access remain; Android permission approval uses the same truthful notification switch states"
+  ],
+  "errors": []
+}

@@ -1,0 +1,12 @@
+{
+  "quickLogUndoReopen": "passed",
+  "safety": "passed",
+  "pdf": {
+    "bytes": 32238,
+    "sha256": "9d2c2770a3f288851fe7de42ab41bf2c49b8b69078d4648744f869c64680f868"
+  },
+  "csv": {
+    "bytes": 2876,
+    "sha256": "83cfa9800ee42ccd8dab2debafeb8c2402d100204da409bf9d330ba53c5a322c"
+  }
+}

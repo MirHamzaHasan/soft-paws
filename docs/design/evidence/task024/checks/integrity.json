@@ -1,0 +1,15 @@
+{
+  "routes": 32,
+  "missing": [],
+  "externalRequests": [],
+  "runtimeErrors": [],
+  "reviewLinks": 7,
+  "focusTrap": true,
+  "escapeClosesSheet": true,
+  "checkboxTargets": [
+    {
+      "width": 239.796875,
+      "height": 48
+    }
+  ]
+}

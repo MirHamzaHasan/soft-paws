@@ -1,0 +1,2300 @@
+{
+  "schemaVersion": 1,
+  "capturedClientDate": "2026-10-16",
+  "timezone": "Asia/Karachi",
+  "baseUrl": "http://localhost:4278/",
+  "boardId": "barklog-local-v1-board-02",
+  "boardName": "BarkLog \u00b7 guided design 05 \u00b7 example journal",
+  "canonicalViewport": {
+    "width": 390,
+    "height": 844
+  },
+  "sections": [
+    {
+      "id": "kit",
+      "view": "kit",
+      "title": "BarkLog kit \u00b7 design 05",
+      "intent": "Mobbin-informed structure, original BarkLog art: editorial type, expressive care marks, colored feature folios, a living day line and informative logging. Inter 400/500, Firm controls, native-parity motion."
+    },
+    {
+      "id": "onboarding",
+      "title": "Opening & guided first run",
+      "intent": "A six-second optional opening and name-only fast start, or a user-paced, skippable path: identity \u2192 shortcuts \u2192 practice \u2192 notes \u2192 Timeline \u2192 local storage \u2192 ready. No permissions or account gate."
+    },
+    {
+      "id": "setup",
+      "title": "Name-only start",
+      "intent": "The existing fast path: enter the dog\u2019s name, then open the local journal. No additional setup gate."
+    },
+    {
+      "id": "home",
+      "title": "Home \u00b7 a day with your dog",
+      "intent": "Dog-first composition, four fast actions, a living day line, a complete log editor and notes. Proposed review direction; the October 14 native source stays pinned."
+    },
+    {
+      "id": "forms",
+      "title": "Create a log \u00b7 observations & notes",
+      "intent": "Nine expressive editors: key observations, generous notes, optional context, sample attachments, drafts, validation, saving and committed record detail."
+    },
+    {
+      "id": "timeline",
+      "title": "Timeline \u00b7 approved + scope",
+      "intent": "Approved reading path and filters, extended with multi-dog scope and local-v1 event presentations."
+    },
+    {
+      "id": "records",
+      "title": "Record lifecycle",
+      "intent": "Approved detail, edit and confirmed deletion, plus retry and stale-revision handling."
+    },
+    {
+      "id": "profile",
+      "title": "Profile & early Insights \u00b7 approved",
+      "intent": "October 14 references kept intact for comparison; they do not claim later features are implemented."
+    },
+    {
+      "id": "profiles",
+      "title": "Profiles & settings",
+      "intent": "Dog switching, later details, local storage, accessibility and deliberate deletion with export available first."
+    },
+    {
+      "id": "medications",
+      "title": "Medication & vaccination",
+      "intent": "Caregiver-entered plans and factual history. No calculator, recommendation or automatic permission prompt."
+    },
+    {
+      "id": "calendar",
+      "title": "Care calendar & reminders",
+      "intent": "Tasks save locally even when reminder permission is declined or scheduling fails."
+    },
+    {
+      "id": "insights",
+      "title": "Insights & trends",
+      "intent": "Factual, accessible summaries with text equivalents. Missing observations never become health judgments."
+    },
+    {
+      "id": "safety",
+      "title": "Offline Safety Center",
+      "intent": "Bounded emergency organization with visible source/version status. No diagnosis, dose or AI decision."
+    },
+    {
+      "id": "exports",
+      "title": "Vet preparation & exports",
+      "intent": "Choose dog, date and content; preview; export CSV/PDF; then hand off to the real system share or print surface."
+    },
+    {
+      "id": "training",
+      "title": "Training",
+      "intent": "Short positive-reinforcement sessions; completion and Timeline save are one committed result."
+    },
+    {
+      "id": "photos",
+      "title": "Photo journal & baselines",
+      "intent": "User-triggered native picker, local example photos and descriptive baselines without comparison claims."
+    },
+    {
+      "id": "expenses",
+      "title": "Expenses",
+      "intent": "Explicit date, currency and precision; receipts remain local attachments."
+    },
+    {
+      "id": "memory",
+      "title": "Memory Book",
+      "intent": "Local highlights trace back to real example records or photos; no generated medical narrative."
+    },
+    {
+      "id": "states",
+      "title": "Global states",
+      "intent": "Content-shaped loading, calm recovery, offline reassurance, permission denial, conflicts and reduced-motion finals."
+    },
+    {
+      "id": "motion",
+      "view": "transitions",
+      "title": "Motion & continuity",
+      "intent": "Firm press/release and calm shared-element journeys. Reduced motion lands directly on the final state."
+    }
+  ],
+  "reviewStore": {
+    "notes": {},
+    "picks": {}
+  },
+  "assets": [
+    {
+      "path": "design/board/assets/fonts/BricolageGrotesque.ttf",
+      "sha256": "413e7357809ddd12fd80a96a8a396de0e401638d4acd3cb3e37532f0472ac682"
+    },
+    {
+      "path": "design/board/assets/fonts/inter_medium.ttf",
+      "sha256": "f1738576525e86db1d5cf63a6c1b56e0a7e2a2898b499ac93db95f2e7a9f9cd5"
+    },
+    {
+      "path": "design/board/assets/fonts/inter_regular.ttf",
+      "sha256": "a414b48aa577ef2c62ebb135341ddeef33ee26a4f5dc9f787f93c1aab08ebb50"
+    },
+    {
+      "path": "design/board/board.config.js",
+      "sha256": "b42eb2a1a52eff563ee570940364f372aaded500a08a47e8b320b93c8beaf2df"
+    },
+    {
+      "path": "design/board/css/barklog-local-v1-tokens.css",
+      "sha256": "b104a8b501cbdd4dfbda15ca9798ce90837d96f524fce924c6410e819f9ad8b7"
+    },
+    {
+      "path": "design/board/css/barklog-tokens.css",
+      "sha256": "69dd63aebe9ea2809eadc35e900806a6b1d66bd6683178084d5510a06233d847"
+    },
+    {
+      "path": "design/board/css/barklog-v3.css",
+      "sha256": "ecfbff14d02188610b00a85c40b9db2048953bf790dada89ce7bddeb1190116e"
+    },
+    {
+      "path": "design/board/css/barklog-v4.css",
+      "sha256": "bda391799599d9723c7a49331a39538ebdc2f912e3fa6250b7c64ba96f4e6045"
+    },
+    {
+      "path": "design/board/css/barklog-vibrant.css",
+      "sha256": "7e4c75c1d080a5b0863c10338298d5b555c4c89f9bb17808312e1f2d2f6e172d"
+    },
+    {
+      "path": "design/board/css/barklog.css",
+      "sha256": "b181cf77408c438f09527efa1fb70b4ee89879c471c3826b1033ab2041b9c658"
+    },
+    {
+      "path": "design/board/css/board.css",
+      "sha256": "fad71b702b3ca47ff2649c438b0abfdd5b4a138457b15db06a03f6c4e662df22"
+    },
+    {
+      "path": "design/board/css/dog-character.css",
+      "sha256": "91585b4dc1914e42ed031a0202568a5fdfc07e162fb47800ae4937c179e0c528"
+    },
+    {
+      "path": "design/board/css/feel-08.css",
+      "sha256": "b322eafdf2e8fbdbaaa80d371329b7266681426dbca6ec848893516248c25cf8"
+    },
+    {
+      "path": "design/board/css/guided-onboarding.css",
+      "sha256": "b76ec6cc9b282206d0398044d18260f3122d947b6a60e864946f93f99199294a"
+    },
+    {
+      "path": "design/board/css/motion-v6.css",
+      "sha256": "afec051065e569e9dba76331eca4724e9c82f69b9ea06113c02b8d785724f364"
+    },
+    {
+      "path": "design/board/css/park-06.css",
+      "sha256": "f396433cb74ffbc51dd02dc25ad326cf0558f59d7a433766faf158202e28a068"
+    },
+    {
+      "path": "design/board/css/parts.css",
+      "sha256": "c4d428ef2b470dd2b0b582ae7f05a36137a05941ea200b0c76d8e18f6e4588a3"
+    },
+    {
+      "path": "design/board/css/phone.css",
+      "sha256": "7e2288c1b21611ba0e5324c585acd369f5a77b90fb751bde1ae6dfc0eb795911"
+    },
+    {
+      "path": "design/board/css/screens.css",
+      "sha256": "995edd29770f0ce4f443634934e6b65953d411d5c1f2c3b79a70a566a0475ed7"
+    },
+    {
+      "path": "design/board/index.html",
+      "sha256": "a0d5eb7a09c42049999336b23adba5e586cb2f9d89de86f826d30b67eab6ce0c"
+    },
+    {
+      "path": "design/board/js/barklog-v3.js",
+      "sha256": "b6991da02ea7ffd5d3a76b2917ae3ac9a50047ca282ac481b1ba0339bbdc0798"
+    },
+    {
+      "path": "design/board/js/barklog-v4.js",
+      "sha256": "170930b091392d5cffee53093f33c1663d77ee6ef496b54a9dcf0d46809e0a47"
+    },
+    {
+      "path": "design/board/js/barklog.js",
+      "sha256": "65cf2749423c46dca0835383dbf6cf5612dddca739988c975d23e7c525005037"
+    },
+    {
+      "path": "design/board/js/board.js",
+      "sha256": "34d4d41d76eeb7f3ef7c434f7ca6b8691c7291d04a048b07c22746a2f15f3f88"
+    },
+    {
+      "path": "design/board/js/dog-character.js",
+      "sha256": "e4b18f50fd90cc32e2a315ffac0dba29fa4e84b116c16620e8aef35aa4aed797"
+    },
+    {
+      "path": "design/board/js/feel-07.js",
+      "sha256": "08c17f14c6cb7e89ee4d55ad69c2b3094d9395b5a36ea6a1dacc3c993735742d"
+    },
+    {
+      "path": "design/board/js/feel-08.js",
+      "sha256": "915ce427fef19b3e33dfb9ea697862e82ca22c5959505096b66f92e30b9f785e"
+    },
+    {
+      "path": "design/board/js/icons.js",
+      "sha256": "42e39bc9ee8872e7d58cbccf611e947b417a785ee1de7b43e103cbf10a007fe7"
+    },
+    {
+      "path": "design/board/js/kit.js",
+      "sha256": "36513ddb4f4ed8e18fb6ee25a7850eab0faaa34edd7ec618645c77646a54f6fd"
+    },
+    {
+      "path": "design/board/js/motion-v6.js",
+      "sha256": "e4de12431d8d8ffb023aa51706c46c1fe3466ce4f02171b8a64f924e2edc6043"
+    },
+    {
+      "path": "design/board/js/park-06.js",
+      "sha256": "cc1e4238de3909de1b7080a9db1ae855d4edeeeaef4c9b74d96785d8afb37afb"
+    },
+    {
+      "path": "design/board/js/parts.js",
+      "sha256": "30a03aff8e0ea542d211c0593a6d99bd922eb3f4d8c5573fd0a2dc5634006b27"
+    },
+    {
+      "path": "design/board/js/review-policy.js",
+      "sha256": "f83b3ab44ea7c82ca16174b1b03500e2cf05910071978d98cad41839b3b7bfe6"
+    },
+    {
+      "path": "design/board/js/screen-manifest.js",
+      "sha256": "d9f550b004a9de941d178cd5024033a03d26ac624ecd4d501d45a34349e198de"
+    },
+    {
+      "path": "design/board/js/screens/barklog-kit.js",
+      "sha256": "eaf7100fc66234d3a3ab26f905f13c455d047b91de7330d4b7708fdccecc84e2"
+    },
+    {
+      "path": "design/board/js/screens/calendar.js",
+      "sha256": "510df24ac3b14242623b1316c8f2f01b1f7e47da4569eb33ca6f86232677ac66"
+    },
+    {
+      "path": "design/board/js/screens/care-editor.js",
+      "sha256": "2c2b1c4b3ac1047f1d8e76d8425385130ed15648a9690e63a1f728325878957e"
+    },
+    {
+      "path": "design/board/js/screens/expenses.js",
+      "sha256": "3850a413a875bec53f737090ffe08bb206970f5856b83e355f4101ec7f290653"
+    },
+    {
+      "path": "design/board/js/screens/exports.js",
+      "sha256": "b23cc0dc317b08871d7b2ea6d01da166e2ef17704da486343ab100ae99e385e6"
+    },
+    {
+      "path": "design/board/js/screens/feature-transitions.js",
+      "sha256": "3570a4c6c7a0363d1011d2e5677ceb0afe5bd7d052a95fffa121125fd81a0b27"
+    },
+    {
+      "path": "design/board/js/screens/forms.js",
+      "sha256": "addde9911a1070cce77b436829119b74f85db9bc974869561fa0db3ffd0f4caf"
+    },
+    {
+      "path": "design/board/js/screens/guided-onboarding.js",
+      "sha256": "57dea2cdad84acbf1307e24aeeb2ea925b9566204ec23fd6ed1b632bafd8646c"
+    },
+    {
+      "path": "design/board/js/screens/home.js",
+      "sha256": "921a73e4626f7fd9a4f6a686495ed95885cdea2a18170fb43827b6930093263e"
+    },
+    {
+      "path": "design/board/js/screens/insights.js",
+      "sha256": "2eb56084839c969a0b5d045f224d032292c52f7fd62873c44fb82ef7ee497f21"
+    },
+    {
+      "path": "design/board/js/screens/medications.js",
+      "sha256": "14d17c6e0acbfb3daa6c3e9fa3838354c1bb2ae02976e4c2143759bda8ce19a7"
+    },
+    {
+      "path": "design/board/js/screens/memory.js",
+      "sha256": "9861db92dc26e24dedcb5159361121d9bc31e681dc4ca116b12c5c49c1c8128d"
+    },
+    {
+      "path": "design/board/js/screens/onboarding.js",
+      "sha256": "68163bcedf80588458bf407a538b2fdc89face907b35c55ef814ae98028d1a99"
+    },
+    {
+      "path": "design/board/js/screens/photos.js",
+      "sha256": "4b9d4f4709ab8c8fa951b2cdeddd83d42bc9194c0a6fc8aee199cd24c04eb000"
+    },
+    {
+      "path": "design/board/js/screens/profile.js",
+      "sha256": "c178b2aef5c3703f218f40e70aaa89471b8e7f121c4dceea672af237f46793e3"
+    },
+    {
+      "path": "design/board/js/screens/profiles.js",
+      "sha256": "d5ac45a85d01a07494bf261f81877970619a919e7f3cf90ab9010812d35f9ea6"
+    },
+    {
+      "path": "design/board/js/screens/records.js",
+      "sha256": "caac9fca9534e46f143b65544623f634e7fd647a47b469d8d1dadcc13289c78c"
+    },
+    {
+      "path": "design/board/js/screens/safety.js",
+      "sha256": "e297813dfd810ca717ee5b484fbe08398ab57a3f844d68b34a6dd756bb315c28"
+    },
+    {
+      "path": "design/board/js/screens/setup.js",
+      "sha256": "8eb91ca10ef4062f5abdd509f4939558564ce9bcbb7606a9c7debf3d1789b2c4"
+    },
+    {
+      "path": "design/board/js/screens/states.js",
+      "sha256": "dd36b6891ceb4c38661ee9e7c3cf27132ae293252be63bff97477bbfab3a137b"
+    },
+    {
+      "path": "design/board/js/screens/timeline.js",
+      "sha256": "dd8f79d900cc9f78e964572b5c92a6712293ad9c1745714352acbf7bd440485f"
+    },
+    {
+      "path": "design/board/js/screens/training.js",
+      "sha256": "899403334551f4773eee8c79489e338e8ac4019d58b78f9436b25cd38a893b3e"
+    },
+    {
+      "path": "design/board/js/transitions.js",
+      "sha256": "2fe0279a859253625b97a92f8d922d20fba4972c538847a33666294e3c80d028"
+    },
+    {
+      "path": "design/board/motion.tokens.js",
+      "sha256": "e3a2d0882927441e4d451aeb8d2050b607e47e608744c862121ab16096dfece1"
+    }
+  ],
+  "screens": [
+    {
+      "id": "kit-mobbin-direction",
+      "name": "Design 04 \u00b7 observation, note, memory",
+      "section": "kit",
+      "order": 0,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-kit-mobbin-direction",
+      "intent": "Mobbin mechanics adapted to original BarkLog parts: dog scene, expressive choice, generous notes and purposeful motion."
+    },
+    {
+      "id": "kit-visual-direction",
+      "name": "Visual language \u00b7 warm, colorful, dog-first",
+      "section": "kit",
+      "order": 1,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-kit-visual-direction",
+      "intent": "Warm editorial colour, a recognizable dog portrait and flat layered shapes give BarkLog personality without decorative gradients or shadows."
+    },
+    {
+      "id": "kit-type",
+      "name": "Type \u00b7 Bricolage display, Inter reading",
+      "section": "kit",
+      "order": 2,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-kit-type",
+      "intent": "Design 06 proposal: Bricolage Grotesque 700/800 for headings and numbers, Inter 400/500 for reading. Display 44, screen 34, section 21, body 14\u201316, captions 11\u201313. Tabular numbers."
+    },
+    {
+      "id": "kit-controls",
+      "name": "Controls \u00b7 default, disabled, error",
+      "section": "kit",
+      "order": 3,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-kit-controls",
+      "intent": "Visible labels, native-like inputs, state-shaped loading and quiet secondary action."
+    },
+    {
+      "id": "feel-firm",
+      "name": "Firm \u00b7 press release",
+      "section": "kit",
+      "order": 4,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "press-feel",
+      "intent": "Motion comparison. 0.86 damping. Content does not bounce. Proposed default: Firm."
+    },
+    {
+      "id": "feel-bubbly",
+      "name": "Bubbly \u00b7 press release",
+      "section": "kit",
+      "order": 5,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "press-feel",
+      "intent": "Motion comparison. 0.62 damping. Content does not bounce. Proposed default: Firm."
+    },
+    {
+      "id": "feel-lively",
+      "name": "Lively \u00b7 press release",
+      "section": "kit",
+      "order": 6,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "press-feel",
+      "intent": "Motion comparison. 0.55 damping. Content does not bounce. Proposed default: Firm."
+    },
+    {
+      "id": "kit-future-parts",
+      "name": "Parts \u00b7 future feature rows",
+      "section": "kit",
+      "order": 7,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-kit-future-parts",
+      "intent": "Reusable dog switcher, agenda row, status, attachment and money patterns; each remains readable without colour."
+    },
+    {
+      "id": "kit-data-viz",
+      "name": "Data views \u00b7 chart plus words",
+      "section": "kit",
+      "order": 8,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-kit-data-viz",
+      "intent": "Exact values, contextual scope and a text equivalent accompany every chart."
+    },
+    {
+      "id": "kit-colour-map",
+      "name": "Colour \u00b7 named families, one action accent",
+      "section": "kit",
+      "order": 9,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-kit-colour-map",
+      "intent": "Colour research translated into the original BarkLog palette. Every care type has a name and icon. Dedicated dark inks/backgrounds, no gradients or decorative shadows."
+    },
+    {
+      "id": "kit-system-handoffs",
+      "name": "System handoffs \u00b7 labeled, never faked",
+      "section": "kit",
+      "order": 10,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-kit-system-handoffs",
+      "intent": "Permissions, photo picking, sharing, printing, settings and calling remain honest platform boundaries."
+    },
+    {
+      "id": "motion-press",
+      "name": "Press \u00b7 calm content, firm control",
+      "section": "motion",
+      "order": 11,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-motion-press",
+      "intent": "90 ms press to 0.97 / 1 pt. Release response 0.30 / damping 0.86. Reduced motion removes transform."
+    },
+    {
+      "id": "kit-day-line",
+      "name": "Day line \u00b7 the hero part",
+      "section": "kit",
+      "order": 12,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-kit-day-line",
+      "intent": "v3 proposal. One day from 06:00 to 24:00; each record sits at its time and close records stack in up to three lanes. Solid up to now, dashed after. Marks carry an icon and a type colour; the accessible label lists every record and time."
+    },
+    {
+      "id": "land-firm",
+      "name": "Firm \u00b7 a mark landing",
+      "section": "kit",
+      "order": 13,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "land-feel",
+      "intent": "Feel picker for the one lively moment: a care mark landing on the day line. Spring 0.3 / 0.86. Presses stay Firm (approved). Proposed default: Bubbly. Pick one."
+    },
+    {
+      "id": "land-bubbly",
+      "name": "Bubbly \u00b7 a mark landing",
+      "section": "kit",
+      "order": 14,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "land-feel",
+      "intent": "Feel picker for the one lively moment: a care mark landing on the day line. Spring 0.38 / 0.62. Presses stay Firm (approved). Proposed default: Bubbly. Pick one."
+    },
+    {
+      "id": "land-lively",
+      "name": "Lively \u00b7 a mark landing",
+      "section": "kit",
+      "order": 15,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "land-feel",
+      "intent": "Feel picker for the one lively moment: a care mark landing on the day line. Spring 0.45 / 0.55. Presses stay Firm (approved). Proposed default: Bubbly. Pick one."
+    },
+    {
+      "id": "seq-home",
+      "name": "Play this section",
+      "section": "home",
+      "order": 16,
+      "sequence": [
+        "home-before",
+        "home"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "home-before",
+      "name": "Before \u00b7 current code reconstruction",
+      "section": "home",
+      "order": 17,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Same example records, existing hierarchy and repeated colored rows. Not a simulator screenshot."
+    },
+    {
+      "id": "home",
+      "name": "Day line \u00b7 tap a tile",
+      "section": "home",
+      "order": 18,
+      "sequence": null,
+      "flow": true,
+      "enter": "cut",
+      "group": "review-home",
+      "intent": "H1 v3. The day as a line from 06:00 to 24:00; each record sits at its time. Tap a care tile: its icon arcs onto the line at now, the count rolls, the newest record slides into Recent care, and Undo is offered. In the app the SQLite write commits before any of this moves."
+    },
+    {
+      "id": "seq-timeline",
+      "name": "Play this section",
+      "section": "timeline",
+      "order": 19,
+      "sequence": [
+        "timeline",
+        "timeline-filters",
+        "timeline-local-events",
+        "timeline-pagination"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "timeline",
+      "name": "Timeline \u00b7 days you can read",
+      "section": "timeline",
+      "order": 20,
+      "sequence": null,
+      "flow": true,
+      "enter": "cut",
+      "group": "review-timeline",
+      "intent": "T1 v3. Type chips filter in place; each day shows its line, then its records, newest first. Tap a row: its icon carries into the record."
+    },
+    {
+      "id": "timeline-filters",
+      "name": "Timeline \u00b7 dates and dog",
+      "section": "timeline",
+      "order": 21,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-timeline-filters",
+      "intent": "Functional in-memory dog, event type and inclusive date filtering. No database reads."
+    },
+    {
+      "id": "timeline-local-events",
+      "name": "Timeline \u00b7 local-v1 event types",
+      "section": "timeline",
+      "order": 22,
+      "sequence": null,
+      "flow": true,
+      "enter": "cut",
+      "group": "review-timeline-local-events",
+      "intent": "Medication, training and photo entries use the same factual row grammar and remain labeled in text."
+    },
+    {
+      "id": "timeline-pagination",
+      "name": "Timeline \u00b7 bounded older records",
+      "section": "timeline",
+      "order": 23,
+      "sequence": null,
+      "flow": true,
+      "enter": "cut",
+      "group": "review-timeline-pagination",
+      "intent": "Older local records load in bounded pages with clear completion and retry behavior."
+    },
+    {
+      "id": "seq-records",
+      "name": "Play this section",
+      "section": "records",
+      "order": 24,
+      "sequence": [
+        "record-detail",
+        "record-edit"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "record-detail",
+      "name": "Record \u00b7 facts and actions",
+      "section": "records",
+      "order": 25,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-record-detail",
+      "intent": "T2. Observation, notes and recorded time. Destructive action is separate and confirmed."
+    },
+    {
+      "id": "delete-confirmation",
+      "name": "Delete \u00b7 safer action first",
+      "section": "records",
+      "order": 26,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-delete-confirmation",
+      "intent": "A preview dialog only. Never deletes the device journal."
+    },
+    {
+      "id": "seq-forms",
+      "name": "Play this section",
+      "section": "forms",
+      "order": 27,
+      "sequence": [
+        "log-chooser",
+        "form-walk",
+        "form-notes-example",
+        "record-detail"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "log-chooser",
+      "name": "Create a log \u00b7 nine ways to remember",
+      "section": "forms",
+      "order": 28,
+      "sequence": null,
+      "flow": true,
+      "enter": "cover",
+      "group": "review-log-chooser",
+      "intent": "Care library with nine informative editors. Notes belong to every log."
+    },
+    {
+      "id": "record-edit",
+      "name": "Edit \u00b7 keep the observation",
+      "section": "records",
+      "order": 29,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-record-edit",
+      "intent": "Design 04: structured observation, notes, optional context, sample attachment, retained draft and committed preview. Proposed design."
+    },
+    {
+      "id": "form-poop",
+      "name": "Poop \u00b7 detail form",
+      "section": "forms",
+      "order": 30,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-form-poop",
+      "intent": "Design 04: structured observation, notes, optional context, sample attachment, retained draft and committed preview. Proposed design."
+    },
+    {
+      "id": "form-pee",
+      "name": "Pee \u00b7 detail form",
+      "section": "forms",
+      "order": 31,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-form-pee",
+      "intent": "Design 04: structured observation, notes, optional context, sample attachment, retained draft and committed preview. Proposed design."
+    },
+    {
+      "id": "form-meal",
+      "name": "Meal \u00b7 detail form",
+      "section": "forms",
+      "order": 32,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-form-meal",
+      "intent": "Design 04: structured observation, notes, optional context, sample attachment, retained draft and committed preview. Proposed design."
+    },
+    {
+      "id": "form-walk",
+      "name": "Walk \u00b7 detail form",
+      "section": "forms",
+      "order": 33,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-form-walk",
+      "intent": "Design 04: structured observation, notes, optional context, sample attachment, retained draft and committed preview. Proposed design."
+    },
+    {
+      "id": "form-symptom",
+      "name": "Symptom \u00b7 detail form",
+      "section": "forms",
+      "order": 34,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-form-symptom",
+      "intent": "Design 04: structured observation, notes, optional context, sample attachment, retained draft and committed preview. Proposed design."
+    },
+    {
+      "id": "form-mood",
+      "name": "Mood \u00b7 detail form",
+      "section": "forms",
+      "order": 35,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-form-mood",
+      "intent": "Design 04: structured observation, notes, optional context, sample attachment, retained draft and committed preview. Proposed design."
+    },
+    {
+      "id": "form-behavior",
+      "name": "Behavior \u00b7 detail form",
+      "section": "forms",
+      "order": 36,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-form-behavior",
+      "intent": "Design 04: structured observation, notes, optional context, sample attachment, retained draft and committed preview. Proposed design."
+    },
+    {
+      "id": "form-grooming",
+      "name": "Grooming \u00b7 detail form",
+      "section": "forms",
+      "order": 37,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-form-grooming",
+      "intent": "Design 04: structured observation, notes, optional context, sample attachment, retained draft and committed preview. Proposed design."
+    },
+    {
+      "id": "form-weight",
+      "name": "Weight \u00b7 detail form",
+      "section": "forms",
+      "order": 38,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-form-weight",
+      "intent": "Design 04: structured observation, notes, optional context, sample attachment, retained draft and committed preview. Proposed design."
+    },
+    {
+      "id": "form-notes-example",
+      "name": "Walk \u00b7 a note worth keeping",
+      "section": "forms",
+      "order": 39,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-form-notes-example",
+      "intent": "Filled example: free text, duration, pace, place and a local sample photo belong to one record."
+    },
+    {
+      "id": "seq-profile",
+      "name": "Play this section",
+      "section": "profile",
+      "order": 40,
+      "sequence": [
+        "profile",
+        "insights"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "profile",
+      "name": "Profile \u00b7 dog and local journal",
+      "section": "profile",
+      "order": 41,
+      "sequence": null,
+      "flow": true,
+      "enter": "cut",
+      "group": "review-profile",
+      "intent": "P1. Name, journal start, real-record count, storage limits. No fake settings, export or add-dog action."
+    },
+    {
+      "id": "insights",
+      "name": "Insights \u00b7 honest early state",
+      "section": "profile",
+      "order": 42,
+      "sequence": null,
+      "flow": true,
+      "enter": "cut",
+      "group": "review-insights",
+      "intent": "I1. Factual trends are not implemented. Do not turn example counts into health interpretation."
+    },
+    {
+      "id": "seq-setup",
+      "name": "Play this section",
+      "section": "setup",
+      "order": 43,
+      "sequence": [
+        "dog-setup",
+        "home"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "dog-setup",
+      "name": "First dog \u00b7 the name becomes the journal",
+      "section": "setup",
+      "order": 44,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-dog-setup",
+      "intent": "O1 v3. Name-only setup. The dog carries in from the opening; as a name is typed the heading becomes \u201cMeet Luna.\u201d and the action names their journal. No account, no extended onboarding, honest local/legacy limits."
+    },
+    {
+      "id": "seq-onboarding",
+      "name": "Play this section",
+      "section": "onboarding",
+      "order": 45,
+      "sequence": [
+        "opening-value",
+        "dog-setup",
+        "onboarding-route",
+        "onboarding-identity",
+        "onboarding-breed",
+        "onboarding-age",
+        "onboarding-shortcuts",
+        "onboarding-practice",
+        "onboarding-notes",
+        "onboarding-timeline",
+        "onboarding-storage",
+        "onboarding-ready",
+        "home-coach"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "opening-value",
+      "name": "Opening \u00b7 moments land on the day",
+      "section": "onboarding",
+      "order": 46,
+      "sequence": null,
+      "flow": true,
+      "enter": "cut",
+      "group": "review-opening-value",
+      "intent": "One optional value beat under six seconds. The dog makes four moments; each lands on the day line at its time; the line becomes a dated card. Skip stays available until the button arrives."
+    },
+    {
+      "id": "home-coach",
+      "name": "Coach mark \u00b7 quick care",
+      "section": "onboarding",
+      "order": 47,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-home-coach",
+      "intent": "One skippable coach mark on the real Home screen. The dog and their name arrive from setup; the tip points at the first tile and then gets out of the way."
+    },
+    {
+      "id": "onboarding-route",
+      "name": "First run \u00b7 quick or guided",
+      "section": "onboarding",
+      "order": 48,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-onboarding-route",
+      "intent": "Optional guided setup. Skip is always available. Values are reused in the real preview surfaces; no account or permission gate."
+    },
+    {
+      "id": "onboarding-identity",
+      "name": "Identity \u00b7 optional sample photo",
+      "section": "onboarding",
+      "order": 49,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-onboarding-identity",
+      "intent": "Optional guided setup. Skip is always available. Values are reused in the real preview surfaces; no account or permission gate."
+    },
+    {
+      "id": "onboarding-breed",
+      "name": "Identity \u00b7 optional breed tiles",
+      "section": "onboarding",
+      "order": 50,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-onboarding-breed",
+      "intent": "Optional guided setup. Skip is always available. Values are reused in the real preview surfaces; no account or permission gate."
+    },
+    {
+      "id": "onboarding-age",
+      "name": "Identity \u00b7 optional age estimate",
+      "section": "onboarding",
+      "order": 51,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-onboarding-age",
+      "intent": "Optional guided setup. Skip is always available. Values are reused in the real preview surfaces; no account or permission gate."
+    },
+    {
+      "id": "onboarding-shortcuts",
+      "name": "Preferences \u00b7 two useful shortcuts",
+      "section": "onboarding",
+      "order": 52,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-onboarding-shortcuts",
+      "intent": "Optional guided setup. Skip is always available. Values are reused in the real preview surfaces; no account or permission gate."
+    },
+    {
+      "id": "onboarding-practice",
+      "name": "Practice \u00b7 a tap becomes a dated record",
+      "section": "onboarding",
+      "order": 53,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-onboarding-practice",
+      "intent": "Optional guided setup. Skip is always available. Values are reused in the real preview surfaces; no account or permission gate."
+    },
+    {
+      "id": "onboarding-notes",
+      "name": "Practice \u00b7 write a real note",
+      "section": "onboarding",
+      "order": 54,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-onboarding-notes",
+      "intent": "Optional guided setup. Skip is always available. Values are reused in the real preview surfaces; no account or permission gate."
+    },
+    {
+      "id": "onboarding-timeline",
+      "name": "Practice \u00b7 the note arrives in Timeline",
+      "section": "onboarding",
+      "order": 55,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-onboarding-timeline",
+      "intent": "Optional guided setup. Skip is always available. Values are reused in the real preview surfaces; no account or permission gate."
+    },
+    {
+      "id": "onboarding-storage",
+      "name": "Local storage \u00b7 an honest boundary",
+      "section": "onboarding",
+      "order": 56,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-onboarding-storage",
+      "intent": "Optional guided setup. Skip is always available. Values are reused in the real preview surfaces; no account or permission gate."
+    },
+    {
+      "id": "onboarding-ready",
+      "name": "Ready \u00b7 your choices become Home",
+      "section": "onboarding",
+      "order": 57,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-onboarding-ready",
+      "intent": "Optional guided setup. Skip is always available. Values are reused in the real preview surfaces; no account or permission gate."
+    },
+    {
+      "id": "seq-profiles",
+      "name": "Play this section",
+      "section": "profiles",
+      "order": 58,
+      "sequence": [
+        "profile-hub",
+        "dog-switcher",
+        "profile-settings"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "profile-hub",
+      "name": "Profile hub \u00b7 local v1",
+      "section": "profiles",
+      "order": 59,
+      "sequence": null,
+      "flow": true,
+      "enter": "cut",
+      "group": "review-profile-hub",
+      "intent": "The dog, their health records and supporting tools are grouped without turning Profile into a fifth dashboard."
+    },
+    {
+      "id": "dog-switcher",
+      "name": "Dog switcher \u00b7 every scope updates",
+      "section": "profiles",
+      "order": 60,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-dog-switcher",
+      "intent": "A dog selection updates Home, Timeline, Insights, Calendar, records and exports in the same preview state."
+    },
+    {
+      "id": "dog-add",
+      "name": "Add dog \u00b7 name first",
+      "section": "profiles",
+      "order": 61,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-dog-add",
+      "intent": "A second dog starts with the same minimal requirement as first run."
+    },
+    {
+      "id": "dog-edit",
+      "name": "Edit profile \u00b7 optional later details",
+      "section": "profiles",
+      "order": 62,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-dog-edit",
+      "intent": "Optional identity details stay editable and never block logging."
+    },
+    {
+      "id": "profile-settings",
+      "name": "Settings \u00b7 storage and access",
+      "section": "profiles",
+      "order": 63,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-profile-settings",
+      "intent": "Local-storage truth, export access and accessibility settings live together; there are no account or cloud controls."
+    },
+    {
+      "id": "delete-dog",
+      "name": "Dog deletion \u00b7 scoped confirmation",
+      "section": "profiles",
+      "order": 64,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-delete-dog",
+      "intent": "The exact scope and permanence are stated. Export remains available before the destructive action."
+    },
+    {
+      "id": "delete-all-data",
+      "name": "Delete every local journal?",
+      "section": "profiles",
+      "order": 65,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-delete-all-data",
+      "intent": "The exact scope and permanence are stated. Export remains available before the destructive action."
+    },
+    {
+      "id": "seq-medications",
+      "name": "Play this section",
+      "section": "medications",
+      "order": 66,
+      "sequence": [
+        "health-records",
+        "medication-list",
+        "medication-detail",
+        "medication-given"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "health-records",
+      "name": "Health records \u00b7 clear families",
+      "section": "medications",
+      "order": 67,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-health-records",
+      "intent": "Medication and vaccination live under one factual records hub, separate from logging and emergency guidance."
+    },
+    {
+      "id": "medication-list",
+      "name": "Medication list \u00b7 active and archived",
+      "section": "medications",
+      "order": 68,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-medication-list",
+      "intent": "Plans show the caregiver-entered name, next schedule and status without medical interpretation."
+    },
+    {
+      "id": "medication-plan",
+      "name": "Medication plan \u00b7 create",
+      "section": "medications",
+      "order": 69,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-medication-plan",
+      "intent": "Every value is typed by the caregiver; there is no calculator or suggested amount."
+    },
+    {
+      "id": "medication-plan-edit",
+      "name": "Medication plan \u00b7 edit",
+      "section": "medications",
+      "order": 70,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-medication-plan-edit",
+      "intent": "Editing retains the plan identity and its recorded administration history."
+    },
+    {
+      "id": "medication-detail",
+      "name": "Medication plan \u00b7 detail and history",
+      "section": "medications",
+      "order": 71,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-medication-detail",
+      "intent": "The shared plan moves into a detail view with a separate committed administration action."
+    },
+    {
+      "id": "medication-given",
+      "name": "Medication \u00b7 committed administration",
+      "section": "medications",
+      "order": 72,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-medication-given",
+      "intent": "Success appears only after the local record is committed; plan and Timeline update as one result."
+    },
+    {
+      "id": "medication-archive",
+      "name": "Medication \u00b7 archive confirmation",
+      "section": "medications",
+      "order": 73,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-medication-archive",
+      "intent": "Archive ends the active schedule but preserves the factual plan and administration history."
+    },
+    {
+      "id": "vaccination-list",
+      "name": "Vaccinations \u00b7 factual history",
+      "section": "medications",
+      "order": 74,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-vaccination-list",
+      "intent": "A dated list of caregiver-entered records, not a recommendation about what is due."
+    },
+    {
+      "id": "vaccination-form",
+      "name": "Vaccination \u00b7 add record",
+      "section": "medications",
+      "order": 75,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-vaccination-form",
+      "intent": "Name, recorded date, provider and optional note only; no schedule recommendation."
+    },
+    {
+      "id": "medication-empty",
+      "name": "Medication \u00b7 no active plans",
+      "section": "medications",
+      "order": 76,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-medication-empty",
+      "intent": "No plan is a neutral state, never an invitation to start treatment."
+    },
+    {
+      "id": "medication-save-error",
+      "name": "Medication \u00b7 failed administration keeps intent",
+      "section": "medications",
+      "order": 77,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-medication-save-error",
+      "intent": "No administration or Timeline result is committed on a failed write. Retry is explicit."
+    },
+    {
+      "id": "seq-calendar",
+      "name": "Play this section",
+      "section": "calendar",
+      "order": 78,
+      "sequence": [
+        "care-calendar",
+        "care-task-detail",
+        "care-task-form",
+        "reminder-opt-in"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "care-calendar",
+      "name": "Care calendar \u00b7 agenda first",
+      "section": "calendar",
+      "order": 79,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-care-calendar",
+      "intent": "A compact week supports a readable agenda; overdue is labeled with text and icon, not colour alone."
+    },
+    {
+      "id": "care-task-detail",
+      "name": "Care task \u00b7 detail and complete",
+      "section": "calendar",
+      "order": 80,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-care-task-detail",
+      "intent": "Completion is a journal fact. Reminder state is shown separately from the task."
+    },
+    {
+      "id": "care-task-form",
+      "name": "Care task \u00b7 save before permission",
+      "section": "calendar",
+      "order": 81,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-care-task-form",
+      "intent": "The task commits first. Enabling its optional reminder is a separate next step."
+    },
+    {
+      "id": "reminder-opt-in",
+      "name": "Reminder \u00b7 in-context opt in",
+      "section": "calendar",
+      "order": 82,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-reminder-opt-in",
+      "intent": "The app-owned primer follows a saved task and precedes the real system permission sheet."
+    },
+    {
+      "id": "reminder-denied",
+      "name": "Reminder \u00b7 permission denied",
+      "section": "calendar",
+      "order": 83,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-reminder-denied",
+      "intent": "The saved task remains usable. Settings are offered without repeatedly prompting."
+    },
+    {
+      "id": "reminder-failure",
+      "name": "Reminder \u00b7 scheduling failed",
+      "section": "calendar",
+      "order": 84,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-reminder-failure",
+      "intent": "Scheduling failure is separate from the committed task and offers a bounded retry."
+    },
+    {
+      "id": "care-task-overdue",
+      "name": "Care task \u00b7 overdue",
+      "section": "calendar",
+      "order": 85,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-care-task-overdue",
+      "intent": "Overdue is factual, dated and resolvable; it is not a health warning."
+    },
+    {
+      "id": "care-task-complete",
+      "name": "Care task \u00b7 committed completion",
+      "section": "calendar",
+      "order": 86,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-care-task-complete",
+      "intent": "Task completion and its Timeline entry update together in preview state."
+    },
+    {
+      "id": "reminder-scheduled",
+      "name": "Reminder \u00b7 scheduled result",
+      "section": "calendar",
+      "order": 87,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-reminder-scheduled",
+      "intent": "The task and reminder have separate explicit statuses. This is board simulation, not an actual notification."
+    },
+    {
+      "id": "care-task-delete",
+      "name": "Care task \u00b7 scoped delete confirmation",
+      "section": "calendar",
+      "order": 88,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-care-task-delete",
+      "intent": "Delete future occurrences and reminders, never historical completions."
+    },
+    {
+      "id": "seq-insights",
+      "name": "Play this section",
+      "section": "insights",
+      "order": 89,
+      "sequence": [
+        "insights-overview",
+        "trends-month",
+        "report-preview"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "insights-overview",
+      "name": "Insights \u00b7 a week of days",
+      "section": "insights",
+      "order": 90,
+      "sequence": null,
+      "flow": true,
+      "enter": "cut",
+      "group": "review-insights-overview",
+      "intent": "Insights v3. Seven day lines show when care was recorded; totals sit beside one comparable bar each; one sentence says what the records show. No scores, stat-card grids or health judgments."
+    },
+    {
+      "id": "trends-month",
+      "name": "Trends \u00b7 range and text equivalent",
+      "section": "insights",
+      "order": 91,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-trends-month",
+      "intent": "Range selection changes the actual chart and its exact text equivalent; scope carries into report preparation."
+    },
+    {
+      "id": "trends-sparse",
+      "name": "Trends \u00b7 sparse observations",
+      "section": "insights",
+      "order": 92,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-trends-sparse",
+      "intent": "Sparse data is named without implying stability, improvement or decline."
+    },
+    {
+      "id": "trends-empty",
+      "name": "Trends \u00b7 no observations",
+      "section": "insights",
+      "order": 93,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-trends-empty",
+      "intent": "An empty chart never invents a baseline or labels the dog healthy."
+    },
+    {
+      "id": "seq-safety",
+      "name": "Play this section",
+      "section": "safety",
+      "order": 94,
+      "sequence": [
+        "safety-home",
+        "emergency-card",
+        "toxicity-search",
+        "triage"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "safety-home",
+      "name": "Safety Center \u00b7 offline entry",
+      "section": "safety",
+      "order": 95,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-safety-home",
+      "intent": "Reachable from Home and Profile, never a fifth tab. Offline/version status appears on every safety surface."
+    },
+    {
+      "id": "emergency-card",
+      "name": "Emergency card \u00b7 call and carry facts",
+      "section": "safety",
+      "order": 96,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-emergency-card",
+      "intent": "Important contacts and observable facts are close together; buttons represent native call handoffs."
+    },
+    {
+      "id": "emergency-contact",
+      "name": "Emergency contacts \u00b7 explicit local details",
+      "section": "safety",
+      "order": 97,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-emergency-contact",
+      "intent": "Numbers are local caregiver settings, not a hosted directory or guarantee of service."
+    },
+    {
+      "id": "toxicity-search",
+      "name": "Toxicity lookup \u00b7 offline search",
+      "section": "safety",
+      "order": 98,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-toxicity-search",
+      "intent": "Search returns a bounded reference match or an explicit unknown state; absence never means safe."
+    },
+    {
+      "id": "toxicity-result",
+      "name": "Toxicity result \u00b7 escalate, do not dose",
+      "section": "safety",
+      "order": 99,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-toxicity-result",
+      "intent": "The result names risk and what information to carry, without home-dose instructions."
+    },
+    {
+      "id": "toxicity-unknown",
+      "name": "Toxicity lookup \u00b7 unknown is not safe",
+      "section": "safety",
+      "order": 100,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-toxicity-unknown",
+      "intent": "An unknown term never produces a green state or reassurance."
+    },
+    {
+      "id": "first-aid",
+      "name": "First aid \u00b7 bounded topic",
+      "section": "safety",
+      "order": 101,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-first-aid",
+      "intent": "Short protective steps support a professional call and avoid diagnosis or treatment dosing."
+    },
+    {
+      "id": "triage",
+      "name": "Triage \u00b7 organize observations, then escalate",
+      "section": "safety",
+      "order": 102,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-triage",
+      "intent": "The branch never decides a diagnosis; it gathers facts and routes to professional help."
+    },
+    {
+      "id": "seq-exports",
+      "name": "Play this section",
+      "section": "exports",
+      "order": 103,
+      "sequence": [
+        "vet-prep",
+        "report-preview",
+        "export-format",
+        "export-progress",
+        "export-complete",
+        "share-handoff"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "vet-prep",
+      "name": "Vet preparation \u00b7 functional scope",
+      "section": "exports",
+      "order": 104,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-vet-prep",
+      "intent": "Dog, inclusive dates and toggled content carry into preview and the file name."
+    },
+    {
+      "id": "report-preview",
+      "name": "Report preview \u00b7 factual and scoped",
+      "section": "exports",
+      "order": 105,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-report-preview",
+      "intent": "A readable preview precedes file creation, with dog/date/content scope visible."
+    },
+    {
+      "id": "export-format",
+      "name": "Export \u00b7 CSV or PDF",
+      "section": "exports",
+      "order": 106,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-export-format",
+      "intent": "Both formats are available before generation and remain free."
+    },
+    {
+      "id": "export-progress",
+      "name": "Export \u00b7 progress and cancellation",
+      "section": "exports",
+      "order": 107,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-export-progress",
+      "intent": "Progress can be cancelled without deleting records or the preview scope."
+    },
+    {
+      "id": "export-failure",
+      "name": "Export \u00b7 failure and retry",
+      "section": "exports",
+      "order": 108,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-export-failure",
+      "intent": "The scoped report and device journal remain intact after file-generation failure."
+    },
+    {
+      "id": "export-complete",
+      "name": "Export \u00b7 file ready",
+      "section": "exports",
+      "order": 109,
+      "sequence": null,
+      "flow": true,
+      "enter": "step",
+      "group": "review-export-complete",
+      "intent": "Completion identifies the file and leads to the real platform surface."
+    },
+    {
+      "id": "share-handoff",
+      "name": "Share/print \u00b7 native platform handoff",
+      "section": "exports",
+      "order": 110,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-share-handoff",
+      "intent": "The board labels but never imitates the iOS/Android share or print sheet."
+    },
+    {
+      "id": "seq-training",
+      "name": "Play this section",
+      "section": "training",
+      "order": 111,
+      "sequence": [
+        "training-catalog",
+        "training-program",
+        "training-session",
+        "training-summary"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "training-catalog",
+      "name": "Training \u00b7 positive-reinforcement catalog",
+      "section": "training",
+      "order": 112,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-training-catalog",
+      "intent": "Short caregiver-led programs use reward-based language and never promise behavioral treatment."
+    },
+    {
+      "id": "training-program",
+      "name": "Training program \u00b7 clear session shape",
+      "section": "training",
+      "order": 113,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-training-program",
+      "intent": "Purpose, reward, environment and stop conditions are visible before enrollment."
+    },
+    {
+      "id": "training-session",
+      "name": "Training \u00b7 active session",
+      "section": "training",
+      "order": 114,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-training-session",
+      "intent": "A calm timer, one instruction and obvious finish/cancel controls keep the session focused."
+    },
+    {
+      "id": "training-summary",
+      "name": "Training \u00b7 one committed result",
+      "section": "training",
+      "order": 115,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-training-summary",
+      "intent": "Program progress and its Timeline record commit together before success feedback."
+    },
+    {
+      "id": "training-empty",
+      "name": "Training \u00b7 catalog empty",
+      "section": "training",
+      "order": 116,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-training-empty",
+      "intent": "A local content problem is stated plainly and never removes saved progress."
+    },
+    {
+      "id": "training-error",
+      "name": "Training \u00b7 catalog read error",
+      "section": "training",
+      "order": 117,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-training-error",
+      "intent": "Retry the local catalog without faking content or touching recorded sessions."
+    },
+    {
+      "id": "training-progress",
+      "name": "Training \u00b7 enrollment and factual progress",
+      "section": "training",
+      "order": 118,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-training-progress",
+      "intent": "Enrollment and observed session counts, never a behavior score or guaranteed outcome."
+    },
+    {
+      "id": "seq-photos",
+      "name": "Play this section",
+      "section": "photos",
+      "order": 119,
+      "sequence": [
+        "photo-journal",
+        "photo-picker",
+        "photo-form",
+        "photo-detail",
+        "photo-baselines"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "photo-journal",
+      "name": "Photo journal \u00b7 local examples",
+      "section": "photos",
+      "order": 120,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-photo-journal",
+      "intent": "Photos are visibly labeled examples and remain supporting observations, not a diagnostic surface."
+    },
+    {
+      "id": "photo-picker",
+      "name": "Photo picker \u00b7 user-triggered handoff",
+      "section": "photos",
+      "order": 121,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-photo-picker",
+      "intent": "A user action opens the native picker; BarkLog does not request broad library access."
+    },
+    {
+      "id": "photo-form",
+      "name": "Photo \u00b7 metadata before save",
+      "section": "photos",
+      "order": 122,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-photo-form",
+      "intent": "Date, plain caption and optional baseline category make the local file traceable."
+    },
+    {
+      "id": "photo-detail",
+      "name": "Photo \u00b7 detail and edit",
+      "section": "photos",
+      "order": 123,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-photo-detail",
+      "intent": "The photo traces to a date, caption and optional category. Edit never changes it into a comparison result."
+    },
+    {
+      "id": "photo-baselines",
+      "name": "Photo baselines \u00b7 descriptive, not comparative",
+      "section": "photos",
+      "order": 124,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-photo-baselines",
+      "intent": "Categories organize dated images; no automatic before/after or health conclusion appears."
+    },
+    {
+      "id": "photo-missing",
+      "name": "Photo \u00b7 missing local file",
+      "section": "photos",
+      "order": 125,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-photo-missing",
+      "intent": "Metadata remains readable when a moved or removed local file cannot be shown."
+    },
+    {
+      "id": "photo-unavailable",
+      "name": "Photo picker \u00b7 cancelled or unavailable",
+      "section": "photos",
+      "order": 126,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-photo-unavailable",
+      "intent": "Cancellation and platform denial do not create a record or block the rest of the journal."
+    },
+    {
+      "id": "photo-permission-denied",
+      "name": "Photo \u00b7 permission denied",
+      "section": "photos",
+      "order": 127,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-photo-permission-denied",
+      "intent": "A denied platform request stays optional; no entry is created and the journal remains usable."
+    },
+    {
+      "id": "seq-expenses",
+      "name": "Play this section",
+      "section": "expenses",
+      "order": 128,
+      "sequence": [
+        "expenses-list",
+        "expense-form",
+        "expense-detail"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "expenses-list",
+      "name": "Expenses \u00b7 explicit monthly total",
+      "section": "expenses",
+      "order": 129,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-expenses-list",
+      "intent": "Currency, month and category are always visible; totals are sums, never estimates."
+    },
+    {
+      "id": "expense-form",
+      "name": "Expense \u00b7 add/edit with precision",
+      "section": "expenses",
+      "order": 130,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-expense-form",
+      "intent": "Amount validation preserves the draft; receipts are optional local attachments."
+    },
+    {
+      "id": "expense-detail",
+      "name": "Expense \u00b7 detail",
+      "section": "expenses",
+      "order": 131,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-expense-detail",
+      "intent": "All entered facts, attachment state and destructive action remain explicit."
+    },
+    {
+      "id": "expense-delete",
+      "name": "Expense \u00b7 deletion confirmation",
+      "section": "expenses",
+      "order": 132,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-expense-delete",
+      "intent": "The exact item and amount are repeated before permanent deletion."
+    },
+    {
+      "id": "expense-error",
+      "name": "Expense \u00b7 precision error retains draft",
+      "section": "expenses",
+      "order": 133,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-expense-error",
+      "intent": "Invalid money precision is described next to the unchanged input."
+    },
+    {
+      "id": "expense-empty",
+      "name": "Expenses \u00b7 empty month",
+      "section": "expenses",
+      "order": 134,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-expense-empty",
+      "intent": "Zero recorded expenses is not a spending judgment."
+    },
+    {
+      "id": "expense-receipt",
+      "name": "Receipt \u00b7 local attachment state",
+      "section": "expenses",
+      "order": 135,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-expense-receipt",
+      "intent": "A user-triggered picker handoff and labeled local sample. Cancellation leaves the draft unchanged."
+    },
+    {
+      "id": "seq-memory",
+      "name": "Play this section",
+      "section": "memory",
+      "order": 136,
+      "sequence": [
+        "memory-book",
+        "memory-highlight",
+        "memory-share"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "memory-book",
+      "name": "Memory Book \u00b7 traceable month",
+      "section": "memory",
+      "order": 137,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-memory-book",
+      "intent": "A month collects chosen journal moments without inventing a story or ranking health."
+    },
+    {
+      "id": "memory-highlight",
+      "name": "Memory highlight \u00b7 source attached",
+      "section": "memory",
+      "order": 138,
+      "sequence": null,
+      "flow": true,
+      "enter": "carry",
+      "group": "review-memory-highlight",
+      "intent": "The highlight copy and its originating local entries remain visible together."
+    },
+    {
+      "id": "memory-sparse",
+      "name": "Memory Book \u00b7 sparse month",
+      "section": "memory",
+      "order": 139,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-memory-sparse",
+      "intent": "One genuine highlight is enough; the screen does not pad a sparse month with generated copy."
+    },
+    {
+      "id": "memory-photo-missing",
+      "name": "Memory Book \u00b7 missing photo fallback",
+      "section": "memory",
+      "order": 140,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-memory-photo-missing",
+      "intent": "A missing file keeps its caption, date and linked care record readable."
+    },
+    {
+      "id": "memory-share",
+      "name": "Memory Book \u00b7 native share handoff",
+      "section": "memory",
+      "order": 141,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-memory-share",
+      "intent": "A local monthly collection is prepared, then the operating system owns sharing."
+    },
+    {
+      "id": "memory-collection",
+      "name": "Memory Book \u00b7 choose local highlights",
+      "section": "memory",
+      "order": 142,
+      "sequence": null,
+      "flow": true,
+      "enter": "push",
+      "group": "review-memory-collection",
+      "intent": "Only referenced local records and photos can be included. Selection is explicit; no automatic narrative."
+    },
+    {
+      "id": "memory-caption",
+      "name": "Memory highlight \u00b7 caregiver caption",
+      "section": "memory",
+      "order": 143,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-memory-caption",
+      "intent": "A manually written caption stays separate from the linked care facts."
+    },
+    {
+      "id": "memory-empty",
+      "name": "Memory Book \u00b7 no chosen highlights",
+      "section": "memory",
+      "order": 144,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-memory-empty",
+      "intent": "No generated padding in a month without selected records."
+    },
+    {
+      "id": "seq-states",
+      "name": "Play this section",
+      "section": "states",
+      "order": 145,
+      "sequence": [
+        "startup-loading",
+        "home-empty",
+        "save-error",
+        "offline-ready",
+        "reduced-motion-state"
+      ],
+      "flow": false,
+      "enter": null,
+      "group": null,
+      "intent": "Review sequence using example data only."
+    },
+    {
+      "id": "startup-loading",
+      "name": "Startup \u00b7 content-shaped loading",
+      "section": "states",
+      "order": 146,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-startup-loading",
+      "intent": "The known shell and content shapes appear without shimmer, invented data or blocked controls."
+    },
+    {
+      "id": "startup-retry",
+      "name": "Startup \u00b7 retry without reset",
+      "section": "states",
+      "order": 147,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-startup-retry",
+      "intent": "A read failure never suggests clearing, uninstalling or replacing the local journal."
+    },
+    {
+      "id": "no-dog",
+      "name": "No dog \u00b7 recover the first entity",
+      "section": "states",
+      "order": 148,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-no-dog",
+      "intent": "If no profile exists, the journal returns to name-only setup without an account or questionnaire."
+    },
+    {
+      "id": "home-empty",
+      "name": "Home \u00b7 first log",
+      "section": "states",
+      "order": 149,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-home-empty",
+      "intent": "Zero is a factual empty state, not a sample health score."
+    },
+    {
+      "id": "home-loading",
+      "name": "Home \u00b7 reading records",
+      "section": "states",
+      "order": 150,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-home-loading",
+      "intent": "Layout-shaped placeholders and disabled log controls. No shimmer or animation loop."
+    },
+    {
+      "id": "timeline-filtered-empty",
+      "name": "Timeline \u00b7 filtered empty",
+      "section": "states",
+      "order": 151,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-timeline-filtered-empty",
+      "intent": "No match is scoped to the filters, with a direct way back to the full journal."
+    },
+    {
+      "id": "save-error",
+      "name": "Log \u00b7 failed save keeps draft",
+      "section": "states",
+      "order": 152,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-save-error",
+      "intent": "A failed save shows retry copy without discarding inputs or claiming success."
+    },
+    {
+      "id": "saving-state",
+      "name": "Log \u00b7 committing locally",
+      "section": "states",
+      "order": 153,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-saving-state",
+      "intent": "The real editor remains visible during a pending write. This review card holds the pending frame and never claims success."
+    },
+    {
+      "id": "retained-draft",
+      "name": "Log \u00b7 cancel with retained draft",
+      "section": "states",
+      "order": 154,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-retained-draft",
+      "intent": "Leaving a changed form asks whether to keep editing or discard only that draft."
+    },
+    {
+      "id": "journal-error",
+      "name": "Journal \u00b7 recoverable read error",
+      "section": "states",
+      "order": 155,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-journal-error",
+      "intent": "Do not reset, clear or replace stored records on a read failure."
+    },
+    {
+      "id": "offline-ready",
+      "name": "Offline \u00b7 reassurance, not a warning",
+      "section": "states",
+      "order": 156,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-offline-ready",
+      "intent": "Local journal actions remain available; only a genuine platform/network-dependent handoff is scoped out."
+    },
+    {
+      "id": "stale-record",
+      "name": "Record \u00b7 stale revision conflict",
+      "section": "states",
+      "order": 157,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-stale-record",
+      "intent": "A newer local revision is never silently overwritten; the caregiver can review it or keep the draft."
+    },
+    {
+      "id": "permission-denied",
+      "name": "Permission \u00b7 denied without dead end",
+      "section": "states",
+      "order": 158,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-permission-denied",
+      "intent": "The requested feature stays optional and the saved underlying work remains intact."
+    },
+    {
+      "id": "reduced-motion-state",
+      "name": "Reduced motion \u00b7 final state",
+      "section": "states",
+      "order": 159,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-reduced-motion-state",
+      "intent": "Shared objects land immediately; meaning, focus order and success feedback remain."
+    },
+    {
+      "id": "transition-setup-home",
+      "name": "Setup \u2192 Home",
+      "section": "motion",
+      "order": 160,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-transition-setup-home",
+      "intent": "Real interactive journey, not a symbolic animation. Baton: The entered identity becomes the Home heading. Open the card in the player and use its product controls. Reduced motion shows the same result."
+    },
+    {
+      "id": "transition-medication-given",
+      "name": "Medication \u2192 administration",
+      "section": "motion",
+      "order": 161,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-transition-medication-given",
+      "intent": "Real interactive journey, not a symbolic animation. Baton: The plan identity becomes a committed Timeline record. Open the card in the player and use its product controls. Reduced motion shows the same result."
+    },
+    {
+      "id": "transition-calendar-edit",
+      "name": "Calendar task \u2192 edit",
+      "section": "motion",
+      "order": 162,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-transition-calendar-edit",
+      "intent": "Real interactive journey, not a symbolic animation. Baton: The agenda item carries its name, date and recurrence. Open the card in the player and use its product controls. Reduced motion shows the same result."
+    },
+    {
+      "id": "transition-trend-report",
+      "name": "Trend \u2192 report",
+      "section": "motion",
+      "order": 163,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-transition-trend-report",
+      "intent": "Real interactive journey, not a symbolic animation. Baton: The selected dog, date range and exact values stay attached. Open the card in the player and use its product controls. Reduced motion shows the same result."
+    },
+    {
+      "id": "transition-photo-memory",
+      "name": "Photo \u2192 Memory Book",
+      "section": "motion",
+      "order": 164,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-transition-photo-memory",
+      "intent": "Real interactive journey, not a symbolic animation. Baton: The chosen local photo becomes a traceable highlight. Open the card in the player and use its product controls. Reduced motion shows the same result."
+    },
+    {
+      "id": "transition-notes-timeline",
+      "name": "Practice note \u2192 Timeline",
+      "section": "motion",
+      "order": 165,
+      "sequence": null,
+      "flow": false,
+      "enter": null,
+      "group": "review-transition-notes-timeline",
+      "intent": "Write a note and follow its dated walk mark into the real Timeline preview. No practice entry is persisted."
+    }
+  ],
+  "authority": {
+    "date": "2026-10-16",
+    "selection": "Current web board chosen by owner as exact target; older Inter-only rule superseded for native parity.",
+    "typography": {
+      "display": "Bricolage Grotesque 700/800",
+      "reading": "Inter 400/500"
+    },
+    "nativeParityApproved": false,
+    "reviewStoreNote": "Picks/Notes were empty at audit. Historical proposed/approved text in board metadata is preserved, not treated as per-screen native approval."
+  },
+  "coverageIssue": {
+    "id": "setup-section-orphan",
+    "registeredIds": [
+      "dog-setup",
+      "seq-setup"
+    ],
+    "description": "The setup section is not in BOARD.sections; keep both entries visible in parity coverage and resolve standalone board-row visibility without redesign."
+  },
+  "configurationRevisions": [
+    {
+      "date": "2026-10-16",
+      "reason": "Expose the already registered dog-setup and seq-setup cards in their existing setup section. Product screen assets, registry and flows unchanged. G04 catalog correction, not visual rebaseline.",
+      "path": "design/board/board.config.js",
+      "previousSha256": "c8798a876bf0ae8c04c2c7ae54af9d1782a93b058fbe78be8341b27d67d17bab",
+      "sha256": "b42eb2a1a52eff563ee570940364f372aaded500a08a47e8b320b93c8beaf2df"
+    }
+  ]
+}

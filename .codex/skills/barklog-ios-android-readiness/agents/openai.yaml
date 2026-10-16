@@ -1,4 +1,0 @@
-interface:
-  display_name: "BarkLog Platform Readiness"
-  short_description: "Handle BarkLog iOS and Android specifics"
-  default_prompt: "Use $barklog-ios-android-readiness to plan or implement BarkLog native platform behavior and release readiness."

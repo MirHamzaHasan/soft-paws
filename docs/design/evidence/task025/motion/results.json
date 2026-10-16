@@ -1,0 +1,420 @@
+{
+  "frames": [
+    {
+      "name": "notification-switch",
+      "targetMs": 90,
+      "actualMs": 92.90000000596046,
+      "screen": "next-permissions",
+      "thumb": {
+        "x": 3.32387,
+        "s": 1
+      },
+      "bar": {
+        "x": 0,
+        "s": 0.8421
+      },
+      "selected": [],
+      "values": []
+    },
+    {
+      "name": "notification-switch",
+      "targetMs": 180,
+      "actualMs": 212.10000000149012,
+      "screen": "next-permissions",
+      "thumb": {
+        "x": 19.2097,
+        "s": 1
+      },
+      "bar": {
+        "x": 0,
+        "s": 0.8421
+      },
+      "selected": [],
+      "values": []
+    },
+    {
+      "name": "notification-switch",
+      "targetMs": 270,
+      "actualMs": 319.1000000014901,
+      "screen": "next-permissions",
+      "thumb": {
+        "x": 20.6567,
+        "s": 1
+      },
+      "bar": {
+        "x": 0,
+        "s": 0.8421
+      },
+      "selected": [],
+      "values": []
+    },
+    {
+      "name": "notification-switch",
+      "targetMs": 650,
+      "actualMs": 652.3000000044703,
+      "screen": "next-permissions",
+      "thumb": {
+        "x": 20,
+        "s": 1
+      },
+      "bar": {
+        "x": 0,
+        "s": 0.8421
+      },
+      "selected": [],
+      "values": []
+    },
+    {
+      "name": "multiple-picks",
+      "targetMs": 90,
+      "actualMs": 92.09999999403954,
+      "screen": "next-goals",
+      "thumb": null,
+      "bar": {
+        "x": 0,
+        "s": 0.4211
+      },
+      "selected": [
+        {
+          "x": 0,
+          "s": 1
+        },
+        {
+          "x": 0,
+          "s": 0.613456
+        }
+      ],
+      "values": []
+    },
+    {
+      "name": "multiple-picks",
+      "targetMs": 180,
+      "actualMs": 190.59999999403954,
+      "screen": "next-goals",
+      "thumb": null,
+      "bar": {
+        "x": 0,
+        "s": 0.4211
+      },
+      "selected": [
+        {
+          "x": 0,
+          "s": 1
+        },
+        {
+          "x": 0,
+          "s": 0.946988
+        }
+      ],
+      "values": []
+    },
+    {
+      "name": "multiple-picks",
+      "targetMs": 270,
+      "actualMs": 272.69999999552965,
+      "screen": "next-goals",
+      "thumb": null,
+      "bar": {
+        "x": 0,
+        "s": 0.4211
+      },
+      "selected": [
+        {
+          "x": 0,
+          "s": 1
+        },
+        {
+          "x": 0,
+          "s": 1.03549
+        }
+      ],
+      "values": []
+    },
+    {
+      "name": "multiple-picks",
+      "targetMs": 650,
+      "actualMs": 653.3999999985099,
+      "screen": "next-goals",
+      "thumb": null,
+      "bar": {
+        "x": 0,
+        "s": 0.4211
+      },
+      "selected": [
+        {
+          "x": 0,
+          "s": 1
+        },
+        {
+          "x": 0,
+          "s": 0.999856
+        }
+      ],
+      "values": []
+    },
+    {
+      "name": "progress-and-page",
+      "targetMs": 115,
+      "actualMs": 117,
+      "screen": "next-goals",
+      "thumb": null,
+      "bar": {
+        "x": 0,
+        "s": 0.4211
+      },
+      "selected": [
+        {
+          "x": 0,
+          "s": 1
+        },
+        {
+          "x": 0,
+          "s": 1
+        }
+      ],
+      "values": []
+    },
+    {
+      "name": "progress-and-page",
+      "targetMs": 230,
+      "actualMs": 233,
+      "screen": "next-rhythm",
+      "thumb": null,
+      "bar": {
+        "x": 0,
+        "s": 0.441394
+      },
+      "selected": [
+        {
+          "x": 0,
+          "s": 1
+        }
+      ],
+      "values": []
+    },
+    {
+      "name": "progress-and-page",
+      "targetMs": 345,
+      "actualMs": 346.30000000447035,
+      "screen": "next-rhythm",
+      "thumb": null,
+      "bar": {
+        "x": 0,
+        "s": 0.468322
+      },
+      "selected": [
+        {
+          "x": 0,
+          "s": 1
+        }
+      ],
+      "values": []
+    },
+    {
+      "name": "progress-and-page",
+      "targetMs": 850,
+      "actualMs": 852.9000000059605,
+      "screen": "next-rhythm",
+      "thumb": null,
+      "bar": {
+        "x": 0,
+        "s": 0.4737
+      },
+      "selected": [
+        {
+          "x": 0,
+          "s": 1
+        }
+      ],
+      "values": []
+    },
+    {
+      "name": "profile-review",
+      "targetMs": 150,
+      "actualMs": 153.10000000149012,
+      "screen": "next-context-review",
+      "thumb": null,
+      "bar": {
+        "x": 0,
+        "s": 0.8947
+      },
+      "selected": [],
+      "values": [
+        {
+          "opacity": "0",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0",
+          "x": 0,
+          "s": 1
+        }
+      ]
+    },
+    {
+      "name": "profile-review",
+      "targetMs": 350,
+      "actualMs": 353,
+      "screen": "next-context-review",
+      "thumb": null,
+      "bar": {
+        "x": 0,
+        "s": 0.8947
+      },
+      "selected": [],
+      "values": [
+        {
+          "opacity": "0.799918",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0.487316",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0",
+          "x": 0,
+          "s": 1
+        }
+      ]
+    },
+    {
+      "name": "profile-review",
+      "targetMs": 550,
+      "actualMs": 552.5,
+      "screen": "next-context-review",
+      "thumb": null,
+      "bar": {
+        "x": 0,
+        "s": 0.8947
+      },
+      "selected": [],
+      "values": [
+        {
+          "opacity": "0.976849",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0.936226",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0.837214",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0.584566",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0",
+          "x": 0,
+          "s": 1
+        }
+      ]
+    },
+    {
+      "name": "profile-review",
+      "targetMs": 1100,
+      "actualMs": 1102.5,
+      "screen": "next-context-review",
+      "thumb": null,
+      "bar": {
+        "x": 0,
+        "s": 0.8947
+      },
+      "selected": [],
+      "values": [
+        {
+          "opacity": "1",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "1",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "1",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0.99997",
+          "x": 0,
+          "s": 1
+        },
+        {
+          "opacity": "0.99896",
+          "x": 0,
+          "s": 1
+        }
+      ]
+    }
+  ],
+  "reduced": [
+    {
+      "transform": "none",
+      "opacity": "1"
+    },
+    {
+      "transform": "none",
+      "opacity": "1"
+    },
+    {
+      "transform": "none",
+      "opacity": "1"
+    },
+    {
+      "transform": "none",
+      "opacity": "1"
+    },
+    {
+      "transform": "none",
+      "opacity": "1"
+    },
+    {
+      "transform": "none",
+      "opacity": "1"
+    },
+    {
+      "transform": "none",
+      "opacity": "1"
+    }
+  ],
+  "reducedThumb": 20,
+  "errors": []
+}

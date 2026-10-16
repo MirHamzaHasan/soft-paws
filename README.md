@@ -1,49 +1,78 @@
 # BarkLog
 
-> Daily dog health, in one tap.
+Daily dog health, in one tap.
 
-BarkLog is a local dog care journal for iPhone and Android. It helps caregivers log observations, review timelines, prepare records for vet visits, and find bounded safety guidance. It does not diagnose or replace veterinary care.
+A fresh Kotlin Multiplatform rebuild using
+[MirHamzaHasan/draco-kotlin-base](https://github.com/MirHamzaHasan/draco-kotlin-base)
+at commit `de1b575911bc514fde95ffba74aca33b0beea0f2`.
 
-## Version 1.0.0
+The approved design board is implemented as shared native Compose screens with
+real local logic: setup, Home, detailed logs, Timeline, profiles/settings, health
+records, calendar, insights, Safety Center, CSV/PDF, training, private photos,
+expenses and Memory Book. The dog reacts after committed logs. SQLDelight schema
+v4 preserves KMP journals across restarts and numbered migrations.
+See [native board port](docs/native-board-port.md) for mapping and verification.
+AI, legacy React Native journal import and physical/store release QA remain separate.
 
-The first release is free: no ads, trial expiry, subscription, or purchase flow. All implemented local features are included. Care records stay in WatermelonDB on the device. Export CSV or PDF to keep a copy before uninstalling or clearing app data. Android uses `com.draco.arts.apps.bark.log.dogs.journal`; iOS uses `com.dracoarts.barklog`.
 
-Native Ask AI uses optional, separately downloaded on-device models for supported factual journal questions and scene captions. Firebase sign-in is only for the optional Atlas fallback. Atlas AI remains hidden in production until BarkLog's server policy supports this free release and its health context checks pass. There is no Firebase care-record sync.
+The latest companion chapter adds detailed multi-select dog onboarding, editable
+profiles, permission switches, a larger animated mascot, account/plan screens and
+conversation UI. Sign-in and AI replies are **local demos**, as requested; profile
+and conversation persistence is real SQLite. No Firebase, online AI or store
+billing is connected. Prices remain undecided. See
+[task027](tasks/task027-native-companion-board-and-main.md).
 
-The source and local automated checks are being prepared for the founder's signed native builds. Device QA and store sign-off are still pending. See [local build instructions](docs/release/local-build.md), [release preflight](docs/release/preflight-local.md), and the [task index](tasks/README.md).
+## Run
 
-## Stack
+Requirements: JDK 17+, Android SDK platform 36 for Android, Python 3.9+ for tools,
+and a Mac with Xcode for iOS. Android minimum API 24; iOS minimum 15.0.
 
-Expo Router, React Native, TypeScript, Tamagui, Zustand, TanStack Query, and local WatermelonDB. GameAnalytics is optional native analytics. Notifications, local export, and on-device AI use native modules, so a native build is needed for full QA.
+For iOS, open `iosApp/iosApp.xcodeproj`, choose the `iosApp` scheme and an
+iPhone simulator, then Run. Xcode builds and embeds the Kotlin framework.
+A physical iPhone needs your Apple Development Team.
 
-## Start locally
-
-Install Node.js 20.19.4 or newer, Corepack, and Android Studio or Xcode. Then:
+For Android, open the repository in Android Studio and run `androidApp`.
+Set `ANDROID_HOME` or an ignored `local.properties` with `sdk.dir=...`.
 
 ```sh
-corepack enable
-corepack pnpm install
-corepack pnpm start
+./gradlew :androidApp:assembleDebug
+./gradlew :androidApp:testDebugUnitTest
+./gradlew :shared:linkDebugFrameworkIosSimulatorArm64
+python3 tools/verify.py --metadata-only
+python3 tools/verify.py
+python3 tools/verify.py --ios
 ```
 
-Copy `env.example` to an ignored `.env.local` for optional public integration values. See [environment management](docs/deployment/env-management.md). A Firebase, Atlas, GameAnalytics, Mixpanel, Sentry, or RevenueCat account is not required for basic local journaling. `corepack pnpm web` is useful for route visibility, but native builds are required to validate device behavior.
+No service credentials, Node, Metro, CocoaPods or environment file is needed.
+Debug Android APK: `androidApp/build/outputs/apk/debug/androidApp-debug.apk`.
+Release Android compilation produces an unsigned artifact; store signing is a later task.
 
-## Validate
+## Project map
 
-```sh
-corepack pnpm check-types
-corepack pnpm test
-corepack pnpm release:check-local
-```
+- `shared/`: shared Compose UI, domain contracts, platform Kotlin adapters.
+- `androidApp/`: Android activity, device adapters, JVM tests.
+- `iosApp/`: tracked SwiftUI host and Xcode project.
+- `template/plugins.json`: inherited integration flags; haptics and opt-in notifications are enabled.
+- `tools/`: configuration, documentation and build verification.
+- `docs/`: new product, architecture, design and delivery context.
+- `tasks/`: ordered KMP rebuild tasks with dependencies and acceptance criteria.
 
-`release:check-local` checks source and Expo config. After clean prebuild and a signed Android build, run `corepack pnpm release:check-native-capabilities` against the generated manifests. The founder runs and signs the final builds; [local-build.md](docs/release/local-build.md) has the commands and device checklist.
+Start at [AGENTS.md](AGENTS.md), [the canonical spec](docs/source-of-truth/barklog-product-engineering.md),
+and [the task index](tasks/README.md). The complete board application is tracked in
+[task021](tasks/task021-complete-board-application.md). Physical QA/signing remains
+[task016](tasks/task016-native-qa-signing-and-release.md); legacy compatibility is
+[task015](tasks/task015-legacy-journal-migration.md).
 
-## Repository
+## Rewrite boundary
 
-`app/` contains Expo Router routes; `src/` contains features and local data; `assets/` contains app assets; `docs/` holds the canonical spec and current release guides; `tasks/` retains the numbered work history and active backlog; `scripts/` holds validation and build tooling. Generated native projects, caches, local env files, signing credentials, and test output are ignored.
+The owner requested a new framework and a fresh backlog, not automatic feature
+parity. The old code, local configuration and uncommitted work were moved to a
+recoverable sibling backup; original Git history remains in this repository.
+See [migration notes](docs/migration/react-native-to-kmp.md).
 
-Read [AGENTS.md](AGENTS.md) and the [canonical product and engineering spec](docs/source-of-truth/barklog-product-engineering.md) before changing product behavior. Use Tamagui and BarkLog tokens, keep Home polished, store care records locally, and keep safety guidance observational and escalation aware.
+The new app uses the existing platform IDs but does not read the old WatermelonDB
+journal. Do not install over a device containing valuable records before reviewing
+the migration/export task. Do not uninstall that app to test this preview.
 
-## License
-
-[MIT](LICENSE)
+No ads, purchases, account gates, cloud journal storage or hosted telemetry are
+configured. AppLovin, Play Billing, RevenueCat and PostHog providers are absent.

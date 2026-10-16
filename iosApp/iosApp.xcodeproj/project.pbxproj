@@ -1,0 +1,215 @@
+// !$*UTF8*$!
+{
+    archiveVersion = 1;
+    classes = {};
+    objectVersion = 56;
+    objects = {
+        B20000000000000000000001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarkLogUITests/JournalJourneys.swift; sourceTree = "<group>"; };
+        B20000000000000000000002 = {isa = PBXBuildFile; fileRef = B20000000000000000000001; };
+        B20000000000000000000003 = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BarkLogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+        B20000000000000000000004 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (B20000000000000000000002); runOnlyForDeploymentPostprocessing = 0; };
+        B20000000000000000000005 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        B20000000000000000000006 = {isa = PBXContainerItemProxy; containerPortal = A1000000000000000000000E; proxyType = 1; remoteGlobalIDString = A1000000000000000000000A; remoteInfo = iosApp; };
+        B20000000000000000000007 = {isa = PBXTargetDependency; target = A1000000000000000000000A; targetProxy = B20000000000000000000006; };
+        B20000000000000000000008 = {isa = PBXNativeTarget; buildConfigurationList = B2000000000000000000000B; buildPhases = (B20000000000000000000004, B20000000000000000000005); buildRules = (); dependencies = (B20000000000000000000007); name = BarkLogUITests; productName = BarkLogUITests; productReference = B20000000000000000000003; productType = "com.apple.product-type.bundle.ui-testing"; };
+        B20000000000000000000009 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 15.0; PRODUCT_BUNDLE_IDENTIFIER = com.dracoarts.barklog.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = iosApp; }; name = Debug; };
+        B2000000000000000000000A = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 15.0; PRODUCT_BUNDLE_IDENTIFIER = com.dracoarts.barklog.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = iosApp; }; name = Release; };
+        B2000000000000000000000B = {isa = XCConfigurationList; buildConfigurations = (B20000000000000000000009, B2000000000000000000000A); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+
+
+/* Begin PBXBuildFile section */
+        A10000000000000000000001 /* DracoArtsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000003 /* DracoArtsApp.swift */; };
+        A10000000000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000004 /* ContentView.swift */; };
+        A10000000000000000000025 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000026 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+        A10000000000000000000003 /* DracoArtsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DracoArtsApp.swift; sourceTree = "<group>"; };
+        A10000000000000000000004 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+        A10000000000000000000005 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+        A10000000000000000000026 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+        A10000000000000000000028 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+        A10000000000000000000006 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+        A10000000000000000000007 = {
+            isa = PBXGroup;
+            children = (B20000000000000000000001, A10000000000000000000008 /* iosApp */, A10000000000000000000009 /* Products */);
+            sourceTree = "<group>";
+        };
+        A10000000000000000000008 /* iosApp */ = {
+            isa = PBXGroup;
+            children = (A10000000000000000000003 /* DracoArtsApp.swift */, A10000000000000000000004 /* ContentView.swift */, A10000000000000000000026 /* Assets.xcassets */, A10000000000000000000028 /* Info.plist */);
+            path = iosApp;
+            sourceTree = "<group>";
+        };
+        A10000000000000000000009 /* Products */ = {
+            isa = PBXGroup;
+            children = (A10000000000000000000005 /* iosApp.app */, B20000000000000000000003);
+            name = Products;
+            sourceTree = "<group>";
+        };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+        A1000000000000000000000A /* iosApp */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = A1000000000000000000000B /* Build configuration list for PBXNativeTarget "iosApp" */;
+            buildPhases = (A1000000000000000000000C /* Compile Kotlin Framework */, A1000000000000000000000D /* Sources */, A10000000000000000000027 /* Resources */, A10000000000000000000006 /* Frameworks */);
+            buildRules = ();
+            dependencies = ();
+            name = iosApp;
+            packageProductDependencies = ();
+            productName = iosApp;
+            productReference = A10000000000000000000005 /* iosApp.app */;
+            productType = "com.apple.product-type.application";
+        };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+        A1000000000000000000000E /* Project object */ = {
+            isa = PBXProject;
+            attributes = {
+                BuildIndependentTargetsInParallel = 1;
+                LastUpgradeCheck = 1600;
+                TargetAttributes = {A1000000000000000000000A = {CreatedOnToolsVersion = 16.0;};};
+            };
+            buildConfigurationList = A1000000000000000000000F /* Build configuration list for PBXProject "iosApp" */;
+            compatibilityVersion = "Xcode 14.0";
+            developmentRegion = en;
+            hasScannedForEncodings = 0;
+            knownRegions = (en, Base,);
+            mainGroup = A10000000000000000000007;
+            packageReferences = ();
+            productRefGroup = A10000000000000000000009 /* Products */;
+            projectDirPath = "";
+            projectRoot = "";
+            targets = (A1000000000000000000000A /* iosApp */, B20000000000000000000008);
+        };
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+        A10000000000000000000027 /* Resources */ = {
+            isa = PBXResourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (A10000000000000000000025 /* Assets.xcassets in Resources */);
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+        A1000000000000000000000C /* Compile Kotlin Framework */ = {
+            isa = PBXShellScriptBuildPhase;
+            alwaysOutOfDate = 1;
+            buildActionMask = 2147483647;
+            files = ();
+            inputPaths = ();
+            name = "Compile Kotlin Framework";
+            outputPaths = ();
+            runOnlyForDeploymentPostprocessing = 0;
+            shellPath = /bin/sh;
+            shellScript = "if [ \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" = \"YES\" ]; then\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
+        };
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+        A1000000000000000000000D /* Sources */ = {
+            isa = PBXSourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (A10000000000000000000001 /* DracoArtsApp.swift in Sources */, A10000000000000000000002 /* ContentView.swift in Sources */);
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+        A10000000000000000000010 /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ENABLE_MODULES = YES;
+                DEBUG_INFORMATION_FORMAT = dwarf;
+                ENABLE_TESTABILITY = YES;
+                ENABLE_USER_SCRIPT_SANDBOXING = NO;
+                GCC_OPTIMIZATION_LEVEL = 0;
+                IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+                SDKROOT = iphoneos;
+                SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+                SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+            };
+            name = Debug;
+        };
+        A10000000000000000000011 /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ENABLE_MODULES = YES;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                ENABLE_USER_SCRIPT_SANDBOXING = NO;
+                IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+                SDKROOT = iphoneos;
+                SWIFT_OPTIMIZATION_LEVEL = "-O";
+            };
+            name = Release;
+        };
+        A10000000000000000000012 /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                CODE_SIGN_STYLE = Automatic;
+                FRAMEWORK_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)");
+                GENERATE_INFOPLIST_FILE = YES;
+                INFOPLIST_FILE = iosApp/Info.plist;
+                INFOPLIST_KEY_CFBundleDisplayName = "BarkLog";
+                CURRENT_PROJECT_VERSION = 1;
+                MARKETING_VERSION = 1.0.0;
+                INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+                INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+                LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
+                OTHER_LDFLAGS = ("$(inherited)", "-framework", Shared, "-ObjC", "-lsqlite3");
+                PRODUCT_BUNDLE_IDENTIFIER = com.dracoarts.barklog;
+                PRODUCT_NAME = "$(TARGET_NAME)";
+                SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+                SWIFT_EMIT_LOC_STRINGS = YES;
+                SWIFT_VERSION = 5.0;
+                TARGETED_DEVICE_FAMILY = "1,2";
+            };
+            name = Debug;
+        };
+        A10000000000000000000013 /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                CODE_SIGN_STYLE = Automatic;
+                FRAMEWORK_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)");
+                GENERATE_INFOPLIST_FILE = YES;
+                INFOPLIST_FILE = iosApp/Info.plist;
+                INFOPLIST_KEY_CFBundleDisplayName = "BarkLog";
+                CURRENT_PROJECT_VERSION = 1;
+                MARKETING_VERSION = 1.0.0;
+                INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+                INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+                LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
+                OTHER_LDFLAGS = ("$(inherited)", "-framework", Shared, "-ObjC", "-lsqlite3");
+                PRODUCT_BUNDLE_IDENTIFIER = com.dracoarts.barklog;
+                PRODUCT_NAME = "$(TARGET_NAME)";
+                SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+                SWIFT_EMIT_LOC_STRINGS = YES;
+                SWIFT_VERSION = 5.0;
+                TARGETED_DEVICE_FAMILY = "1,2";
+            };
+            name = Release;
+        };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+        A1000000000000000000000B /* Build configuration list for PBXNativeTarget "iosApp" */ = {isa = XCConfigurationList; buildConfigurations = (A10000000000000000000012 /* Debug */, A10000000000000000000013 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        A1000000000000000000000F /* Build configuration list for PBXProject "iosApp" */ = {isa = XCConfigurationList; buildConfigurations = (A10000000000000000000010 /* Debug */, A10000000000000000000011 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+
+    };
+    rootObject = A1000000000000000000000E /* Project object */;
+}

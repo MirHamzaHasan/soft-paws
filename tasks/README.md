@@ -1,27 +1,51 @@
-# BarkLog task index
+# BarkLog KMP rebuild tasks
 
-The numbered files in this folder are an implementation record. Earlier Supabase, EAS, household-sharing, and paid-access tasks document superseded work; they are not instructions for the v1.0.0 build. Use the [canonical spec](../docs/source-of-truth/barklog-product-engineering.md), [current product truth](../docs/agentic/product-truth.md), and [local build guide](../docs/release/local-build.md) for current decisions.
+Fresh backlog created 2026-10-14. Old tasks were removed from the current checkout
+and remain recoverable in the RN backup/Git history. This backlog describes a new
+app; old features are not automatically implemented.
 
-## Current release work
+Start with [product truth](../docs/agentic/product-truth.md),
+[the canonical spec](../docs/source-of-truth/barklog-product-engineering.md)
+and [actual feature status](../docs/product/current-feature-status-and-market-roadmap.md).
 
-| Task | Current status |
-| --- | --- |
-| [task046](task046-release-environment-and-supabase-gates.md) | Local public env and signing evidence still needed; its Supabase gates are obsolete. |
-| [task047](task047-preview-builds-and-native-device-qa.md) | Physical Android and iOS QA still needed using locally built artifacts. |
-| [task048](task048-production-builds-store-submission-and-rollback.md) | Signed production artifacts, store upload, and rollback evidence pending. |
-| [task049](task049-production-feedback-and-error-handling-hardening.md) | Manual native feedback and error flow QA pending. |
-| [task051](task051-remove-supabase-and-eas-local-only-build.md) | Local-only journal and build path implemented; physical and iOS QA pending. |
-| [task052](task052-firebase-atlas-ai.md) | Optional Firebase/Atlas adapter implemented; production Atlas policy and live checks pending. |
-| [task053](task053-local-first-mobile-ai.md) | Native local model path implemented; iOS and physical-device QA pending. |
-| [task054](task054-local-conversation-and-photo-captions.md) | Local conversation/caption path implemented; public model downloads and native QA pending. |
+| Task | Slice | Status | Depends on |
+| --- | --- | --- | --- |
+| [task001](task001-kmp-foundation.md) | KMP foundation and repository reset | Implemented foundation | None |
+| [task002](task002-local-database.md) | Device-local SQLDelight database | Implemented; native driver tested | task001 |
+| [task003](task003-dog-setup-and-quick-logging.md) | First dog, Home quick logs and basic Timeline | Implemented; simulator journeys pass; platform gates remain | task002 |
+| [task004](task004-detail-logs-and-timeline.md) | Detailed observations and Timeline tools | Implemented; simulator journeys pass; platform gates remain | task003 |
+| [task005](task005-profiles-and-local-settings.md) | Multi-dog profiles and local settings | Implemented; physical QA pending | task003 |
+| [task006](task006-medication-and-vaccination-records.md) | Medication plans and vaccination records | Implemented; physical QA pending | task004, task005 |
+| [task007](task007-care-calendar-and-reminders.md) | Care Calendar and opt-in native reminders | Implemented; physical QA pending | task005, task006 |
+| [task008](task008-offline-insights-and-trends.md) | Deterministic insights and monthly trends | Implemented; physical QA pending | task004, task006 |
+| [task009](task009-offline-safety-center.md) | Versioned offline Safety Center | Implemented; physical QA pending | task001; task005 for dog-scoped emergency card |
+| [task010](task010-csv-pdf-and-vet-prep.md) | Free local exports and vet preparation | Implemented; physical QA pending | task004, task005, task006 |
+| [task011](task011-training-catalog-and-progress.md) | Bundled training catalog and sessions | Implemented; physical QA pending | task004, task005 |
+| [task012](task012-photo-journal-and-baselines.md) | Local photo journal and baselines | Implemented; physical QA pending | task004, task005 |
+| [task013](task013-expense-tracker.md) | Local care expenses | Implemented; physical QA pending | task005 |
+| [task014](task014-optional-local-ai-models.md) | Optional local AI model lifecycle and factual journal answers | Not started | task008; core journal stable |
+| [task015](task015-legacy-journal-migration.md) | Legacy journal compatibility and update policy | Not started | task002, task010; before updates to existing users |
+| [task016](task016-native-qa-signing-and-release.md) | Physical QA, performance, signing and store release | Not started | task003–013 and task019 for intended v1 scope; task015 for existing-user updates |
+| [task017](task017-local-conversation-and-photo-captions.md) | Bounded local conversation and scene captions | Not started | task014; task012 for captions |
+| [task018](task018-optional-firebase-atlas-fallback.md) | Optional Firebase/Atlas text fallback | Deferred / disabled | task014; approved free-release server/context support |
+| [task019](task019-memory-book.md) | Local Memory Book | Implemented; physical QA pending | task004, task012; task010 for PDF sharing |
+| [task020](task020-approved-native-design.md) | Earlier native design foundation | Functional foundation; current visual parity incomplete | task003/task004 core; owner-approved board |
+| [task021](task021-complete-board-application.md) | Approved board feature application | Functional implementation verified; exact visual parity reopened in task022 | task005–013/task019/task020 |
+| [task022](task022-exact-board-native-parity.md) | Exact current-board native parity, screen by screen | In progress; [166 individual entries, 123 product screens/states](native-parity/README.md); zero matched | task021 functional foundation |
+| [task023](task023-readable-care-and-native-motion.md) | Readable Home care and shared native motion | Implemented; Android/iOS simulator checks pass; physical feel review remains | task022 foundation |
+| [task024](task024-premium-ai-onboarding-board.md) | Rich onboarding, required account and Premium AI board | Board checked; native demo chapter delivered in task027; visual review open | Owner's later 2026-10-16 direction; prices undecided |
+| [task025](task025-light-and-flexible-dog-onboarding.md) | Light default, notification switches and flexible dog context onboarding | Board checked; native refinement delivered in task027; visual review open | Refinement of task024; prices remain undecided |
+| [task026](task026-home-mascot-and-care-card.md) | Larger dog, varied mascot motion and one Home care card | Board checked; native refinement delivered in task027; visual review open | Refinement of task024/task025 |
+| [task027](task027-native-companion-board-and-main.md) | Native companion chapter, backup cleanup and main delivery | Implemented; Android/iOS builds and local tests pass; visual/device review open | Owner authorized native port; demo login/AI; no simulator run |
 
-The v1.0.0 decision is free access to all implemented local features, with no ads or purchase flow. GameAnalytics is optional and requires separate Android and iOS game key/secret pairs. Current release evidence belongs in [preflight-local.md](../docs/release/preflight-local.md).
+## Delivery order
 
-## Historical tasks
+1. task022: current board parity gates, then Home first and each individual screen/state. Do not simplify the board to fit native.
+2. Preserve task021's functional evidence; it does not establish exact screen/motion parity.
+3. task003–013/task019: physical-device and assistive QA; keep actual native parts aligned with the current rendered kit.
+4. task015 and task016: data update policy, physical QA and release evidence.
+5. task014/task017/task018: optional AI, independently of local journal access.
 
-- `task001`–`task044` record earlier implementation and product plans. Current behavior may differ where `task051`–`task054` or the v1.0.0 release decision superseded them.
-- `task032` and `task033` describe the removed care sync path; `task038` and `task039` describe removed share-link and household features.
-- `task045` EAS linking and `task050` contact capture are removed from the local-only release path.
-- [production-readiness-plan.md](production-readiness-plan.md) is historical planning context.
-
-Do not mark release work complete until the founder records signed artifact paths, device tests, store metadata, and a release decision in the current preflight.
+Each task includes context, scope, dependencies, testable criteria and verification.
+Complete one vertical slice at a time. Keep Home polished; retain the free/local
+product boundary. Mark completion only from actual implementation and evidence.

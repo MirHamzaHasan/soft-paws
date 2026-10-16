@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "plugins": [
+    { "id": "auth", "enabled": false },
+    { "id": "analytics", "enabled": false },
+    { "id": "ads", "enabled": false },
+    { "id": "purchases", "enabled": false },
+    { "id": "haptics", "enabled": true },
+    { "id": "notifications", "enabled": true }
+  ]
+}

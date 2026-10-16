@@ -1,0 +1,50 @@
+name: BarkLog KMP checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
+      - uses: gradle/actions/setup-gradle@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.x'
+      - name: Check BarkLog foundation configuration
+        run: python tools/verify.py --metadata-only
+      - name: Build, lint, and test Android
+        run: |
+          chmod +x gradlew
+          ./gradlew :androidApp:assembleDebug :androidApp:assembleRelease :androidApp:lintDebug :androidApp:testDebugUnitTest :shared:verifySqlDelightMigration
+
+  ios:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Check generated plugin registration
+        run: python3 tools/plugins.py check
+      - name: Build iOS simulator app
+        run: |
+          chmod +x gradlew
+          xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath .verify-build/xcode ARCHS=arm64 CODE_SIGNING_ALLOWED=NO build
+          python3 tools/check_ios_bundle.py Debug
+          xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Release -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath .verify-build/xcode ARCHS=arm64 CODE_SIGNING_ALLOWED=NO build
+          python3 tools/check_ios_bundle.py Release

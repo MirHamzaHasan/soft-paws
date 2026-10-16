@@ -1,0 +1,5 @@
+Parity coverage passed: 166 entries; 123 product; 0 matched. This is not visual approval.
+{
+  "baselineFingerprint": "0044317079110dc33db9b5551b6309a26302efc0a177ee3b6857b1eb2aed1321",
+  "sourceFingerprint": "c6190e2d47710380eba5b50836ccc8dd6267e0fcbbb6ce18031f41050ee7cb26"
+}

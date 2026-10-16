@@ -1,0 +1,1402 @@
+{
+  "proposalFingerprint": "81cccf1d8c1e0b30ffab79e113e3c6cba7fda87f4c6121c1ecdae9ca29ab5c8c",
+  "scope": "Board-only proposal; prices undecided; native app unchanged",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "0d2b8669138664315ab9b774fd93396a8bae6c0f56038ce9069d9ba6ad59e541"
+    },
+    {
+      "path": "checks/contrast.json",
+      "sha256": "e011e422dc1ba3f6b650456fa47c29caf7920f22016f1df870a00a59b6417012"
+    },
+    {
+      "path": "checks/contrast.txt",
+      "sha256": "4bd9db849e7309454b09bdcea32507545b5465bde251d87d4410b6cb997f9fd4"
+    },
+    {
+      "path": "checks/integrity.json",
+      "sha256": "cf390507ea6fa67fa6e85e6d90a76ee7b6f8db209001770675975141b189e0d2"
+    },
+    {
+      "path": "checks/journeys.json",
+      "sha256": "8eb3b637c05518fb393cd5ffc53135978a4489a72a05361546075fa82c3408f4"
+    },
+    {
+      "path": "checks/metadata.txt",
+      "sha256": "4dbd6b81292913200495fca16f8f93e67f9934718785ee0f64e997db88df095e"
+    },
+    {
+      "path": "checks/native-source.txt",
+      "sha256": "b193f2459213c64c02831841aa76b94933d34d7ade7a6f4ead0d68171e21448d"
+    },
+    {
+      "path": "checks/proposal-source.json",
+      "sha256": "9ee083c637517b849001aa9994a623c80123c222acf6052974dc13f8e8344d1d"
+    },
+    {
+      "path": "checks/retention.json",
+      "sha256": "345cbd70eb105bcefd99a68c96d48cc557302c16d14557b8fec6bbb545f3249a"
+    },
+    {
+      "path": "checks/visual-qa.json",
+      "sha256": "5959b996de8ff52d422d1626e85a69ef3efddbb5711c2e6aec286630260682bf"
+    },
+    {
+      "path": "contacts/dark-1.jpg",
+      "sha256": "713ebe66b95e1ab2a7d6d9f35239e6ac9d1731fa12a92b0e7a8a725e19eb324d"
+    },
+    {
+      "path": "contacts/dark-2.jpg",
+      "sha256": "a9429da5dfbe461b40c645afb08d9994be5dc891741d3f7832f0859b292b1317"
+    },
+    {
+      "path": "contacts/dark-3.jpg",
+      "sha256": "60ec711060d57df6ff7deee6bc0c26d25d74d1a2f3ad9f36de52a9cf63c61adc"
+    },
+    {
+      "path": "contacts/large-compact-1.jpg",
+      "sha256": "b6deedd53cbbe6a6ac5458ac9750ac59c086577ab32299c2412033520fc00509"
+    },
+    {
+      "path": "contacts/large-compact-2.jpg",
+      "sha256": "89096163339ba7f946cb34cf89e104b6ae813d2cc64e4278c7166dc08a44ce17"
+    },
+    {
+      "path": "contacts/large-compact-3.jpg",
+      "sha256": "8e75be41d53568739f45b5714ea9d4d35fd8ec402b312c020d292aea718601d2"
+    },
+    {
+      "path": "contacts/light-1.jpg",
+      "sha256": "e90d1b211e02329f6df074363bcfab4978ecff19eb78ff67e05579b1e86866e1"
+    },
+    {
+      "path": "contacts/light-2.jpg",
+      "sha256": "20b064d51a8a77385c854f8b81932ab8dfd2f5eff86e7f528eb61232bf93bbd7"
+    },
+    {
+      "path": "contacts/light-3.jpg",
+      "sha256": "33419a6fd3bdc7c8706b79d6b84d1616bbccf1343d3e67f1e5c49a8d262bddcf"
+    },
+    {
+      "path": "contacts/reduced-1.jpg",
+      "sha256": "9410f423ea9188b5241b6cb44194eecde769f9316a592b102a3a9af5899386cc"
+    },
+    {
+      "path": "contacts/reduced-2.jpg",
+      "sha256": "d3f1e38a66e306c27db164a4b2cc4473a875e2b4834e61bf3292b9b897daa8ba"
+    },
+    {
+      "path": "contacts/reduced-3.jpg",
+      "sha256": "8266a1dd99ac8ec281b72fb7d05a30e309abe98bf09413e6b9f2f127dc9540cc"
+    },
+    {
+      "path": "journeys/android-notification-sheet.png",
+      "sha256": "cf6cab021dab6daf602f17f0f5998f5d99be5dc88288de1f5fbeaa9b963ba514"
+    },
+    {
+      "path": "journeys/fresh-home.png",
+      "sha256": "47f05018ce94c4a57d3e62774b2f226e7a47e5593b8eb2a685952bc77ac55a70"
+    },
+    {
+      "path": "journeys/ios-notification-sheet.png",
+      "sha256": "a98f0ef48e898a041f5cd15271f94551e99732b672abc3d52a86bb0e1cad3088"
+    },
+    {
+      "path": "journeys/next-chat-error.png",
+      "sha256": "859bf42e0d07eb6b600be28b598d487e2876cc4587d7ae69b3e304a0ec10710e"
+    },
+    {
+      "path": "journeys/next-chat-offline.png",
+      "sha256": "b3a510f3c04cacd2cb40964b7b87eef92e60777b5e7abef614c9d76e20fa4d45"
+    },
+    {
+      "path": "journeys/paywall-free-path.png",
+      "sha256": "dc44cb73e2971b92985ceb4055fd593bcaf8c23095f52a87b6ccaf878662a90f"
+    },
+    {
+      "path": "journeys/personal-plan.png",
+      "sha256": "b8c91f10cf9cbe2897da04e35d13ed2dcdda151fd95e94e57d0dea45e7595221"
+    },
+    {
+      "path": "journeys/practice.png",
+      "sha256": "1fc637eb161aab2b60c66afe94814b6c2f99af77cadd3771e29fa72b90ef429f"
+    },
+    {
+      "path": "journeys/results.json",
+      "sha256": "8eb3b637c05518fb393cd5ffc53135978a4489a72a05361546075fa82c3408f4"
+    },
+    {
+      "path": "journeys/retained-journal.png",
+      "sha256": "6a19c06e86335bda20af25da6e24c4455575de24ab599f100db34e2bd81dabaf"
+    },
+    {
+      "path": "journeys/source-record.png",
+      "sha256": "f00d16f83fc98e0d7faecbe25977c9e4ed41c81c191d97649d17feb6770a583a"
+    },
+    {
+      "path": "journeys/streaming.png",
+      "sha256": "fbf5db13d3a28928d08009e3c038bf525346780e1766f92bd55a7c49b105925b"
+    },
+    {
+      "path": "journeys/threads.png",
+      "sha256": "fe95cb59fd4fd2441c356feb6575f1555c482f91541b016c7a342ff717794578"
+    },
+    {
+      "path": "motion/pick-and-page-180.png",
+      "sha256": "ad3c0edefe42d15232dbe4f1e834d071fc0e4b8a5bb33561a2bb673a2b8764df"
+    },
+    {
+      "path": "motion/pick-and-page-340.png",
+      "sha256": "112ff7e1d6901651ded3fa92ff5529a0e771780b5542c35e193ad73af6b552d8"
+    },
+    {
+      "path": "motion/pick-and-page-580.png",
+      "sha256": "d4e65634b1d250f2a942f6fe3b68fe17cf90cceaef1e535abad787446c9c9c80"
+    },
+    {
+      "path": "motion/pick-and-page-90.png",
+      "sha256": "ee5839aaac87df0fc456e1436b7c7dc21cef1df005d8182a42dc1f7a7123c441"
+    },
+    {
+      "path": "motion/pick-and-page-920.png",
+      "sha256": "d4c761ce5db1a4c811182778c89a2395298981844a76c9e64efdcb590491e6f0"
+    },
+    {
+      "path": "motion/plan-1800.png",
+      "sha256": "6d14dc8abc85c547b092739e17812316550cc9bb411d5f70a30e27a5b5f993a1"
+    },
+    {
+      "path": "motion/plan-225.png",
+      "sha256": "731d96e675061e975e4d067a45a3f12c65b4fcb7b4ffff95304dcc1372e3bab5"
+    },
+    {
+      "path": "motion/plan-450.png",
+      "sha256": "855dc2724969537d2e2a3fd3fc695abfe9e3ee0c2899e2581595f117370537af"
+    },
+    {
+      "path": "motion/plan-675.png",
+      "sha256": "16237c32b2749e742853b1ce62b84e41927bfe15771a4ed7a2914ed793d7cb3d"
+    },
+    {
+      "path": "motion/practice-115.png",
+      "sha256": "83b4fad49f7d66bc9e4b30b29c280ba8b2b60f4244dcd2f73423842665ce5bcf"
+    },
+    {
+      "path": "motion/practice-230.png",
+      "sha256": "ca319ad6bab565b087e68fb087c933df4a4a5e7848fcb5da3ac2d854848efb5e"
+    },
+    {
+      "path": "motion/practice-345.png",
+      "sha256": "f1558ecb0b652bc0a1edcc097cdf28e54bf1ddd6d0683c5a50352f9d86caa023"
+    },
+    {
+      "path": "motion/practice-650.png",
+      "sha256": "8095c4089932dcf6aabd62264363d6456fca3014a0eb5b3146aea1ef2cc12e04"
+    },
+    {
+      "path": "motion/reduced-plan.png",
+      "sha256": "b2aa4c8e62f2c2101b47c59902e847f4e77ca7d3e2b9f4b1835d9d35e16abf9b"
+    },
+    {
+      "path": "motion/reply-160.png",
+      "sha256": "fe6142be8f32902d66d9f84533c200d88747de110a2b2dc71171c9f2f785318a"
+    },
+    {
+      "path": "motion/reply-1700.png",
+      "sha256": "4b15d32606c4bcf7cee18adc4ff5db12ee7dd991274d4ecdc8ab50befaf6f623"
+    },
+    {
+      "path": "motion/reply-400.png",
+      "sha256": "37fde8a99447a74f0850f8b31dd846414191f8f4e3aa987ccdb669b7cef90990"
+    },
+    {
+      "path": "motion/reply-720.png",
+      "sha256": "f3a9b6f10dc9012e5cc24598c83e6a483b74c510074fd6ef914b4576d1bbbaeb"
+    },
+    {
+      "path": "motion/results.json",
+      "sha256": "2bf5e1008c13fa76d73006b6530e656d4ef11459272c60eb7b6fdc1499b42054"
+    },
+    {
+      "path": "requirements.md",
+      "sha256": "2d10f4ee687bb9ce8730b37f1aa42fe71bbf8ba07441378d5bed1594ce048b66"
+    },
+    {
+      "path": "screenshots/dark/next-account-settings-bottom.png",
+      "sha256": "0e897fb36ec7779d280912131d08eabb689450105b168726823addf02eca0f43"
+    },
+    {
+      "path": "screenshots/dark/next-account-settings.png",
+      "sha256": "e9e467d5e093f71e2e05dbe28e8fbfb284893b8bb53f30bcac42246887998a40"
+    },
+    {
+      "path": "screenshots/dark/next-ai-demo.png",
+      "sha256": "dff171ecb9a20f60cf42f2bb3ffb7239e29741068fe21e673136cbb804e302f2"
+    },
+    {
+      "path": "screenshots/dark/next-ai-gate.png",
+      "sha256": "ce8d4f5e3ff1b75fea522f0c34d2f0c24f5db0cf8cbcc9cfd3b7a14c5a0810a0"
+    },
+    {
+      "path": "screenshots/dark/next-ai-privacy-bottom.png",
+      "sha256": "27c9edbed2a33f61502ec5e31a925f9d7ea5f4c6246d1bcb28c8da606d0511f4"
+    },
+    {
+      "path": "screenshots/dark/next-ai-privacy.png",
+      "sha256": "7c5369c0fcccd511d9ed731dadfe1add588d95f97399f80229f89ddc0e93a8c7"
+    },
+    {
+      "path": "screenshots/dark/next-auth-offline.png",
+      "sha256": "ca1da98f6c790e62e1aa02716e9551701b103e49532c1b00138a010b191ee280"
+    },
+    {
+      "path": "screenshots/dark/next-breed.png",
+      "sha256": "7bf362d24abdd7887a973e4a552223045e53ed92d70e0f8ff32173229626bdbb"
+    },
+    {
+      "path": "screenshots/dark/next-cancel-bottom.png",
+      "sha256": "e8d913a19cd6a500573a2af6a82d17315b6d1bb025f818987b6c493f54b76cb5"
+    },
+    {
+      "path": "screenshots/dark/next-cancel.png",
+      "sha256": "7e51b54f2882683fe5252c977ac31724cc8fd81e61adb24b8ff552f417300ba0"
+    },
+    {
+      "path": "screenshots/dark/next-chat-answer.png",
+      "sha256": "0eabba6790e7aa69e021a1c2a7b47e6fe8b3c8dbcc6d1b1f5c5313e3955a57b6"
+    },
+    {
+      "path": "screenshots/dark/next-chat-empty.png",
+      "sha256": "1a7f13694272c709888219a2fed627985649bccd6d934543fc14f7a7c1fd9d8a"
+    },
+    {
+      "path": "screenshots/dark/next-chat-error.png",
+      "sha256": "9d772de2e3eb867618795f7c58c0c6b64d781a69ef30185997c01017b743b6af"
+    },
+    {
+      "path": "screenshots/dark/next-chat-limit-bottom.png",
+      "sha256": "7599ec7a43a805ef37db20254472805415ecd4ab3fe695912194809cdf968cbc"
+    },
+    {
+      "path": "screenshots/dark/next-chat-limit.png",
+      "sha256": "abef115b7fb2445411ebfdc1d68a85a2d068fe57f3660457dc95b040fd6e9934"
+    },
+    {
+      "path": "screenshots/dark/next-chat-offline.png",
+      "sha256": "f2d63f2d9df3b5e8cdab2a6d3f66ed453f0e19b340252575ff73e682a137405e"
+    },
+    {
+      "path": "screenshots/dark/next-chat.png",
+      "sha256": "9fb5d27fc83a781fed12fd977396ced04e7c47e2c229271bf380b0d069d3cfb6"
+    },
+    {
+      "path": "screenshots/dark/next-check-email-bottom.png",
+      "sha256": "5cf76e7043cdeef66362224ca85ffdb4fc97f5e2e035d151132d1188645a7bfe"
+    },
+    {
+      "path": "screenshots/dark/next-check-email.png",
+      "sha256": "fa346a26d9c43624a9029e999a6defccca035cf43f8e2c6429132ffea3372f51"
+    },
+    {
+      "path": "screenshots/dark/next-delete-account.png",
+      "sha256": "d93d6f54f4bd820d850d65c55f5bffbe9a8863ed743a81cda91eaf6d8e087c4e"
+    },
+    {
+      "path": "screenshots/dark/next-dog-profile-bottom.png",
+      "sha256": "cd7b66f2ae0676d1b32dc1c99f4ed9f5de3aa5e7ad77523aa73fb7d91a791d58"
+    },
+    {
+      "path": "screenshots/dark/next-dog-profile.png",
+      "sha256": "4c7b2b7ba89309b97507e12be184801931d0fba50c1005d7f64f58cc15292ca8"
+    },
+    {
+      "path": "screenshots/dark/next-dog.png",
+      "sha256": "431e11a1ef7c45cdca71a8f328982a5dcb047c892a8d97fca1556275abcdc4ca"
+    },
+    {
+      "path": "screenshots/dark/next-email-bottom.png",
+      "sha256": "f62b26dc5587fca66679f09467b25124ff117bed40a99d3876daa3bf5aaefa46"
+    },
+    {
+      "path": "screenshots/dark/next-email-expired.png",
+      "sha256": "d11ddb5897b80534af7773c182f5ff752429101444b08efb77b725fb07944a96"
+    },
+    {
+      "path": "screenshots/dark/next-email.png",
+      "sha256": "54a941358c8ffff9aee450957f0d47c6f382b04c25dbf28fbfff827d63c5315b"
+    },
+    {
+      "path": "screenshots/dark/next-ended.png",
+      "sha256": "d1ead05f009a44aebbcaa8300c3775232881a6b7c88a73143e70a6289be8630f"
+    },
+    {
+      "path": "screenshots/dark/next-experience.png",
+      "sha256": "43464aec3173cae5b780cf5654b3d1b5afc09b72fc6352b405fe372ff28c5578"
+    },
+    {
+      "path": "screenshots/dark/next-focus.png",
+      "sha256": "95f2f7ea10f3430cd229624ef2ac74134d208b71092a6442ec604f9df11a7b45"
+    },
+    {
+      "path": "screenshots/dark/next-goals.png",
+      "sha256": "4fb17d5870f12873f12e4b3284452476afed5b2e478f69b99b6e56aaf9b1c2b0"
+    },
+    {
+      "path": "screenshots/dark/next-home-bottom.png",
+      "sha256": "ef32cd301caa69582d0f9952b441e6604ab795dd7ea6fe12d0720ab1f4cbd12c"
+    },
+    {
+      "path": "screenshots/dark/next-home-empty-bottom.png",
+      "sha256": "094f838dee8fa4b5eacc5538db84eb3b66ccdea71b1826657ca6a48bc83f34f4"
+    },
+    {
+      "path": "screenshots/dark/next-home-empty.png",
+      "sha256": "0118a892f9ee080d5b77ebc696da133ceb59a4fee4dee1e2b5ea4f6af3239ee8"
+    },
+    {
+      "path": "screenshots/dark/next-home-premium-bottom.png",
+      "sha256": "742a1d56da9a6ce8408ed00480d8b9380a0287a8d02fd67062de1a79e1f30305"
+    },
+    {
+      "path": "screenshots/dark/next-home-premium.png",
+      "sha256": "3f917c3f9d7b06e9d2e3c059f80e500db905ccaa6cf0b4157a779b55e6acf7fa"
+    },
+    {
+      "path": "screenshots/dark/next-home.png",
+      "sha256": "128ca542f7b8f5b1e309679ee98bab74e0b6396649b00d28eb509b9ffe5df1f1"
+    },
+    {
+      "path": "screenshots/dark/next-login-bottom.png",
+      "sha256": "070917e7f07bbc58421789721d366265918b13daef9b197ee23fb278ced58e0b"
+    },
+    {
+      "path": "screenshots/dark/next-login.png",
+      "sha256": "35fe178d56d0731ea052660c45cf89b028a1dd730d5c51277df07773188698da"
+    },
+    {
+      "path": "screenshots/dark/next-manage-plan.png",
+      "sha256": "2e6a7b267687287d83fc09571d1c7412f05b18aaa7967864de7f6713d95142f2"
+    },
+    {
+      "path": "screenshots/dark/next-memory-caption-bottom.png",
+      "sha256": "cb78006f4159021c61195c046b1f0c94e40a913e72bffb61ac5312de69639b23"
+    },
+    {
+      "path": "screenshots/dark/next-memory-caption.png",
+      "sha256": "e276d5ab7894ae001d4bea9fadf82101704f786d16843c59316a8a38626e59b0"
+    },
+    {
+      "path": "screenshots/dark/next-opening.png",
+      "sha256": "5f4fe2eb2445ad57ce1131be59082042371eeb4ff1c6dbca2bd03be1e7daa85e"
+    },
+    {
+      "path": "screenshots/dark/next-paywall-bottom.png",
+      "sha256": "e51feb44e3c7c8f6c8c326b542d390c8ab31d718bf763784fc1a7c343fee4524"
+    },
+    {
+      "path": "screenshots/dark/next-paywall.png",
+      "sha256": "bc07594ddb1c8c08b2f2f89c70d383f958a9e0a84a63d149476266e6e6c7311d"
+    },
+    {
+      "path": "screenshots/dark/next-permissions-bottom.png",
+      "sha256": "0c278b6b6142d5f5cbbead3b49f918e47c931cb139f60545b56b089f99253a1e"
+    },
+    {
+      "path": "screenshots/dark/next-permissions.png",
+      "sha256": "21d2518fb421240fc5b28756e79ad253acf53398a94f02eab462f8fb4c4f4827"
+    },
+    {
+      "path": "screenshots/dark/next-plan-bottom.png",
+      "sha256": "f7c6d8612f6803b1c91604e42fb5a6e6103b8e0480ba7ca8bc62786ab1255ee1"
+    },
+    {
+      "path": "screenshots/dark/next-plan.png",
+      "sha256": "cbfdb2d3f7db9155cb1a542ccbc2ec3a7b83582c8b62c5b39ac51a7eb7989eb6"
+    },
+    {
+      "path": "screenshots/dark/next-practice-bottom.png",
+      "sha256": "2bba3cba0f33fb46127e9fda8914981a37c48810f69ceb343c99795301614d19"
+    },
+    {
+      "path": "screenshots/dark/next-practice.png",
+      "sha256": "7f58a3f409cd225673cbcb570115e5315d5f5d99c5ff6e9ccb0a239cfc6318cd"
+    },
+    {
+      "path": "screenshots/dark/next-premium-ready-bottom.png",
+      "sha256": "bc4a8fc8c1ab34d9610d39d2180e289a1f42406236e0818817294c35837ed71c"
+    },
+    {
+      "path": "screenshots/dark/next-premium-ready.png",
+      "sha256": "d161511a0bcb7bbbcb03ca775ecac440d515880c0f0ece015ae47b26a9901481"
+    },
+    {
+      "path": "screenshots/dark/next-ready-bottom.png",
+      "sha256": "2e19dbf66d9fbab75476701a8067c35b31975b1af16b0bd0432c58438f7408f0"
+    },
+    {
+      "path": "screenshots/dark/next-ready.png",
+      "sha256": "c0130285df3eb555e4b53e9887db70f04c4cdb2a898f547aa59bfb5fb3bdb84f"
+    },
+    {
+      "path": "screenshots/dark/next-reminder.png",
+      "sha256": "54b1fd620a3e8408ddce7b53956f58d5af60b746182e8dd70d8f0740858053f1"
+    },
+    {
+      "path": "screenshots/dark/next-restore.png",
+      "sha256": "af3e700e356e493a448564f7562bcae56364922f6d9c232bb0c05256a2709737"
+    },
+    {
+      "path": "screenshots/dark/next-rhythm.png",
+      "sha256": "74a9fe0a687a29b487bf2e6d2a4d3d04ebee044a0de03ec0de2dbc4d8a8647f0"
+    },
+    {
+      "path": "screenshots/dark/next-stage.png",
+      "sha256": "aeb2b693071d5bfb94733f6b8657df5ea99066ecbd45484f5dad1f570ff9a928"
+    },
+    {
+      "path": "screenshots/dark/next-store-manage-bottom.png",
+      "sha256": "1d9b66ebbebb3cad5fdabeb5d5a942019eaa8b36e86446ae66004008dee8fd99"
+    },
+    {
+      "path": "screenshots/dark/next-store-manage.png",
+      "sha256": "ed4a6f59c18c23ba5ff0b0651da7eb7cc5b69158f9612d9bdff9bba59baa5fe2"
+    },
+    {
+      "path": "screenshots/dark/next-thread-readonly.png",
+      "sha256": "e08c8d7235026ebecb7ce72625322430c5914825b45f87e08d8a2435e7bb562d"
+    },
+    {
+      "path": "screenshots/dark/next-threads.png",
+      "sha256": "5ddc2e46aab4d0da26b879d9532858fda0b14319399b8402d9b2f84136b6bc57"
+    },
+    {
+      "path": "screenshots/dark/next-trial-bottom.png",
+      "sha256": "62fc5b95189e3912c80bbb66a3aa9f02cc99fc93ee2a184ab33aa1d0014836dc"
+    },
+    {
+      "path": "screenshots/dark/next-trial.png",
+      "sha256": "c6a5a4c28e46afec4be332d717805901ba33ca6ddf1cdbbe77b8a4100c32374c"
+    },
+    {
+      "path": "screenshots/dark/next-vet-questions-bottom.png",
+      "sha256": "185b83b8929b9cd81552d41be14f9997e750108f507fac17438036ffdfc56b04"
+    },
+    {
+      "path": "screenshots/dark/next-vet-questions.png",
+      "sha256": "b5d0cf210e55ff707703e6dff0e8c9f7248363f26cd91db8da861165b2f67a68"
+    },
+    {
+      "path": "screenshots/dark/next-weekly-recap-bottom.png",
+      "sha256": "230cb6beb9d7a4f47965f47de150b5f3c82fb3783fd936d4551f16ba4d0af0d8"
+    },
+    {
+      "path": "screenshots/dark/next-weekly-recap.png",
+      "sha256": "10b021e65646f09e2b99fe99a71c6e8206ad8a72b79732ee2fa4fdb97434b6be"
+    },
+    {
+      "path": "screenshots/large-compact/next-account-settings-bottom.png",
+      "sha256": "0b4d94bded6571b3cd21997124250049b20f215b811cf4b53dc2855036ced31d"
+    },
+    {
+      "path": "screenshots/large-compact/next-account-settings.png",
+      "sha256": "e9c4cc11f7817886435016ad5ef900fd7a4bbaa0dcccd3637da6f65a02caad3f"
+    },
+    {
+      "path": "screenshots/large-compact/next-ai-demo-bottom.png",
+      "sha256": "6f8aade04584501ac5bc5e542b315af1a88a7d0dc71b0de3a338d54969abeaf9"
+    },
+    {
+      "path": "screenshots/large-compact/next-ai-demo.png",
+      "sha256": "4ab1dc2b3690e4b03200a1f5429f2b8736c525a46edab66c002c9caab8bcdf60"
+    },
+    {
+      "path": "screenshots/large-compact/next-ai-gate-bottom.png",
+      "sha256": "b3a9cbee0af34223986e3effbd45299b56774bfdc37245687c71c9e792067ac7"
+    },
+    {
+      "path": "screenshots/large-compact/next-ai-gate.png",
+      "sha256": "3acfa29790d9f2c718272804d5d65f8a41ddac55b554139520d5ac53a5fb5950"
+    },
+    {
+      "path": "screenshots/large-compact/next-ai-privacy-bottom.png",
+      "sha256": "266fe49aec70c20888d6e412bc0e271ed20181862d425e38931d00167c7e3ae7"
+    },
+    {
+      "path": "screenshots/large-compact/next-ai-privacy.png",
+      "sha256": "987f40e52a400d90be6b4baa8cc2b724b5f390104091d42389866be616dac9cd"
+    },
+    {
+      "path": "screenshots/large-compact/next-auth-offline-bottom.png",
+      "sha256": "ca5def76e362353655d29a9dd42aac3d580cab5a57b96502eb5d71644dfd8ad6"
+    },
+    {
+      "path": "screenshots/large-compact/next-auth-offline.png",
+      "sha256": "ceeaf2afa33fe742c62175bee0915523bcb58154f2d9e35f6dce0cc987299746"
+    },
+    {
+      "path": "screenshots/large-compact/next-breed-bottom.png",
+      "sha256": "c75718125fda98d0d7f82ec38f80508ebb55f403bd0cf8abe8a90a0d2e97e91c"
+    },
+    {
+      "path": "screenshots/large-compact/next-breed.png",
+      "sha256": "b116a3d9a655bab08fd7cdedf389b6056987cded57fbf9ce98402d340e6ce63e"
+    },
+    {
+      "path": "screenshots/large-compact/next-cancel-bottom.png",
+      "sha256": "916ea8318c1c83c5082c916facdc057be7f70bcaa8f0b2af88696fc105655622"
+    },
+    {
+      "path": "screenshots/large-compact/next-cancel.png",
+      "sha256": "ed4b6bda582e034638ca55e16776ec1411022aac6b490a8a3f7a55596dffd491"
+    },
+    {
+      "path": "screenshots/large-compact/next-chat-answer-bottom.png",
+      "sha256": "0bfb1a380661b610ec646ee63b2a2013d305c70019bf4cfbcc54081718bd3372"
+    },
+    {
+      "path": "screenshots/large-compact/next-chat-answer.png",
+      "sha256": "0bfb1a380661b610ec646ee63b2a2013d305c70019bf4cfbcc54081718bd3372"
+    },
+    {
+      "path": "screenshots/large-compact/next-chat-bottom.png",
+      "sha256": "217c6a4c430da14b2eb867fec5021cf5318bde49e454a556ef2e440be8f4bed4"
+    },
+    {
+      "path": "screenshots/large-compact/next-chat-empty-bottom.png",
+      "sha256": "c670445692aba8e541a7ec06c7b7451e98b37cb7a58ca8a31f57b035101157c1"
+    },
+    {
+      "path": "screenshots/large-compact/next-chat-empty.png",
+      "sha256": "c670445692aba8e541a7ec06c7b7451e98b37cb7a58ca8a31f57b035101157c1"
+    },
+    {
+      "path": "screenshots/large-compact/next-chat-error-bottom.png",
+      "sha256": "c2b40baa8850b3f15ce3825a95ccd477cfd11c48be83cfbaedb3fff7908760e0"
+    },
+    {
+      "path": "screenshots/large-compact/next-chat-error.png",
+      "sha256": "c2b40baa8850b3f15ce3825a95ccd477cfd11c48be83cfbaedb3fff7908760e0"
+    },
+    {
+      "path": "screenshots/large-compact/next-chat-limit-bottom.png",
+      "sha256": "8529b7417e8f09748845ff9c7470dc231405301af02f07c4ea483d5dfe0a9810"
+    },
+    {
+      "path": "screenshots/large-compact/next-chat-limit.png",
+      "sha256": "ba543a54cfe1eab697bf6da08c085d8e32d64ab554dec8bdd3615e6f8a97ea67"
+    },
+    {
+      "path": "screenshots/large-compact/next-chat-offline-bottom.png",
+      "sha256": "d27363243df6dcc2ba79b2edc30334097540714ede7feded0e144b6e4efbd16f"
+    },
+    {
+      "path": "screenshots/large-compact/next-chat-offline.png",
+      "sha256": "d27363243df6dcc2ba79b2edc30334097540714ede7feded0e144b6e4efbd16f"
+    },
+    {
+      "path": "screenshots/large-compact/next-chat.png",
+      "sha256": "217c6a4c430da14b2eb867fec5021cf5318bde49e454a556ef2e440be8f4bed4"
+    },
+    {
+      "path": "screenshots/large-compact/next-check-email-bottom.png",
+      "sha256": "7104fc5dee80f7bf97728cc13e7cb5d334dc918aafb2cde1da4dc97751c83a8c"
+    },
+    {
+      "path": "screenshots/large-compact/next-check-email.png",
+      "sha256": "e6eda0eb4806c262e1a1e7c94f50fde5e545298daa526b2db165888ddb4265cd"
+    },
+    {
+      "path": "screenshots/large-compact/next-delete-account-bottom.png",
+      "sha256": "409b62140ecb2d78c84fca162355b667bd0d82d7cadd3ec93004e92615eba9fe"
+    },
+    {
+      "path": "screenshots/large-compact/next-delete-account.png",
+      "sha256": "40682214308d5ad9830246da27eade436e2ae192d15c158474fcb99c21b5522d"
+    },
+    {
+      "path": "screenshots/large-compact/next-dog-bottom.png",
+      "sha256": "6d44d27255c7a2dcb2e56c7c7eeb94cf23753da11cf8af17c230c67291ec882d"
+    },
+    {
+      "path": "screenshots/large-compact/next-dog-profile-bottom.png",
+      "sha256": "ab024c64ed4d26014abbf6297565de258f13a72d6888cd633adbe1b7ca17eca3"
+    },
+    {
+      "path": "screenshots/large-compact/next-dog-profile.png",
+      "sha256": "810886342e11f7fc76cc6f2f9f6d4450b7ceadaa5dff3d974620e20b4723bf5a"
+    },
+    {
+      "path": "screenshots/large-compact/next-dog.png",
+      "sha256": "b557dacc5671c641d2f015f2752836072ea8f590224da22a4afdcca34230e3cb"
+    },
+    {
+      "path": "screenshots/large-compact/next-email-bottom.png",
+      "sha256": "eaca8444b904a71c0887597a0afd46a6cae5d38a28cb4ea6ee76582021c2d470"
+    },
+    {
+      "path": "screenshots/large-compact/next-email-expired.png",
+      "sha256": "50e475cb7bb8e4c76ddaa244c8e7b44bcb442335b9bca4800ec5f57b84c14b8d"
+    },
+    {
+      "path": "screenshots/large-compact/next-email.png",
+      "sha256": "01ab8924590210a417794dbe7ada819d64a88bfd96a787854e2490a2c10a19ae"
+    },
+    {
+      "path": "screenshots/large-compact/next-ended-bottom.png",
+      "sha256": "14d38797f2d505291e0bfe77fbe4dcb84aa3b87bb26a0a6ea7d3c7742a38910f"
+    },
+    {
+      "path": "screenshots/large-compact/next-ended.png",
+      "sha256": "eadd217b0ef8bfb5387ad1f9567dde1922548adc5e758fe040e5aa9050720305"
+    },
+    {
+      "path": "screenshots/large-compact/next-experience-bottom.png",
+      "sha256": "6a68757b6b3985112c9927f70b898c4210bfa0a9142cca18fc182255e6fb6dbb"
+    },
+    {
+      "path": "screenshots/large-compact/next-experience.png",
+      "sha256": "9b0296103a3872d3963cdc01b78e695e9726e3ea8350474459189de0f081d9e6"
+    },
+    {
+      "path": "screenshots/large-compact/next-focus-bottom.png",
+      "sha256": "b8ce527ca24026a8d1081902a19bf479b00f257ba0729404e1635f1212fc7b09"
+    },
+    {
+      "path": "screenshots/large-compact/next-focus.png",
+      "sha256": "beb916e8c9c4f62e9c961ff20113361f707d4cc57ef3d8a80b492d051a9faa5d"
+    },
+    {
+      "path": "screenshots/large-compact/next-goals-bottom.png",
+      "sha256": "07553bee81cd0d7863b9dece9f46148abc85cada10826f0f4c4a3592cef78fcd"
+    },
+    {
+      "path": "screenshots/large-compact/next-goals.png",
+      "sha256": "cdc9100baa63286546ba6fb7739299ad2e0261890a00b469a0970033cfaf313a"
+    },
+    {
+      "path": "screenshots/large-compact/next-home-bottom.png",
+      "sha256": "7fb58be95aa2f07618f38bbec5489db27ba289dddb00e62f1933793c8e3c7cfa"
+    },
+    {
+      "path": "screenshots/large-compact/next-home-empty-bottom.png",
+      "sha256": "85972b58219cded3b6cfdec538a64f92e96d04465770d9c2c513b6623caad72f"
+    },
+    {
+      "path": "screenshots/large-compact/next-home-empty.png",
+      "sha256": "6c2b35fa0c287dda63de5e7e2f78e257946d18de6d4605059e763ffd41186707"
+    },
+    {
+      "path": "screenshots/large-compact/next-home-premium-bottom.png",
+      "sha256": "70d9443c76af51b7cd79f1272ebb99e5983210b0be99baa7ac9e30b73a272b91"
+    },
+    {
+      "path": "screenshots/large-compact/next-home-premium.png",
+      "sha256": "d5f176df92bd1f6991ce9448492565b3f3ecc3f49238ccdd40ca9d6e5929923c"
+    },
+    {
+      "path": "screenshots/large-compact/next-home.png",
+      "sha256": "0b1431f4ab1b29e308ce3051e330dd5bfcee156375dce1eac68559e725fda182"
+    },
+    {
+      "path": "screenshots/large-compact/next-login-bottom.png",
+      "sha256": "409a7372f2c555d5a20883a48d4cf9184babe0da156e48f0330368940c2d4ecc"
+    },
+    {
+      "path": "screenshots/large-compact/next-login.png",
+      "sha256": "9301cddde3710ec5065d582d188a14f5b69f03577c91a808cde92c6e689c0c1a"
+    },
+    {
+      "path": "screenshots/large-compact/next-manage-plan-bottom.png",
+      "sha256": "7340476f060a6fd8dae0aae6077febfe904302ec8e309accd966f68b68bcad92"
+    },
+    {
+      "path": "screenshots/large-compact/next-manage-plan.png",
+      "sha256": "9389741d85398cc4ce9b3cb5b47e5571f562423a841619e305780d61cd9a3a1e"
+    },
+    {
+      "path": "screenshots/large-compact/next-memory-caption-bottom.png",
+      "sha256": "2b97acbdc078bbf42e53303a68f1e52b9ef231389320ac472b6c63a49225ab37"
+    },
+    {
+      "path": "screenshots/large-compact/next-memory-caption.png",
+      "sha256": "d9777a8b8e5629ae02791e867b4b8a72f439151c83a231c9cbcf25f8b198b33c"
+    },
+    {
+      "path": "screenshots/large-compact/next-opening-bottom.png",
+      "sha256": "79349349384b3db073a9d33281f50629fcab7c3bbadba857222147f634d6cd7e"
+    },
+    {
+      "path": "screenshots/large-compact/next-opening.png",
+      "sha256": "a5493cf1fcbf80435db308497873edf9984c60cef094c3872426574486f9b8dd"
+    },
+    {
+      "path": "screenshots/large-compact/next-paywall-bottom.png",
+      "sha256": "ca61d5fa46f7114c9fc26b001f80e256e4c8c556a5cf87264930f1547ad6adf8"
+    },
+    {
+      "path": "screenshots/large-compact/next-paywall.png",
+      "sha256": "9337d132be705bf7d6942a96aeb91cfdec65ce310cfbe0526566e0f655599e1f"
+    },
+    {
+      "path": "screenshots/large-compact/next-permissions-bottom.png",
+      "sha256": "0197e481a5ec05208616b5cf239a1df20d579368027c2016b1c537f671293735"
+    },
+    {
+      "path": "screenshots/large-compact/next-permissions.png",
+      "sha256": "1f7f4362ed263448e21a9e7a6c0d625d5df37ff73cae4f9d857125c31a5615eb"
+    },
+    {
+      "path": "screenshots/large-compact/next-plan-bottom.png",
+      "sha256": "22aacc0f86e52072084747319d9512e4416b127ee0ee040bd0cb42768feb55ee"
+    },
+    {
+      "path": "screenshots/large-compact/next-plan.png",
+      "sha256": "3363b391e18f85b8169779ae4cb987a8b819a94d9a4d246c501473031e17af3c"
+    },
+    {
+      "path": "screenshots/large-compact/next-practice-bottom.png",
+      "sha256": "218b39f6df23d52265ba80f87fd143d4fc9ed0d8c224791410894f6fcd998baf"
+    },
+    {
+      "path": "screenshots/large-compact/next-practice.png",
+      "sha256": "0a89a202277fbc92df31e4012642412b272a22edfafe673ad288544be53b3528"
+    },
+    {
+      "path": "screenshots/large-compact/next-premium-ready-bottom.png",
+      "sha256": "169b373458ec9becff87aefda5cf781b8e53b1d62dc625d6d723ff0a811d0698"
+    },
+    {
+      "path": "screenshots/large-compact/next-premium-ready.png",
+      "sha256": "a362f0e505335b9a675c132699002fec16610e2907346f6c03db0e6e2a30fe01"
+    },
+    {
+      "path": "screenshots/large-compact/next-ready-bottom.png",
+      "sha256": "405bb2413228822dcaef4dabc3aa796e25b750c11a57a5cdbb0a391d60d1e030"
+    },
+    {
+      "path": "screenshots/large-compact/next-ready.png",
+      "sha256": "23aef6d5a1502f555ada38216184166bc96a97b1598fc8fcf64a86427ee5ace1"
+    },
+    {
+      "path": "screenshots/large-compact/next-reminder-bottom.png",
+      "sha256": "d92471f3f0b5cd72b1761839277e6944f2e7f7f41cf64a6d8560582534df15d8"
+    },
+    {
+      "path": "screenshots/large-compact/next-reminder.png",
+      "sha256": "c75b15d1bf51c460ed0dc931474daad1a7a137d7368025b0e15d965517e6d12f"
+    },
+    {
+      "path": "screenshots/large-compact/next-restore-bottom.png",
+      "sha256": "26393ec70a7f12dec673dddfd38a26e275ec4adcce0e1d2f473ab13afbaba637"
+    },
+    {
+      "path": "screenshots/large-compact/next-restore.png",
+      "sha256": "0ea57f117d9a191ac2f52b56013b3500f3a491d542c3ff7d307936233e2924e4"
+    },
+    {
+      "path": "screenshots/large-compact/next-rhythm-bottom.png",
+      "sha256": "dd9e03e266497eaafdcb271c994a1d5bb4cb3764ab2149a6816d362c2f011690"
+    },
+    {
+      "path": "screenshots/large-compact/next-rhythm.png",
+      "sha256": "69eaa2a791d71bdbba4d31df504ce3d5c7e6f18cf19d5644e3ea6879b97e0c7c"
+    },
+    {
+      "path": "screenshots/large-compact/next-stage-bottom.png",
+      "sha256": "978e1d286b2412800b4d732b4532360f928b8a9a950016edd19d8fa8e52d8203"
+    },
+    {
+      "path": "screenshots/large-compact/next-stage.png",
+      "sha256": "1c74a5e7aefbb0b90f4fecb7cb1b2f062a7abeee63f2e41fd6b83ae275e6ca6c"
+    },
+    {
+      "path": "screenshots/large-compact/next-store-manage-bottom.png",
+      "sha256": "2a0581c452b40b5d9170d508e32caeb254b37aadb16ec760dfe7c415deccd628"
+    },
+    {
+      "path": "screenshots/large-compact/next-store-manage.png",
+      "sha256": "c1f71130a2585cddb72449e436c01ae78c5bda7c41a96d465223e28f1a89bd12"
+    },
+    {
+      "path": "screenshots/large-compact/next-thread-readonly.png",
+      "sha256": "dd6653300a45fd5d3e5f08f4d546f4bf2e954ff85be557f1310c3364942a534a"
+    },
+    {
+      "path": "screenshots/large-compact/next-threads-bottom.png",
+      "sha256": "d1cf70b316af63a5140efacd2b2e28f246dd888a4f08372527a3d312ba43e7e2"
+    },
+    {
+      "path": "screenshots/large-compact/next-threads.png",
+      "sha256": "de9900e3d40b2a5548d8228bfaf55821d3d8336dd075cfbf3c7f5db8503e4adb"
+    },
+    {
+      "path": "screenshots/large-compact/next-trial-bottom.png",
+      "sha256": "29ecd10fbd07217cfd7cdb0cdf82e708aece25c5eb819ab24823ae6b0e4e52a4"
+    },
+    {
+      "path": "screenshots/large-compact/next-trial.png",
+      "sha256": "890b38e4a03851590f4e614a5baa45211698ee8ab4a8c5613413b2cceb4a70b3"
+    },
+    {
+      "path": "screenshots/large-compact/next-vet-questions-bottom.png",
+      "sha256": "4633c5be9009e7d3218c7f1fd8935d164bf20fe611147007b06e816b421f502f"
+    },
+    {
+      "path": "screenshots/large-compact/next-vet-questions.png",
+      "sha256": "6a7113e58eff05844358c29b794f3349175a2150f3d3ae40776c5225603ee5eb"
+    },
+    {
+      "path": "screenshots/large-compact/next-weekly-recap-bottom.png",
+      "sha256": "59f64c846f27423585405b1471ef4d2d17cfde93f32e1fde3b57e388f1385a6c"
+    },
+    {
+      "path": "screenshots/large-compact/next-weekly-recap.png",
+      "sha256": "db55c245509add3393e0690b210b13aef36180b3d05bbfb747e5ac83f210f293"
+    },
+    {
+      "path": "screenshots/light/next-account-settings-bottom.png",
+      "sha256": "06d0deecdd47da92caf08827d9c2b2dc73f232d0648c53404ed199e5f9f4a6c3"
+    },
+    {
+      "path": "screenshots/light/next-account-settings.png",
+      "sha256": "bc58a5286e16314c152b038ad3c795826f576e5a2ce0109c6f29704089a987b9"
+    },
+    {
+      "path": "screenshots/light/next-ai-demo.png",
+      "sha256": "f3cda6f0a0cb2e2c8e3a0137143e1dc2245dfc21dabb055a2c1cf05a07ec96a1"
+    },
+    {
+      "path": "screenshots/light/next-ai-gate.png",
+      "sha256": "27187d3dc6731b65bb38d4e37fd0b95bb14267764b418c65a478507141755a48"
+    },
+    {
+      "path": "screenshots/light/next-ai-privacy-bottom.png",
+      "sha256": "661dcf3fc5a32f46ba2ce2ae4256af392261c8a3b95af7a12fa5514591795c5f"
+    },
+    {
+      "path": "screenshots/light/next-ai-privacy.png",
+      "sha256": "ff857133f6e58b83b0956866c89eab7b11c0e6bd975efa4791d51a216a614550"
+    },
+    {
+      "path": "screenshots/light/next-auth-offline.png",
+      "sha256": "5de5c5e778431d20058c8edfbd5f391f830d48a9558521351153446c941f6a1a"
+    },
+    {
+      "path": "screenshots/light/next-breed.png",
+      "sha256": "af0c270b8e37b2543eda0d6a842c16bcef42fbf255442995542b27e5d6ff34e3"
+    },
+    {
+      "path": "screenshots/light/next-cancel-bottom.png",
+      "sha256": "10906fb3ed611c6d07d9f5ce76263f63284113fee1a5f85ddc267467be076d17"
+    },
+    {
+      "path": "screenshots/light/next-cancel.png",
+      "sha256": "a4d7ed305f43220b93fb3ea23dee824273588e8a110936f52d6cb016e998b986"
+    },
+    {
+      "path": "screenshots/light/next-chat-answer.png",
+      "sha256": "46baf2f5951d02137816f06020e4e8bf637352d2de719e9a45ac4e7b8cb3c99f"
+    },
+    {
+      "path": "screenshots/light/next-chat-empty.png",
+      "sha256": "2a11afbeb64aefeee1c5727f60fd125c4d301e015db869ed355e81bd8027dad4"
+    },
+    {
+      "path": "screenshots/light/next-chat-error.png",
+      "sha256": "2187e2d7e52f8c7ae4c2a85498200439354cc9f2141d42e94096794bf4f8cc66"
+    },
+    {
+      "path": "screenshots/light/next-chat-limit-bottom.png",
+      "sha256": "a647b059c001009d5e34c2fa11142df90948fa8be309c136a18b6dc6086ab3ab"
+    },
+    {
+      "path": "screenshots/light/next-chat-limit.png",
+      "sha256": "7b63afd38b134ee8d65e67ecb9f4c5c4c0fa1014bc3d53d05ae550396714d181"
+    },
+    {
+      "path": "screenshots/light/next-chat-offline.png",
+      "sha256": "a212c319f35a0ba10d34e866d4409b8ba40dc5d4f2560d859a6012d891cd8942"
+    },
+    {
+      "path": "screenshots/light/next-chat.png",
+      "sha256": "98b4841f8d75614b53614bf4a34501fc3d28444c6bdc77cc51fa2d97feb65216"
+    },
+    {
+      "path": "screenshots/light/next-check-email-bottom.png",
+      "sha256": "7eace5c32b42a474dfb4ea008508231e3bafcadee2ddfbbc91cb91a6d444e323"
+    },
+    {
+      "path": "screenshots/light/next-check-email.png",
+      "sha256": "12c8023bbda54654617a8dfd40a49ec62a13a0ecf7456c7a8bfe631d2b96eb92"
+    },
+    {
+      "path": "screenshots/light/next-delete-account.png",
+      "sha256": "8924d409912237eb4df548c49070a8cdcca5c83c4d54d42763bbfe47878c701b"
+    },
+    {
+      "path": "screenshots/light/next-dog-profile-bottom.png",
+      "sha256": "d020c833b3fae2ed80eb28d95d0776705608de95c390afd700462c7139b5de65"
+    },
+    {
+      "path": "screenshots/light/next-dog-profile.png",
+      "sha256": "e77466ffa4c64eb3dbc5a306432dae29da39c3ca8bb6f5e97ae3449c4ab459b0"
+    },
+    {
+      "path": "screenshots/light/next-dog.png",
+      "sha256": "3599f835a4b9299f5120cfa1d5aec9d1ed8545a426899af8c0cee42826a9f9aa"
+    },
+    {
+      "path": "screenshots/light/next-email-bottom.png",
+      "sha256": "38d63e31543477139de39ab9081e654e688ac853b84506848db61a6c8e373be4"
+    },
+    {
+      "path": "screenshots/light/next-email-expired.png",
+      "sha256": "d18a72127c3f6b754620dc514e7d1744df15b0469f324871ae690b3d7b851e11"
+    },
+    {
+      "path": "screenshots/light/next-email.png",
+      "sha256": "eb3b43fee3e6a3a468b4a6af8c094c5dceb2e7d79b30c94831cf24bb63632083"
+    },
+    {
+      "path": "screenshots/light/next-ended.png",
+      "sha256": "777aa8fd7bfb3a2b7ff5eaecb0ad74c698379d6242ecc06a504150e48784a5ce"
+    },
+    {
+      "path": "screenshots/light/next-experience.png",
+      "sha256": "c79dca455a3d22712c4848ffd3eb2dd4011b35be7974ad3c80ebacd13b9f84da"
+    },
+    {
+      "path": "screenshots/light/next-focus.png",
+      "sha256": "ffe4c9ca7142bd50df679b6c5886cf8144f07da06397ddf6e91faa3c59ba264a"
+    },
+    {
+      "path": "screenshots/light/next-goals.png",
+      "sha256": "18e83089239e0fe08414101117114860310ccb49cf0d7ac38a6a8b5132ddf766"
+    },
+    {
+      "path": "screenshots/light/next-home-bottom.png",
+      "sha256": "ed9c9bcab77ff07db341bb3be7ebf8dbf676b078750c789c806e2600c725ee84"
+    },
+    {
+      "path": "screenshots/light/next-home-empty-bottom.png",
+      "sha256": "ab207bc775f6ec27730836238468042750c2cc08f9b457f09437500bb461a9d0"
+    },
+    {
+      "path": "screenshots/light/next-home-empty.png",
+      "sha256": "a17b81b70972fc74c50a1fc738dfce386ba0040cfe43eff2d78c05a51358ba1d"
+    },
+    {
+      "path": "screenshots/light/next-home-premium-bottom.png",
+      "sha256": "0f326995f163665e0845a6cedc7e1b6fe65875820c69f9cc32b432338c28716d"
+    },
+    {
+      "path": "screenshots/light/next-home-premium.png",
+      "sha256": "535ae3acfbec8407c6abe365a89fc302c1997eca84b433cc2833fdf44800e2cc"
+    },
+    {
+      "path": "screenshots/light/next-home.png",
+      "sha256": "7cc5387d30d270be257e835a60790feffe1783bec229edaf9a2b4e4a209f2423"
+    },
+    {
+      "path": "screenshots/light/next-login-bottom.png",
+      "sha256": "affa33172201cd21f4619e3dd7f01a9de1fa06a90fcf37aeec31457f81ae3daa"
+    },
+    {
+      "path": "screenshots/light/next-login.png",
+      "sha256": "dd87975b8c3011af36c1c565ba8879aeb1933c3a5b02db482734994d87a4d6ec"
+    },
+    {
+      "path": "screenshots/light/next-manage-plan.png",
+      "sha256": "1c3534833bcd96c84ba82f3af28f92eebe26fd4091281a67259c803d2e799953"
+    },
+    {
+      "path": "screenshots/light/next-memory-caption-bottom.png",
+      "sha256": "7c11682ce9cdb46e2f6eb1cc5bab352d292f8522bc4c6f58c4fa2f15b323d2cb"
+    },
+    {
+      "path": "screenshots/light/next-memory-caption.png",
+      "sha256": "466827706338139b36783f1b4dae33df42c81970be473f1146308e7db23e6830"
+    },
+    {
+      "path": "screenshots/light/next-opening.png",
+      "sha256": "bbdf1764c94c2f74fec5bbbfdd243d7d92389788dd73ad4390ef869f7ac1923c"
+    },
+    {
+      "path": "screenshots/light/next-paywall-bottom.png",
+      "sha256": "f5ff8af6f2721852d88cedcc9e11e8e10a166adbb3ce068dcad59f372dd7c66f"
+    },
+    {
+      "path": "screenshots/light/next-paywall.png",
+      "sha256": "f175ab201325737c496af53b1d75b7a0c2a12637f23b7abf0f8d67f36aba5804"
+    },
+    {
+      "path": "screenshots/light/next-permissions-bottom.png",
+      "sha256": "4ba33f23a1cdeed2c5c1df81adc2b4d8c6f1e6cbac4d91b03e454aa60182c3b7"
+    },
+    {
+      "path": "screenshots/light/next-permissions.png",
+      "sha256": "8576739a4328e0d020ef5e9877cc2c217bccc3fa074492cd228878ec7aee6717"
+    },
+    {
+      "path": "screenshots/light/next-plan-bottom.png",
+      "sha256": "7bc9ce343b51f4e98ec1ab7ed9061c880377f03095472f73945a4b3d9eb2f691"
+    },
+    {
+      "path": "screenshots/light/next-plan.png",
+      "sha256": "5c1737405bfc093e36f23b0fa4148110491af4840b600748cd16bc27d018459f"
+    },
+    {
+      "path": "screenshots/light/next-practice-bottom.png",
+      "sha256": "9e026b85944359f5b2a14568f1cfa688db265b0994ebb127675f75714ae3193e"
+    },
+    {
+      "path": "screenshots/light/next-practice.png",
+      "sha256": "b2713ff6643330d1b76a70d21c60ba6b1b9d0d515dd57e6426a057abf5fcb6e1"
+    },
+    {
+      "path": "screenshots/light/next-premium-ready-bottom.png",
+      "sha256": "773e5e48c92dd6c8a10e7e1e3dd630e92cc4b23daeab377aa03ef614c65d5683"
+    },
+    {
+      "path": "screenshots/light/next-premium-ready.png",
+      "sha256": "752cc93ba38c851d933267d8e935b48b5835bb8b3cd86b32b1040704cbd1bc0e"
+    },
+    {
+      "path": "screenshots/light/next-ready-bottom.png",
+      "sha256": "3aa33ed0b30631527fd95c9e9ccedcac6608491e9e9d4b8304d6417ee97769b1"
+    },
+    {
+      "path": "screenshots/light/next-ready.png",
+      "sha256": "a8749a5674db5bb3ed7e788311cef5b2eb5107e60bce20c57d3e234076afb4ba"
+    },
+    {
+      "path": "screenshots/light/next-reminder.png",
+      "sha256": "460ecbe47bb422179598c554a9a9507dcfbd7766da294e5e7404f6b6026d7625"
+    },
+    {
+      "path": "screenshots/light/next-restore.png",
+      "sha256": "a0d0c16aff41c983fa6622b12857a6c94287e83a222b4d36e34d50092e6d3bde"
+    },
+    {
+      "path": "screenshots/light/next-rhythm.png",
+      "sha256": "fa146449586f76ef61374da6e30c9e51bdfdc524fdcdf83e85c5714d382f0fab"
+    },
+    {
+      "path": "screenshots/light/next-stage.png",
+      "sha256": "bd6d68e11373e7cf500cd8553fe56910ac141d8053931e25a1ac460a78826c99"
+    },
+    {
+      "path": "screenshots/light/next-store-manage-bottom.png",
+      "sha256": "de4de240e5f01514b8b403d32d34275ab4ccf63242def433d3703b2859446064"
+    },
+    {
+      "path": "screenshots/light/next-store-manage.png",
+      "sha256": "6386a46168c64c15ad2eb794bdeee4decd9af308217fedafd9ce529176d13eea"
+    },
+    {
+      "path": "screenshots/light/next-thread-readonly.png",
+      "sha256": "048a842964d81916a8ef90f2871d75febbee8f5909cd46d70f9dedf2bed81dd2"
+    },
+    {
+      "path": "screenshots/light/next-threads.png",
+      "sha256": "a508bf72597b36b9f0c8db1a438ee4b8e58812bc685a5f35a9f26b32365ba88c"
+    },
+    {
+      "path": "screenshots/light/next-trial-bottom.png",
+      "sha256": "64cf9f9b63d780cf24c88921241791976d8e519ffefa9456aa44b82efb9e4edc"
+    },
+    {
+      "path": "screenshots/light/next-trial.png",
+      "sha256": "e55751d8644ed956a5dfd43a6fac43e16e0dae6e0a3a94e6fdff34e74a9be8d6"
+    },
+    {
+      "path": "screenshots/light/next-vet-questions-bottom.png",
+      "sha256": "fc8c336e2ce9cbcc7ee22babb6b9ab32b168a93e8ada35010e4c6805eb0b1b5f"
+    },
+    {
+      "path": "screenshots/light/next-vet-questions.png",
+      "sha256": "a5763ed7fd0592816059f6e3d0bbdb87521541fd958a3973104fa669bb58f081"
+    },
+    {
+      "path": "screenshots/light/next-weekly-recap-bottom.png",
+      "sha256": "e33ec6103485f4d848b8ad30b1044d30394ca24c394d707a4e0b4ebe0371bf22"
+    },
+    {
+      "path": "screenshots/light/next-weekly-recap.png",
+      "sha256": "5bdcf0af8bf1c7210d0096c1000a9f82caaf497c3512b06b31437e6140bc2297"
+    },
+    {
+      "path": "screenshots/reduced/next-account-settings-bottom.png",
+      "sha256": "06d0deecdd47da92caf08827d9c2b2dc73f232d0648c53404ed199e5f9f4a6c3"
+    },
+    {
+      "path": "screenshots/reduced/next-account-settings.png",
+      "sha256": "6d5bf84fc09871dc08c8526e403ff982f145372912b31a834afda49f1f541148"
+    },
+    {
+      "path": "screenshots/reduced/next-ai-demo.png",
+      "sha256": "0f8c22b0dc913902ba3339a68e8edd9c430b1fb353102f9f7d151ab2697960f5"
+    },
+    {
+      "path": "screenshots/reduced/next-ai-gate.png",
+      "sha256": "b2a70ce009373b5f66fd3c04fa6153c5a304038b18913e7331e010c58a308f35"
+    },
+    {
+      "path": "screenshots/reduced/next-ai-privacy-bottom.png",
+      "sha256": "661dcf3fc5a32f46ba2ce2ae4256af392261c8a3b95af7a12fa5514591795c5f"
+    },
+    {
+      "path": "screenshots/reduced/next-ai-privacy.png",
+      "sha256": "d017c87950f8178e640607d01fc8b99ad380482007728fad023a483a085ac212"
+    },
+    {
+      "path": "screenshots/reduced/next-auth-offline.png",
+      "sha256": "5de5c5e778431d20058c8edfbd5f391f830d48a9558521351153446c941f6a1a"
+    },
+    {
+      "path": "screenshots/reduced/next-breed.png",
+      "sha256": "4627738e16336d178e2739f56cb7b8f6dfa2ce87a663dc9b8300469651420380"
+    },
+    {
+      "path": "screenshots/reduced/next-cancel-bottom.png",
+      "sha256": "d5dffdf61aeb34dda357796b89e3691b0ab3d4c339dcca0c41b83b987cbe5c7d"
+    },
+    {
+      "path": "screenshots/reduced/next-cancel.png",
+      "sha256": "df8a92e996bc5742272bb5e8186d06ba83f187f2164d7fc64782d78ec07d8a86"
+    },
+    {
+      "path": "screenshots/reduced/next-chat-answer.png",
+      "sha256": "46baf2f5951d02137816f06020e4e8bf637352d2de719e9a45ac4e7b8cb3c99f"
+    },
+    {
+      "path": "screenshots/reduced/next-chat-empty.png",
+      "sha256": "2a11afbeb64aefeee1c5727f60fd125c4d301e015db869ed355e81bd8027dad4"
+    },
+    {
+      "path": "screenshots/reduced/next-chat-error.png",
+      "sha256": "0dfdd148c51ab7c15fd03b945c73c000ac6dfd4b66b6929c1abf28c3e8d868e2"
+    },
+    {
+      "path": "screenshots/reduced/next-chat-limit-bottom.png",
+      "sha256": "a647b059c001009d5e34c2fa11142df90948fa8be309c136a18b6dc6086ab3ab"
+    },
+    {
+      "path": "screenshots/reduced/next-chat-limit.png",
+      "sha256": "7b63afd38b134ee8d65e67ecb9f4c5c4c0fa1014bc3d53d05ae550396714d181"
+    },
+    {
+      "path": "screenshots/reduced/next-chat-offline.png",
+      "sha256": "9c631c5131b9ad705ce7e5670b7e5d83042bde9d33e1a8f4c2f8987e5af1e333"
+    },
+    {
+      "path": "screenshots/reduced/next-chat.png",
+      "sha256": "175173c513299821cb289db40ad212e545d936872c56052428a9251d6bcb3212"
+    },
+    {
+      "path": "screenshots/reduced/next-check-email-bottom.png",
+      "sha256": "7eace5c32b42a474dfb4ea008508231e3bafcadee2ddfbbc91cb91a6d444e323"
+    },
+    {
+      "path": "screenshots/reduced/next-check-email.png",
+      "sha256": "12c8023bbda54654617a8dfd40a49ec62a13a0ecf7456c7a8bfe631d2b96eb92"
+    },
+    {
+      "path": "screenshots/reduced/next-delete-account.png",
+      "sha256": "e5543c365264eb52807f342e1a83e71120bc1a37694f91c588d63a86dd37726a"
+    },
+    {
+      "path": "screenshots/reduced/next-dog-profile-bottom.png",
+      "sha256": "af382e55cb75a487076ebe68e7401414cb7c25c8e3ab175d6ed5326476e25588"
+    },
+    {
+      "path": "screenshots/reduced/next-dog-profile.png",
+      "sha256": "b9b869866ec78036751d10c8dbcd9072f5b512a4dce159d9eab60e83e7a1f15f"
+    },
+    {
+      "path": "screenshots/reduced/next-dog.png",
+      "sha256": "e0aac3d689d344dea63395ae0e136957d629777e67e045668b77a93757000452"
+    },
+    {
+      "path": "screenshots/reduced/next-email-bottom.png",
+      "sha256": "7b38aa35b2dd3176bc822963d2a2c48c341dc3a557c1d2110ec75c58f96d7617"
+    },
+    {
+      "path": "screenshots/reduced/next-email-expired.png",
+      "sha256": "9dad294a2452cd7d821b27ae78325bdea4d61b1924328eb42e6104d3c6f0bcb1"
+    },
+    {
+      "path": "screenshots/reduced/next-email.png",
+      "sha256": "cfe1120f2e17c0b8577a0adeccdd2ec2661a1314993bae5913c1667a4430af93"
+    },
+    {
+      "path": "screenshots/reduced/next-ended.png",
+      "sha256": "492a8a4a3ae8cc5aff9510fc77c8326876733de5b975e90a5876b5260d49bd36"
+    },
+    {
+      "path": "screenshots/reduced/next-experience.png",
+      "sha256": "ef6ee99a779502e8db79c4012fe45bb27b4db45107db0b99f077afeaeb7e69cd"
+    },
+    {
+      "path": "screenshots/reduced/next-focus.png",
+      "sha256": "961fe0b2d3e113b8362833b66053cdff024f0843e6a9d7e478b2a78d6f8326d9"
+    },
+    {
+      "path": "screenshots/reduced/next-goals.png",
+      "sha256": "9041670f0f53b201e99280fe00b529b66e38c322608061a677fe661f2c91dbe5"
+    },
+    {
+      "path": "screenshots/reduced/next-home-bottom.png",
+      "sha256": "f3312ac6ff7393cd619a41419ec6a18b3defedf5c3ea0dbc38f1824abbfb7681"
+    },
+    {
+      "path": "screenshots/reduced/next-home-empty-bottom.png",
+      "sha256": "f5cc1f7c972edbf30989d005669af008b14dc61a6223735716bbbe201019da84"
+    },
+    {
+      "path": "screenshots/reduced/next-home-empty.png",
+      "sha256": "45d2fc2c97676c522b71c9ea5b9461b0adfb825ddcadb4f495fc384a0c1835f3"
+    },
+    {
+      "path": "screenshots/reduced/next-home-premium-bottom.png",
+      "sha256": "09f136cb44a141683dbfd0563e398b279c002ed1446b8c222f06ea9c8f6c2002"
+    },
+    {
+      "path": "screenshots/reduced/next-home-premium.png",
+      "sha256": "10b04a51ac0f24ac89eaf3ec0dbd22f0155b8ef1c44b094239f6e5384f73ef63"
+    },
+    {
+      "path": "screenshots/reduced/next-home.png",
+      "sha256": "25562e52eaf768f19bfb7d95613a360be39c3017483dec1d6fdafe11224bf91d"
+    },
+    {
+      "path": "screenshots/reduced/next-login-bottom.png",
+      "sha256": "aa9a79e80eeac4d12ed3409f6d6b336db4078422d738e15c42d0915729fa3ea6"
+    },
+    {
+      "path": "screenshots/reduced/next-login.png",
+      "sha256": "295f34f7e7bdd7155f0f733b8a21a868fe222cda9817be32bbd138606ce56624"
+    },
+    {
+      "path": "screenshots/reduced/next-manage-plan.png",
+      "sha256": "6012f1f7edbd83e22134cf6357c3b5d02705a15dcb84721917a937001fcc0aaf"
+    },
+    {
+      "path": "screenshots/reduced/next-memory-caption-bottom.png",
+      "sha256": "7c11682ce9cdb46e2f6eb1cc5bab352d292f8522bc4c6f58c4fa2f15b323d2cb"
+    },
+    {
+      "path": "screenshots/reduced/next-memory-caption.png",
+      "sha256": "466827706338139b36783f1b4dae33df42c81970be473f1146308e7db23e6830"
+    },
+    {
+      "path": "screenshots/reduced/next-opening.png",
+      "sha256": "2669be9dad64a1231f6c82c898de47ff24af22f78d976509c26695b47a853d6f"
+    },
+    {
+      "path": "screenshots/reduced/next-paywall-bottom.png",
+      "sha256": "1ef53f6754c943fc92eb299952ddbeb9c7b6fcfa5a54cef654b3c05a7c8f67b6"
+    },
+    {
+      "path": "screenshots/reduced/next-paywall.png",
+      "sha256": "f175ab201325737c496af53b1d75b7a0c2a12637f23b7abf0f8d67f36aba5804"
+    },
+    {
+      "path": "screenshots/reduced/next-permissions-bottom.png",
+      "sha256": "020c216b07dd7f39f3abc6c4bea85a7d695bb3f2ce39b69f8fabaeebec969912"
+    },
+    {
+      "path": "screenshots/reduced/next-permissions.png",
+      "sha256": "e7aacd6e66962724d0e4f2aa672c25af77f635ae43ce20847fa8fc87f60d813b"
+    },
+    {
+      "path": "screenshots/reduced/next-plan-bottom.png",
+      "sha256": "4ce893c1442fcf59b3ace8fcbfd8d7f0dc3fb7dc6bbefdea0b3f7b5e86029ad3"
+    },
+    {
+      "path": "screenshots/reduced/next-plan.png",
+      "sha256": "261195222c40f55256d164ef2f0f4030a54e4f6e9fd231a6d6a5db041dafc652"
+    },
+    {
+      "path": "screenshots/reduced/next-practice-bottom.png",
+      "sha256": "709c038ccbca951dd6069b8885746f046525b5156ffbb6a9e9782559cd26c2ca"
+    },
+    {
+      "path": "screenshots/reduced/next-practice.png",
+      "sha256": "6da99c95b04e3856ecc01778789ed713dfcae7fdcfca6b9d52172b622bd81ae0"
+    },
+    {
+      "path": "screenshots/reduced/next-premium-ready-bottom.png",
+      "sha256": "9525d094456a78f615b25bd22e2f2fbac73114a8c83a71e871381a8204f56e0b"
+    },
+    {
+      "path": "screenshots/reduced/next-premium-ready.png",
+      "sha256": "6082d9e24147321acbb9d8d8422dac12600eb0267896dc244f8a7cfc611fbaca"
+    },
+    {
+      "path": "screenshots/reduced/next-ready-bottom.png",
+      "sha256": "903649cf45c74c6981f1f86044120d32b26abda4006187761bf2d6898a1e9ab4"
+    },
+    {
+      "path": "screenshots/reduced/next-ready.png",
+      "sha256": "6f8f8eb5a449a2bda528e5498f1c82a929b99bb5d645ebe5f124ac40f6c10f43"
+    },
+    {
+      "path": "screenshots/reduced/next-reminder.png",
+      "sha256": "22406a50188f7458b52184deffb83d159666b447666c02f12975a32f403845b8"
+    },
+    {
+      "path": "screenshots/reduced/next-restore.png",
+      "sha256": "a0d0c16aff41c983fa6622b12857a6c94287e83a222b4d36e34d50092e6d3bde"
+    },
+    {
+      "path": "screenshots/reduced/next-rhythm.png",
+      "sha256": "d1be4d4d4580ff034d74fe7df745727d256f81b49d164f30fd2fea95ab974791"
+    },
+    {
+      "path": "screenshots/reduced/next-stage.png",
+      "sha256": "4c508d3420f3a3a286beb43494f3b37a35eb22e780f7fc604169517f0a807f93"
+    },
+    {
+      "path": "screenshots/reduced/next-store-manage-bottom.png",
+      "sha256": "de4de240e5f01514b8b403d32d34275ab4ccf63242def433d3703b2859446064"
+    },
+    {
+      "path": "screenshots/reduced/next-store-manage.png",
+      "sha256": "6386a46168c64c15ad2eb794bdeee4decd9af308217fedafd9ce529176d13eea"
+    },
+    {
+      "path": "screenshots/reduced/next-thread-readonly.png",
+      "sha256": "048a842964d81916a8ef90f2871d75febbee8f5909cd46d70f9dedf2bed81dd2"
+    },
+    {
+      "path": "screenshots/reduced/next-threads.png",
+      "sha256": "7a74fe20785918f8f32dd6a0302113ba620c9f692c7b6f12e1d540ffbc9d8f96"
+    },
+    {
+      "path": "screenshots/reduced/next-trial-bottom.png",
+      "sha256": "64cf9f9b63d780cf24c88921241791976d8e519ffefa9456aa44b82efb9e4edc"
+    },
+    {
+      "path": "screenshots/reduced/next-trial.png",
+      "sha256": "e55751d8644ed956a5dfd43a6fac43e16e0dae6e0a3a94e6fdff34e74a9be8d6"
+    },
+    {
+      "path": "screenshots/reduced/next-vet-questions-bottom.png",
+      "sha256": "fc8c336e2ce9cbcc7ee22babb6b9ab32b168a93e8ada35010e4c6805eb0b1b5f"
+    },
+    {
+      "path": "screenshots/reduced/next-vet-questions.png",
+      "sha256": "a5763ed7fd0592816059f6e3d0bbdb87521541fd958a3973104fa669bb58f081"
+    },
+    {
+      "path": "screenshots/reduced/next-weekly-recap-bottom.png",
+      "sha256": "e33ec6103485f4d848b8ad30b1044d30394ca24c394d707a4e0b4ebe0371bf22"
+    },
+    {
+      "path": "screenshots/reduced/next-weekly-recap.png",
+      "sha256": "5bdcf0af8bf1c7210d0096c1000a9f82caaf497c3512b06b31437e6140bc2297"
+    }
+  ]
+}

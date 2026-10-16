@@ -1,0 +1,246 @@
+package com.dracoarts.shared.presentation.screens
+
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.semantics.*
+import androidx.compose.ui.unit.dp
+import com.dracoarts.shared.domain.model.*
+import com.dracoarts.shared.domain.repository.JournalRepository
+import com.dracoarts.shared.presentation.components.*
+import com.dracoarts.shared.presentation.navigation.*
+import com.dracoarts.shared.presentation.state.*
+import com.dracoarts.shared.presentation.theme.*
+import com.dracoarts.shared.services.AppPlatform
+import kotlinx.coroutines.*
+import kotlinx.datetime.TimeZone
+import kotlinx.coroutines.flow.first
+import com.dracoarts.shared.services.ReminderRequest
+import com.dracoarts.shared.presentation.review.boardReviewFeatures
+import com.dracoarts.shared.presentation.review.boardReviewTabs
+import com.dracoarts.shared.presentation.review.boardReviewArgument
+import com.dracoarts.shared.presentation.review.BoardReviewFixture
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.pow
+
+@Composable
+fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPlatform,
+    timeline: TimelineController, events: EventController, care: CareController, settings: SettingsController,
+    repository: JournalRepository, companion: com.dracoarts.shared.presentation.companion.CompanionController, reviewEnabled: Boolean = false, reviewStart: String? = null,
+    reviewFaults: com.dracoarts.shared.presentation.review.BoardReviewFaults? = null) {
+    val journal by controller.state.collectAsState()
+    val focus = LocalFocusManager.current
+    val careState by care.state.collectAsState()
+    val scope = rememberCoroutineScope()
+    var retry by remember { mutableIntStateOf(0) }
+    var now by remember { mutableLongStateOf(platform.nowMillis()) }
+    var zone by remember { mutableStateOf(platform.timeZone()) }
+    val today = JournalDates.day(now, zone)
+    LaunchedEffect(controller, retry, today, zone.id) {
+        val (from, until) = JournalDates.dayBounds(today, zone)
+        controller.observe(maxOf(0, from), until)
+    }
+    LaunchedEffect(journal.selectedDogId) { journal.selectedDogId?.let { care.observe(it) } }
+    LaunchedEffect(journal.feedback) { if (journal.feedback != null) { delay(6000); controller.clearFeedback() } }
+    LaunchedEffect(careState.feedback, careState.dogId) { if (careState.feedback != null) { care.processCleanup(); delay(6000); care.clearFeedback() } }
+    LaunchedEffect(care) { care.processCleanup() }
+    val active by platform.device.foreground.collectAsState()
+    LaunchedEffect(platform, active) { if (active) while (true) { now = platform.nowMillis(); zone = platform.timeZone(); delay(30_000) } }
+    LaunchedEffect(active, journal.dogs, careState.items) {
+        if (active) {
+            care.processCleanup()
+            journal.dogs.forEach { dog ->
+                try {
+                    val items = care.items(dog.id)
+                    items.filter { (it.data as? CareItemData.Task)?.remind == true }.forEach { item ->
+                        val task = item.data as CareItemData.Task
+                        val completed = items.mapNotNull { (it.data as? CareItemData.Completion)?.takeIf { it.taskId == item.id }?.dueDate }.toSet()
+                        CareSchedule.next(task, platform.nowMillis(), completed)?.let { (_, time) -> platform.device.scheduleReminder(ReminderRequest(item.id, dog.id, time, task.repeat, task.zoneId, CareSchedule.upcoming(task, platform.nowMillis(), completed))) }
+                            ?: platform.device.cancelReminder(item.id)
+                    }
+                } catch (cancelled: CancellationException) { throw cancelled }
+                catch (_: Exception) { /* Reconcile on the next foreground; local logging remains available. */ }
+            }
+        }
+    }
+    val openedReminder by platform.device.reminderOpens.collectAsState()
+    LaunchedEffect(openedReminder) {
+        val target = openedReminder
+        if (target != null) {
+            controller.state.first { !it.loading }
+            snapshotFlow { state.backGuard }.first { it == null }
+            try {
+                if (controller.state.value.dogs.any { it.id == target.dogId }) {
+                    controller.selectDog(target.dogId)
+                    val task = care.items(target.dogId).firstOrNull { it.id == target.taskId }?.data as? CareItemData.Task
+                    state.show(Route.Profile); state.open(Feature.Calendar)
+                    if (task != null) state.open(Feature.TaskDetail, target.taskId + "@" + JournalDates.day(target.occurredAtMillis ?: platform.nowMillis(), TimeZone.of(task.zoneId)))
+                }
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (_: Exception) {
+                // A removed task or transient read failure must not interrupt the journal.
+            }
+            platform.device.consumedReminder()
+        }
+    }
+    if (journal.loading && journal.selectedDog == null) { StartupMessage("Reading your journal…"); return }
+    if (journal.readFailed) { StartupMessage(journal.error ?: "Couldn't read your journal.", onRetry = { retry++ }); return }
+    var onboardingInProgress by rememberSaveable { mutableStateOf(journal.selectedDog == null) }
+    var hadDog by rememberSaveable { mutableStateOf(journal.dogs.isNotEmpty()) }
+    var noDogAccepted by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(journal.dogs) { if (journal.dogs.isNotEmpty()) { hadDog = true; noDogAccepted = false } }
+    val savedScreens = rememberSaveableStateHolder()
+    val parentMotion = LocalBarkMotion.current
+    var replay by remember { mutableIntStateOf(0) }
+    var speed by rememberSaveable { mutableStateOf(1f) }
+    var reviewStarted by rememberSaveable { mutableStateOf(false) }
+    var reviewOnboarding by rememberSaveable { mutableStateOf(reviewEnabled && reviewStart in onboardingBoardIds) }
+    LaunchedEffect(reviewEnabled, journal.selectedDogId) {
+        if (reviewEnabled && !reviewStarted && journal.selectedDogId != null) {
+            reviewStarted = true
+            val route = boardReviewTabs[reviewStart] ?: Route.entries.firstOrNull { it.name.equals(reviewStart, true) }
+            val feature = boardReviewFeatures[reviewStart] ?: Feature.entries.firstOrNull { it.name.equals(reviewStart, true) }
+            val type = CareEventRules.detailedTypes.firstOrNull { it.name.equals(reviewStart?.removePrefix("form-"), true) }
+            when {
+                route != null -> state.show(route)
+                feature != null -> state.open(feature, if (reviewStart in boardReviewFeatures) boardReviewArgument(reviewStart, feature, platform::newId) else "")
+                type != null -> state.newLog(journal.selectedDogId!!, type, platform.newId())
+                reviewStart in setOf("record-detail", "delete-confirmation") -> state.detail(journal.selectedDogId!!, BoardReviewFixture.itemId(100))
+                reviewStart in setOf("record-edit", "stale-record") -> state.edit(journal.selectedDogId!!, BoardReviewFixture.itemId(100), platform.newId())
+                reviewStart == "form-notes-example" -> state.newLog(journal.selectedDogId!!, CareEventType.Walk, platform.newId())
+                reviewStart in setOf("save-error", "retained-draft") -> state.newLog(journal.selectedDogId!!, CareEventType.Meal, platform.newId())
+                reviewStart == "saving-state" -> state.newLog(journal.selectedDogId!!, CareEventType.Walk, platform.newId())
+            }
+        }
+    }
+    val context = journal.selectedDog?.let { dog ->
+        val scopedCare = careState.takeIf { it.dogId == dog.id } ?: CareState(dogId = dog.id)
+        FeatureContext(journal, controller, care, scopedCare, settings, state, platform, repository, now, zone, if (reviewEnabled) reviewStart else null, reviewFaults, companion)
+    }
+    val useCompanion = !reviewEnabled || reviewStart?.startsWith("next-") == true
+    val companionState by companion.state.collectAsState()
+    LaunchedEffect(useCompanion) { if (useCompanion) companion.load(journal.selectedDog, com.dracoarts.shared.presentation.companion.CompanionScreen.fromBoard(reviewStart)) }
+    LaunchedEffect(useCompanion, journal.selectedDogId, companionState.loading) { if (useCompanion && !companionState.loading) journal.selectedDogId?.let { companion.activateDog(it) } }
+    if (useCompanion && companionState.loading) { StartupMessage("Opening your saved setup…"); return }
+    if (useCompanion && companionState.loadFailed) { StartupMessage(companionState.error ?: "Couldn't read saved setup.",onRetry={scope.launch {companion.load(journal.selectedDog)}});return }
+    if (useCompanion && companionState.route != null) {
+        com.dracoarts.shared.presentation.companion.CompanionHost(companion, journal, controller, care, platform, state, repository, reviewEnabled = reviewEnabled,
+            onEnterJournal = { id -> controller.selectDog(id); controller.state.first { it.selectedDogId == id && !it.loading }; onboardingInProgress = false; reviewOnboarding = false; state.show(Route.Home); companion.go(null) })
+        return
+    }
+    var footer by remember { mutableStateOf<BoardFooterContent?>(null) }
+    val publishFooter = remember { { value: BoardFooterContent? -> footer = value } }
+    var coach by remember { mutableStateOf<BoardCoachSpec?>(null) }
+    val publishCoach = remember { { value: BoardCoachSpec? -> coach = value } }
+    val showTabs = context != null && !reviewOnboarding && !onboardingInProgress && state.page == null && state.featurePage == null
+    var aiEntryHeight by remember { mutableStateOf(80.dp) }
+    val aiDensity = androidx.compose.ui.platform.LocalDensity.current
+    val homeCompanion = useCompanion && showTabs && state.route == Route.Home
+    val floatingTabs = showTabs && !(reviewEnabled && reviewStart == null)
+    CompositionLocalProvider(LocalBarkMotion provides BarkMotion(parentMotion.reduced, if (reviewEnabled) speed else 1f, replay), LocalBoardFooter provides publishFooter, LocalBoardCoach provides publishCoach) {
+        Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing).imePadding().pointerInput(focus) {
+            detectTapGestures(onTap = { focus.clearFocus() })
+        }, contentAlignment = Alignment.TopCenter) {
+            BoardScene(state, platform.device, Modifier.fillMaxSize().then(if (coach != null) Modifier.semantics { hideFromAccessibility() } else Modifier)) {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+            Column(Modifier.widthIn(max = AppSpacing.contentMaxWidth).fillMaxSize()) {
+                if (openedReminder != null && state.backGuard != null) CaptionText("A care reminder is waiting. Finish or close this form to open it.", Modifier.padding(horizontal = 20.dp))
+                val page = state.page; val feature = state.featurePage
+                if (context != null && !reviewOnboarding && !onboardingInProgress && state.route == Route.Timeline && page == null && feature == null) {
+                    savedScreens.SaveableStateProvider("timeline-${context.dog.id}") {
+                        TimelineScreen(journal, timeline, now, zone, Modifier.weight(1f), photos = context.items, reviewScreen = context.reviewScreen, onPhoto = { context.open(Feature.PhotoDetail, it.id) }, onSwitchDog = { context.open(Feature.DogSwitcher) }, onSelectDog = { scope.launch { controller.selectDog(it) } }, onDetail = { state.detail(it.dogId, it.id) })
+                    }
+                } else {
+                    val screenKey = if (context == null || onboardingInProgress || reviewOnboarding) "setup" else if (page != null) "event-${page.kind}-${page.sessionId}" else if (feature != null) "feature-${context.dog.id}-${feature.feature}-${feature.id}" else "tab-${context.dog.id}-${state.route}"
+                    savedScreens.SaveableStateProvider(screenKey) {
+                        val scroll = rememberScrollState()
+                        Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(scroll).padding(horizontal = AppSpacing.page, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
+                            when {
+                                context == null && !noDogAccepted && (hadDog || reviewFaults?.screen == "no-dog") -> {
+                                    BrandHeader(); ScreenHeading("Start with your dog", "A name is enough to open a local journal."); PawAvatar()
+                                    BarkButton("Add a dog", { noDogAccepted = true; onboardingInProgress = true }, icon = "plus")
+                                    CaptionText("No account, permission or subscription required.")
+                                }
+                                context == null || reviewOnboarding || onboardingInProgress -> OnboardingScreen(controller, journal, platform, state, if (noDogAccepted) "dog-setup" else if (reviewOnboarding) reviewStart else null, scrollState = scroll, onFinished = { reviewOnboarding = false; onboardingInProgress = false })
+                                page != null -> EventPageScreen(page, journal.dogs.firstOrNull { it.id == page.dogId }?.name ?: "Your dog", events, state, platform::newId, now, zone, context)
+                                feature != null -> FeatureScreens(feature, context)
+                                else -> {
+                                    if (journal.error != null) ErrorCard(journal.error!!)
+                                    when (state.route) {
+                                        Route.Home -> HomeScreen(context)
+                                        Route.Insights -> InsightsScreen(context)
+                                        Route.Profile -> ProfileHub(context)
+                                        Route.Timeline -> Unit
+                                    }
+                                }
+                            }
+                            Spacer(Modifier.height(if (floatingTabs) 100.dp + if(homeCompanion) aiEntryHeight else 0.dp else 12.dp))
+                        }
+                    }
+                }
+                footer?.let { action -> Surface(Modifier.fillMaxWidth(), color = boardColor("ground"), border = androidx.compose.foundation.BorderStroke(1.dp, boardColor("hair"))) { Column(Modifier.padding(horizontal = 20.dp, vertical = 10.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { action() } } }
+                if (showTabs && !floatingTabs) JournalTabBar(state, platform, if (useCompanion) ({ route -> state.show(route); if (route == Route.Profile) companion.go(com.dracoarts.shared.presentation.companion.CompanionScreen.AccountSettings) }) else null)
+                if (reviewEnabled && reviewStart == null) DesignReviewBar(state, journal.selectedDogId, platform::newId, speed, { speed = it }, { replay++ })
+            }
+            }
+            }
+            // The selected pill moves; the tab bar itself stays put during page transitions.
+            if (floatingTabs) Column(Modifier.align(Alignment.BottomCenter).widthIn(max = AppSpacing.contentMaxWidth).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                if(homeCompanion) com.dracoarts.shared.presentation.companion.CompanionHomeEntry(companion,journal.selectedDog?.name ?: "your dog",Modifier.padding(horizontal=20.dp).then(Modifier.onSizeChanged {size -> aiEntryHeight=with(aiDensity){size.height.toDp()}+8.dp}))
+                JournalTabBar(state, platform, if (useCompanion) ({ route -> state.show(route); if (route == Route.Profile) companion.go(com.dracoarts.shared.presentation.companion.CompanionScreen.AccountSettings) }) else null)
+            }
+            coach?.let { BoardCoachOverlay(it, Modifier.fillMaxSize()) }
+        }
+    }
+}
+
+@Composable
+internal fun JournalTabBar(state: AppState, platform: AppPlatform, onNavigate: ((Route) -> Unit)? = null) {
+    val motion = LocalBarkMotion.current
+    Surface(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), shape = RoundedCornerShape(40.dp), color = boardColor("tab-bg")) {
+        BoxWithConstraints(Modifier.fillMaxWidth().padding(6.dp)) {
+            val width = maxWidth / Route.entries.size
+            val position = remember { Animatable(state.route.ordinal.toFloat()) }
+            LaunchedEffect(state.route, motion.reduced, motion.speed) {
+                if (motion.reduced) position.snapTo(state.route.ordinal.toFloat())
+                else position.animateTo(state.route.ordinal.toFloat(), spring(.78f, ((2 * PI / .42).pow(2) * motion.speed.pow(2)).toFloat()))
+            }
+            Surface(Modifier.width(width).height(56.dp).graphicsLayer {
+                translationX = width.toPx() * position.value
+                val stretch = if (motion.reduced) 0f else (abs(position.velocity) * .014f).coerceAtMost(.18f)
+                scaleX = 1 + stretch; scaleY = 1 - stretch * .4f
+            }, shape = RoundedCornerShape(40.dp), color = boardColor("ball")) {}
+            Row(Modifier.fillMaxWidth()) {
+                Route.entries.forEach { route ->
+                    val selected = state.route == route; val source = remember { MutableInteractionSource() }
+                    val proximity = ((1 - abs(position.value - route.ordinal) - .45f) / .30f).coerceIn(0f, 1f)
+                    val color = lerp(boardColor("tab-ink"), boardColor("ball-ink"), proximity)
+                    val iconLanding = selectionLanding(selected, 36)
+                    Column(Modifier.weight(1f).heightIn(min = 56.dp).then(pressMotion(source)).semantics { this.selected = selected }
+                        .clickable(interactionSource = source, indication = null, role = Role.Tab) { if (!selected) { platform.haptics.selectionChange(); onNavigate?.invoke(route) ?: state.show(route) } },
+                        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                        BarkIcon(route.iconName(), Modifier.size(21.dp).then(iconLanding), color)
+                        Text(route.label, style = MaterialTheme.typography.labelSmall, color = color)
+                    }
+                }
+            }
+        }
+    }
+}

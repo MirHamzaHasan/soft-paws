@@ -1,0 +1,357 @@
+/* 2026-10-15 · Design 06 "Park day". Board-only proposal, loaded last.
+ * Mobbin study 06: a scene above a white sheet (Finch, BitePal, Alan), one big number with a plain
+ * sentence (Brick, Fitbit, Opal), the day as a vertical line of large typed marks (Structured, Oura),
+ * a floating tab bar (Jomo, Oura). Visuals are BarkLog's own.
+ * Owner approved trying a new typeface for this proposal: Bricolage Grotesque (OFL) for display and
+ * numbers, Inter 400/500 for reading. One accent: tennis-ball green. Flat fills, no shadows/gradients. */
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('../assets/fonts/BricolageGrotesque.ttf') format('truetype');
+  font-weight: 200 800; font-stretch: 75% 100%; font-style: normal; font-display: swap;
+}
+
+/* ------------------------------------------------------------------ tokens · light */
+:root {
+  --font-display: 'Bricolage Grotesque', Inter, system-ui, sans-serif;
+  --ground: #F3F1EA; --v3-ground: #F3F1EA; --panel: #FFFFFF; --inset: #ECE9E0; --hover: #E2DED3; --sunken: #EFECE4;
+  --hair: #E2DED3; --hair-2: #8A8578; --ink-strong: #121A15; --ink: #1D2620; --ink-muted: #55605A; --ink-quiet: #646E68;
+  --ball: #D2EE4A; --ball-down: #BEDA36; --ball-ink: #121A15;
+  --accent: #D2EE4A; --accent-text: #3B5200; --accent-soft: #EEF7C4; --accent-line: #A8C52A;
+  --btn: #121A15; --btn-down: #27322B; --btn-ink: #FFFFFF;
+  --tab-bg: #121A15; --tab-ink: #B9C2BC;
+  --good: #1D7A3A; --bad: #C2263F; --warn: #8A5A00; --info: #2563B8;
+  --good-soft: #DFF3E2; --bad-soft: #FFE1E5; --warn-soft: #FFF0C6; --info-soft: #DFEBFF;
+  --status-good: #1D7A3A; --status-good-soft: #DFF3E2; --status-bad: #B3203A; --status-bad-soft: #FFE1E5;
+  --status-warn: #7A4F00; --status-warn-soft: #FFF0C6; --status-info: #22599F; --status-info-soft: #DFEBFF;
+  --glass: #FFFFFF; --glass-line: #E2DED3; --home-ind: #121A15;
+  --r-card: 26px; --r-row: 20px; --r-tile: 16px; --control: 56px; --gutter: 20px;
+
+  /* Care families: soft ground, line, readable ink, and a sticker colour that holds white glyphs (≥ 3:1). */
+  --poop-bg: #F5E6D8; --poop-line: #E3C4A6; --poop-ink: #5C3215; --poop-dot: #8F532A;
+  --pee-bg: #DDEEFF; --pee-line: #B0D2F6; --pee-ink: #0E3F73; --pee-dot: #2369BF;
+  --meal-bg: #FFE4D6; --meal-line: #F9BE9F; --meal-ink: #7E2B0B; --meal-dot: #C74A16;
+  --walk-bg: #DDF4D7; --walk-line: #ABDA9E; --walk-ink: #1B5216; --walk-dot: #2C7F33;
+  --symptom-bg: #FFDFE5; --symptom-line: #F5AFBD; --symptom-ink: #861532; --symptom-dot: #C52C55;
+  --mood-bg: #ECE4FF; --mood-line: #CBBAF6; --mood-ink: #45279A; --mood-dot: #6C47D6;
+  --behavior-bg: #D9F3EE; --behavior-line: #A3DBD0; --behavior-ink: #0B4F46; --behavior-dot: #0F7B70;
+  --grooming-bg: #FBE3F4; --grooming-line: #EDB3DD; --grooming-ink: #761A60; --grooming-dot: #A93289;
+  --weight-bg: #E6EAF0; --weight-line: #C1CAD6; --weight-ink: #263446; --weight-dot: #4E5F77;
+  --medication-bg: #E2E6FF; --medication-line: #B8C2F6; --medication-ink: #263493; --medication-dot: #4153CC;
+  --training-bg: #FFEFC2; --training-line: #EFCF7C; --training-ink: #5F4200; --training-dot: #966A00;
+  --photo-bg: #D9F0FA; --photo-line: #A5D6EA; --photo-ink: #094760; --photo-dot: #16708F;
+  --note-bg: #ECE9E0; --note-line: #D4CFC2; --note-ink: #2E352F; --note-dot: #5C655F;
+
+  /* The park: Home's scene and every illustrated dog. */
+  --park-sky: #CBE7FF; --park-sky-ink: #0D2B45; --park-hill: #94D27C; --park-hill-2: #6DBB58;
+  --scene-hill: #94D27C; --scene-sun: #FFCC33; --scene-leaf: #2C7F33; --scene-shadow: #6DBB58;
+  --scene-ball: #D2EE4A; --scene-ball-line: #5E7410;
+  --dog-fur: #C9773C; --dog-ear: #8C4520; --dog-muzzle: #F6D7B5; --dog-ink: #1E120B; --dog-collar: #C74A16;
+}
+
+/* ------------------------------------------------------------------ tokens · dark (designed, not inverted) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --ground: #0E1210; --v3-ground: #0E1210; --panel: #181E1A; --inset: #222A25; --hover: #2C3530; --sunken: #131815;
+    --hair: #2B342E; --hair-2: #8E978F; --ink-strong: #F2F5EE; --ink: #E3E8E0; --ink-muted: #A9B3AB; --ink-quiet: #98A29A;
+    --accent: #D2EE4A; --accent-text: #D9F25F; --accent-soft: #2B3412; --accent-line: #7E9625;
+    --btn: #D2EE4A; --btn-down: #BEDA36; --btn-ink: #121A15;
+    --tab-bg: #222A25; --tab-ink: #A9B3AB;
+    --good: #7FD99A; --bad: #FF8C9E; --warn: #F4C25C; --info: #8DB8FF;
+    --good-soft: #15291C; --bad-soft: #3A1820; --warn-soft: #33270B; --info-soft: #172840;
+    --status-good: #8FE0A8; --status-good-soft: #15291C; --status-bad: #FF9DAD; --status-bad-soft: #3A1820;
+    --status-warn: #F6C866; --status-warn-soft: #33270B; --status-info: #9EC3FF; --status-info-soft: #172840;
+    --glass: #181E1A; --glass-line: #2B342E; --home-ind: #F2F5EE;
+    --poop-bg: #2C2018; --poop-line: #57402C; --poop-ink: #F2CBA9; --poop-dot: #B9784A;
+    --pee-bg: #13263B; --pee-line: #2A4C70; --pee-ink: #B4D6FF; --pee-dot: #3F86D9;
+    --meal-bg: #33190D; --meal-line: #6A3519; --meal-ink: #FFC3A3; --meal-dot: #E0662F;
+    --walk-bg: #14291A; --walk-line: #2C5733; --walk-ink: #B2E8A6; --walk-dot: #3E9A45;
+    --symptom-bg: #36141E; --symptom-line: #6D2A3C; --symptom-ink: #FFB3C3; --symptom-dot: #E04A72;
+    --mood-bg: #221A3D; --mood-line: #45367C; --mood-ink: #D3C4FF; --mood-dot: #8264E8;
+    --behavior-bg: #0F2B27; --behavior-line: #23564E; --behavior-ink: #A6E6DA; --behavior-dot: #19978A;
+    --grooming-bg: #33152C; --grooming-line: #652C58; --grooming-ink: #F6B8E5; --grooming-dot: #C44BA2;
+    --weight-bg: #1C232D; --weight-line: #36424F; --weight-ink: #C9D3E0; --weight-dot: #6B7C94;
+    --medication-bg: #1A1F3D; --medication-line: #34407C; --medication-ink: #C3CBFF; --medication-dot: #5B6CE0;
+    --training-bg: #2F240A; --training-line: #5F4A17; --training-ink: #F6D88A; --training-dot: #B48A16;
+    --photo-bg: #0F2833; --photo-line: #23505F; --photo-ink: #A8DDF0; --photo-dot: #1E8BB0;
+    --note-bg: #222A25; --note-line: #36403A; --note-ink: #D7DDD4; --note-dot: #7A847D;
+    --park-sky: #13263B; --park-sky-ink: #DCEBFF; --park-hill: #24502A; --park-hill-2: #1C4122;
+    --scene-hill: #24502A; --scene-sun: #E8B62A; --scene-leaf: #5DBB5F; --scene-shadow: #1C4122;
+    --scene-ball: #C4E03F; --scene-ball-line: #4E600E;
+    --dog-fur: #C9773C; --dog-ear: #8C4520; --dog-muzzle: #F2D2AE; --dog-ink: #1E120B; --dog-collar: #E0662F;
+  }
+}
+:root[data-theme='dark'] {
+  --ground: #0E1210; --v3-ground: #0E1210; --panel: #181E1A; --inset: #222A25; --hover: #2C3530; --sunken: #131815;
+  --hair: #2B342E; --hair-2: #8E978F; --ink-strong: #F2F5EE; --ink: #E3E8E0; --ink-muted: #A9B3AB; --ink-quiet: #98A29A;
+  --accent: #D2EE4A; --accent-text: #D9F25F; --accent-soft: #2B3412; --accent-line: #7E9625;
+  --btn: #D2EE4A; --btn-down: #BEDA36; --btn-ink: #121A15;
+  --tab-bg: #222A25; --tab-ink: #A9B3AB;
+  --good: #7FD99A; --bad: #FF8C9E; --warn: #F4C25C; --info: #8DB8FF;
+  --good-soft: #15291C; --bad-soft: #3A1820; --warn-soft: #33270B; --info-soft: #172840;
+  --status-good: #8FE0A8; --status-good-soft: #15291C; --status-bad: #FF9DAD; --status-bad-soft: #3A1820;
+  --status-warn: #F6C866; --status-warn-soft: #33270B; --status-info: #9EC3FF; --status-info-soft: #172840;
+  --glass: #181E1A; --glass-line: #2B342E; --home-ind: #F2F5EE;
+  --poop-bg: #2C2018; --poop-line: #57402C; --poop-ink: #F2CBA9; --poop-dot: #B9784A;
+  --pee-bg: #13263B; --pee-line: #2A4C70; --pee-ink: #B4D6FF; --pee-dot: #3F86D9;
+  --meal-bg: #33190D; --meal-line: #6A3519; --meal-ink: #FFC3A3; --meal-dot: #E0662F;
+  --walk-bg: #14291A; --walk-line: #2C5733; --walk-ink: #B2E8A6; --walk-dot: #3E9A45;
+  --symptom-bg: #36141E; --symptom-line: #6D2A3C; --symptom-ink: #FFB3C3; --symptom-dot: #E04A72;
+  --mood-bg: #221A3D; --mood-line: #45367C; --mood-ink: #D3C4FF; --mood-dot: #8264E8;
+  --behavior-bg: #0F2B27; --behavior-line: #23564E; --behavior-ink: #A6E6DA; --behavior-dot: #19978A;
+  --grooming-bg: #33152C; --grooming-line: #652C58; --grooming-ink: #F6B8E5; --grooming-dot: #C44BA2;
+  --weight-bg: #1C232D; --weight-line: #36424F; --weight-ink: #C9D3E0; --weight-dot: #6B7C94;
+  --medication-bg: #1A1F3D; --medication-line: #34407C; --medication-ink: #C3CBFF; --medication-dot: #5B6CE0;
+  --training-bg: #2F240A; --training-line: #5F4A17; --training-ink: #F6D88A; --training-dot: #B48A16;
+  --photo-bg: #0F2833; --photo-line: #23505F; --photo-ink: #A8DDF0; --photo-dot: #1E8BB0;
+  --note-bg: #222A25; --note-line: #36403A; --note-ink: #D7DDD4; --note-dot: #7A847D;
+  --park-sky: #13263B; --park-sky-ink: #DCEBFF; --park-hill: #24502A; --park-hill-2: #1C4122;
+  --scene-hill: #24502A; --scene-sun: #E8B62A; --scene-leaf: #5DBB5F; --scene-shadow: #1C4122;
+  --scene-ball: #C4E03F; --scene-ball-line: #4E600E;
+  --dog-fur: #C9773C; --dog-ear: #8C4520; --dog-muzzle: #F2D2AE; --dog-ink: #1E120B; --dog-collar: #E0662F;
+}
+
+/* Earlier layers set these per screen; the park sets them once. */
+.ph.bark {
+  --scene-hill: var(--park-hill); --scene-sun: #FFCC33; --scene-leaf: var(--walk-dot); --scene-shadow: var(--park-hill-2);
+  --scene-ball: var(--ball, #D2EE4A); --scene-ball-line: #5E7410;
+  background: var(--ground);
+}
+
+/* ------------------------------------------------------------------ type */
+.ph.bark h1, .ph.bark h2, .ph.bark .v3-count-n, .ph.bark .bl-total, .ph.bark .v3-care-label, .ph.bark .v3-care-count strong,
+.ph.bark .bl-metric strong, .ph.bark .bl-chart-value, .ph.bark .v4-log-tile-title, .ph.bark .bl-dialog-panel h2 {
+  font-family: var(--font-display); font-optical-sizing: auto;
+}
+.ph.bark h1 { font-weight: 700; font-size: calc(34px * var(--text-scale)); line-height: 1.02; letter-spacing: -.035em; color: var(--ink-strong); }
+.ph.bark .bl-heading.is-display h1 { font-size: calc(44px * var(--text-scale)); font-weight: 800; letter-spacing: -.045em; line-height: .96; }
+.ph.bark h2 { font-weight: 700; font-size: calc(21px * var(--text-scale)); letter-spacing: -.025em; line-height: 1.15; color: var(--ink-strong); }
+.ph.bark h3 { font-weight: 500; letter-spacing: -.01em; }
+.ph.bark .bl-heading .bl-sub { font-size: calc(14px * var(--text-scale)); color: var(--ink-muted); line-height: 1.45; }
+.ph.bark .bl-heading { gap: 8px; }
+.ph.bark .bl-accent-word, .ph.bark .bl-heading h1 em {
+  font-style: normal; color: inherit; background: linear-gradient(transparent 58%, var(--ball) 58%, var(--ball) 92%, transparent 92%);
+  padding: 0 .06em; margin: 0 -.06em; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.ph.bark .bl-total { font-weight: 800; font-size: calc(30px * var(--text-scale)); letter-spacing: -.035em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.ph.bark .bl-kicker, .ph.bark .v4-eyebrow { font-family: Inter, system-ui, sans-serif; font-weight: 500; letter-spacing: .08em; font-size: calc(10.5px * var(--text-scale)); color: var(--ink-muted); text-transform: uppercase; }
+
+/* ------------------------------------------------------------------ surfaces */
+.ph.bark .bl-scroll { padding: 6px 20px 120px; }
+.ph.bark.no-tabs .bl-scroll { padding-bottom: 36px; }
+.ph.bark .bl-stack { gap: 20px; }
+.ph.bark .bl-card, .ph.bark .bl-menu, .ph.bark .bl-records, .ph.bark .bl-empty, .ph.bark .bl-identity {
+  border: 1px solid var(--hair); border-radius: var(--r-card); background: var(--panel);
+}
+.ph.bark .bl-card { padding: 20px; }
+.ph.bark .bl-dialog-panel { border-radius: 30px; border: 0; background: var(--panel); }
+.ph.bark .bl-row, .ph.bark .bl-menu-row { background: var(--panel); }
+.ph.bark .bl-row + .bl-row, .ph.bark .bl-menu-row + .bl-menu-row { border-top: 1px solid var(--hair) !important; }
+.ph.bark .bl-row.is-down, .ph.bark .bl-menu-row.is-down { background: var(--inset) !important; }
+.ph.bark .bl-menu-row { min-height: 68px; padding: 12px 16px !important; gap: 14px; }
+.ph.bark .bl-menu-title { font-weight: 500; font-size: calc(15px * var(--text-scale)); letter-spacing: -.01em; }
+
+/* Stickers: every care type is a round, solid mark with a white glyph and its name beside it. */
+.ph.bark .bl-event-icon, .ph.bark .v4-log-mark, .ph.bark .v3-record-icon {
+  border-radius: 50% !important; background: var(--event-dot) !important; color: #FFFFFF !important; border: 0 !important;
+}
+.ph.bark .bl-event-icon { width: 40px; height: 40px; flex: none; display: grid; place-items: center; }
+.ph.bark .bl-menu-icon { border-radius: 50% !important; width: 42px; height: 42px; flex: none; }
+
+/* ------------------------------------------------------------------ controls */
+.ph.bark .bl-btn {
+  min-height: 56px; border-radius: 999px !important; border: 0 !important; background: var(--btn) !important; color: var(--btn-ink) !important;
+  font-family: Inter, system-ui, sans-serif; font-weight: 500; font-size: calc(15px * var(--text-scale)) !important; letter-spacing: -.01em; gap: 8px;
+}
+.ph.bark .bl-btn.is-down { background: var(--btn-down) !important; }
+.ph.bark .bl-btn.secondary { background: var(--panel) !important; color: var(--ink-strong) !important; border: 1.5px solid var(--ink-strong) !important; }
+.ph.bark .bl-btn.secondary.is-down { background: var(--inset) !important; }
+.ph.bark .bl-btn:disabled { background: var(--inset) !important; color: var(--ink-quiet) !important; }
+.ph.bark .bl-btn.bl-danger { color: var(--status-bad) !important; border-color: var(--status-bad) !important; }
+.ph.bark .bl-link { color: var(--ink-strong) !important; font-weight: 500; text-decoration: underline; text-decoration-color: var(--accent-line); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.ph.bark .bl-link.bl-back {
+  text-decoration: none; min-height: 48px; padding: 0 16px 0 12px !important; border-radius: 999px; border: 1px solid var(--hair); background: var(--panel); align-self: flex-start;
+}
+.ph.bark .bl-chip, .ph.bark .v4-choice {
+  border-radius: 999px !important; border: 1.5px solid var(--hair) !important; background: var(--panel) !important; color: var(--ink) !important;
+}
+.ph.bark .v4-choice { border-radius: 20px !important; }
+.ph.bark .bl-chip[aria-pressed='true'], .ph.bark .v4-choice[aria-pressed='true'], .ph.bark .v4-choice.is-on {
+  background: var(--ball) !important; border-color: var(--ball) !important; color: var(--ball-ink) !important;
+}
+.ph.bark .bl-input { border-radius: var(--r-tile); border: 1.5px solid var(--hair) !important; background: var(--panel); font-size: calc(16px * var(--text-scale)); }
+.ph.bark .bl-input:focus-visible, .ph.bark .bl-input:focus { border-color: var(--ink-strong) !important; outline: 3px solid color-mix(in srgb, var(--ball) 70%, transparent); outline-offset: 1px; }
+.ph.bark .bl-input[aria-invalid='true'] { border-color: var(--status-bad) !important; }
+.ph.bark .bl-toggle-track { border-radius: 999px; }
+.ph.bark .bl-toggle.is-on .bl-toggle-track { background: var(--ink-strong) !important; border-color: var(--ink-strong) !important; }
+.ph.bark .bl-toggle.is-on .bl-toggle-knob { background: var(--ball) !important; }
+.ph.bark .bl-progress { height: 12px; border: 0; background: var(--inset); border-radius: 999px; }
+.ph.bark .bl-progress > span { background: var(--ink-strong); border-radius: 999px; }
+.ph.bark .guide-track { height: 6px; background: var(--inset); }
+.ph.bark .guide-track > i { background: var(--ink-strong); border-radius: 6px; }
+
+/* Status: a tinted card with a round mark. */
+.ph.bark .bl-status { border-radius: var(--r-card); border: 0 !important; padding: 18px; gap: 14px; }
+.ph.bark .bl-status > svg.ic { width: 40px; height: 40px; padding: 9px; border-radius: 50%; flex: none; box-sizing: border-box; }
+.ph.bark .bl-status.good { background: var(--status-good-soft) !important; color: var(--ink) !important; }
+.ph.bark .bl-status.good > svg.ic { background: var(--status-good); color: #FFFFFF; }
+.ph.bark .bl-status.bad { background: var(--status-bad-soft) !important; color: var(--ink) !important; }
+.ph.bark .bl-status.bad > svg.ic { background: var(--status-bad); color: #FFFFFF; }
+.ph.bark .bl-status.warn { background: var(--status-warn-soft) !important; color: var(--ink) !important; }
+.ph.bark .bl-status.warn > svg.ic { background: var(--status-warn); color: #FFFFFF; }
+.ph.bark .bl-status.info { background: var(--status-info-soft) !important; color: var(--ink) !important; }
+.ph.bark .bl-status.info > svg.ic { background: var(--status-info); color: #FFFFFF; }
+:root[data-theme='dark'] .ph.bark .bl-status > svg.ic { color: #121A15; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) .ph.bark .bl-status > svg.ic { color: #121A15; } }
+.ph.bark .bl-status h3 { font-family: var(--font-display); font-weight: 700; font-size: calc(17px * var(--text-scale)); letter-spacing: -.02em; color: var(--ink-strong); }
+
+/* ------------------------------------------------------------------ the dog chip and top */
+.ph.bark .v3-dog-chip { border-radius: 999px !important; border: 1px solid var(--hair) !important; background: var(--panel) !important; }
+.ph.bark .v3-dog-chip-name { font-family: var(--font-display); font-weight: 700; font-size: calc(16px * var(--text-scale)); letter-spacing: -.02em; }
+.ph.bark .v3-dog-chip-paw { background: var(--ball) !important; color: var(--ball-ink) !important; }
+.ph.bark .bl-brand-action { border-radius: 999px; border: 1px solid var(--symptom-line) !important; background: var(--symptom-bg) !important; color: var(--symptom-ink) !important; }
+
+/* ------------------------------------------------------------------ folios: a coloured sticker header per feature */
+.ph.bark .v4-folio {
+  border: 0; border-radius: 30px; padding: 22px 92px 24px 22px; min-height: 150px; background: var(--folio-bg);
+}
+.ph.bark .v4-folio h1 { color: var(--folio-ink); font-size: calc(36px * var(--text-scale)); font-weight: 800; }
+.ph.bark .v4-folio .bl-sub, .ph.bark .v4-folio .v4-eyebrow { color: var(--folio-ink); }
+.ph.bark .v4-folio .bl-sub { opacity: .86; }
+.ph.bark .v4-folio-mark {
+  top: 20px; right: 18px; width: 62px; height: 62px; border-radius: 50%; border: 0; background: var(--event-dot); color: #FFFFFF;
+  transform: rotate(-10deg);
+}
+.ph.bark.bl-section-calendar, .ph.bark.bl-section-expenses { --folio-bg: var(--training-bg); --folio-ink: var(--training-ink); }
+.ph.bark.bl-section-profiles { --folio-bg: var(--walk-bg); --folio-ink: var(--walk-ink); }
+
+/* ------------------------------------------------------------------ Home: one dog beside the care facts */
+.ph.bark .v3-day {
+  background: var(--panel) !important; border: 1px solid var(--hair) !important; border-radius: 32px; padding: 16px 20px 14px; overflow: hidden; isolation: isolate; gap: 8px;
+}
+.ph.bark .v3-day::before, .ph.bark .v3-day::after { content: none; }
+.ph.bark .v3-day-head { display: grid; grid-template-columns: minmax(0, 1fr) 128px; align-items: center; gap: 10px; min-height: 148px; }
+.ph.bark .v3-day-copy { max-width: none; min-width: 0; padding-top: 0; gap: 6px; }
+.ph.bark .v3-count { flex-direction: column; align-items: flex-start; gap: 0; }
+.ph.bark .v3-count-n { font-size: calc(88px * var(--text-scale)); font-weight: 800; letter-spacing: -.06em; line-height: 1; color: var(--ink-strong) !important; }
+.ph.bark .v3-count-unit { font-size: calc(14px * var(--text-scale)); color: var(--ink-muted) !important; max-width: none; font-weight: 500; }
+.ph.bark .v3-day-status { color: var(--ink-muted) !important; font-size: calc(12px * var(--text-scale)); width: 100%; }
+.ph.bark .v3-day-status .ic { color: var(--status-good) !important; flex: none; }
+.ph.bark .v4-home-scene { position: relative; right: auto; top: auto; width: 128px; height: 148px; overflow: visible; }
+.ph.bark .v4-home-scene svg { display: block; width: 100%; height: 100%; margin: 0; }
+.ph.bark .bl-home-dog { transform-origin: 50% 100%; }
+.ph.bark .v3-day .dl-track { height: 60px; }
+.ph.bark .v3-day .dl-rest { background: var(--hair-2) !important; }
+.ph.bark .v3-day .dl-past { background: var(--ink-muted) !important; }
+.ph.bark .v3-day .dl-axis { color: var(--ink-muted); }
+.ph.bark .v3-day .dl-mark { width: 26px; height: 26px; margin-left: -13px; border: 2px solid var(--panel); }
+.ph.bark .dl-mark { background: var(--event-dot) !important; color: #FFFFFF !important; border-radius: 50% !important; }
+.ph.bark .dl-now { background: var(--ball) !important; border: 2px solid var(--ink-strong) !important; }
+
+/* Quick care: big colourful stickers. */
+.ph.bark .v3-care-grid { gap: 12px; }
+.ph.bark .v3-care {
+  min-height: 132px; border-radius: 28px; padding: 14px 16px 14px !important; border: 0 !important; background: var(--event-bg) !important; color: var(--event-ink) !important;
+}
+.ph.bark .v3-care.is-down { background: color-mix(in srgb, var(--event-bg) 80%, var(--event-dot)) !important; }
+.ph.bark .v3-care-icon { width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--event-dot); color: #FFFFFF; }
+.ph.bark .v3-care-add { width: 36px; height: 36px; border-radius: 50%; background: var(--panel); color: var(--ink-strong); opacity: 1; }
+.ph.bark .v3-care-label { font-size: calc(22px * var(--text-scale)); font-weight: 700; letter-spacing: -.03em; color: var(--event-ink); }
+.ph.bark .v3-care-count strong { font-size: calc(34px * var(--text-scale)); font-weight: 800; letter-spacing: -.05em; }
+.ph.bark .v4-create-action {
+  min-height: 72px; border-radius: 999px !important; border: 0 !important; background: var(--ink-strong) !important; color: var(--panel) !important; padding: 10px 18px 10px 10px !important;
+}
+.ph.bark .v4-create-action > span:first-child { width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--ball); color: var(--ball-ink); }
+.ph.bark .v4-create-action strong { font-family: var(--font-display); font-weight: 700; font-size: calc(18px * var(--text-scale)); letter-spacing: -.02em; }
+.ph.bark .v4-create-action small { opacity: .8; }
+:root[data-theme='dark'] .ph.bark .v4-create-action { background: var(--inset) !important; color: var(--ink-strong) !important; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) .ph.bark .v4-create-action { background: var(--inset) !important; color: var(--ink-strong) !important; } }
+.ph.bark .bl-head h2 { font-size: calc(22px * var(--text-scale)); }
+.ph.bark .v3-row-time { font-family: var(--font-display); font-weight: 700; font-size: calc(14px * var(--text-scale)); color: var(--ink-strong); letter-spacing: -.01em; width: 46px; }
+
+/* ------------------------------------------------------------------ tabs: one dark floating bar, the ball travels */
+.ph.bark .v3-tabs, .ph.bark .bl-tabs {
+  left: 16px; right: 16px; bottom: 22px; padding: 6px; border: 0 !important; border-radius: 999px; background: var(--tab-bg) !important;
+}
+.ph.bark .v3-tab-pill { top: 6px; bottom: 6px; border-radius: 999px; background: var(--ball) !important; }
+.ph.bark .v3-tabs .bl-tab, .ph.bark .bl-tabs .bl-tab { min-height: 56px; border-radius: 999px; color: var(--tab-ink) !important; background: transparent !important; }
+.ph.bark .v3-tabs .bl-tab[aria-current='page'], .ph.bark .bl-tabs .bl-tab[aria-current='page'] { color: var(--ball-ink) !important; }
+
+/* ------------------------------------------------------------------ feedback */
+.ph.bark .bl-toast { border-radius: 999px; background: var(--ink-strong); color: var(--ground); border: 0; }
+.ph.bark .v3-toast-tick { background: var(--ball); color: var(--ball-ink); }
+
+/* ------------------------------------------------------------------ editor and library */
+.ph.bark .v4-editor-hero { border-radius: 30px !important; border: 0 !important; }
+.ph.bark .v4-editor-hero .v4-log-mark { width: 64px; height: 64px; }
+.ph.bark .v4-editor-section { border-radius: var(--r-card) !important; border-color: var(--hair) !important; background: var(--panel) !important; }
+.ph.bark .v4-editor-footer { background: color-mix(in srgb, var(--ground) 92%, transparent); }
+.ph.bark .v4-log-tile { border-radius: 26px !important; border: 0 !important; background: var(--event-bg) !important; color: var(--event-ink) !important; }
+.ph.bark .v4-log-tile .v4-log-mark { width: 44px; height: 44px; }
+.ph.bark .v4-log-tile-title { font-weight: 700; font-size: calc(18px * var(--text-scale)); letter-spacing: -.02em; }
+
+/* ------------------------------------------------------------------ photos and charts */
+.ph.bark .bl-photo { border-radius: 24px; border: 0; overflow: hidden; }
+.ph.bark .bl-photo-sun { background: var(--scene-sun) !important; }
+.ph.bark .bl-chart-bar { border-radius: 999px 999px 10px 10px !important; border: 0 !important; }
+.ph.bark .bl-chart-col:nth-child(4n + 1) .bl-chart-bar { background: var(--mood-dot); }
+.ph.bark .bl-chart-col:nth-child(4n + 2) .bl-chart-bar { background: var(--pee-dot); }
+.ph.bark .bl-chart-col:nth-child(4n + 3) .bl-chart-bar { background: var(--walk-dot); }
+.ph.bark .bl-chart-col:nth-child(4n + 4) .bl-chart-bar { background: var(--meal-dot); }
+.ph.bark .bl-chart-value { font-weight: 800; font-size: calc(15px * var(--text-scale)); color: var(--ink-strong); }
+
+/* ------------------------------------------------------------------ the opening */
+.ph.bark .v3-open-word, .ph.bark .v3-open-words { font-family: var(--font-display); font-weight: 800; letter-spacing: -.04em; }
+
+/* ------------------------------------------------------------------ pass 2 fixes */
+/* Every folio's mark takes its own family's sticker colour. */
+.ph.bark { --folio-dot: var(--meal-dot); }
+.ph.bark.bl-section-profiles { --folio-dot: var(--walk-dot); }
+.ph.bark.bl-section-medications { --folio-dot: var(--medication-dot); }
+.ph.bark.bl-section-calendar, .ph.bark.bl-section-expenses, .ph.bark.bl-section-training { --folio-dot: var(--training-dot); }
+.ph.bark.bl-section-insights, .ph.bark.bl-section-exports, .ph.bark.bl-section-photos { --folio-dot: var(--photo-dot); }
+.ph.bark.bl-section-safety { --folio-dot: var(--symptom-dot); }
+.ph.bark.bl-section-memory { --folio-dot: var(--mood-dot); }
+.ph.bark .v4-folio-mark { background: var(--folio-dot) !important; color: #FFFFFF !important; }
+.ph.bark .bl-identity { border: 0 !important; background: var(--folio-bg) !important; border-radius: 30px; padding: 18px; }
+.ph.bark .bl-identity h1, .ph.bark .bl-identity .bl-sub { color: var(--folio-ink); }
+.ph.bark .bl-avatar { border-radius: 50% !important; border: 0 !important; background: var(--folio-dot) !important; color: #FFFFFF !important; }
+.ph.bark h1 em { font-style: normal; color: inherit; background: linear-gradient(transparent 58%, var(--ball) 58%, var(--ball) 92%, transparent 92%); padding: 0 .06em; margin: 0 -.06em; }
+
+/* Timeline: one thread runs through the stickers, time on the left (Structured-style reading). */
+.ph.bark .v3-day-group .bl-records { border: 0; background: transparent; overflow: visible; }
+.ph.bark .v3-day-group .v3-row { position: relative; background: transparent !important; border: 0 !important; padding-left: 0 !important; padding-right: 4px !important; min-height: 76px; }
+.ph.bark .v3-day-group .v3-row + .v3-row { border-top: 0 !important; }
+.ph.bark .v3-day-group .v3-row::before {
+  content: ''; position: absolute; z-index: 0; left: 77px; width: 3px; top: 0; bottom: 0; border-radius: 3px; background: var(--hair);
+}
+.ph.bark .v3-day-group .v3-row:first-child::before { top: 50%; }
+.ph.bark .v3-day-group .v3-row:last-child::before { bottom: 50%; }
+.ph.bark .v3-day-group .v3-row .bl-event-icon { position: relative; z-index: 1; width: 44px; height: 44px; box-shadow: 0 0 0 5px var(--ground); }
+.ph.bark .v3-day-group .v3-row .bl-row-content { padding: 12px 14px; border-radius: 20px; background: var(--panel); border: 1px solid var(--hair); }
+.ph.bark .v3-day-group .v3-row.is-down .bl-row-content { background: var(--inset); }
+.ph.bark .v3-day-group .v3-row > .ic { display: none; }
+
+/* Profile: the dog's ID card. */
+.ph.bark .v3-profile-hero {
+  position: relative; overflow: hidden; border: 0 !important; border-radius: 30px; background: var(--panel) !important; padding: 64px 20px 20px !important; align-items: flex-end;
+}
+.ph.bark .v3-profile-hero::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 72px; background: var(--ball); }
+.ph.bark .v3-profile-hero .v3-day-dog { position: relative; z-index: 1; width: 104px; height: 104px; border-radius: 50%; border: 5px solid var(--panel); background: var(--park-sky); }
+.ph.bark .v3-profile-hero h2 { font-size: calc(30px * var(--text-scale)); font-weight: 800; }
+.ph.bark h1 em, .ph.bark .bl-accent-word { background-repeat: no-repeat; background-size: 100% 100%; background-position: left center; }
+.ph.bark .v3-day-group .v3-row::before { transform-origin: 50% 0; }
+.ph.bark .v3-profile-hero::before { transform-origin: 0 50%; }
+
+.ph.bark .bl-head { flex-wrap: wrap; row-gap: 4px; }
+.ph.bark .bl-head h2 { min-width: 0; }
+.ph.bark .v3-count-n { transform-origin: 0 100%; }
+
+/* The folio sticker rests tilted on `rotate`, so moves on `transform` (carry, arrival) compose with it. */
+.ph.bark .v4-folio-mark { transform: none; rotate: -10deg; }
+
+/* Picks bloom ball green from the finger (interaction-feel): the fill spreads, the label stays readable. */
+.ph.bark .v3-filter-row .bl-chip, .ph.bark .v4-choice { position: relative; isolation: isolate; }
+.ph.bark .v3-filter-row .bl-chip[aria-pressed='true']:has(> .sel-bloom),
+.ph.bark .v4-choice[aria-pressed='true']:has(> .sel-bloom) { background: var(--panel) !important; border-color: var(--ball) !important; color: var(--ball-ink) !important; }
+.ph.bark .v3-filter-row .bl-chip .sel-bloom i, .ph.bark .v4-choice .sel-bloom i { background: var(--ball) !important; }

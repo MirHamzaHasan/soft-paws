@@ -1,0 +1,122 @@
+{
+  "sourceFingerprint": "34c44c1b2d0eea4673e97ea083a18b767f7ca28dc98c12c4d000829d1e161909",
+  "nativeFixtures": "Existing separate mutable SQLite QA journals; no reset",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "f9f2e12be54644972b78d5d541596bb268ea24533296ecd0222562af3a47a85b"
+    },
+    {
+      "path": "checks/android-loading-layout.json",
+      "sha256": "2206bd0a4ab88efd5d7472e6eb0a77d61603ac4f55dc43912284ebd2f361e22b"
+    },
+    {
+      "path": "checks/android-motion.txt",
+      "sha256": "28cc243719fa7e4351a782a5fb7bace4907f14975aefb4e83ecebe2986e0e5ce"
+    },
+    {
+      "path": "checks/android-variants.json",
+      "sha256": "4e100235bfb9f0e0e0aeade90dfd36aea032ccc81abe8315c510ff4b0b61dcc5"
+    },
+    {
+      "path": "checks/board-contrast.txt",
+      "sha256": "36141b2a775f3e9a0d8c2a53720746745f1ad5fa0ac9f8b6cbe513ecd4c9ba17"
+    },
+    {
+      "path": "checks/board-qa.json",
+      "sha256": "908e753cb364989aec5fb66fd31a04f1757a4dc21d6bbdb9da8fe09e43575134"
+    },
+    {
+      "path": "checks/full-verification.txt",
+      "sha256": "57354d15660cc7715e90d8bf73dd1c464eeed9ff6354a2a986d862f5ad03a8fc"
+    },
+    {
+      "path": "checks/ios-summary.json",
+      "sha256": "19b1e790de945b3e3d662461a911afed547dd8640aa0ee360526fcdcfc326e72"
+    },
+    {
+      "path": "checks/ios-variants.json",
+      "sha256": "ab36485e40b38a74198cfa58c159e3547c644aefddae5e55361144109b47e424"
+    },
+    {
+      "path": "checks/jvm-summary.json",
+      "sha256": "775b81db9051a04aaefc911469797d334bfbfeed8222d257c7f0cd1a2ed55ad1"
+    },
+    {
+      "path": "checks/metadata.txt",
+      "sha256": "97487a74cddf3598d605eb37f0031932c0da55398859ac6ad1f893a4c5d1ae95"
+    },
+    {
+      "path": "checks/source-fingerprints.txt",
+      "sha256": "b193f2459213c64c02831841aa76b94933d34d7ade7a6f4ead0d68171e21448d"
+    },
+    {
+      "path": "motion/android-navigation.mp4",
+      "sha256": "550cf8e5e34740fbdbdd80af5f8d00ad811c2c83267d75b02b52d35898b2121c"
+    },
+    {
+      "path": "motion/android-slow-browse.mp4",
+      "sha256": "59119fab6601a906486e7cd4d279e8001b318c0bb22230dc2d668cbdcc73cb88"
+    },
+    {
+      "path": "motion/ios-navigation.mp4",
+      "sha256": "5a1d69bc1c41017cff1a4b5cc6848b937250dfad02988c87c934a4031d2bf765"
+    },
+    {
+      "path": "screenshots/android/dark.png",
+      "sha256": "3e2dc2b0857e99dc5f9d537b195c1c191de66e94e7fc6925e0c7c539eb757c41"
+    },
+    {
+      "path": "screenshots/android/empty.png",
+      "sha256": "b70601149eeeb7a3b1a58b4691a8dafc71eb863e8a5fb5aec5142c64dc0d4a12"
+    },
+    {
+      "path": "screenshots/android/light.png",
+      "sha256": "a066d601cd145996bfd33af3c3290fbd3c3bab3ccbbb570ca8ec3adf69a1549f"
+    },
+    {
+      "path": "screenshots/android/loaded-after-reading.png",
+      "sha256": "a066d601cd145996bfd33af3c3290fbd3c3bab3ccbbb570ca8ec3adf69a1549f"
+    },
+    {
+      "path": "screenshots/android/loading.png",
+      "sha256": "ee5ecf64fe65937d430773b573fb45d5ab15b4ccf5b12dc17eea5af057dcf3a7"
+    },
+    {
+      "path": "screenshots/android/reduced.png",
+      "sha256": "0ea6e6a1ecb375bce45651d189c62bde1cc3f611ab1c7e0176c837425c45ce42"
+    },
+    {
+      "path": "screenshots/android/text130.png",
+      "sha256": "915c72b9f5029e872e187edc06d15cb3ba790371ff60a98854f17e7e1bfce48c"
+    },
+    {
+      "path": "screenshots/ios/dark.png",
+      "sha256": "eaf4ddffdd968b368726690425bb3d410e8526a9f2ad387fbc41059cb149f11d"
+    },
+    {
+      "path": "screenshots/ios/empty.png",
+      "sha256": "2133fa7c0debd547e0e12f5209dcce2030cda1d43d3afeb3bc7c24aca97ff59a"
+    },
+    {
+      "path": "screenshots/ios/light.png",
+      "sha256": "492ad643703c1ffc765a40808a1280436b4a9adc9178ca51d8b30265bbc3e1df"
+    },
+    {
+      "path": "screenshots/ios/loaded-after-reading.png",
+      "sha256": "09501e8f8718bd83fae5c9ed62e3a46c655f4736f8bb3f3de4ed842a76d5ced0"
+    },
+    {
+      "path": "screenshots/ios/loading.png",
+      "sha256": "1bed1226e3e7f97079ce932312b022a2106d26654315d8cb19cd268efe811a22"
+    },
+    {
+      "path": "screenshots/ios/reduced.png",
+      "sha256": "492ad643703c1ffc765a40808a1280436b4a9adc9178ca51d8b30265bbc3e1df"
+    },
+    {
+      "path": "screenshots/ios/text135.png",
+      "sha256": "c7870c22715594011514377c31fc7c7b3bd2df1b8bc161c9a020688c7e1292f3"
+    }
+  ]
+}

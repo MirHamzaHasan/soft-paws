@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.draco.arts.apps.bark.log.dogs.journal.CompanionTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-10-16T17:28:17.984Z" hostname="Mirs-MacBook-Pro.local" time="3.385">
+  <properties/>
+  <testcase name="invalidSetupCannotCreateDogAndDocumentFailureDoesNotPublishSuccess" classname="com.draco.arts.apps.bark.log.dogs.journal.CompanionTest" time="0.015"/>
+  <testcase name="profileCustomMixesAndDraftsPersistWithoutTouchingAnExistingJournal" classname="com.draco.arts.apps.bark.log.dogs.journal.CompanionTest" time="0.371"/>
+  <testcase name="stopAndRegenerateSaveOnceAndSignOutRetainsTheCareJournal" classname="com.draco.arts.apps.bark.log.dogs.journal.CompanionTest" time="0.012"/>
+  <testcase name="interruptedProfileEditPreservesExistingCareContactsAndGuestJournalAccess" classname="com.draco.arts.apps.bark.log.dogs.journal.CompanionTest" time="0.003"/>
+  <testcase name="dogDeletionRemovesOnlyItsDocumentsAndBadReadIsNotTreatedAsEmptyData" classname="com.draco.arts.apps.bark.log.dogs.journal.CompanionTest" time="0.006"/>
+  <testcase name="sourceConsentAndClinicalBoundariesRemainExplicit" classname="com.draco.arts.apps.bark.log.dogs.journal.CompanionTest" time="2.944"/>
+  <testcase name="allBoardRoutesExistAndMascotBagAndRestPosesAreDeterministic" classname="com.draco.arts.apps.bark.log.dogs.journal.CompanionTest" time="0.014"/>
+  <testcase name="explicitSourcesAreDogScopedAndSnapshotSurvivesProfileEditsAndRestart" classname="com.draco.arts.apps.bark.log.dogs.journal.CompanionTest" time="0.01"/>
+  <testcase name="accountDeletionClearsDemoConversationsAcrossDogsAndPreservesCare" classname="com.draco.arts.apps.bark.log.dogs.journal.CompanionTest" time="0.004"/>
+  <testcase name="startingAnotherConversationNeverSilentlyDropsOlderHistory" classname="com.draco.arts.apps.bark.log.dogs.journal.CompanionTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

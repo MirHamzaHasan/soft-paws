@@ -1,0 +1,37 @@
+Running: /Library/Frameworks/Python.framework/Versions/3.11/bin/python3 tools/check_foundation.py
+BarkLog identities, local/free policy, resources and documentation links passed.
+Running: /Library/Frameworks/Python.framework/Versions/3.11/bin/python3 tools/design_tokens.py --check
+Board color, motion and icon exports match.
+Running: /Library/Frameworks/Python.framework/Versions/3.11/bin/python3 tools/check_native_parity.py
+Parity coverage passed: 166 entries; 123 product; 0 matched. This is not visual approval.
+Running: /Library/Frameworks/Python.framework/Versions/3.11/bin/python3 tools/plugins.py check
+Plugin registration is current.
+Running: /Library/Frameworks/Python.framework/Versions/3.11/bin/python3 -m unittest discover -s tools/tests -v
+test_both_themes_and_firm_motion_are_pinned (test_design_tokens.DesignTokensTest.test_both_themes_and_firm_motion_are_pinned) ... ok
+test_export_is_reproducible (test_design_tokens.DesignTokensTest.test_export_is_reproducible) ... ok
+test_icon_slots_ignore_family_names_and_nested_subtitle_values (test_design_tokens.DesignTokensTest.test_icon_slots_ignore_family_names_and_nested_subtitle_values) ... ok
+test_icon_subset_contains_only_vector_paths (test_design_tokens.DesignTokensTest.test_icon_subset_contains_only_vector_paths) ... ok
+test_native_icon_references_exist_in_board_export (test_design_tokens.DesignTokensTest.test_native_icon_references_exist_in_board_export) ... ok
+test_native_review_is_explicit_debug_only (test_design_tokens.DesignTokensTest.test_native_review_is_explicit_debug_only) ... ok
+test_exact_compose_resource_layout_is_required_for_alternate_test_host (test_ios_bundle.IosBundleTests.test_exact_compose_resource_layout_is_required_for_alternate_test_host) ... ok
+test_fonts_in_wrong_location_do_not_mask_missing_compose_resources (test_ios_bundle.IosBundleTests.test_fonts_in_wrong_location_do_not_mask_missing_compose_resources) ... ok
+test_board_asset_drift_fails (test_native_parity.NativeParityTest.test_board_asset_drift_fails) ... ok
+test_current_coverage_and_asset_hashes (test_native_parity.NativeParityTest.test_current_coverage_and_asset_hashes) ... ok
+test_dropped_screen_is_not_silently_accepted (test_native_parity.NativeParityTest.test_dropped_screen_is_not_silently_accepted) ... ok
+test_duplicate_id_and_shared_task_fail (test_native_parity.NativeParityTest.test_duplicate_id_and_shared_task_fail) ... ok
+test_file_presence_alone_cannot_prove_visual_parity (test_native_parity.NativeParityTest.test_file_presence_alone_cannot_prove_visual_parity) ... ok
+test_live_added_screen_and_changed_sequence_fail (test_native_parity.NativeParityTest.test_live_added_screen_and_changed_sequence_fail) ... ok
+test_missing_child_task_or_native_source_fails (test_native_parity.NativeParityTest.test_missing_child_task_or_native_source_fails) ... ok
+test_setup_is_product_and_historical_is_not (test_native_parity.NativeParityTest.test_setup_is_product_and_historical_is_not) ... ok
+test_unproved_completion_claim_fails (test_native_parity.NativeParityTest.test_unproved_completion_claim_fails) ... ok
+test_enable_disable_changes_registration_and_stale_check_fails (test_plugins.PluginCommandsTest.test_enable_disable_changes_registration_and_stale_check_fails) ... ok
+test_missing_builtin_and_duplicate_json_keys_fail (test_plugins.PluginCommandsTest.test_missing_builtin_and_duplicate_json_keys_fail) ... ok
+test_new_plugin_is_disabled_and_does_not_replace_existing_code (test_plugins.PluginCommandsTest.test_new_plugin_is_disabled_and_does_not_replace_existing_code) ... ok
+test_rejects_unknown_fields_ids_versions_and_factory_injection (test_plugins.PluginCommandsTest.test_rejects_unknown_fields_ids_versions_and_factory_injection) ... ok
+test_reserved_and_existing_paths_are_not_overwritten (test_plugins.PluginCommandsTest.test_reserved_and_existing_paths_are_not_overwritten) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.672s
+
+OK
+BarkLog metadata checks passed. Platform builds were not requested.
