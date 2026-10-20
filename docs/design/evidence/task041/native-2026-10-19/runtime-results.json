@@ -1,0 +1,28 @@
+{
+  "androidSoundWeeklyJourney": {
+    "passed": 1,
+    "failed": 0
+  },
+  "iosSoundWeeklyAndNormalEntry": {
+    "passed": 2,
+    "failed": 0
+  },
+  "ownedFixture": "park-ai-cards-v1",
+  "fixtureCareCounts": {
+    "total": 12,
+    "walk": 7,
+    "grooming": 2,
+    "meal": 3
+  },
+  "fixtureReplies": "demo; no Firebase or online AI",
+  "normalProfileEntryVerified": [
+    "android",
+    "ios"
+  ],
+  "normalOnlineWeeklyRequest": 422,
+  "normalOnlineMinimalRequest": 422,
+  "serverErrorCode": "CONTEXT_FEATURE_UNKNOWN",
+  "acceptedLiveAnswer": false,
+  "releaseOnlineAiEnabled": false,
+  "physicalAudioVerified": false
+}

@@ -49,7 +49,7 @@ fun EventButton(type: CareEventType, todayCount: Int?, enabled: Boolean, modifie
     val interaction = remember { MutableInteractionSource() }
     val motion = LocalBarkMotion.current
     Surface(
-        onClick = onClick, enabled = enabled, interactionSource = interaction,
+        onClick = soundAction(onClick), enabled = enabled, interactionSource = interaction,
         modifier = modifier.heightIn(min = 132.dp).then(pressMotion(interaction, enabled)).semantics { contentDescription = if (todayCount == null) "${type.label}. Reading records." else "Log ${type.label}. $todayCount today." },
         shape = RoundedCornerShape(28.dp), color = palette.background, contentColor = palette.text,
         shadowElevation = 0.dp, tonalElevation = 0.dp,
@@ -81,7 +81,7 @@ fun EventButton(type: CareEventType, todayCount: Int?, enabled: Boolean, modifie
 fun TimelineRow(event: CareEvent, zone: TimeZone, includeDate: Boolean = false, onClick: (() -> Unit)? = null, bordered: Boolean = true) {
     val palette = EventPalette.forType(event.type, LocalBarkDarkTheme.current)
     Surface(
-        Modifier.fillMaxWidth().heightIn(min = 76.dp).then(if (onClick != null) Modifier.clickable(role = Role.Button, onClickLabel = "View full ${event.type.label} record", onClick = onClick) else Modifier),
+        Modifier.fillMaxWidth().heightIn(min = 76.dp).then(if (onClick != null) Modifier.clickable(role = Role.Button, onClickLabel = "View full ${event.type.label} record", onClick = soundAction(onClick)) else Modifier),
         shape = RoundedCornerShape(if (bordered) 12.dp else 0.dp), color = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface, border = if (bordered) BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant) else null,
         tonalElevation = 0.dp, shadowElevation = 0.dp,
@@ -118,7 +118,7 @@ fun BoardThreadRow(time: String, title: String, note: String, icon: String, fami
         val x = 80.dp.toPx()
         drawLine(line, Offset(x, if (first) size.height / 2 else 0f), Offset(x, if (last) size.height / 2 else size.height), 3.dp.toPx(), StrokeCap.Round)
         drawCircle(ground, 27.dp.toPx(), Offset(x, size.height / 2))
-    }.clickable(interactionSource = source, indication = null, role = Role.Button, onClickLabel = "View $title record", onClick = onClick),
+    }.clickable(interactionSource = source, indication = null, role = Role.Button, onClickLabel = "View $title record", onClick = soundAction(onClick)),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(time, Modifier.width(46.dp), style = MaterialTheme.typography.titleMedium.copy(fontFamily = LocalDisplayFont.current, fontWeight = FontWeight.Bold, fontSize = 14.sp))
         Surface(shape = RoundedCornerShape(50), color = boardColor("$family-dot")) { Box(Modifier.size(44.dp), contentAlignment = Alignment.Center) { BarkIcon(icon, Modifier.size(23.dp), Color.White) } }

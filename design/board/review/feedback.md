@@ -1,5 +1,68 @@
 # BarkLog board review log
 
+## Plan and paywall · 2026-10-20
+
+| # | Their note | What changed | Status |
+| --- | --- | --- | --- |
+| 37 | “Beautiful pay wall… nice animation… use Rive if possible… your plan screen… seems so flat… use Ungenerated” | Named-dog care card, one sliding checked price choice, rolling money and account plan. Original Rive spaniel, approved prices, visible free path and reduced motion retained. | 12 layouts, 15 motion/flow/Rive checks, contrast and screenshots checked; owner review pending before native |
+| 38 | “Pet food scanner… cat or dog food… explains the label… pantry gets recalled… Premium users only” | Recorded task048; separate Coming soon · Premium card, not an available subscription benefit. | Planned; no scanner or recall monitor implemented |
+| 39 | “May be able to access the Rive libraries… take full advantage” | Connected to local official MCP, opened owned spaniel 2660676 and read available controller/clips/libraries. | Dog Controller + seven clips accessible; no linked libraries/components in this file; original export reused |
+| 40 | “For the dog app make new… why… use again… use Rive” | Original notebook puppy, new Rive file 2667617, its own Care Companion controller and genuine runtime/editable exports. Replaces the spaniel on the three plan previews only. | Done 20 Oct: Rive playback/midframes, 12 layouts and 15 motion/flow checks pass. Waiting for owner review before native; supersedes reuse in #37/#39 for this slice |
+
+Work: [task047](../../../tasks/task047-premium-plan-motion-design.md).
+
+## Soft interaction sounds · 2026-10-19
+
+| # | Their note | What changed | Status |
+| --- | --- | --- | --- |
+| 36 | “ok great” to the AI cards; “can we add asmr kind of sound on button clicks and all?” | Card direction accepted and retained. New optional local sound preview: wood/pop textures, tap/selection/saved cues, volume and off switch. | Sound behavior/waveform/four-layout and 22-card-regression checks pass; owner listening review pending; native audio not implemented |
+
+Work: [task042](../../../tasks/task042-soft-interaction-sounds.md).
+Listen: <http://localhost:4278/premium/index.html#play-next-sounds>.
+
+## BarkLog AI answer cards · 2026-10-19
+
+| # | Their note | What changed | Status |
+| --- | --- | --- | --- |
+| 34 | Overall chat design/text is fine; make answers into cards, show relevant previous logs and reserve future dog-product space. | Isolated answer-card section preserving the compact chat shell; database-style facts/source notes separated from general guidance; separate inactive product-placement example. | Board checked: 22 layouts and interactions; owner accepted in #36; native implementation pending |
+| 35 | Add a week automatically, always include the dog's name/profile, and never show Atlas in the app; it is BarkLog AI. | Automatic profile + seven-day review button and explicit scope consent proposal; no individual log picking. Native consent migration, payload bounds and complete product-name audit specified in task041. | Board checked; owner accepted in #36; native implementation pending |
+
+Work: [task041](../../../tasks/task041-barklog-ai-answer-cards.md).
+Preview: <http://localhost:4278/premium/index.html?answerTheme=light#play-next-chat-cards>.
+
+## Grounded chat, then local-model hold · 2026-10-18
+
+| # | Their note | What changed | Status |
+| --- | --- | --- | --- |
+| 31 | Tell local AI the dog profile/owner, retrieve logs, answer the question first and show recent readings. | Separate grounded-chat proposal with example source-backed counts and a recent-care bar card; preliminary retrieval code. | Paused by later owner direction |
+| 32 | “Approve this card for the app.” | Recorded approval of next-chat-grounded layout. | Approved; native UI not built before pause |
+| 33 | “Stop… hold that feature… use Atlas only.” | Stop local RAG/card work; task039 selects Atlas-only client and removes local controls from the active flow. | Client implemented; final checks/live service proof tracked in task039 |
+
+
+## Premium outputs and missing Home entry · 2026-10-17
+
+| # | Their note | What changed | Status |
+| --- | --- | --- | --- |
+| 28 | “Lost the menu… Ask about {Dog name}… let's fix that.” | Restore existing companion initialization in old existing-dog Debug review; show the approved Ask entry with either tab layout, reserving the dock's measured height. | Done (2026-10-17); builds/tests and scoped native checks pass |
+| 29 | Mobile report free; PDF/sharing should require Premium; find other useful paid features. | Gate report and Memory Book PDF/print/sharing using the labelled demo plan; free mobile preview/CSV retained; contextual existing Premium page and original return destination. | Done (2026-10-17) for demo gates; real entitlements remain deferred |
+| 30 | Create nice image-based video highlights on KMP Android/iOS as Premium. | New photo editor and output-value board, local image selection/captions/order/format/play-pause, plus official framework comparison and native slice plan. | Waiting for editor review; no native MP4 encoder installed |
+
+Work: [task033](../../../tasks/task033-premium-outputs-and-home-entry.md).
+Preview: <http://localhost:4278/premium/index.html#play-next-highlight-editor>.
+
+## Original Rive spaniel · 2026-10-17
+
+| # | Their note | What changed | Status |
+| --- | --- | --- | --- |
+| 26 | “Test with the dog… change the dog too… still low quality… make it nice high quality.” | Original vector spaniel in Rive, seven clips, trigger controller, interrupted-action blending, greeting paw detail and a local exported-player preview in close-up/Home context. App adoption stays separate from this review. | Waiting for them |
+| 25 | Installed Glaxnimate to start the free mascot workflow. | Editable vector/Glaxnimate/Lottie study in task030; verified CLI path after its macOS GUI accessibility crash. | Superseded by #26 for the next mascot direction |
+| 24 | The dog has a brown background on click; keep it clean. | task029 removed the default rectangular native click indication; checked iOS tap and shared Android/iOS builds. Both animation studies keep transparent artwork. | Done (2026-10-17) |
+
+Work: [task031](../../../tasks/task031-rive-spaniel-mascot-study.md).
+Preview: <http://localhost:4278/refinements/rive-dog/index.html?v=031>.
+The current Rive workspace still adds its mandatory intro splash to the export;
+it is distinguished from the transparent dog and has not been hidden or patched.
+
 ## Larger animated dog and one care card · 2026-10-16
 
 | # | Their note | What changed | Status |
@@ -135,3 +198,23 @@ Standing review rules: [standing-rules.md](standing-rules.md).
 | --- | --- | --- | --- |
 | 1 | “Designs are extremely simple… make it interactive, nicely animated and a nice colorful app. Use Ungenerated.” | Reworked the board with a warm editorial palette, richer semantic care colours, dog-first illustration, section colour grounds, expressive Home/opening compositions, animated charts, rolling care counts, liquid toggles, Firm press feedback and continuity-safe entrances. Product structure and safety boundaries remain unchanged. | Done (2026-10-15) |
 | 2 | “Create outstanding design with best possible motion using Ungenerated.” | v3 “day line” proposal. The day is drawn as a line (06–24) and every record sits at its time; it carries from the opening film through setup, Home, Timeline, Record and Insights. Home: a tap flies the care icon onto the line, the count rolls, the dog reacts, the record slides into Recent care, and Undo sits where the moment landed (nothing covers the tiles). Opening: four moments leave the dog and land on the line, which becomes a dated card; button last. Setup: typed name becomes the heading and the action. Timeline: type chips bloom from the finger; each day shows its line. Insights: a week of day lines plus one bar per type and a computed sentence replace the stat-card grid. Kit: day-line part and a Firm/Bubbly/Lively landing picker. Removed: arc grounds, logo on every screen, automatic accent word, decorative rings. Previous direction was archived before this pass; the archive was later removed in the owner-requested task027 cleanup. | Proposed (2026-10-15) · awaiting Pick |
+
+
+27. **2026-10-17 · Native Rive adoption authorized.** Owner paid for Draco Arts
+    Studios Cadet and requested exporting the liked dog and starting application
+    changes. Task032 replaces the prior prototype-only boundary for this mascot;
+    unrelated screen directions and real service/billing deferrals remain.
+
+
+31. **2026-10-17 · Video approved; restore earlier chat.** Owner selected the
+    video flow for native highlights. Owner rejected the simplified native chat's
+    large controls and requested the existing clean, animated chat. Task034 ports
+    the approved video flow and corrects chat toward `next-chat`; no new chat
+    direction or pricing decision is inferred.
+
+
+## 2026-10-17 · Chat care tools
+
+| # | Their note | What changed | Status |
+|---|---|---|---|
+| 32 | Floating keyboard/emoji strip is inside the simulator; add pictures, vet calls and a downloadable report in chat. | Extended the approved compact chat in place: local photo attachments, saved vet contacts, factual report preview and Premium PDF. Corrected iOS keyboard spacing; disabled the matching Gboard stylus toolbar only on the owned emulator. General medication education only; no image assessment, prescribing or doses in the demo. | Simulator verification complete; physical/clinical release checks pending |

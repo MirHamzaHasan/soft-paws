@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
@@ -43,6 +44,7 @@ class JournalController(
     private val haptics: HapticManager,
     private val nowMillis: () -> Long,
     private val timeZone: () -> kotlinx.datetime.TimeZone,
+    private val onCommitted: () -> Unit = {},
 ) {
     constructor(repository: JournalRepository, preferences: StorageManager, haptics: HapticManager, nowMillis: () -> Long) :
         this(repository, preferences, haptics, nowMillis, { kotlinx.datetime.TimeZone.currentSystemDefault() })
@@ -91,12 +93,25 @@ class JournalController(
         }
     }
 
-    suspend fun selectDog(id: String) {
-        require(_state.value.dogs.any { it.id == id }) { "Dog not found." }
-        if (id == _state.value.selectedDogId) return
-        _state.update { it.copy(selectedDogId = id, events = emptyList(), dayEvents = emptyList(), dailyCounts = emptyMap(), totalCount = 0, loading = true, feedback = null, lastSaved = null, quickUndo = null) }
-        withContext(Dispatchers.Default) { runCatching { preferences.setString(SELECTED_DOG_KEY, id) } }
+    suspend fun selectDog(id: String): Boolean {
+        // A committed profile can arrive before the long-lived UI observer refreshes.
+        val dogs = try { repository.observeDogs().first() }
+        catch (cancelled: CancellationException) { throw cancelled }
+        catch (_: Exception) {
+            _state.update { it.copy(error = "Couldn't open this dog's journal. Your saved records stay here. Try again.") }
+            return false
+        }
+        if (dogs.none { it.id == id }) {
+            _state.update { it.copy(error = "This dog is no longer available. Choose another dog.") }
+            return false
+        }
+        _state.update {
+            if (it.selectedDogId == id) it.copy(dogs = dogs, error = null)
+            else it.copy(dogs = dogs, selectedDogId = id, events = emptyList(), dayEvents = emptyList(), dailyCounts = emptyMap(), totalCount = 0, loading = true, error = null, feedback = null, lastSaved = null, quickUndo = null)
+        }
         selection.value = id
+        withContext(Dispatchers.Default) { runCatching { preferences.setString(SELECTED_DOG_KEY, id) } }
+        return true
     }
 
     fun recordSaved(event: CareEvent) { _state.update { it.copy(lastSaved = event) } }
@@ -118,6 +133,7 @@ class JournalController(
         try {
             block()
             runCatching { haptics.success() }
+            runCatching { onCommitted() }
         } catch (cancelled: CancellationException) {
             throw cancelled
         } catch (_: Exception) {

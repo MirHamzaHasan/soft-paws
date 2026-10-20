@@ -1,0 +1,23 @@
+{
+  "platform": "iOS 18.5 simulator",
+  "mode": "normal signed Debug, no fixture",
+  "uiTestPassed": true,
+  "replyAndSessionSurviveRelaunch": true,
+  "counts": {
+    "dogs": 1,
+    "care_events": 0,
+    "care_items": 0,
+    "local_documents": 2
+  },
+  "careCountsPreserved": true,
+  "savedReplies": [
+    {
+      "question": "How can you help me related to my dog?",
+      "assistant": true,
+      "source": "atlas",
+      "answer": "I can help with general dog-care education, daily routines, grooming, calm handling, enrichment, and organizing caregiver notes into factual summaries or vet-visit questions. I don\u2019t have selected observations here, so I can\u2019t make dog-specific claims. I won\u2019t diagnose, triage, choose medication or doses, or recommend treatment; health concerns should go to a veterinarian.",
+      "profileAttached": false,
+      "recordCount": 0
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "Android": {
+    "os": "API35",
+    "compose": "1.10.3",
+    "realFrames": 18,
+    "greetingWavePixels": 1653,
+    "reducedMotionPixelsEqual": true
+  },
+  "iOS": {
+    "os": "18.5",
+    "compose": "1.10.3",
+    "videoSeconds": 58.34,
+    "sampledFrames": 292,
+    "tapGreeting": true,
+    "postCommitSaveReaction": true,
+    "saveUndoRoundTrip": true,
+    "homeTimelineHome": true,
+    "backgroundForeground": true,
+    "reducedMotionPixelsEqual": true
+  },
+  "physicalDeviceQa": false,
+  "nativeDarkThemeQa": false,
+  "allScreensMatched": false
+}

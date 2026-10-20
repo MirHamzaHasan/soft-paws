@@ -1,0 +1,13 @@
+Test Suite 'Selected tests' started at 2026-10-19 20:40:57.239.
+Test Suite 'BarkLogUITests.xctest' started at 2026-10-19 20:40:57.240.
+Test Suite 'AddDogReviewJourneys' started at 2026-10-19 20:40:57.240.
+Test Case '-[BarkLogUITests.AddDogReviewJourneys testFullNewDogSetupResumesAndSavesItsOwnProfile]' started.
+Test Case '-[BarkLogUITests.AddDogReviewJourneys testFullNewDogSetupResumesAndSavesItsOwnProfile]' passed (241.014 seconds).
+Test Case '-[BarkLogUITests.AddDogReviewJourneys testSavedAdditionalDogCanOpenHomeAfterRelaunch]' started.
+Test Case '-[BarkLogUITests.AddDogReviewJourneys testSavedAdditionalDogCanOpenHomeAfterRelaunch]' passed (30.061 seconds).
+Test Suite 'AddDogReviewJourneys' passed at 2026-10-19 20:45:28.318.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 271.075 (271.079) seconds
+Test Suite 'BarkLogUITests.xctest' passed at 2026-10-19 20:45:28.319.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 271.075 (271.080) seconds
+Test Suite 'Selected tests' passed at 2026-10-19 20:45:28.320.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 271.075 (271.081) seconds

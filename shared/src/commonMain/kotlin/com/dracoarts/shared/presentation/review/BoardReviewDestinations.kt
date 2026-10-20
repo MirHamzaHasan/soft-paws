@@ -6,6 +6,9 @@ import com.dracoarts.shared.domain.model.ReportContent
 
 /** Board IDs resolve to real screens; state-specific evidence remains individually tracked. */
 val boardReviewFeatures = mapOf(
+    "next-highlight-editor" to Feature.VideoHighlight,
+    "next-highlight-empty" to Feature.VideoHighlight,
+    "next-highlight-gate" to Feature.VideoHighlightGate,
     "log-chooser" to Feature.Chooser,
     "dog-switcher" to Feature.DogSwitcher,
     "dog-add" to Feature.DogAdd,
@@ -37,6 +40,13 @@ val boardReviewFeatures = mapOf(
     "trends-month" to Feature.Monthly,
     "trends-sparse" to Feature.Monthly,
     "trends-empty" to Feature.Monthly,
+    "next-safety" to Feature.Safety,
+    "next-emergency" to Feature.Emergency,
+    "next-toxicity" to Feature.Toxicity,
+    "next-safety-topics" to Feature.FirstAid,
+    "next-nearby-vet" to Feature.NearestVet,
+    "next-train-dog" to Feature.TrainDog,
+    "next-triage" to Feature.Triage,
     "safety-home" to Feature.Safety,
     "emergency-card" to Feature.Emergency,
     "emergency-contact" to Feature.EmergencyEdit,

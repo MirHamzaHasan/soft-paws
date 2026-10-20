@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+  <title>BarkLog greeting paw pads</title>
+  <path d="M13 34c0-8 6-14 12-14s12 6 12 14c0 8-7 9-12 5-5 4-12 3-12-5Z" fill="#805033"/>
+  <ellipse cx="12" cy="17" rx="4" ry="5.5" transform="rotate(-22 12 17)" fill="#805033"/>
+  <ellipse cx="23" cy="11" rx="4" ry="5.5" fill="#805033"/>
+  <ellipse cx="35" cy="15" rx="4" ry="5.5" transform="rotate(22 35 15)" fill="#805033"/>
+</svg>

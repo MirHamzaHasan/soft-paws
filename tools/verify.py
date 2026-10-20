@@ -29,6 +29,7 @@ def main() -> int:
     if args.ios and (platform.system() != "Darwin" or shutil.which("xcodebuild") is None):
         parser.error("iOS host verification requires macOS with Xcode.")
     run([sys.executable, "tools/check_foundation.py"])
+    run([sys.executable, "tools/check_mascot.py"])
     run([sys.executable, "tools/design_tokens.py", "--check"])
     run([sys.executable, "tools/check_native_parity.py"])
     run([sys.executable, "tools/plugins.py", "check"])
@@ -36,6 +37,10 @@ def main() -> int:
     if args.metadata_only:
         print("BarkLog metadata checks passed. Platform builds were not requested.")
         return 0
+    # Client configs are owner-supplied and ignored by Git. Validate them when
+    # available, without making credential-free metadata checks depend on them.
+    if (ROOT / "androidApp/google-services.json").exists() and (ROOT / "iosApp/iosApp/GoogleService-Info.plist").exists():
+        run([sys.executable, "tools/firebase_config.py"])
     java = shutil.which("java")
     if java is None:
         raise RuntimeError("Install JDK 17+ and make java available on PATH.")
@@ -52,7 +57,9 @@ def main() -> int:
             run(["xcodebuild", "-quiet", "-project", "iosApp/iosApp.xcodeproj", "-scheme", "iosApp",
                  "-configuration", configuration, "-sdk", "iphonesimulator", "-destination",
                  "generic/platform=iOS Simulator", "-derivedDataPath", ".verify-build/xcode",
-                 "ARCHS=arm64", "CODE_SIGNING_ALLOWED=NO", "build"])
+                 # Simulator signing supplies the app's own Keychain identity.
+                 # Unsigned builds compile, but Firebase session persistence fails (17995).
+                 "ARCHS=arm64", "CODE_SIGNING_ALLOWED=YES", "CODE_SIGN_IDENTITY=-", "build"])
             run([sys.executable, "tools/check_ios_bundle.py", configuration])
     print("Requested verification passed." + (" iOS was not built; use --ios on a Mac." if not args.ios else ""))
     return 0

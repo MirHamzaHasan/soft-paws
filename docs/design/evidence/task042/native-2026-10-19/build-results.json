@@ -1,0 +1,13 @@
+{
+  "pythonToolsTests": 30,
+  "jvmTests": 133,
+  "jvmFailures": 0,
+  "androidDebugRelease": true,
+  "androidLint": true,
+  "sqlDelightMigrations": true,
+  "iosSignedDebugReleaseHosts": true,
+  "iosBundleChecks": true,
+  "releaseOnlineAiEnabled": false,
+  "physicalAudioVerified": false,
+  "nativeDarkLargeTextVerified": false
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "5791410e-d8cd-4044-aab0-8c7dd03061d6",
+    "owner_id": "53e64d19-7848-4321-a637-9da7319023fa",
+    "name": "Luna 09708",
+    "created_at": 1792002240000,
+    "details_json": "{\"breed\":\"Beagle\",\"age\":\"1 years, 2 months\",\"sex\":\"Female\",\"companion\":{\"stage\":\"Puppy\",\"years\":\"1\",\"months\":\"2\",\"breeds\":[\"Beagle\"],\"size\":\"Small\",\"weight\":\"9.5\",\"goals\":[\"Remember daily care\",\"Keep their memories\"],\"routines\":[\"Morning & evening\",\"Every day is different\"],\"topics\":[\"Daily routines\",\"Training & play\"],\"traits\":[\"Curious\"],\"activities\":[\"Sniffing walks\"],\"foods\":[\"Wet food\"],\"allergies\":\"New dog sensitivity note\",\"conditions\":\"Caregiver observation\",\"medications\":\"Existing vet instructions\",\"careNotes\":\"Prefers a quiet doorway\"}}",
+    "revision": 1
+  },
+  {
+    "id": "6a7d8f57-4ec3-4cf7-b96b-fdedb3931c00",
+    "owner_id": "53e64d19-7848-4321-a637-9da7319023fa",
+    "name": "Luna 90374",
+    "created_at": 1792002240000,
+    "details_json": "{\"breed\":\"Beagle\",\"age\":\"1 years, 2 months\",\"sex\":\"Female\",\"companion\":{\"stage\":\"Puppy\",\"years\":\"1\",\"months\":\"2\",\"breeds\":[\"Beagle\"],\"size\":\"Small\",\"weight\":\"9.5\",\"goals\":[\"Remember daily care\",\"Keep their memories\"],\"routines\":[\"Morning & evening\",\"Every day is different\"],\"traits\":[\"Curious\"],\"activities\":[\"Sniffing walks\"],\"foods\":[\"Wet food\"],\"allergies\":\"New dog sensitivity note\",\"conditions\":\"Caregiver observation\",\"medications\":\"Existing vet instructions\",\"careNotes\":\"Prefers a quiet doorway\"}}",
+    "revision": 1
+  },
+  {
+    "id": "b04d0022-0001-4000-8000-000000000001",
+    "owner_id": "53e64d19-7848-4321-a637-9da7319023fa",
+    "name": "Bruno",
+    "created_at": 1792002240000,
+    "details_json": "{\"breed\":\"Mixed breed\",\"age\":\"4\u20137 years\"}",
+    "revision": 1
+  },
+  {
+    "id": "c2f14857-005c-4f32-bd6e-e177373ecdc8",
+    "owner_id": "53e64d19-7848-4321-a637-9da7319023fa",
+    "name": "Luna 18992",
+    "created_at": 1792002240000,
+    "details_json": "{\"breed\":\"Beagle\",\"age\":\"1 years, 2 months\",\"sex\":\"Female\",\"companion\":{\"stage\":\"Puppy\",\"years\":\"1\",\"months\":\"2\",\"breeds\":[\"Beagle\"],\"size\":\"Small\",\"weight\":\"9.5\",\"goals\":[\"Remember daily care\",\"Keep their memories\"],\"routines\":[\"Morning & evening\",\"Every day is different\"],\"topics\":[\"Daily routines\",\"Training & play\"],\"traits\":[\"Curious\"],\"activities\":[\"Sniffing walks\"],\"foods\":[\"Wet food\"],\"allergies\":\"New dog sensitivity note\",\"conditions\":\"Caregiver observation\",\"medications\":\"Existing vet instructions\",\"careNotes\":\"Prefers a quiet doorway\"}}",
+    "revision": 1
+  },
+  {
+    "id": "ceb7349c-6b9b-408a-9efc-c8e8342d9ee3",
+    "owner_id": "53e64d19-7848-4321-a637-9da7319023fa",
+    "name": "Luna 39869",
+    "created_at": 1792002240000,
+    "details_json": "{\"breed\":\"Beagle\",\"age\":\"1 years, 2 months\",\"sex\":\"Female\",\"companion\":{\"stage\":\"Puppy\",\"years\":\"1\",\"months\":\"2\",\"breeds\":[\"Beagle\"],\"size\":\"Small\",\"weight\":\"9.5\",\"goals\":[\"Remember daily care\",\"Keep their memories\"],\"routines\":[\"Morning & evening\",\"Every day is different\"],\"topics\":[\"Daily routines\",\"Training & play\"],\"traits\":[\"Curious\"],\"activities\":[\"Sniffing walks\"],\"foods\":[\"Wet food\"],\"allergies\":\"New dog sensitivity note\",\"conditions\":\"Caregiver observation\",\"medications\":\"Existing vet instructions\",\"careNotes\":\"Prefers a quiet doorway\"}}",
+    "revision": 1
+  }
+]

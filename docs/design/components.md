@@ -1,5 +1,17 @@
 # BarkLog Compose component registry
 
+20 October task047: the owner approved the new notebook-puppy Rive and the three
+reviewed plan/paywall/membership screens for mobile. Shared Compose implementation, Android/iOS builds and scoped native
+journeys are verified. Physical/assistive review remains open. Home retains its spaniel; RevenueCat
+configuration/entitlement behavior and all local care records are preserved. See
+[task047](../../tasks/task047-premium-plan-motion-design.md).
+
+Current task033 boundary: the existing Home Ask entry is restored in old Debug
+review paths too. `PremiumExportAccess` checks PDF/Memory Book output destinations
+and reuses the existing contextual Premium screen. Preview/raw CSV stay free.
+The local demo plan is not a verified entitlement. The new photo-film editor is
+a board proposal; no native video component/encoder is registered yet.
+
 Current implementation lives in `shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/`.
 `components/` contains the reusable controls; `theme/` contains the native kit.
 
@@ -38,7 +50,7 @@ runtime icon/animation package or bitmap asset is required.
 | BarkIcon / EventMark | Implemented | Cached 24 dp vectors, event palettes, decorative semantics |
 | SupportingText | Implemented | Muted readable body |
 | StartupMessage | Implemented | Loading/error message and retry action |
-| BarkLogShell/tab bar | Implemented | Four tabs, safe areas, scrolling/scaled text |
+| BarkLogShell/tab bar | Implemented | Four tabs, safe areas, scrolling/scaled text; task044 coordinates Profile selection/menu; task045 retains one fixed dock and live pill through Profile transitions |
 | EventButton | Implemented | Event color, disabled/saving state, post-commit feedback |
 | Home daily summary / RecentCare | Implemented | Local same-day facts, no invented values |
 | Dog-name field | Implemented | Saveable draft, keyboard/error/accessibility behavior |
@@ -47,6 +59,8 @@ runtime icon/animation package or bitmap asset is required.
 | Record deletion confirmation | Implemented | Record/date/dog scope, revision capture, Keep record |
 | PawAvatar | Implemented | Decorative local fallback; no photo/profile editing implied |
 | BarkMotion | Implemented | Firm press, soft release bubble, supporting-text entry and OS/app reduced motion |
+| AnimatedCareNotebook | Implemented; physical/assistive review open | Original new Rive, bounded greeting/page turn, same-art still, transparent interaction and visibility/foreground/snapshot cancellation |
+| PremiumPlanScreen | Implemented; scoped native QA passes | Approved setup plan, full-price moving selection with pinned free exit, truthful membership view and unchanged controller/store guards |
 | AnimatedDog | Implemented; latest native visual review open | One pose owner, six shuffled idle actions, greeting/saved-log priority, foreground/visibility cancellation and reduced-motion neutral |
 | DesignReviewBar | Debug opt-in | Replay/speed/destinations; real journal; no draft/data reset |
 | DogAvatar / Switcher | Implemented | Local identity and fallback |
@@ -96,3 +110,45 @@ controls. They remain pending paired native visual/accessibility review; no
 simulator was launched for task027. Login/AI/plan states are labelled local demos,
 prices stay undecided and purchase actions are unavailable. The free care journal
 is accessible without sign-in.
+
+
+## Native Rive character · task032
+
+AnimatedDog now renders the owner-approved spaniel through official Android and
+Apple runtimes; shared Compose keeps placement, interaction semantics and motion
+policy. The original editable source and .riv live in
+`design/board/refinements/rive-dog/`. The Dog Controller view-model triggers are
+hello, curious, saved, sleepy, sniff, ears and rest (cancellation). Native rest
+art is `composeResources/drawable/spaniel_rest.png`, captured from the same rig.
+Use this component rather than drawing another dog. Loading/failure/reduced
+motion use the same still; live views detach for native page snapshot animation.
+The original web board's older dog is superseded for this owner-authorized mascot
+slice; task022's remaining screen-by-screen gates still apply.
+
+
+Task034 reuses the approved video board: neutral bordered player, 174dp portrait
+preview or full-width square, 66dp selected/check-marked thumbnails, compact
+48dp move/play/aspect controls, optional caption and clear Premium export action.
+Chat restores the approved display font, 44dp lime paw emblem, compact question
+and source rows, borderless input and 48dp round send/stop. Shared controls keep
+minimum targets, scalable text and reduced/foreground motion policies.
+
+
+### Chat care tools · task035 (2026-10-17)
+
+The approved compact chat now includes up to three local photo attachments per message, saved vet/emergency call actions and a vet-report mobile preview. SQLite transfers composer attachment ownership atomically into each saved conversation. Report PDF uses the existing Premium gate; mobile preview and care logging remain free. Caregiver messages/selected dog-scoped records are factual inputs; demo AI replies and photos are separate opt-ins. General medication education never selects drugs/doses or treatment. Images are not analyzed or uploaded. Native verification is tracked in task035; real AI, billing and clinical review remain deferred.
+
+### Weekly reply cards and quiet controls · task041/task042
+
+`WeeklyLogCard` uses a saved question-time profile/week snapshot, exact SQLite
+counts, seven labeled bars and dated source excerpts. Zero/missing logs never
+imply health or adequate care. `WeeklyAiConsent` versions the expanded automatic
+scope; `WeeklyContextDialog` reviews it and supports revocation/read retry.
+The existing compact chat layout remains. Product/affiliate placement is inactive.
+
+`SoundSettingsScreen` provides optional interaction sounds, a 0–100% slider,
+Soft wood/Soft pop and three explicit samples. Soft wood/35% is selected and
+off until enabled. Samples have one accessible description each. Shared
+`soundAction` and `LocalInteractionSounds` cover common control activation;
+SQLite completion callbacks alone trigger actual saved cues. Sound never replaces
+visible state, changes reduced-motion preferences or accompanies loading/typing.

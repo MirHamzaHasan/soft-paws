@@ -1,0 +1,64 @@
+[
+  {
+    "aspect" : "Portrait",
+    "captionBackground" : true,
+    "duration" : 8.4000000000000004,
+    "filename" : "BarkLog-film-A4FFB803-DE22-4A68-BCFE-771F632E4655.mp4",
+    "height" : 1280,
+    "motion" : true,
+    "passed" : true,
+    "photoColorOrder" : [
+      0,
+      1,
+      2
+    ],
+    "progressUpdates" : 42,
+    "width" : 720
+  },
+  {
+    "aspect" : "Square",
+    "captionBackground" : true,
+    "duration" : 8.4000000000000004,
+    "filename" : "BarkLog-film-39ADB457-DEB8-486D-90C7-324E501DA1CD.mp4",
+    "height" : 720,
+    "motion" : true,
+    "passed" : true,
+    "photoColorOrder" : [
+      0,
+      1,
+      2
+    ],
+    "progressUpdates" : 42,
+    "width" : 720
+  },
+  {
+    "aspect" : "Square",
+    "captionBackground" : true,
+    "duration" : 8.4000000000000004,
+    "filename" : "BarkLog-film-1723BDF2-C529-4C5C-AD93-D8355F81AA46.mp4",
+    "height" : 720,
+    "motion" : false,
+    "passed" : true,
+    "photoColorOrder" : [
+      0,
+      1,
+      2
+    ],
+    "progressUpdates" : 42,
+    "width" : 720
+  },
+  {
+    "case" : "cancel",
+    "passed" : true,
+    "remainingAddedFiles" : [
+
+    ]
+  },
+  {
+    "case" : "missing-input",
+    "passed" : true,
+    "remainingAddedFiles" : [
+
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "scope": "Local browser board; native audio is not implemented",
+  "checks": [
+    "Default off: no audio context, autoplay or disabled-sample output",
+    "Trusted enable resumes audio; three sample types play once; texture changes; sources clean up",
+    "Zero volume mutes ordinary buttons; preference reload is silent and preserves volume/style",
+    "Normal chat buttons get one sound; typing/scrolling and synthetic clicks remain silent",
+    "Quick-care preview adds the record before its explicit saved cue; landing/haptic animation adds no duplicate sound",
+    "Switching off immediately stops the active voice and prevents delayed sounds",
+    "Rapid trusted taps are limited; at most one active voice; no accumulated loudness",
+    "Headless browser did not expose hidden-tab state; physical/background audio still needs native QA",
+    "Sound settings inspected in light/dark and 375\u00d7667 at 130%; named controls, 48px targets, no horizontal overflow",
+    "Keyboard activation produces one cue with reduced motion enabled; measured custom text contrast meets 4.5:1",
+    "Simulated unavailable audio disables only sound controls; chat navigation still works",
+    "Six original PCM variants checked for bounded peaks, short duration, zero endpoints and low DC; two listening WAVs exported at default gain"
+  ],
+  "browserErrors": [],
+  "externalRequests": [],
+  "layouts": 4,
+  "minimumTextContrast": 5.793857545104181,
+  "minimumTargetSize": 48,
+  "cardRegressionLayouts": 22,
+  "audio": [
+    {
+      "file": "wood-preview.wav",
+      "channels": 1,
+      "sampleRate": 48000,
+      "sampleWidth": 2,
+      "seconds": 2.0,
+      "sha256": "24e9cbbeaf8e075854acd0dd56c1266612b7f2b7b34353aaa4f5dd60b411a500"
+    },
+    {
+      "file": "pop-preview.wav",
+      "channels": 1,
+      "sampleRate": 48000,
+      "sampleWidth": 2,
+      "seconds": 2.0,
+      "sha256": "243e1fbfd04e0e945140ab5f10e8d86bbc358797d2abfcb2ab4cca30bca49c92"
+    }
+  ],
+  "nativeImplemented": false,
+  "physicalAudioVerified": false
+}

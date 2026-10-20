@@ -1,0 +1,509 @@
+{
+  "checks": [
+    "Default off: no audio context, autoplay or disabled-sample output",
+    "Trusted enable resumes audio; three sample types play once; texture changes; sources clean up",
+    "Zero volume mutes ordinary buttons; preference reload is silent and preserves volume/style",
+    "Normal chat buttons get one sound; typing/scrolling and synthetic clicks remain silent",
+    "Quick-care preview adds the record before its explicit saved cue; landing/haptic animation adds no duplicate sound",
+    "Switching off immediately stops the active voice and prevents delayed sounds",
+    "Rapid trusted taps are limited; at most one active voice; no accumulated loudness",
+    "Headless browser did not expose hidden-tab state; physical/background audio still needs native QA",
+    "Sound settings inspected in light/dark and 375×667 at 130%; named controls, 48px targets, no horizontal overflow",
+    "Keyboard activation produces one cue with reduced motion enabled; measured custom text contrast meets 4.5:1",
+    "Simulated unavailable audio disables only sound controls; chat navigation still works",
+    "Six original PCM variants checked for bounded peaks, short duration, zero endpoints and low DC; two listening WAVs exported at default gain"
+  ],
+  "errors": [],
+  "external": [],
+  "layouts": [
+    {
+      "theme": "light",
+      "compact": false,
+      "contrast": [
+        {
+          "text": "Optional. Start quiet and adju",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Volume",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "35%",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Sounds are on · 35%",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Button tap",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "A small, rounded touch",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Selection tick",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "A lighter sound for a choice",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Saved",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "A warm note after a completed ",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Typing, scrolling and loading ",
+          "ratio": 5.793857545104181
+        }
+      ],
+      "overflow": [],
+      "targets": [
+        {
+          "name": "Back",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Interaction sounds",
+          "width": 64,
+          "height": 48
+        },
+        {
+          "name": "Interaction sound volume",
+          "width": 312,
+          "height": 48
+        },
+        {
+          "name": "Soft wood",
+          "width": 151,
+          "height": 48
+        },
+        {
+          "name": "Soft pop",
+          "width": 151,
+          "height": 48
+        },
+        {
+          "name": "Preview button tap sound",
+          "width": 312,
+          "height": 66
+        },
+        {
+          "name": "Preview selection tick sound",
+          "width": 312,
+          "height": 66
+        },
+        {
+          "name": "Preview saved sound",
+          "width": 312,
+          "height": 66
+        },
+        {
+          "name": "Try in AI chat",
+          "width": 350,
+          "height": 56
+        },
+        {
+          "name": "Back to journal",
+          "width": 92,
+          "height": 48
+        }
+      ],
+      "phoneWidth": 390,
+      "phoneHeight": 844
+    },
+    {
+      "theme": "light",
+      "compact": true,
+      "contrast": [
+        {
+          "text": "Optional. Start quiet and adju",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Volume",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "35%",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Sounds are on · 35%",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Button tap",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "A small, rounded touch",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Selection tick",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "A lighter sound for a choice",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Saved",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "A warm note after a completed ",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Typing, scrolling and loading ",
+          "ratio": 5.793857545104181
+        }
+      ],
+      "overflow": [],
+      "targets": [
+        {
+          "name": "Back",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Interaction sounds",
+          "width": 64,
+          "height": 48
+        },
+        {
+          "name": "Interaction sound volume",
+          "width": 297,
+          "height": 48
+        },
+        {
+          "name": "Soft wood",
+          "width": 144,
+          "height": 48
+        },
+        {
+          "name": "Soft pop",
+          "width": 144,
+          "height": 48
+        },
+        {
+          "name": "Preview button tap sound",
+          "width": 297,
+          "height": 77
+        },
+        {
+          "name": "Preview selection tick sound",
+          "width": 297,
+          "height": 77
+        },
+        {
+          "name": "Preview saved sound",
+          "width": 297,
+          "height": 99
+        },
+        {
+          "name": "Try in AI chat",
+          "width": 335,
+          "height": 56
+        },
+        {
+          "name": "Back to journal",
+          "width": 120,
+          "height": 48
+        }
+      ],
+      "phoneWidth": 375,
+      "phoneHeight": 667
+    },
+    {
+      "theme": "dark",
+      "compact": false,
+      "contrast": [
+        {
+          "text": "Optional. Start quiet and adju",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Volume",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "35%",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Sounds are on · 35%",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Button tap",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "A small, rounded touch",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Selection tick",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "A lighter sound for a choice",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Saved",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "A warm note after a completed ",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Typing, scrolling and loading ",
+          "ratio": 8.73847279076458
+        }
+      ],
+      "overflow": [],
+      "targets": [
+        {
+          "name": "Back",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Interaction sounds",
+          "width": 64,
+          "height": 48
+        },
+        {
+          "name": "Interaction sound volume",
+          "width": 312,
+          "height": 48
+        },
+        {
+          "name": "Soft wood",
+          "width": 151,
+          "height": 48
+        },
+        {
+          "name": "Soft pop",
+          "width": 151,
+          "height": 48
+        },
+        {
+          "name": "Preview button tap sound",
+          "width": 312,
+          "height": 66
+        },
+        {
+          "name": "Preview selection tick sound",
+          "width": 312,
+          "height": 66
+        },
+        {
+          "name": "Preview saved sound",
+          "width": 312,
+          "height": 66
+        },
+        {
+          "name": "Try in AI chat",
+          "width": 350,
+          "height": 56
+        },
+        {
+          "name": "Back to journal",
+          "width": 92,
+          "height": 48
+        }
+      ],
+      "phoneWidth": 390,
+      "phoneHeight": 844
+    },
+    {
+      "theme": "dark",
+      "compact": true,
+      "contrast": [
+        {
+          "text": "Optional. Start quiet and adju",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Volume",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "35%",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Sounds are on · 35%",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Button tap",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "A small, rounded touch",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Selection tick",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "A lighter sound for a choice",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Saved",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "A warm note after a completed ",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Typing, scrolling and loading ",
+          "ratio": 8.73847279076458
+        }
+      ],
+      "overflow": [],
+      "targets": [
+        {
+          "name": "Back",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Interaction sounds",
+          "width": 64,
+          "height": 48
+        },
+        {
+          "name": "Interaction sound volume",
+          "width": 297,
+          "height": 48
+        },
+        {
+          "name": "Soft wood",
+          "width": 144,
+          "height": 48
+        },
+        {
+          "name": "Soft pop",
+          "width": 144,
+          "height": 48
+        },
+        {
+          "name": "Preview button tap sound",
+          "width": 297,
+          "height": 77
+        },
+        {
+          "name": "Preview selection tick sound",
+          "width": 297,
+          "height": 77
+        },
+        {
+          "name": "Preview saved sound",
+          "width": 297,
+          "height": 99
+        },
+        {
+          "name": "Try in AI chat",
+          "width": 335,
+          "height": 56
+        },
+        {
+          "name": "Back to journal",
+          "width": 120,
+          "height": 48
+        }
+      ],
+      "phoneWidth": 375,
+      "phoneHeight": 667
+    }
+  ],
+  "pcm": [
+    {
+      "style": "wood",
+      "kind": "tap",
+      "samples": 4081,
+      "duration": 0.08502083333333334,
+      "peak": 0.41999998688697815,
+      "rms": 0.08595900679159967,
+      "dc": 0.0009376492892617258,
+      "first": 0,
+      "last": 0
+    },
+    {
+      "style": "wood",
+      "kind": "selection",
+      "samples": 3120,
+      "duration": 0.065,
+      "peak": 0.30000001192092896,
+      "rms": 0.05862078003477779,
+      "dc": 0.00027355719218225737,
+      "first": 0,
+      "last": 0
+    },
+    {
+      "style": "wood",
+      "kind": "saved",
+      "samples": 10080,
+      "duration": 0.21,
+      "peak": 0.41999998688697815,
+      "rms": 0.1345204400935755,
+      "dc": 0.00011623221581134812,
+      "first": 0,
+      "last": 0
+    },
+    {
+      "style": "pop",
+      "kind": "tap",
+      "samples": 4081,
+      "duration": 0.08502083333333334,
+      "peak": 0.41999998688697815,
+      "rms": 0.12096409285008904,
+      "dc": 0.00039888473930323903,
+      "first": 0,
+      "last": 0
+    },
+    {
+      "style": "pop",
+      "kind": "selection",
+      "samples": 3120,
+      "duration": 0.065,
+      "peak": 0.30000001192092896,
+      "rms": 0.0817727119040603,
+      "dc": 0.00012947314322996653,
+      "first": 0,
+      "last": 0
+    },
+    {
+      "style": "pop",
+      "kind": "saved",
+      "samples": 10080,
+      "duration": 0.21,
+      "peak": 0.41999998688697815,
+      "rms": 0.1345204400935755,
+      "dc": 0.00011623221581134812,
+      "first": 0,
+      "last": 0
+    }
+  ],
+  "nativeImplemented": false
+}

@@ -14,7 +14,7 @@ import kotlinx.coroutines.sync.Mutex
 
 data class EventState(val record: CareEvent? = null, val reading: Boolean = true, val readError: Boolean = false, val saving: Boolean = false, val error: String? = null, val conflict: Boolean = false)
 
-class EventController(private val repository: JournalRepository, private val haptics: HapticManager, private val onCreated: (CareEvent) -> Unit = {}) {
+class EventController(private val repository: JournalRepository, private val haptics: HapticManager, private val onCommitted: () -> Unit = {}, private val onCreated: (CareEvent) -> Unit = {}) {
     private val _state = MutableStateFlow(EventState())
     val state = _state.asStateFlow()
     private val writing = Mutex()
@@ -38,6 +38,7 @@ class EventController(private val repository: JournalRepository, private val hap
         return try {
             val result = operation()
             runCatching { haptics.success() }
+            runCatching { onCommitted() }
             result
         } catch (cancelled: CancellationException) { throw cancelled }
         catch (cause: Exception) {

@@ -1,0 +1,118 @@
+{
+  "ids": [
+    "next-plan",
+    "next-paywall",
+    "next-manage-plan"
+  ],
+  "results": [
+    {
+      "id": "next-plan",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-paywall",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-manage-plan",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-plan",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-paywall",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-manage-plan",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-plan",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-paywall",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-manage-plan",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-plan",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-paywall",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-manage-plan",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    }
+  ],
+  "errors": []
+}

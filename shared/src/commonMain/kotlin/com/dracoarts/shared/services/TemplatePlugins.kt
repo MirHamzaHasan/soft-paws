@@ -4,7 +4,7 @@ package com.dracoarts.shared.services
 import com.dracoarts.shared.managers.AppManagers
 
 object TemplatePlugins {
-    val enabled: Set<String> = setOf("haptics", "notifications")
+    val enabled: Set<String> = setOf("auth", "purchases", "haptics", "notifications")
     fun isEnabled(id: String): Boolean = id in enabled
 
     @Suppress("UNUSED_PARAMETER")

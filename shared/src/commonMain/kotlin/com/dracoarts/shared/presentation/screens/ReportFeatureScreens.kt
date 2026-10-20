@@ -42,9 +42,13 @@ fun ReportFeatureScreen(page: FeaturePage, context: FeatureContext) {
             require(context.journal.dogs.any { it.id == form["dog"] }) { "Choose an available dog." }
             context.open(Feature.ReportPreview, "$first@$last@${form["dog"]}@${form["include"]}")
         } } }, icon = "file-text")
-        CaptionText("CSV and PDF are free. No records are uploaded. Native sharing is your choice.")
+        CaptionText("Read the report here or export CSV for free. PDF export, printing and sharing are Premium. Nothing is uploaded.")
         return
     }
+    if (page.feature == Feature.Export && page.id.substringAfterLast('@') != "CSV" &&
+        !PremiumExportAccess(context, com.dracoarts.shared.presentation.companion.PremiumFeature.ReportPdf) {
+            context.navigation.returnTo(Feature.ReportPreview, page.id.substringBeforeLast('@'))
+        }) return
     var snapshot by remember(page.id, context.dog.id) { mutableStateOf<ReportSnapshot?>(null) }
     var error by remember { mutableStateOf<String?>(null) }
     var retry by remember { mutableIntStateOf(0) }
@@ -83,12 +87,12 @@ fun ReportFeatureScreen(page: FeaturePage, context: FeatureContext) {
                 BarkTextAction(if (expanded) "Hide included records" else "View included records", { expanded = !expanded }, icon = "list")
                 if (expanded) { report.events.take(12).forEach { event -> TimelineRow(event, context.zone, includeDate = true, onClick = { context.navigation.detail(event.dogId, event.id) }) }; CaptionText("The exported file includes all ${report.events.size} selected care records and their full notes.") }
             } else if (page.feature == Feature.ReportFormat) {
-                SupportingText("The same scoped data. Both formats are free.")
+                SupportingText("CSV stays free. Take a PDF with Premium.")
                 BoardMenu {
                     FeatureRow("CSV", "Rows for a spreadsheet or archive", "table-2") { context.open(Feature.Export, "${page.id}@CSV") }
-                    FeatureRow("PDF", "Readable report with page headings", "file-text") { context.open(Feature.Export, "${page.id}@PDF") }
+                    FeatureRow("PDF", "Export and share a readable report · Premium", "file-text", meta = "Premium") { context.open(Feature.Export, "${page.id}@PDF") }
                 }
-                BarkTextAction("Print PDF", { context.open(Feature.Export, "${page.id}@PRINT") }, icon = "file-text")
+                BarkTextAction("Print PDF · Premium", { context.open(Feature.Export, "${page.id}@PRINT") }, icon = "file-text")
             } else {
                 val format = if (page.id.substringAfterLast('@') == "CSV") ExportFormat.CSV else ExportFormat.PDF
                 val printing = page.id.substringAfterLast('@') == "PRINT"

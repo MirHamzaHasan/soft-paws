@@ -1,0 +1,8 @@
+
+com.draco.arts.apps.bark.log.dogs.journal.ProfileTabJourneyTest:.
+
+Time: 52.51
+
+OK (1 test)
+
+

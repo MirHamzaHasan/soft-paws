@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-17",
+  "command": "python3 tools/verify.py --ios",
+  "result": "passed",
+  "jvm": {
+    "tests": 75,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "toolingTests": 23,
+  "android": [
+    "assembleDebug",
+    "assembleRelease",
+    "lintDebug",
+    "verifySqlDelightMigration"
+  ],
+  "ios": [
+    "Debug simulator build and bundle check",
+    "Release simulator build and bundle check"
+  ],
+  "visual": [
+    "iOS before: tap tint reproduced",
+    "iOS after: wave and clean ground inspected",
+    "Android updated opening inspected; tap state not captured"
+  ],
+  "sourceSha256": "26d6e9532a00534bc150d417b47605d3048b88ca9260d7d34b350eee0562d3e4",
+  "warning": "Bundled ICU simulator object built for 17.2; host minimum declares 15.0. Minimum-OS support needs release validation.",
+  "temporaryLog": ".verify-build/task029/verify.log"
+}

@@ -26,13 +26,13 @@ fun featureFolio(feature: Feature): BoardFolio? = when (feature) {
     Feature.Health, Feature.Medications, Feature.MedicationForm, Feature.MedicationDetail, Feature.MedicationGiven, Feature.MedicationArchive, Feature.Vaccinations, Feature.VaccinationForm -> BoardFolio("THE CARE RECORD", "pill", "medication")
     Feature.Calendar, Feature.TaskForm, Feature.TaskDetail, Feature.ReminderOptIn -> BoardFolio("A LITTLE PLANNING", "calendar", "training")
     Feature.Monthly -> BoardFolio("FROM YOUR RECORDS", "chart-no-axes-column-increasing", "photo")
-    Feature.Safety, Feature.Emergency, Feature.EmergencyEdit, Feature.Toxicity, Feature.FirstAid, Feature.Triage -> BoardFolio("READY WHEN IT MATTERS", "shield", "symptom")
+    Feature.Safety, Feature.Emergency, Feature.EmergencyEdit, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog -> BoardFolio("READY WHEN IT MATTERS", "shield", "symptom")
     Feature.Report, Feature.ReportPreview, Feature.ReportFormat, Feature.Export -> BoardFolio("BRING THE FACTS", "file-text", "photo")
     Feature.Training, Feature.Program, Feature.TrainingProgress, Feature.Session, Feature.TrainingSummary -> BoardFolio("SMALL PRACTICE, OFTEN", "graduation-cap", "training")
     Feature.Photos, Feature.PhotoForm, Feature.PhotoDetail, Feature.Baselines -> BoardFolio("MOMENTS TO KEEP", "image", "photo")
     Feature.Expenses, Feature.ExpenseForm, Feature.ExpenseDetail -> BoardFolio("THE COST OF CARE", "receipt", "training")
     Feature.Memory, Feature.MemoryCollection, Feature.MemoryHighlight, Feature.MemoryCaption, Feature.MemoryShare -> BoardFolio("THE GOOD LITTLE THINGS", "heart", "mood")
-    Feature.Chooser, Feature.CareTools -> null
+    Feature.Chooser, Feature.CareTools, Feature.Sounds, Feature.VideoHighlight, Feature.VideoHighlightGate -> null
 }
 
 @Composable
@@ -40,17 +40,18 @@ private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
     LaunchedEffect(page) { context.care.clearError() }
     if (page.feature == Feature.Chooser) Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { FeatureBack(context); BoardDogChip(context.dog.name, { context.open(Feature.DogSwitcher) }) }
     else FeatureBack(context)
-    if (context.careState.loading && page.feature !in setOf(Feature.Settings, Feature.DogAdd, Feature.DogEdit, Feature.Safety, Feature.Emergency, Feature.Toxicity, Feature.FirstAid, Feature.Triage)) {
+    if (context.careState.loading && page.feature !in setOf(Feature.Sounds, Feature.Settings, Feature.DogAdd, Feature.DogEdit, Feature.Safety, Feature.Emergency, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog)) {
         FeatureNotice("Reading saved records", "Your journal is on this device.", "refresh-cw"); return
     }
     if (context.careState.readFailed) {
         ErrorCard(context.careState.error ?: "Couldn't read these local records.")
         BarkButton("Try again", context.care::retry, icon = "refresh-cw")
-        if (page.feature !in setOf(Feature.Settings, Feature.DogEdit, Feature.Safety, Feature.Emergency, Feature.Toxicity, Feature.FirstAid, Feature.Triage)) return
+        if (page.feature !in setOf(Feature.Sounds, Feature.Settings, Feature.DogEdit, Feature.Safety, Feature.Emergency, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog)) return
     }
     if (!context.careState.readFailed) context.careState.error?.let { ErrorCard(it) }
     context.careState.feedback?.let { FeatureNotice("On this device", it, "circle-check") }
     when (page.feature) {
+        Feature.Sounds -> SoundSettingsScreen(context)
         Feature.CareTools -> ProfileHub(context)
         Feature.DogSwitcher, Feature.DogAdd, Feature.DogEdit, Feature.Settings, Feature.DeleteDog, Feature.DeleteAll, Feature.EmergencyEdit -> ProfileFeatureScreen(page, context)
         Feature.Health, Feature.Medications, Feature.MedicationForm, Feature.MedicationDetail, Feature.MedicationGiven, Feature.MedicationArchive, Feature.Vaccinations, Feature.VaccinationForm -> HealthFeatureScreen(page, context)
@@ -58,9 +59,10 @@ private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
         Feature.Training, Feature.Program, Feature.TrainingProgress, Feature.Session, Feature.TrainingSummary -> TrainingFeatureScreen(page, context)
         Feature.Photos, Feature.PhotoForm, Feature.PhotoDetail, Feature.Baselines -> PhotoFeatureScreen(page, context)
         Feature.Expenses, Feature.ExpenseForm, Feature.ExpenseDetail -> ExpenseFeatureScreen(page, context)
-        Feature.Safety, Feature.Emergency, Feature.Toxicity, Feature.FirstAid, Feature.Triage -> SafetyFeatureScreen(page, context)
+        Feature.Safety, Feature.Emergency, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog -> SafetyFeatureScreen(page, context)
         Feature.Report, Feature.ReportPreview, Feature.ReportFormat, Feature.Export -> ReportFeatureScreen(page, context)
         Feature.Memory, Feature.MemoryCollection, Feature.MemoryHighlight, Feature.MemoryCaption, Feature.MemoryShare -> MemoryFeatureScreen(page, context)
+        Feature.VideoHighlight, Feature.VideoHighlightGate -> HighlightFeatureScreen(page, context)
         Feature.Monthly -> InsightsScreen(context, monthly = true)
         Feature.Chooser -> {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) { CaptionText("KEEP THE LITTLE DETAILS"); MarkerHeading("Create a log.", "log."); SupportingText("A quick observation, a proper note, or both.") }

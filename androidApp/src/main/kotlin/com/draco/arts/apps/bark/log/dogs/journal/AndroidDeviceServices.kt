@@ -33,6 +33,43 @@ import android.os.Looper
 import androidx.compose.ui.graphics.asImageBitmap
 
 class AndroidDeviceServices(private val activity: ComponentActivity) : DeviceServices {
+    override fun suggestedCountry() = java.util.Locale.getDefault().country
+    @Suppress("DEPRECATION", "MissingPermission")
+    override suspend fun currentArea(): DeviceResult<ApproximateArea> = permissionLock.withLock {
+        try {
+            val allowed = withContext(Dispatchers.Main) {
+                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) true
+                else {
+                    val result = CompletableDeferred<Boolean>(); permission = result
+                    try { permissionRequest.launch(Manifest.permission.ACCESS_COARSE_LOCATION); result.await() } finally { permission = null }
+                }
+            }
+            if (!allowed) return@withLock DeviceResult.Denied
+            val manager = activity.getSystemService(android.content.Context.LOCATION_SERVICE) as android.location.LocationManager
+            if (!manager.isProviderEnabled(android.location.LocationManager.NETWORK_PROVIDER)) return@withLock DeviceResult.Failed("Turn on location services, or enter a city instead.")
+            val result = CompletableDeferred<android.location.Location>()
+            val listener = object : android.location.LocationListener {
+                override fun onLocationChanged(location: android.location.Location) { result.complete(location) }
+                override fun onProviderEnabled(provider: String) = Unit
+                override fun onProviderDisabled(provider: String) { result.cancel() }
+                override fun onStatusChanged(provider: String?, status: Int, extras: android.os.Bundle?) = Unit
+            }
+            val location = try {
+                withContext(Dispatchers.Main) { manager.requestLocationUpdates(android.location.LocationManager.NETWORK_PROVIDER, 0L, 0f, listener, Looper.getMainLooper()) }
+                withTimeoutOrNull(25_000) { result.await() }
+            } finally { manager.removeUpdates(listener) }
+            if (location == null) return@withLock DeviceResult.Failed("Couldn't find your area. Enter a city instead.")
+            val country = withContext(Dispatchers.IO) { runCatching { android.location.Geocoder(activity).getFromLocation(location.latitude, location.longitude, 1)?.firstOrNull()?.countryCode.orEmpty() }.getOrDefault("") }
+            DeviceResult.Success(ApproximateArea(kotlin.math.round(location.latitude * 100) / 100, kotlin.math.round(location.longitude * 100) / 100, country))
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (_: Exception) { DeviceResult.Failed("Couldn't find your area. Enter a city instead.") }
+    }
+    override fun updateAppearance(dark: Boolean, followSystem: Boolean) {
+        androidx.core.view.WindowCompat.getInsetsController(activity.window, activity.window.decorView).apply {
+            isAppearanceLightStatusBars = !dark
+            isAppearanceLightNavigationBars = !dark
+        }
+    }
     override suspend fun captureFrame(bounds: DeviceFrameBounds): androidx.compose.ui.graphics.ImageBitmap? {
         if (Build.VERSION.SDK_INT < 26 || bounds.width <= 0 || bounds.height <= 0) return null
         return withContext(Dispatchers.Main) {

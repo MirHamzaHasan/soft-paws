@@ -1,0 +1,14 @@
+{
+  "android": {
+    "dogCount": 1,
+    "careEventCount": 3,
+    "careEventsUnchanged": true,
+    "profilesUnchanged": true
+  },
+  "ios": {
+    "dogCount": 1,
+    "careEventCount": 5,
+    "careEventsUnchanged": true,
+    "profilesUnchanged": true
+  }
+}

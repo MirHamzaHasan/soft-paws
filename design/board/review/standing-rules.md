@@ -46,3 +46,38 @@
     belong in one card. The dog needs its own space, with no overlap on care facts.
     Varied mascot idle actions settle with quiet gaps; saved-log feedback takes
     priority. Stop offscreen/disposed motion and honour reduced motion immediately.
+
+16. The dog stays on transparent ground during taps/hover/focus too. No filled
+    rectangular interaction tint behind its artwork (owner feedback, 2026-10-17).
+17. The mascot authoring/playback workflow must use free/open-source tools and
+    original artwork. Do not introduce paid export requirements, subscriptions
+    or mandatory third-party branding without the owner's request (2026-10-17).
+18. The owner subsequently selected Rive and explicitly allowed a new dog for
+    task031 (2026-10-17). Original Rive authoring is now authorized for this study;
+    retain its actual workspace/export restrictions. The new character still
+    needs review before native adoption. Keep the dog transparent and preserve
+    the existing Home composition and separate care facts.
+
+19. On 2026-10-17 the owner activated Draco Arts Studios Cadet and authorized the
+    approved Rive spaniel in the native application (task032). Use the clean
+    official export; retain the editable source. Preserve transparent presses,
+    reduced motion, quiet varied idles and post-commit save reactions.
+
+20. The owner changed the output boundary on 2026-10-17: mobile reports and raw
+    CSV remain free; report/Memory Book PDF, printing and PDF sharing are Premium.
+    Restore the personalized Home Ask entry. Offer upgrades at requested outputs,
+    keep an obvious return to the preview, and do not interrupt care logging.
+    Photo-film export is a proposed paid feature; its new editor requires review
+    before native integration. Prices and real billing remain deferred.
+
+21. On 19 October the owner liked the existing chat layout and text style but
+    requested structured answer cards with question-relevant saved logs. Keep
+    the compact shell whole. Separate saved facts and general guidance; never
+    turn counts or missing records into a health/wellbeing assessment. Reserve
+    context-relevant dog-product placement for a later phase, absent by default.
+22. The same owner's later clarification changes the new AI context direction:
+    after explicit consent to this scope, include the current dog's name/profile
+    and the past seven days automatically. Users review context rather than
+    selecting individual logs. This supersedes rule 14's manual-selection design
+    for task041; existing native consent must not silently expand. All app-facing
+    names say BarkLog AI. Atlas remains an internal service identifier only.

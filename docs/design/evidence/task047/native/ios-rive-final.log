@@ -1,0 +1,19 @@
+Timestamp               Ty Process[PID:TID]
+2026-10-20 19:14:36.387 Df iosApp[47637:2b64af] (Foundation) BarkLogMascot ready care-notebook
+2026-10-20 19:14:36.514 Df iosApp[47637:2b64af] (Foundation) BarkLogMascot cue hello (1), bounds (0.0, 0.0, 132.0, 154.0), attached 1
+2026-10-20 19:14:38.939 Df iosApp[47637:2b64af] (Foundation) BarkLogMascot cue rest (2), bounds (0.0, 0.0, 132.0, 154.0), attached 1
+2026-10-20 19:14:41.040 Df iosApp[47637:2b64af] (Foundation) BarkLogMascot ready care-notebook
+2026-10-20 19:14:41.171 Df iosApp[47637:2b64af] (Foundation) BarkLogMascot cue hello (3), bounds (0.0, 0.0, 132.0, 154.0), attached 1
+2026-10-20 19:14:43.587 Df iosApp[47637:2b64af] (Foundation) BarkLogMascot cue rest (4), bounds (0.0, 0.0, 132.0, 154.0), attached 1
+2026-10-20 19:14:47.460 Df iosApp[47877:2b6782] (Foundation) BarkLogMascot ready care-notebook
+2026-10-20 19:14:47.597 Df iosApp[47877:2b6782] (Foundation) BarkLogMascot cue hello (1), bounds (0.0, 0.0, 142.0, 146.0), attached 1
+2026-10-20 19:14:50.009 Df iosApp[47877:2b6782] (Foundation) BarkLogMascot cue rest (2), bounds (0.0, 0.0, 142.0, 146.0), attached 1
+2026-10-20 19:14:51.430 Df iosApp[47877:2b6782] (Foundation) BarkLogMascot cue curious (3), bounds (0.0, 0.0, 142.0, 146.0), attached 1
+2026-10-20 19:14:53.129 Df iosApp[47877:2b6782] (Foundation) BarkLogMascot cue curious (4), bounds (0.0, 0.0, 142.0, 146.0), attached 1
+2026-10-20 19:14:54.842 Df iosApp[47877:2b6782] (Foundation) BarkLogMascot cue curious (5), bounds (0.0, 0.0, 142.0, 146.0), attached 1
+2026-10-20 19:14:57.654 Df iosApp[47877:2b6782] (Foundation) BarkLogMascot cue rest (6), bounds (0.0, 0.0, 142.0, 146.0), attached 1
+2026-10-20 19:15:43.229 Df iosApp[48461:2b6f66] (Foundation) BarkLogMascot ready care-notebook
+2026-10-20 19:15:43.356 Df iosApp[48461:2b6f66] (Foundation) BarkLogMascot cue hello (1), bounds (0.0, 0.0, 132.0, 154.0), attached 1
+2026-10-20 19:15:45.773 Df iosApp[48461:2b6f66] (Foundation) BarkLogMascot cue rest (2), bounds (0.0, 0.0, 132.0, 154.0), attached 1
+2026-10-20 19:15:46.259 Df iosApp[48461:2b6f66] (Foundation) BarkLogMascot cue hello (3), bounds (0.0, 0.0, 132.0, 154.0), attached 1
+2026-10-20 19:15:48.671 Df iosApp[48461:2b6f66] (Foundation) BarkLogMascot cue rest (4), bounds (0.0, 0.0, 132.0, 154.0), attached 1

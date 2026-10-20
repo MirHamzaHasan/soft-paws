@@ -29,6 +29,7 @@ data class FeatureContext(
     val careState: CareState, val settings: SettingsController, val navigation: AppState,
     val platform: AppPlatform, val repository: JournalRepository, val now: Long, val zone: TimeZone, val reviewScreen: String? = null,
     val reviewFaults: com.dracoarts.shared.presentation.review.BoardReviewFaults? = null,
+    val highlights: com.dracoarts.shared.presentation.highlights.HighlightController? = null,
     val companion: com.dracoarts.shared.presentation.companion.CompanionController? = null,
 ) {
     val dog get() = journal.selectedDog!!
@@ -48,7 +49,7 @@ fun FeatureRow(title: String, subtitle: String = "", icon: String = "chevron-rig
     val grouped = LocalBoardMenu.current
     val family = tone ?: when (icon) { "pill", "syringe" -> "medication"; "calendar", "alarm-clock" -> "walk"; "graduation-cap", "receipt" -> "training"; "image" -> "photo"; "shield", "trash" -> "symptom"; "heart" -> "mood"; else -> "note" }
     val pressed by interaction.collectIsPressedAsState()
-    Surface(onClick, Modifier.fillMaxWidth().heightIn(min = 68.dp), interactionSource = interaction,
+    Surface(soundAction(onClick), Modifier.fillMaxWidth().heightIn(min = 68.dp), interactionSource = interaction,
         shape = RoundedCornerShape(if (grouped || !bordered) 0.dp else 20.dp), color = boardColor(if (pressed) "inset" else "panel"),
         border = if (grouped || !bordered) null else BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant), tonalElevation = 0.dp, shadowElevation = 0.dp) {
         Row(Modifier.padding(horizontal = 16.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
@@ -88,9 +89,10 @@ fun FeatureNotice(title: String, text: String, icon: String = "info", tone: Stri
 
 @Composable
 fun FeatureToggle(title: String, subtitle: String, value: Boolean, onChange: (Boolean) -> Unit) {
+    val sounds = LocalInteractionSounds.current
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Column(Modifier.weight(1f)) { Text(title, style = MaterialTheme.typography.titleMedium); CaptionText(subtitle) }
-        Switch(value, onCheckedChange = onChange, modifier = Modifier.sizeIn(minWidth = 52.dp, minHeight = 48.dp).semantics { contentDescription = title }, colors = SwitchDefaults.colors(checkedTrackColor = boardColor("ink-strong"), checkedThumbColor = boardColor("ball"), checkedBorderColor = boardColor("ink-strong"), uncheckedTrackColor = boardColor("inset"), uncheckedThumbColor = boardColor("panel"), uncheckedBorderColor = boardColor("hair-2")))
+        Switch(value, onCheckedChange = { sounds?.play(com.dracoarts.shared.services.SoundCue.Selection); onChange(it) }, modifier = Modifier.sizeIn(minWidth = 52.dp, minHeight = 48.dp).semantics { contentDescription = title }, colors = SwitchDefaults.colors(checkedTrackColor = boardColor("ink-strong"), checkedThumbColor = boardColor("ball"), checkedBorderColor = boardColor("ink-strong"), uncheckedTrackColor = boardColor("inset"), uncheckedThumbColor = boardColor("panel"), uncheckedBorderColor = boardColor("hair-2")))
     }
 }
 

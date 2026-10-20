@@ -1,0 +1,13 @@
+18 October 2026 — owned BarkLog Exact Board QA 20261016, iOS 18.5.
+Updated Debug app installed in place; existing preview journal and installed Qwen retained.
+Explicit DesignReview park-empty-v1 / next-chat / LiveAIReview. No Atlas/network calls.
+
+Typed via native UI: "How many Walk records are in the supplied observations? Answer briefly. " followed by a newline.
+Before Send: Message BarkLog AI field contained that text, Send message enabled.
+After Send: saved message visible; Preparing your answer / Preparing reply visible;
+Message BarkLog AI field had no value; Stop response visible.
+After inference: On-device AI; There are 2 Walk records in the supplied observations.;
+Dog profile used; 8 source records; Message BarkLog AI empty; Send message disabled.
+
+Screenshot ios-composer-cleared.png captures the final answer and empty composer.
+The app was left on this screen. No conversation/journal/model files were removed.

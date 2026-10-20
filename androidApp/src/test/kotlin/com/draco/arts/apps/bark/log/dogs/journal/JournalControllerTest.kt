@@ -41,6 +41,8 @@ class JournalControllerTest {
         override fun observeEvents(dogId: String) = events
         override fun observeEvent(dogId: String, eventId: String) = events.map { it.firstOrNull { event -> event.id == eventId && event.dogId == dogId } }
         override fun observeTimeline(filter: TimelineFilter, limit: Int) = events.map { TimelinePage(it.take(limit), it.size.toLong()) }
+        override fun observeMatchingEvents(filter: TimelineFilter, terms: List<String>, limit: Int) = error("Not used by journal-loop tests")
+        override fun observeCareWindow(dogId: String, fromMillis: Long, untilMillis: Long) = error("Not used by journal-loop tests")
         override fun observeSummary(dogId: String, fromMillis: Long, untilMillis: Long) = events.map { records ->
             JournalSummary(records.takeLast(3), records.filter { it.occurredAtMillis in fromMillis until untilMillis }.groupingBy { it.type }.eachCount(), records.size.toLong())
         }
@@ -140,6 +142,33 @@ class JournalControllerTest {
             withTimeout(3000) { controller.state.first { !it.loading && it.selectedDog != null } }
             assertEquals(if (preferred == "luna") "Luna" else "Bruno", controller.state.value.selectedDog!!.name)
             observer.cancelAndJoin()
+        }
+    }
+
+    @Test fun unavailableDogAndReadFailureKeepTheCurrentJournalAndCancellationPropagates() = runBlocking {
+        val repo = FakeRepository(); val preferences = Preferences()
+        val controller = JournalController(repo, StorageManager(preferences), Haptics()) { 100 }
+        controller.addDog("Bruno")
+        val before = controller.state.value
+        assertFalse(controller.selectDog("missing"))
+        assertEquals(before.selectedDog, controller.state.value.selectedDog)
+        assertEquals("dog", preferences.data[JournalController.SELECTED_DOG_KEY])
+        assertTrue(controller.state.value.error!!.contains("Choose another dog"))
+        for (cancel in listOf(false, true)) {
+            val unreadable = object : JournalRepository by repo {
+                override fun observeDogs() = kotlinx.coroutines.flow.flow<List<Dog>> {
+                    if (cancel) throw kotlinx.coroutines.CancellationException("cancelled")
+                    error("private database failure")
+                }
+            }
+            val failed = JournalController(unreadable, StorageManager(preferences), Haptics()) { 100 }
+            if (cancel) kotlin.test.assertFailsWith<kotlinx.coroutines.CancellationException> { failed.selectDog("dog") }
+            else {
+                assertFalse(failed.selectDog("dog"))
+                assertTrue(failed.state.value.error!!.contains("Try again"))
+                assertFalse(failed.state.value.error!!.contains("private database failure"))
+            }
+            assertEquals("dog", preferences.data[JournalController.SELECTED_DOG_KEY])
         }
     }
 

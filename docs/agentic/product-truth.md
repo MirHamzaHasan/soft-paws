@@ -1,4 +1,50 @@
+**20 October task047:** the approved new notebook-puppy Rive and three plan/paywall/
+membership compositions are implemented in shared Compose on Android/iOS. Scoped
+native/build/data-preservation checks pass; physical/assistive and global parity
+review remain open. Home keeps the spaniel. Store setup and live AI rechecks stay
+deferred; the food scanner is Coming soon only. See [task047](../../tasks/task047-premium-plan-motion-design.md).
+
 # BarkLog product truth — KMP rebuild
+
+**20 October 2026 · task046 superseding direction (local implementation verified):**
+Additional dog creation and AI Safety explanations are Premium. Approved USD plans:
+$2.99/week, $6.99/month, $39.99/year. Native RevenueCat integration is authorized;
+the owner will supply configuration later. Existing dogs/journals and emergency
+calls stay available. Nearby-vet Maps handoff is Premium; guided training is Coming
+soon. See [current contract](../product/premium-revenuecat-and-safety.md) and
+[task046](../../tasks/task046-premium-safety-and-nearby-vets.md). Older billing and
+undecided-price statements below are historical for this scope. Release AI gates,
+no journal sync and all local data-preservation rules remain in force.
+
+
+**Latest 18 October direction — task039:** Atlas-only chat. The owner stopped local
+LLM/RAG work after approving the recent-care card; no native card was implemented.
+No local runtime is constructed or loaded in the active flow, and no local model
+or photo-inference controls are offered. Preserve installed files and journals.
+Cloud processing still requires saved permission, real Firebase identity and
+server policy admission. Automatic local context and old local/demo exchanges do
+not become cloud history. Release Atlas is gated pending live authenticated proof.
+Earlier on-device-first notes below are superseded; see task039 and the AI contract.
+
+
+**18 October 2026 owner update:** both app IDs are now `com.draco.apps.bark.log`.
+Task036 replaces demo sign-in with native Firebase Authentication. Google is enabled
+and both downloaded Google OAuth configs are verified; other provider setup, live
+sign-in and device review remain pending. Task037 now wires real optional local
+text/photo models and an authenticated Atlas text client; verification is in progress.
+Atlas server admission/context checks and live proof remain pending, Release fallback
+is disabled. Premium remains a demo; billing and journal sync remain disabled. See
+[Firebase Authentication](../product/firebase-authentication.md).
+
+## Current owner override · 17 October 2026
+
+Task033 restores the Home “Ask about {dog}” entry and makes report/Memory Book
+PDF export, print and PDF sharing Premium. Mobile reports and raw CSV stay free,
+as do existing journal/care tools. Earlier all-exports-free statements below are
+historical for this boundary. Demo plan state is not payment; real services and
+prices remain deferred. The owner approved photo-video highlights for native KMP in task034;
+shared editing and local MP4 encoders are implemented, with validation in progress. See [current Premium plan](../product/premium-features-and-video.md).
+
 
 Latest 2026-10-16 authorization: [task027](../../tasks/task027-native-companion-board-and-main.md) ports task024–026 into the
 KMP app. The owner explicitly chose local demo sign-in and AI replies now; real
@@ -31,7 +77,7 @@ and its exhaustive screen-by-screen ledger. Functional coverage is not visual ap
 SQLDelight schema v4 preserves v1/v2/v3
 journals and stores retained drafts. See [the native port](../native-board-port.md)
 for source mapping, verification and remaining physical-device gates.
-AI, legacy RN import and store release remain unimplemented.
+Task037 AI verification, legacy RN import and store release remain open.
 
 Product decisions retained: free local dog journal, no account required, no ads,
 trial expiry, purchases or paywalls. SQLDelight 2.1.0 owns local SQLite (schema v4).
@@ -48,13 +94,52 @@ request replaces Home's crowded icon chart with the owner-reviewed named/time
 strip and animated Earlier/Latest controls. Shared KMP motion gains directional
 tabs, Back uncover, tactile glyphs/stickers and selection feedback. This Home
 revision does not rebaseline the rest of task022 or mark any screen matched.
-Android: com.draco.arts.apps.bark.log.dogs.journal. iOS: com.dracoarts.barklog.
+Android: com.draco.apps.bark.log. iOS: com.draco.apps.bark.log.
 
 Safety content must organize observations and escalate, never diagnose/prescribe.
-Native reminders are opt-in; saves work after denial. Future AI downloads are
-optional and loaded only when used; Atlas/Firebase is deferred and cannot sync
-care records or enable Release fallback without approved context checks.
+Native reminders are opt-in; saves work after denial. Task037 model downloads are
+optional and weights load only when used. Atlas needs explicit cloud consent and
+Firebase identity; it cannot sync care records or enable Release fallback without
+approved server/context checks. Android API 26 and iOS 16.6 are the approved floors.
+See [local AI and Atlas](../product/local-ai-and-atlas.md).
 
 The old working tree/configuration remains in a recoverable sibling backup.
 The new app does not automatically read old journals. Use migration/export
 planning before updating an installed app containing valuable records.
+
+The owner added chat-local photos, vet call actions and a downloadable caregiver report on 2026-10-17 (task035). Up to three local images per message; demo AI cannot assess images. General medication education is allowed, while diagnosis, prescribing, doses and treatment remain veterinary decisions. Reports separate caregiver observations from optional unverified AI text and explicitly chosen images/records. No automatic sharing or medical upload.
+
+Task037 owner refinement (18 October): downloaded local Qwen uses the current
+dog's profile and up to 12 recent/relevant timeline observations automatically;
+no manual record attachment is required for local chat. General dog-care
+education does not require logs. Atlas still gets only explicitly allowed
+profile/selected records, with automatic local-source history excluded when
+unshared. Diagnosis, prescribing and clinical assessment remain excluded.
+
+Task037 composer/performance refinement (18 October): Send clears the controller-owned
+composer after SQLite commit and preserves failed/newer drafts. Full model integrity
+checks use native streaming SHA-256; unchanged synthetic iOS text prompts measured
+3.3–5.1 seconds versus 13.2–15.0 seconds before. Simulator samples do not establish
+physical-device latency. See task037 timing and native composer evidence.
+
+Task041/042 owner refinement (19 October): the approved compact BarkLog AI chat
+now has database-derived weekly log cards, source excerpts and profile review.
+After explicit versioned consent, each allowed question includes this dog's fresh
+profile and today plus six preceding local days, ending at question time. Weekly
+counts are exact; note excerpts are bounded and limitations visible. Old consent
+does not expand silently. Internal Atlas IDs/receipts and disabled Release gate
+remain intact. Local LLM/RAG remains paused; no products/affiliate links are active.
+
+Optional interaction sounds use original bundled PCM and native adapters. The
+owner delegated the texture: Soft wood at 35%, off until enabled. UI preferences
+persist locally. Tap/selection cues follow activation; completion cues follow
+successful SQLite writes. Typing, scrolling, loading and AI responses stay silent.
+Audio failure cannot block an action or save. See task041/task042 for actual
+simulator evidence and the remaining physical audio/accessibility gates.
+
+19 October · task043: “Add another dog” reuses every dog-information question
+from approved onboarding, with a fresh independent profile and a separate
+SQLite draft that can be finished later. Only final confirmation creates the dog;
+success selects their journal. Accounts, existing dogs and per-dog AI consent
+remain separate. See [task043](../../tasks/task043-additional-dog-onboarding.md)
+for actual verification status.

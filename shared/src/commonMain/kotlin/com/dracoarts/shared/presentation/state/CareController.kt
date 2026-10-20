@@ -15,7 +15,7 @@ import kotlinx.coroutines.sync.Mutex
 
 data class CareState(val dogId: String = "", val loading: Boolean = true, val items: List<CareItem> = emptyList(), val saving: Boolean = false, val error: String? = null, val readFailed: Boolean = false, val feedback: String? = null)
 
-class CareController(private val repository: CareRepository, private val haptics: HapticManager, private val device: DeviceServices? = null) {
+class CareController(private val repository: CareRepository, private val haptics: HapticManager, private val device: DeviceServices? = null, private val onCommitted: () -> Unit = {}) {
     private val _state = MutableStateFlow(CareState())
     val state = _state.asStateFlow()
     private val writing = Mutex()
@@ -70,6 +70,7 @@ class CareController(private val repository: CareRepository, private val haptics
             if (result is CareItem) _state.update { if (it.dogId == result.dogId) it.copy(items = (it.items.filterNot { item -> item.id == result.id } + result).sortedByDescending { item -> item.occurredAt }) else it }
             _state.update { it.copy(feedback = "Saved on this device") }
             runCatching { haptics.success() }
+            runCatching { onCommitted() }
             result
         } catch (cancelled: CancellationException) { throw cancelled }
         catch (cause: Exception) {

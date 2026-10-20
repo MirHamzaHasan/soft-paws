@@ -177,7 +177,7 @@ fun OnboardingScreen(controller: JournalController, journal: JournalState, platf
                 BoardGuideHeading("Their journal. This phone.", "phone.", "No account, subscription or cloud sync.")
                 Surface(shape = RoundedCornerShape(28.dp), color = boardColor("photo-bg"), border = BorderStroke(1.dp, boardColor("photo-line"))) { Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 25.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) { Surface(shape = RoundedCornerShape(13.dp, 29.dp, 13.dp, 13.dp), color = boardColor("panel"), border = BorderStroke(2.dp, boardColor("photo-ink"))) { Column(Modifier.size(92.dp, 108.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) { PawMark(Modifier.size(34.dp)); CaptionText(cleanName) } }; Row(verticalAlignment = Alignment.CenterVertically) { BarkIcon("smartphone", Modifier.size(25.dp)); Text("  Saved locally") } } }
                 StorageFact("Log care offline", "No connection or sign-in is needed.", "wifi-off")
-                StorageFact("Export a copy when you need it", "CSV and PDF export are free. Nothing is uploaded by BarkLog.", "file-down")
+                StorageFact("Keep a copy of your records", "CSV export is free. PDF export and sharing are Premium. Nothing is uploaded by BarkLog.", "file-down")
                 StorageFact("Keep your own copy", "Removing the app or its data can remove the journal. There is no cloud backup.", "info")
                 BarkButton("Open our journal", { advanceTo(11) }, icon = "arrow-right")
             }

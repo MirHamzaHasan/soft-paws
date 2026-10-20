@@ -27,6 +27,13 @@ __pycache__/
 *.mobileprovision
 *.log
 
+# Curated verification evidence referenced by delivery reports
+!docs/design/evidence/**/*.log
+
 # Private local design review notes (not app data)
 design/board/review/store.json
 design/board/.backup/
+
+# Owner-supplied Firebase client configuration
+androidApp/google-services.json
+iosApp/iosApp/GoogleService-Info.plist

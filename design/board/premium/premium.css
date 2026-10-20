@@ -272,3 +272,5 @@ body.is-solo .next-review-bar { display:none; }
 .ph.bark.n-screen .n-mascot-body { transform-box:view-box; transform-origin:50% 93%; }
 .ph.bark.n-screen .n-mascot-paw { transform-box:fill-box; transform-origin:50% 6%; }
 .ph.bark.n-screen.n-home .bl-scroll { bottom:calc(112px + var(--n-ai-height,70px) + 8px); }
+/* Compact chat attachments retain the approved conversation layout. */
+.n-chat-photos{display:flex;gap:8px}.n-chat-photos:empty{display:none}.n-chat-photos>div{position:relative;flex:1;max-width:100px}.n-chat-photos img{width:100%;height:64px;object-fit:contain;background:var(--inset);border-radius:12px}.n-chat-photos .n-icon{position:absolute;top:0;right:0;background:var(--panel);width:48px;height:48px}.n-chat-message-photo{display:block;width:100%;max-height:180px;object-fit:contain;border-radius:12px;margin-bottom:8px}.n-composer-tools>.n-icon{flex:0 0 48px}

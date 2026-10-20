@@ -1,4 +1,44 @@
+**20 October task047 native refinement:** the owner approved the new notebook
+puppy for mobile. The reviewed setup-plan, paywall and account-plan compositions
+are implemented in shared Compose with official Android/iOS Rive playback.
+Current builds and scoped simulator/data-preservation checks pass. Physical and
+assistive review remain open; Home's spaniel, free care data and existing store/
+AI admission boundaries are preserved. The pet-food scanner is an explicitly
+unavailable future Premium card. See [task047](../../tasks/task047-premium-plan-motion-design.md).
+
+> 18 October owner refinement (task040): email sign-in uses email and password,
+
+**20 October 2026 · task046 superseding direction (local implementation verified):**
+Additional dog creation and AI Safety explanations are Premium. Approved USD plans:
+$2.99/week, $6.99/month, $39.99/year. Native RevenueCat integration is authorized;
+the owner will supply configuration later. Existing dogs/journals and emergency
+calls stay available. Nearby-vet Maps handoff is Premium; guided training is Coming
+soon. See [current contract](../product/premium-revenuecat-and-safety.md) and
+[task046](../../tasks/task046-premium-safety-and-nearby-vets.md). Older billing and
+undecided-price statements below are historical for this scope. Release AI gates,
+no journal sync and all local data-preservation rules remain in force.
+
+> with explicit account creation and password recovery. Native Firebase owns the
+> session; passwords are transient and never enter the journal. Legacy incoming
+> email links remain compatible. Current AI route remains Atlas-only (task039).
+
 # BarkLog product and engineering spec
+
+**18 October 2026 owner update:** both app IDs are now `com.draco.apps.bark.log`.
+Task036 replaces demo sign-in with native Firebase Authentication. Google is enabled
+and both downloaded Google OAuth configs are verified; other provider setup, live
+sign-in and device review remain pending. Task039 selects Atlas-only text chat with explicit cloud consent. Local models,
+RAG and the approved new care card are paused. Premium remains a local demo.
+Release Atlas awaits approved server admission/live proof; billing and journal sync remain disabled. See
+[Firebase Authentication](../product/firebase-authentication.md).
+
+**Latest 2026-10-17 Premium output direction:** [task033](../../tasks/task033-premium-outputs-and-home-entry.md)
+restores the existing Home Ask entry and changes PDF/print/native PDF sharing
+(including Memory Book) to Premium while keeping mobile reports, care tools and
+raw CSV free. This explicitly supersedes earlier free-PDF statements below.
+Photo-to-video highlights are owner-approved for task034. Shared editing and local
+MP4 encoders are implemented; native validation is in progress. Real billing/auth/AI remain disabled, prices undecided.
+See [current boundary and video plan](../product/premium-features-and-video.md).
 
 Latest 2026-10-16 authorization: [task027](../../tasks/task027-native-companion-board-and-main.md) ports task024–026 into the
 KMP app. The owner explicitly chose local demo sign-in and AI replies now; real
@@ -7,6 +47,14 @@ schema v4 with preserving v1/v2/v3 migrations. Prices remain undecided and real
 purchasing disabled. No simulator run is requested; native visual/device QA is
 still outstanding. Earlier board-only statements below describe prior scope.
 
+
+**2026-10-17 mascot authorization:** the owner activated Draco Arts Studios Cadet
+and requested the approved original Rive spaniel in the application. Task032
+integrates the clean export with official native Android/Apple runtimes. Compose
+1.10.3 supplies the transparent UIKit overlay needed by the live character.
+Current builds and scoped simulator checks pass; physical/assistive and task022's
+individual screen review gates remain open. App identity, journal storage and
+real-service/billing deferrals are unchanged.
 
 Canonical for the fresh Kotlin Multiplatform rebuild requested on 2026-10-14.
 Previous framework instructions and implemented-feature claims are superseded.
@@ -84,8 +132,8 @@ No React Native, Expo, Tamagui, WatermelonDB, JavaScript build pipeline or Metro
 Do not add an unnecessary DI/navigation framework or dependency.
 Record dependency choices and actual compatibility verification in the task.
 
-Android ID: com.draco.arts.apps.bark.log.dogs.journal.
-iOS ID: com.dracoarts.barklog. iOS minimum 15.0; Android minimum API 24.
+Android ID: com.draco.apps.bark.log.
+iOS ID: com.draco.apps.bark.log. iOS minimum 15.0; Android minimum API 24.
 Versions: 1.0.0, build 1. URL/deep-link support is implemented with its feature,
 not claimed from a configuration entry.
 
@@ -239,3 +287,66 @@ See docs/validation.md and docs/release/preflight-local.md.
 
 The RN backup/history is reference material for intent, content and migration.
 It is not the current architecture, build instructions or KMP test evidence.
+
+## 18 October 2026 · task037 AI implementation
+
+The owner authorized real downloaded local text/photo models and Atlas text
+fallback, approving Android API 26 and iOS 16.6 minimums. This supersedes earlier
+deferred/demo-only AI scope. Llamatik 1.10.1, Qwen2.5 0.5B and SmolVLM 500M are
+implemented with optional pinned downloads and worker-thread inference. Atlas
+requires saved cloud consent, fresh native Firebase identity and matching context
+receipts; Release stays disabled pending approved server support and live proof.
+No photo upload, journal sync, clinical interpretation or real billing is enabled.
+See [current AI contract](../product/local-ai-and-atlas.md) and
+[task037 evidence](../../tasks/task037-local-ai-and-atlas-fallback.md).
+
+Task037 refinement, 18 October: the owner requested automatic local dog context.
+After AI opt-in, each local question receives the current dog's profile and up to
+12 recent/relevant observations from a bounded query of the latest 60 timeline
+records, including structured care details. General non-clinical dog-care
+education does not require logs. Local request context is separate from the
+explicitly allowed Atlas profile/record fields; history filtering prevents
+unshared local-source answers from becoming cloud context. Clinical assessment,
+diagnosis, prescribing and automatic photo/cloud upload remain excluded.
+
+
+## Current AI and interaction direction · 19 October 2026
+
+Task039 supersedes the preceding local-first route: normal chat is Atlas-only.
+Local LLM/RAG work is paused; preserve installed models and history without loading
+or downloading models in the active flow. Fresh native Firebase identity, context
+policy checks and matching receipts remain required. Task040 has live Debug proof;
+Release stays gated. Native password authentication never treats a demo identity
+as real Firebase auth.
+
+The owner approved task041's compact reply cards and delegated task042's sound
+choice/native continuation. New affirmative versioned consent automatically includes
+this dog's fresh saved profile/name and seven local calendar days (today plus six
+preceding days), ending at question time. Prior manual consent cannot expand
+silently. One SQLite read transaction provides exact counts and daily bars. At most
+50 relevant/latest note excerpts and bounded profile facts fit the existing context
+byte budget. Disclose total/shared counts and shortened profile facts; save source
+snapshots with replies. Exclude photos, contacts, documents, other dogs and older
+journal records. Dog/account/consent changes cancel requests; history is restricted
+to compatible scope. Local care stays usable with AI declined or revoked.
+
+Use BarkLog AI in product UI/errors/exports; internal registered IDs stay unchanged.
+Show question-first answers, relevant saved-log cards and separate general care
+ideas. Observations cannot establish health, diagnosis or treatment. No catalog,
+products, affiliate links, billing or automatic photo upload is introduced.
+
+Soft wood at 35% is selected, off until enabled. Optional volume/texture preferences
+persist locally. Bundled original PCM plays through native adapters with one voice,
+repeat/foreground/mute/interruption guards and nonblocking failure. Saved cues follow
+committed local writes. Typing, scrolling, loading and AI generation stay silent.
+See task041/task042 and their native evidence for actual verification; task022 parity
+and physical audio/accessibility/release gates remain separate.
+
+### Additional dogs · task043, 19 October 2026
+
+The owner requires the full approved dog-information onboarding for each added
+dog. A new profile starts independently, covers the same optional details and
+reminder choices, and uses a separate resumable SQLite draft. Confirming the
+review creates/selects that dog; a partial setup never overwrites the current
+dog. Existing accounts/plans are reused and AI consent/conversations remain
+scoped to each dog. See task043 for actual build/runtime verification.

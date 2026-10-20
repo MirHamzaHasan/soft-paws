@@ -1,0 +1,306 @@
+{
+  "nativeFrames": [
+    {
+      "file": "celebrate-00.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        75,
+        22,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "celebrate-25.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        67,
+        24,
+        319,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "celebrate-50.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        78,
+        22,
+        317,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "celebrate-75.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        75,
+        22,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "celebrate-99.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        75,
+        22,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "curious-00.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        75,
+        22,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "curious-25.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        60,
+        21,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "curious-50.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        58,
+        21,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "curious-75.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        76,
+        20,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "curious-99.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        75,
+        22,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "hello-00.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        75,
+        22,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "hello-25.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        68,
+        22,
+        328,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "hello-50.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        67,
+        22,
+        328,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "hello-75.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        77,
+        22,
+        326,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "hello-99.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        75,
+        22,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "still-00.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        75,
+        22,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "still-25.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        75,
+        22,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "still-50.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        75,
+        22,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "still-75.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        75,
+        22,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    },
+    {
+      "file": "still-99.png",
+      "width": 360,
+      "height": 380,
+      "opaqueBounds": [
+        75,
+        22,
+        315,
+        357
+      ],
+      "transparentEdges": true
+    }
+  ],
+  "textContrast": [
+    {
+      "theme": "light",
+      "text": "#17221b",
+      "ground": "#F3F1E9",
+      "ratio": 14.5
+    },
+    {
+      "theme": "light",
+      "text": "#17221b",
+      "ground": "#fffefa",
+      "ratio": 16.24
+    },
+    {
+      "theme": "light",
+      "text": "#55615a",
+      "ground": "#F3F1E9",
+      "ratio": 5.72
+    },
+    {
+      "theme": "light",
+      "text": "#55615a",
+      "ground": "#fffefa",
+      "ratio": 6.42
+    },
+    {
+      "theme": "dark",
+      "text": "#f4f3e9",
+      "ground": "#16211c",
+      "ratio": 14.86
+    },
+    {
+      "theme": "dark",
+      "text": "#f4f3e9",
+      "ground": "#202d25",
+      "ratio": 12.88
+    },
+    {
+      "theme": "dark",
+      "text": "#b9c4ba",
+      "ground": "#16211c",
+      "ratio": 9.2
+    },
+    {
+      "theme": "dark",
+      "text": "#b9c4ba",
+      "ground": "#202d25",
+      "ratio": 7.97
+    },
+    {
+      "theme": "accent",
+      "text": "#17221b",
+      "ground": "#daf547",
+      "ratio": 13.37
+    },
+    {
+      "theme": "accent",
+      "text": "#405026",
+      "ground": "#daf547",
+      "ratio": 7.16
+    }
+  ]
+}

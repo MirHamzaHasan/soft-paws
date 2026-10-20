@@ -18,6 +18,10 @@ import kotlinx.datetime.*
 
 @Composable
 fun MemoryFeatureScreen(page: FeaturePage, context: FeatureContext) {
+    if (page.feature == Feature.MemoryShare &&
+        !PremiumExportAccess(context, com.dracoarts.shared.presentation.companion.PremiumFeature.MemoryBookPdf) {
+            context.navigation.back()
+        }) return
     val scope = rememberCoroutineScope()
     val saved = context.items.firstOrNull { it.id == page.id && it.data is CareItemData.Memory }
     val memory = saved?.data as? CareItemData.Memory
@@ -60,6 +64,7 @@ fun MemoryFeatureScreen(page: FeaturePage, context: FeatureContext) {
     val availableIds = records.events.map { it.id } + photos.map { it.id }
     when (page.feature) {
         Feature.Memory -> {
+            FeatureRow("Make a little film", "Choose photos · free editing and preview", "image") { context.open(Feature.VideoHighlight) }
             val collections = context.items.filter { it.data is CareItemData.Memory && JournalDates.inputDate(it.occurredAt, context.zone).startsWith(month) }
             if (collections.isEmpty()) FeatureNotice("No highlights chosen", "Choose a local care record or photo when you want to keep it here.", "heart")
             else if (collections.size == 1) FeatureNotice("One saved highlight", "This month stays short because only one item was chosen.", "heart", tone = "info")

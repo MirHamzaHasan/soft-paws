@@ -120,6 +120,16 @@ AND (:eventType IS NULL OR type = :eventType)
 AND (:fromTime IS NULL OR occurred_at >= :fromTime)
 AND (:untilTime IS NULL OR occurred_at < :untilTime);
 
+matchingEvents:
+SELECT * FROM care_events WHERE dog_id = :dogId
+AND (:eventType IS NULL OR type = :eventType)
+AND (:fromTime IS NULL OR occurred_at >= :fromTime)
+AND (:untilTime IS NULL OR occurred_at < :untilTime)
+AND ((:termOne != '' AND instr(lower(coalesce(note, '') || ' ' || coalesce(details_json, '') || ' ' || context_json), :termOne) > 0)
+OR (:termTwo != '' AND instr(lower(coalesce(note, '') || ' ' || coalesce(details_json, '') || ' ' || context_json), :termTwo) > 0)
+OR (:termThree != '' AND instr(lower(coalesce(note, '') || ' ' || coalesce(details_json, '') || ' ' || context_json), :termThree) > 0))
+ORDER BY occurred_at DESC, created_at DESC, id DESC LIMIT :rowLimit;
+
 recentEvents:
 SELECT * FROM care_events WHERE dog_id = ? ORDER BY occurred_at DESC, created_at DESC, id DESC LIMIT 3;
 
@@ -206,6 +216,12 @@ SELECT value_json FROM local_documents WHERE id = ?;
 
 saveDocument:
 INSERT OR REPLACE INTO local_documents(id, dog_id, value_json) VALUES (?, ?, ?);
+
+documentsWithPrefix:
+SELECT * FROM local_documents WHERE substr(id, 1, :prefixLength) = :prefixText;
+
+documentsForDog:
+SELECT * FROM local_documents WHERE dog_id = ?;
 
 deleteDocuments:
 DELETE FROM local_documents WHERE substr(id, 1, :prefixLength) = :prefixText;

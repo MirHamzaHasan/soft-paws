@@ -1,0 +1,11 @@
+[
+  {
+    "duration": "26s",
+    "durationInSeconds": 26.776798963546753,
+    "name": "testNewPlanMotionAndReducedMotionFrames()",
+    "nodeIdentifier": "PremiumSafetyJourneys/testNewPlanMotionAndReducedMotionFrames()",
+    "nodeIdentifierURL": "test://com.apple.xcode/iosApp/BarkLogUITests/PremiumSafetyJourneys/testNewPlanMotionAndReducedMotionFrames",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  }
+]

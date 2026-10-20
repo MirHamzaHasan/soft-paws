@@ -9,6 +9,10 @@ import com.dracoarts.shared.managers.StorageBackend
 import kotlinx.datetime.*
 
 enum class BoardReviewDataSet(val key: String, val databaseName: String) {
+    PremiumSafety("park-premium-safety-v1", "barklog_review_premium_safety_v1.db"),
+    AddDog("park-add-dog-v1", "barklog_review_add_dog_v1.db"),
+    AiCards("park-ai-cards-v1", "barklog_review_ai_cards_v1.db"),
+    Video("park-video-v1", "barklog_review_park_video_v1.db"),
     Day("park-day-v1", "barklog_review_park_day_v1.db"),
     Full("park-full-v1", "barklog_review_park_full_v1.db"),
     Empty("park-empty-v1", "barklog_review_park_empty_v1.db"),
@@ -17,6 +21,7 @@ enum class BoardReviewDataSet(val key: String, val databaseName: String) {
     Contexts("park-contexts-v1", "barklog_review_park_contexts_v1.db"),
     Paged("park-paged-v1", "barklog_review_park_paged_v1.db");
     val preferencePrefix get() = if (this == Day) "board_review_v1_" else "board_review_${name.lowercase()}_v1_"
+    val nowMillis get() = if (this == AiCards) LocalDateTime.parse("2026-10-19T20:00").toInstant(BoardReviewFixture.zone).toEpochMilliseconds() else BoardReviewFixture.now
 }
 
 /** Opt-in host Debug fixture. A separate SQLite file and preference namespace are mandatory. */
@@ -33,8 +38,28 @@ object BoardReviewFixture {
 
     suspend fun seed(repository: JournalRepository, dataSet: BoardReviewDataSet = BoardReviewDataSet.Day) {
         if (dataSet in setOf(BoardReviewDataSet.Setup, BoardReviewDataSet.NoDog)) return
-        repository.addDog("Bruno", DogDetails(breed = "Mixed breed", age = "4–7 years"), dogId)
-        if (dataSet == BoardReviewDataSet.Empty) return
+        repository.addDog("Bruno", if (dataSet == BoardReviewDataSet.AiCards) DogDetails(breed = "Cocker Spaniel", age = "3 years", companion = DogContext(years = "3", breeds = listOf("Cocker Spaniel"))) else DogDetails(breed = "Mixed breed", age = "4–7 years"), dogId)
+        if (dataSet == BoardReviewDataSet.AiCards) {
+            val rows = listOf(
+                Triple("13T08:10", CareEventType.Walk, "Morning loop · 18 minutes"), Triple("13T18:20", CareEventType.Walk, "Evening loop · 22 minutes"),
+                Triple("14T08:15", CareEventType.Meal, "Breakfast · usual food"), Triple("14T19:10", CareEventType.Grooming, "A few brush strokes, then walked away"),
+                Triple("15T18:05", CareEventType.Walk, "Quiet route · stopped to sniff"), Triple("15T18:40", CareEventType.Meal, "Evening meal"),
+                Triple("16T08:20", CareEventType.Walk, "Morning loop · 20 minutes"), Triple("16T19:00", CareEventType.Grooming, "Short brush session · paused when he moved away"),
+                Triple("17T08:10", CareEventType.Meal, "Breakfast · usual food"), Triple("18T08:05", CareEventType.Walk, "Morning loop · 15 minutes"),
+                Triple("18T18:30", CareEventType.Walk, "Park loop · sniffing breaks"), Triple("19T18:20", CareEventType.Walk, "Evening loop · 24 minutes"))
+            rows.forEachIndexed { i, (stamp, type, note) ->
+                val details = if (type == CareEventType.Grooming) CareDetails.Grooming(GroomingActivity.Brushing) else null
+                repository.createEvent(dogId, itemId(9000 + i), CareEventInput(type, LocalDateTime.parse("2026-10-$stamp").toInstant(zone).toEpochMilliseconds(), note, details))
+            }
+            (repository as com.dracoarts.shared.domain.repository.LocalDocumentRepository).writeDocument("companion-session", """{"premium":true}""")
+            return
+        }
+        if (dataSet in setOf(BoardReviewDataSet.Empty, BoardReviewDataSet.AddDog)) return
+        if (dataSet == BoardReviewDataSet.Video) {
+            val draft = HighlightDraft(dogId, listOf("red", "green", "blue").mapIndexed { i, name -> HighlightClip("video-qa-$name.jpg", "QA moment ${i + 1}") })
+            (repository as CareRepository).saveDraft(dogId, HighlightDraft.SLOT, com.dracoarts.shared.domain.repository.LocalDraft(kotlinx.serialization.json.Json.encodeToString(HighlightDraft.serializer(), draft), draft.clips.map { it.photoId }))
+            return
+        }
         val samples = listOf(
             Triple(CareEventType.Walk, "18:20", "Evening loop · 24 minutes"),
             Triple(CareEventType.Meal, "17:45", "Dry food · 120 g"),

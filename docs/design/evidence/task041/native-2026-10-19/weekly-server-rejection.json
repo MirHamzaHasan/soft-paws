@@ -1,0 +1,16 @@
+{
+  "weeklyTotal": 3,
+  "weeklyShared": 3,
+  "httpStatus": 422,
+  "contextChecked": null,
+  "contextFeature": null,
+  "bodyBytes": 3799,
+  "responseFields": [
+    "error"
+  ],
+  "error_code": "CONTEXT_FEATURE_UNKNOWN",
+  "error_message": "The requested context feature is not authorized by this application",
+  "clientRequestId": "d5e99782-7321-4ae4-b4e0-aafb1894a970",
+  "serverRequestId": null,
+  "scope": "Explicit versioned consent: owned synthetic current dog profile + past seven days"
+}

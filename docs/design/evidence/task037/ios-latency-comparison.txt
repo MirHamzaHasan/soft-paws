@@ -1,0 +1,49 @@
+18 October 2026 — owned iOS 18.5 simulator, BarkLog Exact Board QA 20261016.
+Synthetic native acceptance, Debug test binary, same pinned models and prompts.
+Each request verifies the full model, loads it on demand and releases it afterwards.
+No care database, account or network used. These are samples, not physical-device guarantees.
+
+BEFORE: common Okio HashingSource on Kotlin/Native
+BARKLOG_AI_TIMING: text.verify 10532ms
+BARKLOG_AI_TIMING: text.load 557ms
+BARKLOG_AI_TIMING: text.generate 3018ms
+BARKLOG_AI_TIMING: text.release 22ms
+BARKLOG_SYNTHETIC_TEXT: Milo's recorded walk was 17 minutes. (14.134937541668478 seconds)
+BARKLOG_AI_TIMING: text.verify 10235ms
+BARKLOG_AI_TIMING: text.load 457ms
+BARKLOG_AI_TIMING: text.generate 4281ms
+BARKLOG_AI_TIMING: text.release 18ms
+BARKLOG_COMPUTED_COUNTS: There are 2 Walk records in the supplied observations. (14.994591666662018 seconds)
+BARKLOG_AI_TIMING: text.verify 10274ms
+BARKLOG_AI_TIMING: text.load 504ms
+BARKLOG_AI_TIMING: text.generate 2417ms
+BARKLOG_AI_TIMING: text.release 22ms
+BARKLOG_GENERAL_CARE: Fetch (13.220472000000882 seconds)
+BARKLOG_AI_TIMING: photo.verify 13233ms
+BARKLOG_AI_TIMING: photo.release 31ms
+BARKLOG_SYNTHETIC_CAPTION:  Red square. (14.575775249999424 seconds)
+Passed: pinnedModelsAnswerSyntheticTextAndDescribeASyntheticScene (com.dracoarts.shared.services.ai.LocalAiIosNativeTest)
+Testing finished
+
+AFTER: streaming native platform SHA-256
+Passed: nativeSha256MatchesKnownVectorAndRejectsChangedBytes (com.dracoarts.shared.services.ai.LocalAiIosNativeTest)
+BARKLOG_AI_TIMING: text.verify 544ms
+BARKLOG_AI_TIMING: text.load 639ms
+BARKLOG_AI_TIMING: text.generate 3219ms
+BARKLOG_AI_TIMING: text.release 27ms
+BARKLOG_SYNTHETIC_TEXT: Milo's recorded walk was 17 minutes. (4.433778916667507 seconds)
+BARKLOG_AI_TIMING: text.verify 371ms
+BARKLOG_AI_TIMING: text.load 468ms
+BARKLOG_AI_TIMING: text.generate 4267ms
+BARKLOG_AI_TIMING: text.release 22ms
+BARKLOG_COMPUTED_COUNTS: There are 2 Walk records in the supplied observations. (5.131882708337798 seconds)
+BARKLOG_AI_TIMING: text.verify 392ms
+BARKLOG_AI_TIMING: text.load 473ms
+BARKLOG_AI_TIMING: text.generate 2379ms
+BARKLOG_AI_TIMING: text.release 24ms
+BARKLOG_GENERAL_CARE: Fetch (3.271708625004976 seconds)
+BARKLOG_AI_TIMING: photo.verify 499ms
+BARKLOG_AI_TIMING: photo.release 27ms
+BARKLOG_SYNTHETIC_CAPTION:  A red square. (1.7946730416661012 seconds)
+Passed: pinnedModelsAnswerSyntheticTextAndDescribeASyntheticScene (com.dracoarts.shared.services.ai.LocalAiIosNativeTest)
+Testing finished

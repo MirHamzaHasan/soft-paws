@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import platform.Foundation.*
+import platform.CoreLocation.*
 import platform.UIKit.*
 import platform.PhotosUI.*
 import platform.AVFoundation.*
@@ -22,6 +23,49 @@ import platform.darwin.NSObject
 import platform.posix.memcpy
 
 class IosDeviceServices : DeviceServices {
+    override fun suggestedCountry(): String = NSLocale.currentLocale.countryCode.orEmpty()
+    private val areaLock = Mutex()
+    private var areaDelegate: CLLocationManagerDelegateProtocol? = null
+    override suspend fun currentArea(): DeviceResult<ApproximateArea> = withContext(Dispatchers.Main) {
+        areaLock.withLock {
+            if (!CLLocationManager.locationServicesEnabled()) return@withLock DeviceResult.Failed("Turn on location services, or enter a city instead.")
+            val manager = CLLocationManager()
+            val geocoder = CLGeocoder()
+            val result = CompletableDeferred<DeviceResult<ApproximateArea>>()
+            fun authorization() {
+                when (manager.authorizationStatus) {
+                    kCLAuthorizationStatusDenied, kCLAuthorizationStatusRestricted -> result.complete(DeviceResult.Denied)
+                    kCLAuthorizationStatusAuthorizedWhenInUse, kCLAuthorizationStatusAuthorizedAlways -> manager.requestLocation()
+                    else -> Unit
+                }
+            }
+            val delegate = object : NSObject(), CLLocationManagerDelegateProtocol {
+                override fun locationManagerDidChangeAuthorization(manager: CLLocationManager) { authorization() }
+                override fun locationManager(manager: CLLocationManager, didFailWithError: NSError) { result.complete(DeviceResult.Failed("Couldn't find your area. Enter a city instead.")) }
+                override fun locationManager(manager: CLLocationManager, didUpdateLocations: List<*>) {
+                    val location = didUpdateLocations.filterIsInstance<CLLocation>().lastOrNull() ?: return
+                    val latitude = location.coordinate.useContents { latitude }
+                    val longitude = location.coordinate.useContents { longitude }
+                    geocoder.reverseGeocodeLocation(location) { places, _ ->
+                        val country = places?.filterIsInstance<CLPlacemark>()?.firstOrNull()?.ISOcountryCode.orEmpty()
+                        result.complete(DeviceResult.Success(ApproximateArea(kotlin.math.round(latitude * 100) / 100, kotlin.math.round(longitude * 100) / 100, country)))
+                    }
+                }
+            }
+            areaDelegate = delegate; manager.delegate = delegate; manager.desiredAccuracy = kCLLocationAccuracyKilometer
+            try {
+                if (manager.authorizationStatus == kCLAuthorizationStatusNotDetermined) manager.requestWhenInUseAuthorization() else authorization()
+                withTimeoutOrNull(30_000) { result.await() } ?: DeviceResult.Failed("Couldn't find your area. Enter a city instead.")
+            } finally { manager.stopUpdatingLocation(); manager.delegate = null; geocoder.cancelGeocode(); areaDelegate = null }
+        }
+    }
+    override fun updateAppearance(dark: Boolean, followSystem: Boolean) {
+        presenter()?.view?.window?.overrideUserInterfaceStyle = when {
+            followSystem -> UIUserInterfaceStyle.UIUserInterfaceStyleUnspecified
+            dark -> UIUserInterfaceStyle.UIUserInterfaceStyleDark
+            else -> UIUserInterfaceStyle.UIUserInterfaceStyleLight
+        }
+    }
     override suspend fun captureFrame(bounds: DeviceFrameBounds): androidx.compose.ui.graphics.ImageBitmap? = withContext(Dispatchers.Main) {
         if (bounds.width <= 0 || bounds.height <= 0) return@withContext null
         val window = presenter()?.view?.window ?: return@withContext null

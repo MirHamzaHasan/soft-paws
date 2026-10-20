@@ -1,0 +1,8 @@
+
+com.draco.arts.apps.bark.log.dogs.journal.AddDogJourneyTest:.
+
+Time: 272.536
+
+OK (1 test)
+
+

@@ -1,0 +1,24 @@
+{
+  "editorFile": "https://editor.rive.app/file/barklog-care-notebook-plan-study/2667617",
+  "fileId": 2667617,
+  "artboard": "BarkLog Care Notebook",
+  "stateMachine": "Care Companion",
+  "viewModel": "Care",
+  "triggers": {
+    "Hello": "hello",
+    "Curious": "curious"
+  },
+  "cancelTrigger": "rest",
+  "fps": 60,
+  "clips": {
+    "Idle": 6,
+    "Hello": 2.4,
+    "Curious": 2.8
+  },
+  "sourceSha256": "33a2c24cbd5f871cb74f8d885e7d365d99d8b057e05e398783021e297feea5fc",
+  "runtimeSha256": "87d98161ac43bfb40ef788c157553baf606590c9c757fe07e6d5ed2ade6e66de",
+  "editableSha256": "7618f14b248b6e0604e5db795f93520d20f0b68e51e4542f4fe860c78b405309",
+  "editableError": null,
+  "motionSourceSha256": "fdc8e53e622ec0cc566b313568fff91befc13349134f54fd7da47aaaef5da886",
+  "scope": "New original artwork and Rive motion for plan/paywall review only. Existing spaniel and native app preserved."
+}

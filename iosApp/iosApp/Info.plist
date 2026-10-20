@@ -2,9 +2,28 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CADisableMinimumFrameDurationOnPhone</key>
-    <true/>
-    <key>NSCameraUsageDescription</key>
-    <string>Take a photo for your dog profile or care record when you choose Take photo.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Find animal emergency services and nearby veterinary clinics in your area when you ask. You can enter a city instead.</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Take a photo for your dog profile or care record when you choose Take photo.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>FirebaseGoogleSignIn</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.518533458415-m09pt7ui5dglhovnsh8lbot8s8imlqqk</string>
+			</array>
+		</dict>
+	</array>
+	<key>BarkLogRevenueCatPublicKey</key>
+	<string>$(BARKLOG_REVENUECAT_PUBLIC_KEY)</string>
+	<key>BarkLogRevenueCatEntitlementID</key>
+	<string>$(BARKLOG_REVENUECAT_ENTITLEMENT_ID)</string>
+	<key>BarkLogRevenueCatOfferingID</key>
+	<string>$(BARKLOG_REVENUECAT_OFFERING_ID)</string>
 </dict>
 </plist>

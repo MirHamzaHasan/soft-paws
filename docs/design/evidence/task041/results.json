@@ -1,0 +1,2265 @@
+{
+  "checks": [
+    "Eight states in light/dark; populated/empty/consent at 375×667 with 130% text; readable end-of-scroll captures",
+    "Exact fixture counts; seven original walk source notes; sheet focus trap, Escape and focus return",
+    "Automatic-context review includes all twelve example rows plus the named dog profile; no per-record picker",
+    "Unchecked consent disables AI; affirmative scope consent opens chat; declining returns to the journal",
+    "Loading can stop without losing the question; stopped/error states retry to a source-backed authored reply",
+    "No logs and no matching logs remain distinct; future placement has no links/actions and is absent in normal answers",
+    "Reduced-motion screen is stable at rest",
+    "Real-time source-sheet frames; no browser errors or external requests"
+  ],
+  "errors": [],
+  "external": [],
+  "layouts": [
+    {
+      "id": "next-chat-cards",
+      "theme": "light",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "You’ve recorded 7 walks for Bruno this",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "walks recorded",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "2",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Tue",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Wed",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "1",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Thu",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "1",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Fri",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Sat",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "2",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Sun",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "1",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Mon",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Latest · 19 Oct, 18:20",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "“Evening loop · 24 minutes”",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "View 7 walk logs",
+          "ratio": 14.606446326675421
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Give Bruno time to sniff along a famil",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Reward calm moments with praise or a r",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 12.810437906721678
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 6.548085106530282
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "View 7 walk logs",
+          "width": 314,
+          "height": 48
+        },
+        {
+          "name": "Show me the walk notes",
+          "width": 350,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-brushing",
+      "theme": "light",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "Bruno’s notes describe short brushing ",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "grooming entries recorded",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Tue",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "1",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Wed",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Thu",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "1",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Fri",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Sat",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Sun",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Mon",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Latest · 16 Oct, 19:00",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "“Short brush session · paused when he ",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "View 2 grooming logs",
+          "ratio": 14.606446326675421
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Let Bruno approach the brush. Begin wi",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Keep sessions short. Pause when Bruno ",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 12.810437906721678
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 6.548085106530282
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "View 2 grooming logs",
+          "width": 314,
+          "height": 48
+        },
+        {
+          "name": "Help me write a brushing note",
+          "width": 350,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-no-match",
+      "theme": "light",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "There are no brushing notes for Bruno ",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "grooming entries recorded",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "No grooming logs in this week. Other c",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Let Bruno approach the brush. Begin wi",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Keep sessions short. Pause when Bruno ",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 12.810437906721678
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 6.548085106530282
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Help me write a brushing note",
+          "width": 350,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-empty",
+      "theme": "light",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "Bruno has no walk logs saved this week",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "walks recorded",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "No care records saved this week. Bruno",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Give Bruno time to sniff along a famil",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Reward calm moments with praise or a r",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 12.810437906721678
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 6.548085106530282
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Show me the walk notes",
+          "width": 350,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-products",
+      "theme": "light",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "Bruno’s notes describe short brushing ",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "grooming entries recorded",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Tue",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "1",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Wed",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Thu",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "1",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Fri",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Sat",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Sun",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Mon",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Latest · 16 Oct, 19:00",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "“Short brush session · paused when he ",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "View 2 grooming logs",
+          "ratio": 14.606446326675421
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Let Bruno approach the brush. Begin wi",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Keep sessions short. Pause when Bruno ",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Future placement · design only",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Photo, name and suitability details",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "No products, prices, affiliate links o",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 12.810437906721678
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 6.548085106530282
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "View 2 grooming logs",
+          "width": 314,
+          "height": 48
+        },
+        {
+          "name": "Help me write a brushing note",
+          "width": 350,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-loading",
+      "theme": "light",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "BarkLog AI",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Profile + 12 records · 13–19 Oct",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 12.810437906721678
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 6.548085106530282
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Stop response",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-error",
+      "theme": "light",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "Your question is kept here. Your local",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Try again",
+          "ratio": 14.606446326675421
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 12.810437906721678
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 6.548085106530282
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Try again",
+          "width": 314,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-ai-cards-consent",
+      "theme": "light",
+      "large": false,
+      "compact": false,
+      "contrast": [],
+      "targets": [
+        {
+          "name": "Back",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Enable BarkLog AI",
+          "width": 350,
+          "height": 56
+        },
+        {
+          "name": "Keep using my journal",
+          "width": 137.546875,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": null,
+      "readingBottom": 810,
+      "bodyTop": 68,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards",
+      "theme": "dark",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "You’ve recorded 7 walks for Bruno this",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "walks recorded",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "2",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Tue",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Wed",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "1",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Thu",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "1",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Fri",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Sat",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "2",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Sun",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "1",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Mon",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Latest · 19 Oct, 18:20",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "“Evening loop · 24 minutes”",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "View 7 walk logs",
+          "ratio": 13.374572858236876
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Give Bruno time to sniff along a famil",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Reward calm moments with praise or a r",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 11.841639910201065
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 7.844601590311204
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "View 7 walk logs",
+          "width": 314,
+          "height": 48
+        },
+        {
+          "name": "Show me the walk notes",
+          "width": 350,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-brushing",
+      "theme": "dark",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "Bruno’s notes describe short brushing ",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "grooming entries recorded",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Tue",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "1",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Wed",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Thu",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "1",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Fri",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Sat",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Sun",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Mon",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Latest · 16 Oct, 19:00",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "“Short brush session · paused when he ",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "View 2 grooming logs",
+          "ratio": 13.374572858236876
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Let Bruno approach the brush. Begin wi",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Keep sessions short. Pause when Bruno ",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 11.841639910201065
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 7.844601590311204
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "View 2 grooming logs",
+          "width": 314,
+          "height": 48
+        },
+        {
+          "name": "Help me write a brushing note",
+          "width": 350,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-no-match",
+      "theme": "dark",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "There are no brushing notes for Bruno ",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "grooming entries recorded",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "No grooming logs in this week. Other c",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Let Bruno approach the brush. Begin wi",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Keep sessions short. Pause when Bruno ",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 11.841639910201065
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 7.844601590311204
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Help me write a brushing note",
+          "width": 350,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-empty",
+      "theme": "dark",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "Bruno has no walk logs saved this week",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "walks recorded",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "No care records saved this week. Bruno",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Give Bruno time to sniff along a famil",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Reward calm moments with praise or a r",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 11.841639910201065
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 7.844601590311204
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Show me the walk notes",
+          "width": 350,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-products",
+      "theme": "dark",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "Bruno’s notes describe short brushing ",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "grooming entries recorded",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Tue",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "1",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Wed",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Thu",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "1",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Fri",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Sat",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Sun",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Mon",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Latest · 16 Oct, 19:00",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "“Short brush session · paused when he ",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "View 2 grooming logs",
+          "ratio": 13.374572858236876
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Let Bruno approach the brush. Begin wi",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Keep sessions short. Pause when Bruno ",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Future placement · design only",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Photo, name and suitability details",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "No products, prices, affiliate links o",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 11.841639910201065
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 7.844601590311204
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "View 2 grooming logs",
+          "width": 314,
+          "height": 48
+        },
+        {
+          "name": "Help me write a brushing note",
+          "width": 350,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-loading",
+      "theme": "dark",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "BarkLog AI",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Profile + 12 records · 13–19 Oct",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 11.841639910201065
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 7.844601590311204
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Stop response",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-error",
+      "theme": "dark",
+      "large": false,
+      "compact": false,
+      "contrast": [
+        {
+          "text": "Your question is kept here. Your local",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Try again",
+          "ratio": 13.374572858236876
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 11.841639910201065
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 7.844601590311204
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Try again",
+          "width": 314,
+          "height": 48
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 220,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": 124,
+      "readingBottom": 655,
+      "composerTop": 665,
+      "bodyTop": 72,
+      "backendExposed": false
+    },
+    {
+      "id": "next-ai-cards-consent",
+      "theme": "dark",
+      "large": false,
+      "compact": false,
+      "contrast": [],
+      "targets": [
+        {
+          "name": "Back",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Enable BarkLog AI",
+          "width": 350,
+          "height": 56
+        },
+        {
+          "name": "Keep using my journal",
+          "width": 137.546875,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 390,
+      "phoneHeight": 844,
+      "headerBottom": null,
+      "readingBottom": 810,
+      "bodyTop": 68,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards",
+      "theme": "light",
+      "large": true,
+      "compact": true,
+      "contrast": [
+        {
+          "text": "You’ve recorded 7 walks for Bruno this",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "walks recorded",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "2",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Tue",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Wed",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "1",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Thu",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "1",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Fri",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "0",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Sat",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "2",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Sun",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "1",
+          "ratio": 17.731903315155712
+        },
+        {
+          "text": "Mon",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Latest · 19 Oct, 18:20",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "“Evening loop · 24 minutes”",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "View 7 walk logs",
+          "ratio": 14.606446326675421
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Give Bruno time to sniff along a famil",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Reward calm moments with praise or a r",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 12.810437906721678
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 6.548085106530282
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "View 7 walk logs",
+          "width": 299,
+          "height": 48
+        },
+        {
+          "name": "Show me the walk notes",
+          "width": 335,
+          "height": 49.890625
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 205,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 375,
+      "phoneHeight": 667,
+      "headerBottom": 124,
+      "readingBottom": 461,
+      "composerTop": 471,
+      "bodyTop": -749,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-empty",
+      "theme": "light",
+      "large": true,
+      "compact": true,
+      "contrast": [
+        {
+          "text": "Bruno has no walk logs saved this week",
+          "ratio": 13.76031135175547
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "walks recorded",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "No care records saved this week. Bruno",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 6.548085106530282
+        },
+        {
+          "text": "Give Bruno time to sniff along a famil",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Reward calm moments with praise or a r",
+          "ratio": 15.55158875105366
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 5.793857545104181
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 12.810437906721678
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 6.548085106530282
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Show me the walk notes",
+          "width": 335,
+          "height": 49.890625
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 205,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 375,
+      "phoneHeight": 667,
+      "headerBottom": 124,
+      "readingBottom": 461,
+      "composerTop": 471,
+      "bodyTop": -589,
+      "backendExposed": false
+    },
+    {
+      "id": "next-ai-cards-consent",
+      "theme": "light",
+      "large": true,
+      "compact": true,
+      "contrast": [],
+      "targets": [
+        {
+          "name": "Back",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Enable BarkLog AI",
+          "width": 335,
+          "height": 56
+        },
+        {
+          "name": "Keep using my journal",
+          "width": 178.8125,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 375,
+      "phoneHeight": 667,
+      "headerBottom": null,
+      "readingBottom": 633,
+      "bodyTop": -452,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards",
+      "theme": "dark",
+      "large": true,
+      "compact": true,
+      "contrast": [
+        {
+          "text": "You’ve recorded 7 walks for Bruno this",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "walks recorded",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "2",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Tue",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Wed",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "1",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Thu",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "1",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Fri",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "0",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Sat",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "2",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Sun",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "1",
+          "ratio": 15.386512276315663
+        },
+        {
+          "text": "Mon",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Latest · 19 Oct, 18:20",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "“Evening loop · 24 minutes”",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "View 7 walk logs",
+          "ratio": 13.374572858236876
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Give Bruno time to sniff along a famil",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Reward calm moments with praise or a r",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 11.841639910201065
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 7.844601590311204
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "View 7 walk logs",
+          "width": 299,
+          "height": 48
+        },
+        {
+          "name": "Show me the walk notes",
+          "width": 335,
+          "height": 49.890625
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 205,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 375,
+      "phoneHeight": 667,
+      "headerBottom": 124,
+      "readingBottom": 461,
+      "composerTop": 471,
+      "bodyTop": -749,
+      "backendExposed": false
+    },
+    {
+      "id": "next-chat-cards-empty",
+      "theme": "dark",
+      "large": true,
+      "compact": true,
+      "contrast": [
+        {
+          "text": "Bruno has no walk logs saved this week",
+          "ratio": 15.17528178163927
+        },
+        {
+          "text": "From Bruno’s logs",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "walks recorded",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "13–19 Oct · past 7 days",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "No care records saved this week. Bruno",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "General care ideas",
+          "ratio": 7.844601590311204
+        },
+        {
+          "text": "Give Bruno time to sniff along a famil",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Reward calm moments with praise or a r",
+          "ratio": 13.622979947191915
+        },
+        {
+          "text": "Care logs may be incomplete. A veterin",
+          "ratio": 8.73847279076458
+        },
+        {
+          "text": "Profile + past 7 days",
+          "ratio": 11.841639910201065
+        },
+        {
+          "text": "General care · not diagnosis",
+          "ratio": 7.844601590311204
+        }
+      ],
+      "targets": [
+        {
+          "name": "Back to journal",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Chat options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Show me the walk notes",
+          "width": 335,
+          "height": 49.890625
+        },
+        {
+          "name": "Photo options",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Review automatic profile and seven-day context",
+          "width": 205,
+          "height": 48
+        },
+        {
+          "name": "Send message",
+          "width": 48,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 375,
+      "phoneHeight": 667,
+      "headerBottom": 124,
+      "readingBottom": 461,
+      "composerTop": 471,
+      "bodyTop": -589,
+      "backendExposed": false
+    },
+    {
+      "id": "next-ai-cards-consent",
+      "theme": "dark",
+      "large": true,
+      "compact": true,
+      "contrast": [],
+      "targets": [
+        {
+          "name": "Back",
+          "width": 48,
+          "height": 48
+        },
+        {
+          "name": "Enable BarkLog AI",
+          "width": 335,
+          "height": 56
+        },
+        {
+          "name": "Keep using my journal",
+          "width": 178.8125,
+          "height": 48
+        }
+      ],
+      "overflow": [],
+      "phoneWidth": 375,
+      "phoneHeight": 667,
+      "headerBottom": null,
+      "readingBottom": 633,
+      "bodyTop": -452,
+      "backendExposed": false
+    }
+  ],
+  "motion": [
+    {
+      "targetMs": 105,
+      "observedMs": 106.19999999925494
+    },
+    {
+      "targetMs": 210,
+      "observedMs": 222.2999999988824
+    },
+    {
+      "targetMs": 315,
+      "observedMs": 337.2999999988824
+    }
+  ],
+  "nativeImplemented": false
+}

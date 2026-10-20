@@ -45,6 +45,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.dracoarts.shared.presentation.theme.AppSpacing
 import com.dracoarts.shared.presentation.theme.pressMotion
@@ -59,7 +60,7 @@ import com.dracoarts.shared.presentation.theme.boardColor
 
 @Composable
 fun PawMark(modifier: Modifier = Modifier.size(32.dp)) {
-    val ink = MaterialTheme.colorScheme.onSurface
+    val ink = androidx.compose.material3.LocalContentColor.current
     Canvas(modifier.clearAndSetSemantics {}) {
         drawOval(ink, Offset(size.width * .24f, size.height * .48f), Size(size.width * .52f, size.height * .42f))
         listOf(.04f to .30f, .23f to .06f, .54f to .06f, .76f to .30f).forEach { (x, y) ->
@@ -70,7 +71,7 @@ fun PawMark(modifier: Modifier = Modifier.size(32.dp)) {
 
 @Composable
 @OptIn(ExperimentalLayoutApi::class)
-fun BrandHeader() {
+fun BrandHeader(storageLabel: String = "On this device") {
     FlowRow(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             PawMark(Modifier.size(20.dp))
@@ -78,7 +79,7 @@ fun BrandHeader() {
         }
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             BarkIcon("shield-check", Modifier.size(14.dp), MaterialTheme.colorScheme.onSurfaceVariant)
-            Text("On this device", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(storageLabel, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
@@ -144,7 +145,7 @@ fun CaptionText(text: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun BarkButton(label: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, secondary: Boolean = false, icon: String? = null, danger: Boolean = false) {
+fun BarkButton(label: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, secondary: Boolean = false, icon: String? = null, danger: Boolean = false, outlineWidth: Dp = 1.5.dp) {
     val source = remember { MutableInteractionSource() }
     val shape = RoundedCornerShape(50)
     val position = modifier.fillMaxWidth().heightIn(min = AppSpacing.controlHeight).then(pressMotion(source, enabled)).clip(shape)
@@ -153,11 +154,12 @@ fun BarkButton(label: String, onClick: () -> Unit, modifier: Modifier = Modifier
         icon?.let { BarkIcon(it, Modifier.size(18.dp).then(glyphPressMotion(source, glyphDirection(it), enabled))); Spacer(Modifier.width(8.dp)) }
         Text(label, style = MaterialTheme.typography.labelLarge)
     }
-    if (secondary) OutlinedButton(onClick, position, enabled, shape = shape,
+    val click = soundAction(onClick)
+    if (secondary) OutlinedButton(click, position, enabled, shape = shape,
         colors = ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.surface, contentColor = if (danger) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface, disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant),
-        border = BorderStroke(1.5.dp, if (danger) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface),
+        border = BorderStroke(outlineWidth, if (danger) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp), interactionSource = source, content = content)
-    else Button(onClick, position, enabled, shape = shape, elevation = null,
+    else Button(click, position, enabled, shape = shape, elevation = null,
         colors = ButtonDefaults.buttonColors(containerColor = if (danger) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary, disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant, disabledContentColor = MaterialTheme.colorScheme.onSurface),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp), interactionSource = source, content = content)
 }
@@ -166,7 +168,7 @@ fun BarkButton(label: String, onClick: () -> Unit, modifier: Modifier = Modifier
 fun BarkTextAction(label: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, icon: String? = null, leading: Boolean = false, danger: Boolean = false) {
     val source = remember { MutableInteractionSource() }
     val underline = boardColor("accent-line")
-    TextButton(onClick, modifier.heightIn(min = 48.dp).then(pressMotion(source, enabled)), enabled,
+    TextButton(soundAction(onClick), modifier.heightIn(min = 48.dp).then(pressMotion(source, enabled)), enabled,
         colors = ButtonDefaults.textButtonColors(contentColor = if (danger) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface),
         interactionSource = source, contentPadding = PaddingValues(horizontal = 0.dp, vertical = 8.dp)) {
         if (leading && icon != null) { BarkIcon(icon, Modifier.size(16.dp).then(glyphPressMotion(source, glyphDirection(icon), enabled))); Spacer(Modifier.width(6.dp)) }

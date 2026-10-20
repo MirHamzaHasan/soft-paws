@@ -16,12 +16,12 @@ enum class Route(val label: String, val symbol: String) {
 }
 
 enum class Feature {
-    CareTools, DogSwitcher, DogAdd, DogEdit, Settings, DeleteDog, DeleteAll, Chooser, Health,
+    CareTools, DogSwitcher, DogAdd, DogEdit, Settings, Sounds, DeleteDog, DeleteAll, Chooser, Health,
     Medications, MedicationForm, MedicationDetail, MedicationGiven, MedicationArchive, Vaccinations, VaccinationForm,
-    Calendar, TaskForm, TaskDetail, ReminderOptIn, Safety, Emergency, EmergencyEdit, Toxicity, FirstAid, Triage,
+    Calendar, TaskForm, TaskDetail, ReminderOptIn, Safety, Emergency, EmergencyEdit, Toxicity, FirstAid, Triage, NearestVet, TrainDog,
     Report, ReportPreview, ReportFormat, Export, Training, Program, TrainingProgress, Session, TrainingSummary,
     Photos, PhotoForm, PhotoDetail, Baselines, Expenses, ExpenseForm, ExpenseDetail,
-    Memory, MemoryCollection, MemoryHighlight, MemoryCaption, MemoryShare, Monthly,
+    Memory, MemoryCollection, MemoryHighlight, MemoryCaption, MemoryShare, Monthly, VideoHighlight, VideoHighlightGate,
 }
 data class FeaturePage(val feature: Feature, val id: String = "")
 enum class BoardNavigationMove { Cut, Tab, Push, Cover, Carry, Back }
@@ -47,6 +47,13 @@ class AppState(initialRoute: Route = Route.Home) {
     fun open(feature: Feature, id: String = "") {
         require(!id.contains('|') && !id.contains('~') && !id.contains(':'))
         change(if (feature == Feature.Chooser) BoardNavigationMove.Cover else BoardNavigationMove.Push) { page = null; featureStack = featureStack + FeaturePage(feature, id) }
+    }
+    /** Called inside the companion's existing snapshot transition; never enqueue a second one. */
+    internal fun openJournalTool(feature: Feature) {
+        page = null; featureStack = listOf(FeaturePage(feature)); route = Route.Home
+    }
+    internal fun enterJournal(route: Route = Route.Home) {
+        page = null; featureStack = emptyList(); this.route = route
     }
     fun replace(feature: Feature, id: String = "") {
         require(!id.contains('|') && !id.contains('~') && !id.contains(':'))

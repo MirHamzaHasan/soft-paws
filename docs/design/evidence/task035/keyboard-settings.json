@@ -1,0 +1,8 @@
+{
+  "avd": "BarkLogExactBoardQA_20261016",
+  "stylusHandwritingBefore": "null",
+  "stylusHandwritingAfter": "0",
+  "showKeyboardWithHardwareKeyboard": "1 (unchanged)",
+  "reason": "Owner requested removal of floating handwriting/emoji toolbar from simulator.",
+  "finalVerification": "Normal keyboard captured after native app update; attachment/context/Send row visible."
+}

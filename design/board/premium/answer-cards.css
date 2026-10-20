@@ -1,0 +1,57 @@
+/* task041 review: existing chat shell, readable replies and factual source cards. */
+.ph.bark.n-screen.n-answer-cards .n-body { gap:18px; }
+.ph.bark.n-screen.n-answer-cards .n-chat-top>div { min-width:0; }
+.ph.bark.n-screen.n-answer-cards .n-chat-top strong { font-size:calc(20px * var(--text-scale,1)); }
+.ph.bark.n-screen.n-answer-cards .n-messages { gap:22px; width:100%; }
+.ph.bark.n-screen.n-answer-cards .n-assistant { gap:14px; }
+.ph.bark.n-screen.n-answer-cards .ac-intro { font-size:calc(15px * var(--text-scale,1)); line-height:1.65; }
+.ph.bark.n-screen.n-answer-cards .ac-card { border:1px solid var(--hair-2); border-radius:20px; background:var(--panel); padding:17px; display:flex; flex-direction:column; gap:12px; }
+.ph.bark.n-screen.n-answer-cards .ac-card h3 { font-size:calc(19px * var(--text-scale,1)); line-height:1.22; letter-spacing:-.3px; }
+.ph.bark.n-screen.n-answer-cards .ac-eyebrow { display:flex; align-items:center; gap:7px; color:var(--ink-muted); font-size:calc(12px * var(--text-scale,1)); line-height:1.4; }
+.ac-eyebrow svg { flex-shrink:0; }
+.ph.bark.n-screen.n-answer-cards .ac-summary { display:flex; align-items:baseline; gap:10px; }
+.ph.bark.n-screen.n-answer-cards .ac-number { font:800 calc(42px * var(--text-scale,1))/1 var(--font-display); color:var(--ink-strong); letter-spacing:-1px; }
+.ph.bark.n-screen.n-answer-cards .ac-summary span { font-size:calc(14px * var(--text-scale,1)); }
+.ph.bark.n-screen.n-answer-cards .ac-muted { color:var(--ink-muted); font-size:calc(12px * var(--text-scale,1)); line-height:1.5; }
+.ph.bark.n-screen.n-answer-cards .ac-week { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:6px; margin-block:1px 3px; }
+.ac-day { display:flex; flex-direction:column; align-items:center; gap:7px; font-size:calc(10px * var(--text-scale,1)); color:var(--ink-muted); }
+.ac-day-track { display:flex; align-items:flex-end; width:100%; max-width:27px; height:37px; background:var(--inset); border-radius:6px; overflow:hidden; }
+.ac-day-track i { display:block; width:100%; background:var(--ink-strong); border-radius:6px; min-height:0; }
+.ac-day strong { color:var(--ink-strong); font-size:calc(12px * var(--text-scale,1)); font-weight:500; }
+.ph.bark.n-screen.n-answer-cards .ac-latest { display:flex; gap:10px; align-items:flex-start; padding-top:12px; border-top:1px solid var(--hair); }
+.ac-latest>svg { flex-shrink:0; margin-top:2px; }
+.ac-latest>div { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.ph.bark.n-screen.n-answer-cards .ac-latest strong { font-size:calc(12px * var(--text-scale,1)); line-height:1.4; font-weight:500; }
+.ph.bark.n-screen.n-answer-cards .ac-latest p { font-size:calc(13px * var(--text-scale,1)); line-height:1.5; }
+.ph.bark.n-screen.n-answer-cards .ac-action { min-height:48px; width:100%; display:flex; align-items:center; justify-content:space-between; gap:9px; border-radius:12px; padding:9px 11px; background:var(--inset); color:var(--ink-strong); font-size:calc(12px * var(--text-scale,1)); font-weight:500; text-align:left; }
+.ac-action>svg { flex-shrink:0; }
+.ph.bark.n-screen.n-answer-cards .ac-guidance { gap:14px; }
+.ph.bark.n-screen.n-answer-cards .ac-step { display:flex; gap:11px; align-items:flex-start; font-size:calc(14px * var(--text-scale,1)); line-height:1.55; }
+.ac-step>span { flex-shrink:0; display:grid; place-items:center; width:23px; height:23px; border:1px solid var(--hair-2); border-radius:8px; font:700 13px/1 var(--font-display); }
+.ph.bark.n-screen.n-answer-cards .ac-follow { display:flex; align-items:center; gap:10px; padding:10px 13px; min-height:48px; border:1px solid var(--hair-2); border-radius:16px; width:100%; text-align:left; font-size:calc(13px * var(--text-scale,1)); background:var(--ground); }
+.ac-follow>span { flex:1; }
+.ph.bark.n-screen.n-answer-cards .ac-boundary { padding-inline:2px; font-size:calc(11px * var(--text-scale,1)); color:var(--ink-muted); line-height:1.6; }
+.ph.bark.n-screen.n-answer-cards .ac-products { border-style:dashed; }
+.ph.bark.n-screen.n-answer-cards .ac-product-slot { display:flex; gap:14px; align-items:center; padding-top:2px; }
+.ac-product-art { width:64px; height:68px; flex-shrink:0; display:grid; place-items:center; border-radius:13px; background:var(--inset); color:var(--ink-muted); }
+.ac-product-slot>div { display:flex; flex-direction:column; gap:6px; }
+.ph.bark.n-screen.n-answer-cards .ac-product-slot strong { font-size:calc(14px * var(--text-scale,1)); font-weight:500; }
+.ph.bark.n-screen.n-answer-cards .ac-progress { display:flex; flex-direction:column; gap:13px; }
+.ph.bark.n-screen.n-answer-cards .ac-progress>p { font-size:calc(14px * var(--text-scale,1)); }
+.ph.bark.n-screen.n-answer-cards .n-context-button { min-width:0; }
+.ph.bark.n-screen.n-answer-cards .n-context-button span { flex:1; }
+.ph.bark.n-screen.n-answer-cards button:focus-visible,.ph.bark.n-screen.n-answer-cards textarea:focus-visible { outline:2px solid var(--ink-strong); outline-offset:3px; }
+.ph.bark.n-screen .ac-source-record { display:flex; gap:12px; padding-block:14px; border-bottom:1px solid var(--hair); }
+.ac-source-record>svg { flex-shrink:0; margin-top:2px; }
+.ac-source-record>div { display:flex; flex-direction:column; gap:5px; }
+.ph.bark.n-screen .ac-source-record strong { font-size:calc(13px * var(--text-scale,1)); line-height:1.4; font-weight:500; }
+.ph.bark.n-screen .ac-source-record small { color:var(--ink-muted); font-size:calc(12px * var(--text-scale,1)); line-height:1.5; }
+.ph.bark.n-screen .ac-source-record p { font-size:calc(13px * var(--text-scale,1)); line-height:1.55; }
+.ph.bark.n-screen .ac-consent-details { display:flex; flex-direction:column; gap:16px; }
+.ph.bark.n-screen .ac-consent-details>div { display:flex; gap:12px; align-items:flex-start; }
+.ac-consent-details>div>svg { flex-shrink:0; margin-top:2px; }
+.ac-consent-details>div>div { display:flex; flex-direction:column; gap:5px; }
+.ph.bark.n-screen .ac-consent-details p { color:var(--ink-muted); font-size:calc(13px * var(--text-scale,1)); line-height:1.55; }
+.ph.bark.n-screen .ac-consent-check { display:flex; gap:11px; align-items:flex-start; min-height:48px; font-size:calc(13px * var(--text-scale,1)); line-height:1.6; }
+.ac-consent-check input { margin-top:4px; width:20px; height:20px; flex-shrink:0; accent-color:var(--ink-strong); }
+@media (prefers-reduced-motion:reduce) { .ac-day-track i { animation:none; transition:none; } }

@@ -1,0 +1,94 @@
+{
+  "scope": "Read-only inspection of the existing owned BarkLog file; no artwork, library, billing or account changes.",
+  "session": {
+    "success": true,
+    "activeFileId": 2660676,
+    "activeRevisionId": null,
+    "activeFileName": "BarkLog Spaniel Motion Study",
+    "openTabs": [
+      {
+        "name": "BarkLog Spaniel Motion Study",
+        "fileId": 2660676,
+        "projectId": 2025006,
+        "folderId": null,
+        "workspaceId": null,
+        "workspaceName": null,
+        "projectName": null,
+        "isLibrary": false,
+        "url": "https://editor.rive.app/file/barklog-spaniel-motion-study/2660676",
+        "isActive": true
+      }
+    ]
+  },
+  "libraries": {
+    "success": true,
+    "assets": []
+  },
+  "components": {
+    "success": true,
+    "assets": []
+  },
+  "machines": {
+    "success": true,
+    "stateMachines": [
+      {
+        "id": "0-7",
+        "name": "Dog Controller",
+        "isDefault": true,
+        "layers": [
+          {
+            "id": "0-8",
+            "name": "Layer 1"
+          }
+        ]
+      }
+    ]
+  },
+  "animations": {
+    "success": true,
+    "linearAnimations": [
+      {
+        "id": "0-485",
+        "name": "Hello",
+        "duration": 2.4,
+        "isSelected": false
+      },
+      {
+        "id": "0-486",
+        "name": "Curious",
+        "duration": 2.8,
+        "isSelected": false
+      },
+      {
+        "id": "0-487",
+        "name": "Saved",
+        "duration": 2.2,
+        "isSelected": false
+      },
+      {
+        "id": "0-488",
+        "name": "Sleepy",
+        "duration": 3.4,
+        "isSelected": true
+      },
+      {
+        "id": "0-489",
+        "name": "Sniff",
+        "duration": 2.4,
+        "isSelected": false
+      },
+      {
+        "id": "0-490",
+        "name": "Ear perk",
+        "duration": 2.4,
+        "isSelected": false
+      },
+      {
+        "id": "0-6",
+        "name": "Idle",
+        "duration": 6.0,
+        "isSelected": false
+      }
+    ]
+  }
+}

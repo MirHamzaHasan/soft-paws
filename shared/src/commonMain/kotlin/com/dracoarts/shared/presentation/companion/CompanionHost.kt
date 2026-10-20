@@ -2,6 +2,7 @@ package com.dracoarts.shared.presentation.companion
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -9,6 +10,9 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import com.dracoarts.shared.domain.repository.JournalRepository
 import com.dracoarts.shared.presentation.components.*
@@ -20,18 +24,21 @@ import com.dracoarts.shared.services.AppPlatform
 import kotlinx.coroutines.launch
 
 @Composable
-private fun CompanionHostContent(controller: CompanionController, journal: JournalState, journalController: JournalController, care: CareController, platform: AppPlatform, navigation: AppState, repository: JournalRepository, onEnterJournal: suspend (String) -> Unit) {
+internal fun CompanionHostContent(controller: CompanionController, journal: JournalState, journalController: JournalController, care: CareController, platform: AppPlatform, navigation: AppState, repository: JournalRepository, applySafeInsets: Boolean = true, onEnterJournal: suspend (String) -> Unit) {
     val state by controller.state.collectAsState(); val route = state.route ?: return
     val scope = rememberCoroutineScope(); val motion = LocalBarkMotion.current
-    var returningToReview by rememberSaveable { mutableStateOf(false) }
+    val focus = LocalFocusManager.current
     fun back() {
+        if (state.profileSaving) return
         val index = CompanionController.onboardingIds.indexOf(route.boardId)
         when {
+            state.reviewingDraft -> controller.go(CompanionScreen.ContextReview)
+            state.draft.addingDog && route == CompanionScreen.Dog -> { scope.launch { controller.pauseAddDog(navigation) }; Unit }
+            state.premiumFeature != null && route in setOf(CompanionScreen.Paywall, CompanionScreen.Restore) -> controller.dismissPremium()
             route == CompanionScreen.ContextReview && state.draft.editingDogId != null -> controller.go(CompanionScreen.DogProfile)
-            returningToReview && index >= 0 -> { returningToReview = false; controller.go(CompanionScreen.ContextReview) }
             index > 0 -> controller.go(CompanionScreen.fromBoard(CompanionController.onboardingIds[index-1]))
             route in setOf(CompanionScreen.Email,CompanionScreen.CheckEmail,CompanionScreen.EmailExpired,CompanionScreen.AuthOffline) -> controller.go(CompanionScreen.Login)
-            route == CompanionScreen.AccountSettings || route == CompanionScreen.AiGate || route == CompanionScreen.Threads -> { navigation.show(Route.Home); controller.go(null) }
+            route == CompanionScreen.AccountSettings || route == CompanionScreen.AiGate || route == CompanionScreen.Threads -> controller.navigateTab(navigation, Route.Home)
             route == CompanionScreen.DogProfile || route == CompanionScreen.ManagePlan || route == CompanionScreen.DeleteAccount -> controller.go(CompanionScreen.AccountSettings)
             route == CompanionScreen.AiPrivacy || route == CompanionScreen.Chat || route.name.startsWith("Chat") -> { controller.stopReply(); controller.go(null) }
             route != CompanionScreen.Opening -> controller.go(CompanionScreen.AccountSettings)
@@ -44,7 +51,7 @@ private fun CompanionHostContent(controller: CompanionController, journal: Journ
         return
     }
     if (route in chatScreens && journal.selectedDog != null) {
-        CompanionChat(controller, journal.selectedDog!!, repository, platform, ::back); return
+        CompanionChat(controller, journal.selectedDog!!, repository, platform, ::back, onEditVet = { controller.go(null); navigation.open(Feature.EmergencyEdit) }); return
     }
     if (route in chatScreens && journal.selectedDog == null) {
         Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing).padding(20.dp), verticalArrangement = Arrangement.spacedBy(22.dp)) {
@@ -55,30 +62,38 @@ private fun CompanionHostContent(controller: CompanionController, journal: Journ
         }
         return
     }
-    Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing).imePadding(),horizontalAlignment = Alignment.CenterHorizontally) {
+    if (route in setOf(CompanionScreen.Plan, CompanionScreen.Paywall, CompanionScreen.ManagePlan)) {
+        PremiumPlanScreen(route, controller, journal, applySafeInsets, ::back, onEnterJournal)
+        return
+    }
+    // safeDrawing includes the keyboard; use the same inset/focus policy as chat.
+    Column(Modifier.fillMaxSize().then(if (applySafeInsets) Modifier.windowInsetsPadding(WindowInsets.safeDrawing) else Modifier).pointerInput(focus) { detectTapGestures(onTap = { focus.clearFocus() }) },horizontalAlignment = Alignment.CenterHorizontally) {
         BoxWithConstraints(Modifier.weight(1f).widthIn(max = AppSpacing.contentMaxWidth).fillMaxWidth()) {
             val viewport = maxHeight
             val scroll = rememberScrollState()
             LaunchedEffect(route) { scroll.scrollTo(0) }
             Column(Modifier.fillMaxWidth().verticalScroll(scroll).heightIn(min = viewport).padding(horizontal = 20.dp,vertical = 12.dp),verticalArrangement = Arrangement.spacedBy(22.dp)) {
                 if (route != CompanionScreen.Opening) Row(Modifier.fillMaxWidth(),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(18.dp)) {
-                    BoardBackButton(::back)
-                    val index = CompanionController.onboardingIds.indexOf(route.boardId)
+                    BoardBackButton(::back, !state.profileSaving)
+                    val steps = if (state.draft.addingDog) CompanionController.dogSetupIds else CompanionController.onboardingIds
+                    val index = steps.indexOf(route.boardId)
                     if (index >= 0) {
-                        val progress by animateFloatAsState(index / 19f, if (motion.reduced) snap() else tween(motion.milliseconds(460), easing = CubicBezierEasing(.16f,1f,.3f,1f)),label = "setup progress")
+                        val progress by animateFloatAsState(index.toFloat() / (steps.size - 1), if (motion.reduced) snap() else tween(motion.milliseconds(460), easing = CubicBezierEasing(.16f,1f,.3f,1f)),label = "setup progress")
                         LinearProgressIndicator(progress = { progress },modifier = Modifier.weight(1f).height(4.dp),color = boardColor("ink-strong"),trackColor = boardColor("hair"),drawStopIndicator = {})
-                    } else { Spacer(Modifier.weight(1f)); BrandHeader() }
+                    } else { Spacer(Modifier.weight(1f)); BrandHeader(if (controller.atlasOnly && route == CompanionScreen.AiPrivacy) "Text via BarkLog AI" else "On this device") }
                 }
                 state.error?.let { ErrorCard(it) }
                 when {
-                    route.boardId in CompanionController.onboardingIds -> CompanionOnboarding(route,controller,platform)
+                    route.boardId in CompanionController.onboardingIds -> CompanionOnboarding(route,controller,platform,onEnterJournal)
                     route in setOf(CompanionScreen.Login,CompanionScreen.Email,CompanionScreen.CheckEmail,CompanionScreen.EmailExpired,CompanionScreen.AuthOffline,CompanionScreen.AccountSettings,CompanionScreen.DogProfile,CompanionScreen.DeleteAccount) -> CompanionAccount(route,controller,journal,platform,navigation,onEnterJournal)
                     route in setOf(CompanionScreen.AiPrivacy,CompanionScreen.Threads,CompanionScreen.ChatLimit,CompanionScreen.WeeklyRecap,CompanionScreen.VetQuestions,CompanionScreen.MemoryCaption) -> CompanionChatPages(route,controller,journal,platform)
                     else -> CompanionPlan(route,controller,journal,onEnterJournal)
                 }
             }
         }
-        if (route == CompanionScreen.AccountSettings) JournalTabBar(navigation,platform) { tab -> navigation.show(tab); controller.go(if (tab == Route.Profile) CompanionScreen.AccountSettings else null) }
+        if (state.draft.addingDog && route.boardId in CompanionController.dogSetupIds) {
+            BarkTextAction("Finish later", { scope.launch { controller.pauseAddDog(navigation) } }, enabled = !state.profileSaving)
+        }
     }
 }
 
@@ -91,8 +106,8 @@ fun CompanionHost(controller: CompanionController,journal: JournalState,journalC
         val handler=LocalBoardNavigation.current
         DisposableEffect(handler) {controller.navigationHandler=handler;onDispose {if(controller.navigationHandler===handler)controller.navigationHandler=null}}
         Column(Modifier.fillMaxSize()) {
-            Box(Modifier.weight(1f)) {CompanionHostContent(controller,journal,journalController,care,platform,navigation,repository,onEnterJournal)}
-            if(reviewEnabled) Surface(color=boardColor("inset")) {Column(Modifier.fillMaxWidth().padding(8.dp)) {
+            Box(Modifier.weight(1f)) {CompanionHostContent(controller,journal,journalController,care,platform,navigation,repository,onEnterJournal=onEnterJournal)}
+            if(reviewEnabled && WindowInsets.ime.getBottom(LocalDensity.current) == 0) Surface(color=boardColor("inset")) {Column(Modifier.fillMaxWidth().padding(8.dp)) {
                 BoardSelect("Native board screen",current.route?.boardId.orEmpty(),CompanionScreen.entries.map {it.boardId to "${it.ordinal+1}/54 · ${it.boardId}"}) {id->controller.go(CompanionScreen.fromBoard(id))}
                 Row {BarkTextAction("Replay",{replay++});BarkTextAction("1×",{speed=1f});BarkTextAction("½×",{speed=.5f});BarkTextAction("¼×",{speed=.25f})}
             }}

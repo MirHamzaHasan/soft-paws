@@ -30,7 +30,7 @@ import kotlin.math.PI
 @Composable internal fun CChoice(title: String, subtitle: String = "", icon: String = "paw-print", selected: Boolean, multi: Boolean = false, onClick: () -> Unit) {
     val motion = LocalBarkMotion.current
     val scale by animateFloatAsState(if (selected) 1f else .82f, if (motion.reduced) snap() else spring(.62f, (2 * PI / .36).toFloat().let { it * it }), label = "picked check")
-    Surface(onClick, Modifier.fillMaxWidth().heightIn(min = 82.dp).semantics { this.selected = selected; role = if (multi) Role.Checkbox else Role.RadioButton }, shape = RoundedCornerShape(20.dp), color = boardColor(if (selected) "accent-soft" else "panel"), border = BorderStroke(1.dp, boardColor(if (selected) "accent-line" else "hair"))) {
+    Surface(soundAction(onClick, com.dracoarts.shared.services.SoundCue.Selection), Modifier.fillMaxWidth().heightIn(min = 82.dp).semantics { this.selected = selected; role = if (multi) Role.Checkbox else Role.RadioButton }, shape = RoundedCornerShape(20.dp), color = boardColor(if (selected) "accent-soft" else "panel"), border = BorderStroke(1.dp, boardColor(if (selected) "accent-line" else "hair"))) {
         Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(14.dp), verticalAlignment = Alignment.CenterVertically) {
             BarkIcon(icon, Modifier.size(28.dp)); Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) { Text(title, style = MaterialTheme.typography.titleMedium); if (subtitle.isNotBlank()) CaptionText(subtitle) }
             Surface(Modifier.size(24.dp).graphicsLayer { scaleX = scale; scaleY = scale }, shape = CircleShape, color = boardColor(if (selected) "ink-strong" else "panel"), border = BorderStroke(1.dp, boardColor("hair-2"))) { if (selected) Box(contentAlignment = Alignment.Center) { BarkIcon("check", Modifier.size(16.dp), boardColor("ground")) } }
@@ -56,10 +56,11 @@ import kotlin.math.PI
 }
 @Composable internal fun CSwitch(title: String, subtitle: String, checked: Boolean, enabled: Boolean = true, onChange: (Boolean) -> Unit) {
     val motion = LocalBarkMotion.current
+    val selectionSound = soundAction({}, com.dracoarts.shared.services.SoundCue.Selection)
     val position by animateFloatAsState(if (checked) 20f else 0f, if (motion.reduced) snap() else spring(.70f, (2 * PI / .32).toFloat().let { it * it }), label = "notification switch")
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) { Text(title, style = MaterialTheme.typography.titleMedium); CaptionText(subtitle) }
-        Box(Modifier.size(64.dp,48.dp).semantics { contentDescription = title }.toggleable(checked, enabled = enabled, role = Role.Switch, onValueChange = onChange), contentAlignment = Alignment.Center) {
+        Box(Modifier.size(64.dp,48.dp).semantics { contentDescription = title }.toggleable(checked, enabled = enabled, role = Role.Switch, onValueChange = { selectionSound(); onChange(it) }), contentAlignment = Alignment.Center) {
             Surface(Modifier.size(54.dp,34.dp), color = boardColor(if (checked) "ink-strong" else "inset"), shape = CircleShape, border = BorderStroke(1.dp, boardColor("hair-2"))) {
                 Box(Modifier.padding(3.dp)) { Surface(Modifier.size(26.dp).graphicsLayer { translationX = position.dp.toPx() }, shape = CircleShape, color = boardColor("panel"), border = BorderStroke(1.dp, boardColor("hair-2"))) { if (checked) Box(contentAlignment = Alignment.Center) { BarkIcon("check", Modifier.size(15.dp), boardColor("ink-strong")) } } }
             }
@@ -73,16 +74,16 @@ import kotlin.math.PI
 }
 internal val profileEdits = mapOf("Sex" to CompanionScreen.Sex, "Life stage" to CompanionScreen.Stage, "Age" to CompanionScreen.Age, "Breed or mix" to CompanionScreen.Breed, "Neutered or spayed" to CompanionScreen.Sex, "Size" to CompanionScreen.Size, "Recorded weight" to CompanionScreen.Size, "Your experience" to CompanionScreen.Experience, "Care priorities" to CompanionScreen.Goals, "Routines" to CompanionScreen.Rhythm, "AI topics" to CompanionScreen.Focus, "Personality" to CompanionScreen.Personality, "Activities" to CompanionScreen.Activities, "Food" to CompanionScreen.Food, "Allergies or sensitivities" to CompanionScreen.Food, "Known conditions" to CompanionScreen.CareNotes, "Existing care instructions" to CompanionScreen.CareNotes, "Care notes" to CompanionScreen.CareNotes)
 @Composable internal fun CProfile(snapshot: ProfileSnapshot, onEdit: ((CompanionScreen) -> Unit)? = null) {
-    JournalCard { Text(snapshot.name, style = MaterialTheme.typography.headlineMedium); (listOf("Sex" to snapshot.sex).filter {it.second != "Not recorded"} + snapshot.context.facts()).forEachIndexed { index, (key,value) -> Column(Modifier.fillMaxWidth().then(profileValueEntrance(index)), verticalArrangement = Arrangement.spacedBy(5.dp)) { CaptionText(key); Row(verticalAlignment = Alignment.CenterVertically) { Text(value, Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge); if (onEdit != null) BarkTextAction("Edit", { onEdit(profileEdits[key] ?: CompanionScreen.ContextReview) }, icon = "pencil") }; HorizontalDivider(color = boardColor("hair")) } } }
+    JournalCard { Text(snapshot.name, style = MaterialTheme.typography.headlineMedium); (listOf("Sex" to snapshot.sex).filter {it.second != "Not recorded"} + snapshot.context.facts() + listOf("Other breed note" to snapshot.breed, "Other age note" to snapshot.age, "Other care notes" to snapshot.notes).filter { it.second.isNotBlank() }).forEachIndexed { index, (key,value) -> Column(Modifier.fillMaxWidth().then(profileValueEntrance(index)), verticalArrangement = Arrangement.spacedBy(5.dp)) { CaptionText(key); Row(verticalAlignment = Alignment.CenterVertically) { Text(value, Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge); if (onEdit != null) BarkTextAction("Edit", { onEdit(profileEdits[key] ?: CompanionScreen.ContextReview) }, icon = "pencil") }; HorizontalDivider(color = boardColor("hair")) } } }
     if(onEdit!=null) BoardSelect("Add or change a detail","",profileEdits.entries.map {it.value.boardId to it.key}.distinctBy {it.first}) {id->CompanionScreen.fromBoard(id)?.let(onEdit)}
 }
 
 @Composable internal fun CompanionHomeEntry(controller: CompanionController,name: String,modifier: Modifier=Modifier) {
     val state by controller.state.collectAsState()
-    Surface(onClick={controller.go(if(!state.session.premium)CompanionScreen.AiGate else if(!state.workspace.messageConsent)CompanionScreen.AiPrivacy else CompanionScreen.Chat)},modifier=modifier.fillMaxWidth().heightIn(min=70.dp),shape=RoundedCornerShape(19.dp),color=boardColor("panel"),border=BorderStroke(1.dp,boardColor("hair-2"))) {
+    Surface(onClick=soundAction({controller.go(if(!state.premiumAccess)CompanionScreen.AiGate else if(controller.requiresAiConsent)CompanionScreen.AiPrivacy else CompanionScreen.Chat)}),modifier=modifier.fillMaxWidth().heightIn(min=70.dp),shape=RoundedCornerShape(19.dp),color=boardColor("panel"),border=BorderStroke(1.dp,boardColor("hair-2"))) {
         Row(Modifier.padding(horizontal=16.dp,vertical=12.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
             Surface(shape=RoundedCornerShape(15.dp),color=boardColor("ball"),contentColor=boardColor("ball-ink")) {Box(Modifier.size(44.dp),contentAlignment=Alignment.Center) {PawMark(Modifier.size(24.dp))}}
-            Column(Modifier.weight(1f)) {Text("Ask about $name",style=MaterialTheme.typography.titleMedium);CaptionText(if(state.session.premium) "Demo AI · selected context" else "AI chat · Premium demo")};BarkIcon(if(state.session.premium)"arrow-up-right" else "lock-keyhole",Modifier.size(20.dp))
+            Column(Modifier.weight(1f)) {Text("Ask about $name",style=MaterialTheme.typography.titleMedium);CaptionText(if (!state.premiumAccess) "AI chat · Premium" else if (controller.demoResponses) "Demo AI · profile + past 7 days" else if (controller.atlasOnly) "BarkLog AI · profile + past 7 days" else "On-device AI · automatic context")};BarkIcon(if(state.premiumAccess)"arrow-up-right" else "lock-keyhole",Modifier.size(20.dp))
         }
     }
 }

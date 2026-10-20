@@ -1,0 +1,20 @@
+.verify-build/task047-native/ExtractSelected.swift:14:31: warning: 'copyCGImage(at:actualTime:)' was deprecated in macOS 15.0: Use generateCGImageAsynchronouslyForTime:completionHandler: instead [#DeprecatedDeclaration]
+12 | try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+13 | for (index, seconds) in times.enumerated() {
+14 |     let image = try generator.copyCGImage(at: CMTime(seconds: seconds, preferredTimescale: 600), actualTime: nil)
+   |                               `- warning: 'copyCGImage(at:actualTime:)' was deprecated in macOS 15.0: Use generateCGImageAsynchronouslyForTime:completionHandler: instead [#DeprecatedDeclaration]
+15 |     let url = output.appendingPathComponent(String(format: "%02d-%.3f.png", index, seconds))
+16 |     let destination = CGImageDestinationCreateWithURL(url as CFURL, UTType.png.identifier as CFString, 1, nil)!
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Selected real-time frames exported
+.verify-build/task047-native/ExtractSelected.swift:14:31: warning: 'copyCGImage(at:actualTime:)' was deprecated in macOS 15.0: Use generateCGImageAsynchronouslyForTime:completionHandler: instead [#DeprecatedDeclaration]
+12 | try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+13 | for (index, seconds) in times.enumerated() {
+14 |     let image = try generator.copyCGImage(at: CMTime(seconds: seconds, preferredTimescale: 600), actualTime: nil)
+   |                               `- warning: 'copyCGImage(at:actualTime:)' was deprecated in macOS 15.0: Use generateCGImageAsynchronouslyForTime:completionHandler: instead [#DeprecatedDeclaration]
+15 |     let url = output.appendingPathComponent(String(format: "%02d-%.3f.png", index, seconds))
+16 |     let destination = CGImageDestinationCreateWithURL(url as CFURL, UTType.png.identifier as CFString, 1, nil)!
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Selected real-time frames exported

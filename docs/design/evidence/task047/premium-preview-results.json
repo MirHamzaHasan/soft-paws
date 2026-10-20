@@ -1,0 +1,18 @@
+{
+  "checks": [
+    {
+      "theme": "light",
+      "previewLabel": true,
+      "scannerComingSoon": true,
+      "directCancel": true,
+      "strayNull": false
+    },
+    {
+      "theme": "dark",
+      "previewLabel": true,
+      "scannerComingSoon": true,
+      "directCancel": true,
+      "strayNull": false
+    }
+  ]
+}

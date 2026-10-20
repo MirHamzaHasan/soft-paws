@@ -1,0 +1,15 @@
+BarkLog optional on-device AI — task037
+
+Llamatik 1.10.1, copyright 2025 Ferran Pons — MIT.
+https://github.com/ferranpons/Llamatik/tree/v1.10.1
+The Maven POM declares Apache-2.0; the pinned source LICENSE is MIT.
+The MIT source license is included as Llamatik-LICENSE.txt.
+
+Models are optional user downloads, not bundled weights:
+Qwen/Qwen2.5-0.5B-Instruct-GGUF — Apache-2.0.
+ggml-org/SmolVLM-500M-Instruct-GGUF — Apache-2.0.
+Model revisions, exact sizes and SHA-256 are pinned in ModelCatalog.kt.
+Apache-2.0 text is included as Media3-LICENSE.txt.
+
+Bundled Android libc++/OpenMP runtime notices: LLVM-LICENSE.txt
+(Apache-2.0 with LLVM exceptions and included legacy notices).

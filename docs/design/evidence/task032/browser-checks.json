@@ -1,0 +1,468 @@
+{
+  "checks": [
+    "All six trigger reactions play and return to Idle; 18 actual mid-motion frames captured without clipping",
+    "Keyboard greeting; Pause freezes actual canvas pixels and Resume completes the action",
+    "Hello → Saved interruption blends from the live pose; mean channel change 2.103 across two animation frames",
+    "System reduced motion cancels movement to the neutral SVG; local opt-in plays and turning it off restores stillness",
+    "A random idle action starts after its quiet gap; scheduling stops when switched off",
+    "Light/dark, Home/close-up, 375/390px, 130% text, 44px targets and real offscreen pause/resume checked",
+    "Real page navigation disposes the player once; browser Back restores a usable review"
+  ],
+  "frames": [
+    "clean-first-frame",
+    "light-rest",
+    "hello-0.25",
+    "hello-0.5",
+    "hello-0.75",
+    "curious-0.25",
+    "curious-0.5",
+    "curious-0.75",
+    "saved-0.25",
+    "saved-0.5",
+    "saved-0.75",
+    "sleepy-0.25",
+    "sleepy-0.5",
+    "sleepy-0.75",
+    "sniff-0.25",
+    "sniff-0.5",
+    "sniff-0.75",
+    "ears-0.25",
+    "ears-0.5",
+    "ears-0.75",
+    "paused",
+    "interruption",
+    "reduced-motion",
+    "dark-rest",
+    "dark-home",
+    "dark-home-wave",
+    "light-home",
+    "phone-home-375",
+    "phone-close-375",
+    "phone-home-390",
+    "phone-close-390",
+    "phone-large-text"
+  ],
+  "bounds": [
+    {
+      "name": "clean-first-frame",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52912,
+      "hash": 3176686921
+    },
+    {
+      "name": "idle",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52927,
+      "hash": 1671125268
+    },
+    {
+      "name": "hello-0.25",
+      "w": 426,
+      "h": 426,
+      "x0": 93,
+      "y0": 48,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 56490,
+      "hash": 3158664906
+    },
+    {
+      "name": "hello-0.5",
+      "w": 426,
+      "h": 426,
+      "x0": 100,
+      "y0": 47,
+      "x1": 347,
+      "y1": 383,
+      "edge": 0,
+      "painted": 54448,
+      "hash": 3843818608
+    },
+    {
+      "name": "hello-0.75",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52910,
+      "hash": 1481014042
+    },
+    {
+      "name": "hello-end",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52921,
+      "hash": 1437660118
+    },
+    {
+      "name": "curious-0.25",
+      "w": 426,
+      "h": 426,
+      "x0": 81,
+      "y0": 51,
+      "x1": 341,
+      "y1": 383,
+      "edge": 0,
+      "painted": 51202,
+      "hash": 1620814938
+    },
+    {
+      "name": "curious-0.5",
+      "w": 426,
+      "h": 426,
+      "x0": 81,
+      "y0": 51,
+      "x1": 341,
+      "y1": 383,
+      "edge": 0,
+      "painted": 51202,
+      "hash": 2423385268
+    },
+    {
+      "name": "curious-0.75",
+      "w": 426,
+      "h": 426,
+      "x0": 105,
+      "y0": 47,
+      "x1": 344,
+      "y1": 383,
+      "edge": 0,
+      "painted": 53065,
+      "hash": 1127893154
+    },
+    {
+      "name": "curious-end",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52921,
+      "hash": 3749428686
+    },
+    {
+      "name": "saved-0.25",
+      "w": 426,
+      "h": 426,
+      "x0": 97,
+      "y0": 56,
+      "x1": 345,
+      "y1": 383,
+      "edge": 0,
+      "painted": 54406,
+      "hash": 136609241
+    },
+    {
+      "name": "saved-0.5",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 342,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52998,
+      "hash": 461658601
+    },
+    {
+      "name": "saved-0.75",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52921,
+      "hash": 136956715
+    },
+    {
+      "name": "saved-end",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52921,
+      "hash": 3749428686
+    },
+    {
+      "name": "sleepy-0.25",
+      "w": 426,
+      "h": 426,
+      "x0": 114,
+      "y0": 46,
+      "x1": 342,
+      "y1": 383,
+      "edge": 0,
+      "painted": 53197,
+      "hash": 1836461455
+    },
+    {
+      "name": "sleepy-0.5",
+      "w": 426,
+      "h": 426,
+      "x0": 114,
+      "y0": 48,
+      "x1": 342,
+      "y1": 383,
+      "edge": 0,
+      "painted": 53219,
+      "hash": 2868675326
+    },
+    {
+      "name": "sleepy-0.75",
+      "w": 426,
+      "h": 426,
+      "x0": 108,
+      "y0": 48,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 53233,
+      "hash": 2313131071
+    },
+    {
+      "name": "sleepy-end",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52921,
+      "hash": 3749428686
+    },
+    {
+      "name": "sniff-0.25",
+      "w": 426,
+      "h": 426,
+      "x0": 101,
+      "y0": 53,
+      "x1": 342,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52917,
+      "hash": 895218966
+    },
+    {
+      "name": "sniff-0.5",
+      "w": 426,
+      "h": 426,
+      "x0": 101,
+      "y0": 53,
+      "x1": 344,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52804,
+      "hash": 994352640
+    },
+    {
+      "name": "sniff-0.75",
+      "w": 426,
+      "h": 426,
+      "x0": 101,
+      "y0": 50,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52880,
+      "hash": 3937930338
+    },
+    {
+      "name": "sniff-end",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52921,
+      "hash": 3749428686
+    },
+    {
+      "name": "ears-0.25",
+      "w": 426,
+      "h": 426,
+      "x0": 106,
+      "y0": 44,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 51754,
+      "hash": 2845164077
+    },
+    {
+      "name": "ears-0.5",
+      "w": 426,
+      "h": 426,
+      "x0": 107,
+      "y0": 44,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 51351,
+      "hash": 3222550059
+    },
+    {
+      "name": "ears-0.75",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52914,
+      "hash": 1944302862
+    },
+    {
+      "name": "ears-end",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52921,
+      "hash": 3749428686
+    },
+    {
+      "name": "dark-home",
+      "w": 426,
+      "h": 426,
+      "x0": 103,
+      "y0": 46,
+      "x1": 343,
+      "y1": 383,
+      "edge": 0,
+      "painted": 52930,
+      "hash": 2859156915
+    }
+  ],
+  "timings": [
+    {
+      "action": "hello",
+      "fraction": 0.25,
+      "elapsed": 603.7000000029802
+    },
+    {
+      "action": "hello",
+      "fraction": 0.5,
+      "elapsed": 1200.7999999970198
+    },
+    {
+      "action": "hello",
+      "fraction": 0.75,
+      "elapsed": 1801
+    },
+    {
+      "action": "curious",
+      "fraction": 0.25,
+      "elapsed": 701.8999999910593
+    },
+    {
+      "action": "curious",
+      "fraction": 0.5,
+      "elapsed": 1407.0999999940395
+    },
+    {
+      "action": "curious",
+      "fraction": 0.75,
+      "elapsed": 2107.7000000029802
+    },
+    {
+      "action": "saved",
+      "fraction": 0.25,
+      "elapsed": 551.7000000029802
+    },
+    {
+      "action": "saved",
+      "fraction": 0.5,
+      "elapsed": 1102.2000000029802
+    },
+    {
+      "action": "saved",
+      "fraction": 0.75,
+      "elapsed": 1652.2000000029802
+    },
+    {
+      "action": "sleepy",
+      "fraction": 0.25,
+      "elapsed": 852
+    },
+    {
+      "action": "sleepy",
+      "fraction": 0.5,
+      "elapsed": 1701.5
+    },
+    {
+      "action": "sleepy",
+      "fraction": 0.75,
+      "elapsed": 2551.7000000029802
+    },
+    {
+      "action": "sniff",
+      "fraction": 0.25,
+      "elapsed": 601.9000000059605
+    },
+    {
+      "action": "sniff",
+      "fraction": 0.5,
+      "elapsed": 1201.4000000059605
+    },
+    {
+      "action": "sniff",
+      "fraction": 0.75,
+      "elapsed": 1802.2000000029802
+    },
+    {
+      "action": "ears",
+      "fraction": 0.25,
+      "elapsed": 605.2999999970198
+    },
+    {
+      "action": "ears",
+      "fraction": 0.5,
+      "elapsed": 1203.1000000089407
+    },
+    {
+      "action": "ears",
+      "fraction": 0.75,
+      "elapsed": 1802.7999999970198
+    }
+  ],
+  "errors": [],
+  "resources": [],
+  "externalRequests": [],
+  "exportIncludesRiveSplash": false,
+  "nativeIntegration": false
+}

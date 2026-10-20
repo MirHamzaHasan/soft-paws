@@ -7,11 +7,174 @@ private func journalScrollBottom(_ app: XCUIApplication) -> CGFloat {
     return app.buttons["Close"].exists && save.exists && save.isHittable ? save.frame.minY - 36 : app.frame.maxY
 }
 
+/// Explicit live acceptance only; requires an already authenticated, synthetic QA journal.
+/// No credentials are supplied; automatic profile/week scope requires its current consent.
+final class LiveAtlasJourneys: XCTestCase {
+    private var app: XCUIApplication!
+    private let question = "How can you help me related to my dog?"
+    override func setUpWithError() throws {
+        guard ProcessInfo.processInfo.environment["BARKLOG_LIVE_ATLAS_QA"] == "1" else {
+            throw XCTSkip("Live Atlas UI acceptance requires explicit BARKLOG_LIVE_ATLAS_QA=1 and an owned QA journal.")
+        }
+        continueAfterFailure = false
+        app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
+        app.launchArguments = []
+        app.launch()
+    }
+    private func text(_ label: String) -> XCUIElement {
+        app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", label)).firstMatch
+    }
+    private func capture(_ name: String) {
+        let image = XCTAttachment(screenshot: app.screenshot())
+        image.name = name; image.lifetime = .keepAlways; add(image)
+    }
+    private func press(_ element: XCUIElement) {
+        for _ in 0..<10 {
+            if element.exists && element.isHittable && element.frame.minY > 40 && element.frame.maxY < app.frame.maxY - 20 {
+                element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+                return
+            }
+            app.swipeUp()
+        }
+        XCTFail("Requested control is unavailable: \(element)")
+    }
+    private func openChat() {
+        let home = app.buttons["Home"]
+        XCTAssertTrue(home.waitForExistence(timeout: 15), app.debugDescription)
+        if text("Your account.").exists && app.buttons["Back"].exists { press(app.buttons["Back"]) }
+        else if !app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Ask about ")).firstMatch.exists { press(home) }
+        let ask = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Ask about ")).firstMatch
+        XCTAssertTrue(ask.waitForExistence(timeout: 8), app.debugDescription)
+        press(ask)
+        if app.buttons["Enable BarkLog AI"].waitForExistence(timeout: 3) {
+            if !app.buttons["Enable BarkLog AI"].isEnabled {
+                press(app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", "I agree to online AI processing")).firstMatch)
+            }
+            press(app.buttons["Enable BarkLog AI"])
+        }
+        XCTAssertTrue(app.buttons["Send message"].waitForExistence(timeout: 12), app.debugDescription)
+        XCTAssertTrue(text("BarkLog AI").exists, "Live acceptance must not use a demo or local-model fixture.")
+    }
+    func testQuestionGetsRealReplyAndSurvivesRelaunch() throws {
+        XCTAssertTrue(app.buttons["Profile"].waitForExistence(timeout: 15), app.debugDescription)
+        press(app.buttons["Profile"])
+        XCTAssertTrue(text("Email · Firebase account").waitForExistence(timeout: 12), "Sign in to the existing QA account before running live acceptance.")
+        capture("atlas-account-restored")
+        openChat()
+        press(app.buttons["Chat options"])
+        press(text("Past conversations"))
+        press(app.buttons["New conversation"])
+        XCTAssertTrue(app.buttons["Send message"].waitForExistence(timeout: 8))
+        XCTAssertTrue(text("Profile + past 7 days").exists, "New scope must be explicit and automatic.")
+        let single = app.textFields["Message BarkLog AI"]
+        let input = single.exists ? single : app.textViews["Message BarkLog AI"]
+        XCTAssertTrue(input.waitForExistence(timeout: 8), app.debugDescription)
+        let original = (input.value as? String) ?? ""
+        XCTAssertTrue(original.isEmpty, "Preserve any existing draft instead of overwriting it.")
+        press(input)
+        input.typeText(question)
+        press(app.buttons["Send message"])
+        if app.buttons["Stop response"].waitForExistence(timeout: 3) { capture("atlas-loading") }
+        let complete = app.buttons["Try another response"]
+        let answered = complete.waitForExistence(timeout: 65)
+        capture(answered ? "atlas-answer" : "atlas-request-failed")
+        XCTAssertTrue(answered, app.debugDescription)
+        XCTAssertFalse(((input.value as? String) ?? "").contains(question), "Committed send must clear the composer.")
+        app.terminate()
+        app.launch()
+        XCTAssertTrue(app.buttons["Profile"].waitForExistence(timeout: 15))
+        press(app.buttons["Profile"])
+        XCTAssertTrue(text("Email · Firebase account").waitForExistence(timeout: 12), "The native Firebase session must survive relaunch.")
+        openChat()
+        XCTAssertTrue(app.buttons["Try another response"].waitForExistence(timeout: 15), app.debugDescription)
+        capture("atlas-answer-after-relaunch")
+    }
+}
+
+/// Separate synthetic SQLite fixture; no Firebase or network calls are enabled.
+final class SoundAndWeeklyReviewJourneys: XCTestCase {
+    private var app: XCUIApplication!
+    private func element(_ label: String) -> XCUIElement { app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", label)).firstMatch }
+    private func press(_ el: XCUIElement) {
+        for _ in 0..<16 {
+            if el.exists && el.isHittable && el.frame.minY > 40 && el.frame.maxY < app.frame.maxY - 20 {
+                let settled = el.frame; Thread.sleep(forTimeInterval: 0.35)
+                if settled == el.frame { el.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap(); return }
+            }
+            let chat = app.buttons["Send message"].exists
+            let rail = app.staticTexts["Native board screen"]
+            let pageBottom = rail.exists && rail.isHittable ? rail.frame.minY - 8 : journalScrollBottom(app) - 12
+            let bottom = chat ? (app.textFields["Message BarkLog AI"].exists ? app.textFields["Message BarkLog AI"].frame.minY - 20 : app.frame.height * 0.60) : pageBottom
+            let low = max(160, bottom - 35), high = max(70, low - min(230, low * 0.6))
+            let x = app.frame.width * (chat ? 0.5 : 0.98)
+            let a = app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: low))
+            let b = app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: high))
+            a.press(forDuration: 0.02, thenDragTo: b, withVelocity: .slow, thenHoldForDuration: 0.05)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        XCTFail("Control unavailable: \(el)")
+    }
+    private func capture(_ name: String) { let a = XCTAttachment(screenshot: app.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a) }
+    func testNormalJournalCanOpenSoundSettings() throws {
+        continueAfterFailure = false
+        app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
+        app.launchArguments = []; app.launch()
+        guard app.buttons["Profile"].waitForExistence(timeout: 15) else { throw XCTSkip("A pre-existing local QA journal is required; never create or reset one for this check.") }
+        press(app.buttons["Profile"])
+        let entry = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Interaction sounds")).firstMatch
+        press(entry)
+        XCTAssertTrue(element("A softer little tap.").waitForExistence(timeout: 8), app.debugDescription)
+        capture("ios-normal-sound-settings-entry")
+    }
+    func testSoundsAndSourceBackedWeeklyCards() throws {
+        continueAfterFailure = false
+        app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "park-ai-cards-v1", "-DesignReviewScreen", "next-sounds"]
+        app.launch()
+        let sound = app.switches.matching(NSPredicate(format: "label BEGINSWITH %@", "Interaction sounds")).firstMatch
+        XCTAssertTrue(sound.waitForExistence(timeout: 20), app.debugDescription)
+        if app.staticTexts["Sounds are off."].exists { press(sound) }
+        let sample = app.buttons["Preview button tap sound"]
+        for _ in 0..<20 { if sample.exists && sample.isEnabled { break }; Thread.sleep(forTimeInterval: 0.25) }
+        XCTAssertTrue(sample.isEnabled, app.debugDescription)
+        capture("ios-sounds-settings")
+        press(sample); press(app.buttons["Preview selection tick sound"]); press(app.buttons["Preview saved sound"])
+        capture("ios-sounds-samples")
+        press(app.buttons["Try in AI chat"])
+        if !app.buttons["Send message"].waitForExistence(timeout: 3) {
+            capture("ios-weekly-consent")
+            press(app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", "I agree to online AI processing")).firstMatch)
+            press(app.buttons["Enable BarkLog AI"])
+        }
+        XCTAssertTrue(app.buttons["Send message"].waitForExistence(timeout: 15), app.debugDescription)
+        press(app.buttons["Chat options"]); press(element("Past conversations")); press(app.buttons["New conversation"])
+        let single = app.textFields["Message BarkLog AI"]
+        let input = single.exists ? single : app.textViews["Message BarkLog AI"]
+        XCTAssertTrue(input.waitForExistence(timeout: 8)); press(input)
+        input.typeText("How is Bruno doing with his walks?")
+        press(app.buttons["Send message"])
+        XCTAssertTrue(app.buttons["Try another response"].waitForExistence(timeout: 25), app.debugDescription)
+        for _ in 0..<3 { app.swipeDown() }
+        capture("ios-weekly-answer")
+        press(app.buttons["View 7 walk logs"]); capture("ios-weekly-sources"); press(app.buttons["Close records"]); capture("ios-weekly-card-lower")
+        press(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Review automatic profile and seven-day context")).firstMatch)
+        XCTAssertTrue(element("Included with every question").waitForExistence(timeout: 6), app.debugDescription)
+        capture("ios-weekly-context")
+        press(app.buttons["Back to chat"])
+        app.terminate(); app.launch()
+        XCTAssertTrue(sound.waitForExistence(timeout: 15))
+        for _ in 0..<20 { if app.buttons["Preview button tap sound"].isEnabled { break }; Thread.sleep(forTimeInterval: 0.25) }
+        XCTAssertFalse(app.staticTexts["Sounds are off."].exists)
+        XCTAssertTrue(app.buttons["Preview button tap sound"].isEnabled)
+        capture("ios-sound-preference-restored")
+    }
+}
+
 final class JournalJourneys: XCTestCase {
     private var app: XCUIApplication!
     override func setUpWithError() throws {
         continueAfterFailure = false
-        app = XCUIApplication(bundleIdentifier: "com.dracoarts.barklog")
+        app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
         app.launchArguments = []
         app.launch()
         if !app.buttons["Profile"].waitForExistence(timeout: 8) {
@@ -216,7 +379,7 @@ final class FirstRunJourney: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
-        app = XCUIApplication(bundleIdentifier: "com.dracoarts.barklog")
+        app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
         app.launchArguments = ["-DesignReview", "-DesignReviewScreen", "opening-value", "-DesignReviewFixture", "park-setup-v1"]
         app.launch()
     }
@@ -329,7 +492,7 @@ final class BoardParityJourneys: XCTestCase {
     private var app: XCUIApplication!
     override func setUpWithError() throws {
         continueAfterFailure = false
-        app = XCUIApplication(bundleIdentifier: "com.dracoarts.barklog")
+        app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
         app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "park-day-v1", "-DesignReviewScreen", "home"]
         app.launch()
         XCTAssertTrue(app.buttons["Profile"].waitForExistence(timeout: 15), app.debugDescription)
@@ -413,7 +576,7 @@ final class BoardParityJourneys: XCTestCase {
 /// Operation failures are one-shot Debug faults on the separate real SQLite QA journal.
 /// Screenshots use separate real QA stores; no capture resets or deletes records.
 private func captureBoardRest(_ test: XCTestCase, cases: [(String, String, String)]) {
-    let app = XCUIApplication(bundleIdentifier: "com.dracoarts.barklog")
+    let app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
     for (id, fixture, expected) in cases {
         XCTContext.runActivity(named: "Rest: " + id) { _ in
             app.terminate()
@@ -502,7 +665,7 @@ final class BoardMotionJourneys: XCTestCase {
     private var app: XCUIApplication!
     override func setUpWithError() throws {
         continueAfterFailure = false
-        app = XCUIApplication(bundleIdentifier: "com.dracoarts.barklog")
+        app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
         app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "park-day-v1", "-DesignReviewScreen", "home"]
         app.launch()
         XCTAssertTrue(app.buttons["Add details"].waitForExistence(timeout: 15), app.debugDescription)
@@ -579,7 +742,7 @@ final class BoardRecoveryJourneys: XCTestCase {
     private var app: XCUIApplication!
     override func setUpWithError() throws {
         continueAfterFailure = false
-        app = XCUIApplication(bundleIdentifier: "com.dracoarts.barklog")
+        app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
     }
     private func open(_ id: String, fixture: String = "park-full-v1") {
         app.terminate()
@@ -699,4 +862,449 @@ final class BoardRecoveryJourneys: XCTestCase {
         close.tap()
         XCTAssertTrue(app.buttons["Back to preview"].waitForExistence(timeout: 10), app.debugDescription)
     }
+}
+
+/// All writes are confined to park-video-v1, never the owner's journal.
+final class HighlightAndChatJourneys: XCTestCase {
+    private var app: XCUIApplication!
+    override func setUpWithError() throws { continueAfterFailure = false; app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log") }
+    private func launch(_ screen: String) {
+        app.terminate()
+        app.launchArguments = ["-DesignReview", "-DesignReviewScreen", screen, "-DesignReviewFixture", "park-video-v1"]
+        app.launch()
+        Thread.sleep(forTimeInterval: 0.7)
+    }
+    private func reveal(_ label: String) -> XCUIElement {
+        let target = app.buttons[label]
+        for _ in 0..<12 {
+            let review = app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "Native board screen")).firstMatch
+            let bottom = review.exists ? review.frame.minY - 60 : app.frame.maxY - 40
+            if target.exists && target.isHittable && target.frame.minY > 65 && target.frame.maxY < bottom { return target }
+            let low = bottom - 25, high = max(100, low - 240)
+            let origin = app.coordinate(withNormalizedOffset: .zero)
+            let a = origin.withOffset(CGVector(dx: app.frame.width * 0.98, dy: low))
+            let b = origin.withOffset(CGVector(dx: app.frame.width * 0.98, dy: high))
+            a.press(forDuration: 0.02, thenDragTo: b, withVelocity: .slow, thenHoldForDuration: 0.05)
+            Thread.sleep(forTimeInterval: 0.8)
+        }
+        return target
+    }
+    private func text(_ label: String) -> XCUIElement { app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", label)).firstMatch }
+    private func press(_ element: XCUIElement) { element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap(); Thread.sleep(forTimeInterval: 0.65) }
+    private func capture(_ name: String) { let image = XCTAttachment(screenshot: app.screenshot()); image.name = name; image.lifetime = .keepAlways; add(image) }
+    func test01VideoDraftGateRealExportAndShareCancellation() throws {
+        launch("VideoHighlight")
+        XCTAssertTrue(text("Make a little film.").waitForExistence(timeout: 15), app.debugDescription)
+        capture("video-editor")
+        press(reveal("Choose photos"));press(app.buttons["From my phone"])
+        XCTAssertTrue(app.buttons["Cancel"].waitForExistence(timeout: 8), app.debugDescription)
+        capture("video-native-photo-picker");press(app.buttons["Cancel"])
+        press(reveal("Export video · Premium"))
+        let see = app.buttons["See Premium"]
+        if see.waitForExistence(timeout: 3) {
+            press(see); let demo = reveal("Try demo Premium"); XCTAssertTrue(demo.isEnabled, app.debugDescription); press(demo)
+            XCTAssertTrue(app.buttons["Export video · Premium"].waitForExistence(timeout: 8))
+            press(reveal("Export video · Premium"))
+        }
+        XCTAssertTrue(text("Your film is ready.").waitForExistence(timeout: 90), app.debugDescription)
+        capture("video-ready")
+        press(reveal("Save or share MP4"))
+        let cancel = app.buttons["Close"]
+        if cancel.waitForExistence(timeout: 4) { press(cancel) } else { app.swipeDown() }
+        XCTAssertTrue(text("Your film is ready.").waitForExistence(timeout: 8))
+        launch("VideoHighlight")
+        XCTAssertTrue(text("Make a little film.").waitForExistence(timeout: 12))
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Preview photo 1")).firstMatch.exists, app.debugDescription)
+    }
+    func test02ChatPhotosVetReportAndContacts() throws {
+        launch("next-ai-privacy")
+        let consent = app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "Use the messages I send for an AI response.")).firstMatch
+        XCTAssertTrue(consent.waitForExistence(timeout: 12), app.debugDescription)
+        let openChat = reveal("Open AI chat")
+        if !openChat.isEnabled { press(consent) }
+        press(reveal("Open AI chat"))
+        XCTAssertTrue(app.buttons["Send message"].waitForExistence(timeout: 10), app.debugDescription)
+        if !app.buttons["When was the last walk?"].exists {
+            press(app.buttons["Chat options"]); press(app.buttons["Past conversations"])
+            press(reveal("New conversation"))
+            XCTAssertTrue(app.buttons["When was the last walk?"].waitForExistence(timeout: 8))
+        }
+        capture("chat-empty")
+        press(app.buttons["When was the last walk?"])
+        let stop = app.buttons["Stop response"]
+        if stop.waitForExistence(timeout: 3) { capture("chat-streaming") }
+        XCTAssertTrue(app.buttons["Try another response"].waitForExistence(timeout: 15), app.debugDescription)
+        capture("chat-answer")
+        XCTAssertTrue(app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", "Choose journal context")).firstMatch.exists)
+        press(app.buttons["Chat options"])
+        press(app.buttons["Report for my vet"])
+        XCTAssertTrue(text("A report for your vet").waitForExistence(timeout: 6), app.debugDescription)
+        capture("chat-vet-report")
+        press(app.buttons["Download PDF · Premium"])
+        XCTAssertTrue(app.buttons["Save or share PDF"].waitForExistence(timeout: 10), app.debugDescription)
+        capture("chat-pdf-ready")
+        press(app.buttons["Back to chat"])
+        press(app.buttons["Chat options"]); press(app.buttons["Call my vet"])
+        XCTAssertTrue(text("Call your vet").waitForExistence(timeout: 5))
+        capture("chat-vet-contacts");press(app.buttons["Back to chat"])
+        press(app.buttons["Attach a photo"])
+        XCTAssertTrue(text("Add a photo").waitForExistence(timeout: 5))
+        press(app.buttons["Choose from photos"])
+        let cancelPhoto = app.buttons["Cancel"]
+        XCTAssertTrue(cancelPhoto.waitForExistence(timeout: 8), app.debugDescription)
+        capture("chat-native-photo-picker")
+        press(cancelPhoto)
+        XCTAssertTrue(app.buttons["Attach a photo"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Attach a photo"].isEnabled)
+        capture("chat-photo-result")
+    }
+    func test03KeyboardEntryAndClearQaDraft() throws {
+        launch("next-chat")
+        let single=app.textFields["Message BarkLog AI"]
+        let input=single.exists ? single : app.textViews["Message BarkLog AI"]
+        XCTAssertTrue(input.waitForExistence(timeout: 10),app.debugDescription)
+        let before=(input.value as? String) ?? ""
+        let initialTree=XCTAttachment(string: "before=\(before)\n" + app.debugDescription)
+        initialTree.name="keyboard-initial-tree"; initialTree.lifetime = .keepAlways; add(initialTree)
+        // Preserve any owner-authored draft; only clear our own temporary typing probe.
+        let probe=["QA keyboard check","QA keyboard chec","K"].contains(before)
+        if !before.isEmpty && !probe { return }
+        press(input)
+        if probe { input.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue,count:before.count)) }
+        input.typeText("Keyboard QA")
+        XCTAssertTrue(((input.value as? String) ?? "").contains("Keyboard QA"))
+        let send=app.buttons["Send message"], attach=app.buttons["Attach a photo"]
+        XCTAssertTrue(send.exists && send.isHittable && send.frame.height >= 44,app.debugDescription)
+        XCTAssertTrue(attach.exists && attach.isHittable && attach.frame.height >= 44,app.debugDescription)
+        XCTAssertGreaterThanOrEqual(send.frame.minY,input.frame.maxY - 2,"Composer controls must stay below the input instead of overlapping it.")
+        if app.keyboards.firstMatch.exists { XCTAssertLessThanOrEqual(send.frame.maxY,app.keyboards.firstMatch.frame.minY + 2) }
+        let geometry=XCTAttachment(string: "input=\(input.frame) send=\(send.frame) attach=\(attach.frame) keyboard=\(app.keyboards.firstMatch.frame)\n" + app.debugDescription)
+        geometry.name="keyboard-layout-tree";geometry.lifetime = .keepAlways;add(geometry)
+        capture("chat-keyboard")
+        input.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue,count:11))
+        // UIKit may still hold the final composing character after rapid deletes.
+        Thread.sleep(forTimeInterval: 0.4)
+        let remaining=(input.value as? String) ?? ""
+        if !remaining.isEmpty && "Keyboard QA".hasPrefix(remaining) {
+            input.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue,count:remaining.count))
+        }
+        Thread.sleep(forTimeInterval: 0.4)
+        XCTAssertEqual((input.value as? String) ?? "", "")
+        capture("chat-keyboard-cleared")
+    }
+
+}
+
+/// The additional-dog profile uses the approved onboarding in a separate real SQLite journal.
+final class AddDogReviewJourneys: XCTestCase {
+    private var app: XCUIApplication!
+    private func element(_ label: String) -> XCUIElement {
+        app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", label)).firstMatch
+    }
+    // Read one AX snapshot per attempt: animated Compose nodes can be replaced between queries.
+    private func nodes() -> [XCUIElementSnapshot] {
+        guard let root = try? app.snapshot() else { return [] }
+        func flatten(_ node: XCUIElementSnapshot) -> [XCUIElementSnapshot] { [node] + node.children.flatMap(flatten) }
+        return flatten(root)
+    }
+    private func contentBottom(_ tree: [XCUIElementSnapshot]) -> CGFloat {
+        var bottom = app.frame.height - 25
+        for node in tree where !node.frame.isEmpty && node.frame.minY > 40 {
+            if node.elementType == .staticText && node.label == "Native board screen" {
+                // The review toolbar sits below the content's home-indicator inset.
+                bottom = min(bottom, node.frame.minY - 48)
+            } else if node.elementType == .keyboard ||
+               (node.elementType == .button && ["Finish later", "Home"].contains(node.label)) {
+                bottom = min(bottom, node.frame.minY - 10)
+            }
+        }
+        return bottom
+    }
+    private func scroll(_ bottom: CGFloat) {
+        let low = max(180, bottom - 25), high = max(105, low - 240)
+        let x = app.frame.width * 0.98
+        let a = app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: low))
+        let b = app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: high))
+        a.press(forDuration: 0.02, thenDragTo: b, withVelocity: .slow, thenHoldForDuration: 0.3)
+        Thread.sleep(forTimeInterval: 0.6)
+    }
+    private func touch(_ frame: CGRect) {
+        app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: frame.midX, dy: frame.midY)).tap()
+        Thread.sleep(forTimeInterval: 0.65)
+    }
+    private func press(_ label: String) {
+        for _ in 0..<25 {
+            let tree = nodes(); let bottom = contentBottom(tree)
+            let limit = ["Finish later", "Home", "Timeline", "Insights", "Profile"].contains(label) ? app.frame.maxY - 20 : bottom
+            if let node = tree.first(where: { $0.label.hasPrefix(label) && !$0.frame.isEmpty && $0.frame.minY > 40 && $0.frame.maxY < limit }) {
+                let step = tree.first(where: { $0.elementType == .button && $0.label.hasPrefix("Native board screen,") })?.label
+                touch(node.frame)
+                // A tap can stop residual scroll momentum before it activates a control.
+                if label == "Continue", let step {
+                    let settled = nodes()
+                    if settled.contains(where: { $0.label == step }),
+                       let current = settled.first(where: { $0.elementType == .button && $0.label == label && !$0.frame.isEmpty && $0.frame.minY > 40 && $0.frame.maxY < contentBottom(settled) }) {
+                        touch(current.frame)
+                    }
+                }
+                return
+            }
+            scroll(bottom)
+        }
+        XCTFail("Missing control: \(label). \(app.debugDescription)")
+    }
+    private func choose(_ label: String) {
+        for _ in 0..<25 {
+            let tree = nodes(); let bottom = contentBottom(tree)
+            if tree.contains(where: { $0.label == label + " ×" || $0.label == "Remove " + label }) { return }
+            if let node = tree.first(where: { $0.elementType == .button && $0.label.hasPrefix(label) && !$0.frame.isEmpty && $0.frame.minY > 40 && $0.frame.maxY < bottom }) {
+                if !node.isSelected { touch(node.frame) }
+                return
+            }
+            scroll(bottom)
+        }
+        XCTFail("Missing choice: \(label)")
+    }
+    private func field(_ label: String, _ value: String) {
+        for _ in 0..<25 {
+            let tree = nodes(); let bottom = contentBottom(tree)
+            if let node = tree.first(where: { [.textField, .textView].contains($0.elementType) && ($0.label == label || $0.label.hasPrefix(label + ", ")) && !$0.frame.isEmpty && $0.frame.minY > 40 && $0.frame.maxY < bottom }) {
+                let query = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+                let single = app.textFields.matching(query).firstMatch
+                let input = single.exists ? single : app.textViews.matching(query).firstMatch
+                // Focus the text line, including in tall empty multiline fields.
+                touch(CGRect(x: node.frame.minX + 24, y: node.frame.minY + 22, width: 1, height: 1))
+                if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { input.tap() }
+                XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 3), "The field must have keyboard focus before typing.")
+                if let old = node.value as? String, old != "Empty", !old.isEmpty { input.tap(withNumberOfTaps: 3, numberOfTouches: 1) }
+                input.typeText(value)
+                if label == "Your dog’s name" { capture("keyboard-entry") }
+                let done = app.keyboards.buttons["Done"]
+                if done.exists { done.tap() }
+                else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.12)).tap() }
+                for _ in 0..<20 { if !app.keyboards.firstMatch.exists { break }; Thread.sleep(forTimeInterval: 0.1) }
+                // Compose safe-area and review-toolbar geometry settle after UIKit removes the keyboard.
+                Thread.sleep(forTimeInterval: 1)
+                return
+            }
+            scroll(bottom)
+        }
+        XCTFail("Missing field: \(label). \(app.debugDescription)")
+    }
+    private func waitFor(_ label: String) { XCTAssertTrue(element(label).waitForExistence(timeout: 15), app.debugDescription) }
+    private func advance(_ label: String, to heading: String) {
+        press(label)
+        // UIKit may consume the first tap while closing its text-selection overlay.
+        if !element(heading).waitForExistence(timeout: 3) { press(label) }
+        waitFor(heading)
+    }
+    private func capture(_ name: String) { let a = XCTAttachment(screenshot: app.screenshot()); a.name = "ios-add-dog-" + name; a.lifetime = .keepAlways; add(a) }
+    private func launch() {
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "park-add-dog-v1", "-DesignReviewScreen", "dog-switcher"]
+        app.launch(); waitFor("Choose a dog")
+    }
+    private func startAdditionalDog() {
+        launch();press("Add another dog")
+        if element("A journal for each dog.").waitForExistence(timeout: 3) {
+            press("Try Debug Premium preview");waitFor("Choose a dog");press("Add another dog")
+        }
+    }
+    func testFullNewDogSetupResumesAndSavesItsOwnProfile() throws {
+        continueAfterFailure = false
+        app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
+        let name = "Luna " + String(Int(Date().timeIntervalSince1970) % 100000)
+        startAdditionalDog()
+        for _ in 0..<17 { if element("Who’s your dog?").exists { break }; press("Back") }
+        waitFor("Who’s your dog?")
+        let initialName = app.textFields["Your dog’s name"].exists ? app.textFields["Your dog’s name"] : app.textViews["Your dog’s name"]
+        XCTAssertFalse(initialName.value as? String == "Bruno")
+        capture("fresh-profile")
+        field("Your dog’s name",name)
+        XCTAssertEqual(initialName.value as? String, name)
+        press("Continue")
+        waitFor("What chapter are they in?"); press("Puppy")
+        waitFor("How old is \(name)?"); field("Years","1"); field("Months","2"); press("Continue")
+        waitFor("Their breed. Or their mix."); choose("Beagle"); press("Continue")
+        waitFor("A little more about them."); press("Female"); press("Continue")
+        waitFor("Their size, in your words."); press("Small"); field("Recorded weight","9.5"); press("Continue")
+        waitFor("How new is dog care?"); press("Some experience")
+        waitFor("What would help most?"); choose("Keep their memories"); press("Continue")
+        waitFor("How does your day go?"); choose("Every day is different"); press("Continue")
+        waitFor("What are you curious about?"); choose("Training & play"); press("Continue")
+        waitFor("What’s your dog like?"); choose("Curious"); press("Continue")
+        waitFor("What do they enjoy?"); choose("Sniffing walks"); press("Continue")
+        waitFor("What’s on their menu?"); choose("Wet food"); field("Known allergies or sensitivities","New dog sensitivity note"); advance("Continue", to: "The things only you know.")
+        waitFor("The things only you know."); field("Known conditions","Caregiver observation"); field("Medications or care instructions","Existing vet instructions"); field("Anything else to know?","Prefers a quiet doorway")
+        press("Finish later"); waitFor("Choose a dog"); XCTAssertFalse(element(name).exists); capture("paused-without-new-dog")
+        app.terminate(); startAdditionalDog(); waitFor("The things only you know.")
+        XCTAssertEqual(app.textViews["Known conditions"].value as? String,"Caregiver observation")
+        capture("resumed-notes"); press("Continue")
+        waitFor("A little nudge?"); press("Choose access")
+        waitFor("A nudge when it helps."); waitFor("Off · logging still works."); capture("optional-access")
+        press("Review dog details"); waitFor("Does this sound like \(name)?"); capture("profile-review")
+        press("Edit name"); waitFor("Who’s your dog?"); press("Continue"); waitFor("Does this sound like \(name)?")
+        press("Add \(name)")
+        capture("after-confirmation")
+        XCTAssertTrue(element("Ask about \(name)").waitForExistence(timeout: 15), app.debugDescription)
+        capture("new-dog-home"); press("Profile"); press("Dog profile"); waitFor("\(name)’s profile."); capture("saved-profile")
+        press("Switch or add dog"); waitFor("Choose a dog"); waitFor("Bruno"); waitFor(name); capture("both-dogs")
+    }
+    func testSavedAdditionalDogCanOpenHomeAfterRelaunch() throws {
+        continueAfterFailure = false
+        app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "park-add-dog-v1", "-DesignReviewScreen", "next-home"]
+        app.launch()
+        XCTAssertTrue(app.buttons["Home"].waitForExistence(timeout: 15), app.debugDescription)
+        capture("saved-home-after-relaunch")
+        XCTAssertTrue(element("Ask about Luna ").exists, app.debugDescription)
+        press("Profile"); press("Dog profile")
+        XCTAssertTrue(element("Luna ").waitForExistence(timeout: 10), app.debugDescription)
+        capture("saved-profile-after-relaunch")
+        press("Switch or add dog"); waitFor("Choose a dog"); waitFor("Bruno"); capture("switcher-after-relaunch")
+    }
+
+}
+
+final class ProfileTabReviewJourneys: XCTestCase {
+    func testProfileMenuAndSelectedTabStayTogether() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
+        for theme in ["Light", "Dark"] { for reduced in [false, true] {
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "park-add-dog-v1", "-DesignReviewScreen", "next-home", "-barklog_preference_v1_board_review_adddog_v1_theme", theme,
+            "-barklog_preference_v1_board_review_adddog_v1_reduce_motion", reduced ? "true" : "false"]
+        app.launch()
+        XCTAssertTrue(app.buttons["Home"].waitForExistence(timeout: 15))
+        for origin in (reduced ? ["Home"] : ["Home", "Timeline", "Insights"]) {
+            if origin != "Home" { app.buttons[origin].tap(); Thread.sleep(forTimeInterval: 1) }
+            let dockBounds = app.buttons["Profile"].frame
+            app.buttons["Profile"].tap()
+            let selected = NSPredicate(format: "selected == true")
+            expectation(for: selected, evaluatedWith: app.buttons["Profile"])
+            waitForExpectations(timeout: 10)
+            Thread.sleep(forTimeInterval: 0.8)
+            XCTAssertEqual(app.buttons["Profile"].frame, dockBounds, "Profile keeps the same dock while opening its menu")
+            XCTAssertFalse(app.buttons["Home"].isSelected)
+            XCTAssertTrue(app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "Your account.")).firstMatch.exists)
+            let shot = XCTAttachment(screenshot: app.screenshot())
+            shot.name = "ios-" + theme.lowercased() + (reduced ? "-reduced" : "-motion") + "-profile-from-" + origin.lowercased(); shot.lifetime = .keepAlways; add(shot)
+            app.buttons["Home"].tap(); Thread.sleep(forTimeInterval: 1)
+            XCTAssertTrue(app.buttons["Home"].isSelected)
+            XCTAssertFalse(app.buttons["Profile"].isSelected)
+        } }
+        app.terminate()
+        }
+    }
+}
+
+final class PremiumSafetyJourneys: XCTestCase {
+    private let app = XCUIApplication(bundleIdentifier: "com.draco.apps.bark.log")
+    private func launch(_ screen: String, _ theme: String = "Light") {
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "park-premium-safety-v1", "-DesignReviewScreen", screen,
+            "-barklog_preference_v1_board_review_premiumsafety_v1_theme", theme,
+            "-barklog_preference_v1_board_review_premiumsafety_v1_emergency-country", "US"]
+        app.launch(); Thread.sleep(forTimeInterval: 1)
+    }
+    private func element(_ label: String) -> XCUIElement {
+        let matches = app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", label))
+        let visible = matches.allElementsBoundByIndex.filter { $0.exists && !$0.frame.isEmpty && $0.isHittable }
+        return (label == "Continue with free journal" ? visible.last : visible.first) ?? matches.firstMatch
+    }
+    private func visible(_ label: String) -> XCUIElement {
+        for _ in 0..<16 {
+            let e = element(label)
+            let marker = app.staticTexts["Native board screen"]
+            let bottom = label == "Close profile" ? app.frame.height - 25 : (marker.exists ? marker.frame.minY - 48 : app.frame.height - 25)
+            if e.exists && e.frame.height > 0 && e.frame.minY > 40 && e.frame.maxY < bottom { return e }
+            let scroll = app.scrollViews.firstMatch
+            var dragBottom = min(bottom - 25, scroll.exists ? scroll.frame.maxY - 15 : bottom - 25)
+            let freeButtons = app.buttons.matching(NSPredicate(format: "label == %@", "Continue with free journal")).allElementsBoundByIndex.filter { $0.frame.minY > app.frame.height / 2 }
+            if let fixedFree = freeButtons.last { dragBottom = min(dragBottom, fixedFree.frame.minY - 40) }
+            let x = app.frame.width / 2
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: dragBottom)).press(forDuration: 0.02, thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: 190)), withVelocity: .slow, thenHoldForDuration: 0.2)
+            Thread.sleep(forTimeInterval: 0.3)
+        }
+        shot("ios-missing-control");XCTFail("Missing visible element: \(label). \(app.debugDescription)"); return element(label)
+    }
+    private func press(_ label: String) { let e = visible(label);app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: e.frame.midX, dy: e.frame.midY)).tap();Thread.sleep(forTimeInterval: 1) }
+    private func shot(_ name: String) { let a = XCTAttachment(screenshot: app.screenshot());a.name = name;a.lifetime = .keepAlways;add(a) }
+    func testPricingAndEmergencyRemainHonestWithoutStoreSetup() {
+        continueAfterFailure = false
+        // This new fixture starts free and never contacts Firebase, AI or RevenueCat.
+        for theme in ["Light", "Dark"] {
+            launch("next-paywall", theme)
+            XCTAssertTrue(visible("Weekly").exists);XCTAssertTrue(visible("Monthly").exists);XCTAssertTrue(visible("Yearly").exists)
+            shot("ios-" + theme.lowercased() + "-pricing")
+            XCTAssertTrue(visible("Store setup pending · no payment starts here.").exists)
+            launch("triage", theme);press("Possible poisoning");XCTAssertTrue(visible("Emergency card").exists)
+            shot("ios-" + theme.lowercased() + "-free-emergency")
+            XCTAssertTrue(visible("Animal poison services").exists);XCTAssertTrue(visible("Call (888) 426-4435").exists)
+            shot("ios-" + theme.lowercased() + "-animal-services")
+            launch("next-train-dog", theme);XCTAssertTrue(visible("Train your dog").exists);shot("ios-" + theme.lowercased() + "-training-coming-soon")
+            launch("next-nearby-vet", theme);XCTAssertTrue(visible("See Premium").exists);shot("ios-" + theme.lowercased() + "-nearby-gate")
+        }
+        app.terminate()
+    }
+    func testNewNotebookPlansAndFreeExit() {
+        continueAfterFailure = false
+        for theme in ["Light", "Dark"] {
+            launch("next-plan", theme);XCTAssertTrue(visible("A plan for").exists);shot("ios-" + theme.lowercased() + "-new-plan")
+            press("Review Bruno’s full profile");XCTAssertTrue(visible("Close profile").exists);shot("ios-" + theme.lowercased() + "-new-plan-profile");press("Close profile")
+            launch("next-paywall", theme);XCTAssertTrue(element("Say hello to the notebook puppy").waitForExistence(timeout: 10));XCTAssertTrue(visible("Monthly").exists);shot("ios-" + theme.lowercased() + "-new-paywall")
+            press("Yearly");press("Weekly");press("Monthly")
+            XCTAssertFalse(visible("Continue with monthly").isEnabled)
+            XCTAssertTrue(visible("Pet food scanner").exists);XCTAssertTrue(visible("Planned feature · not available yet.").exists);shot("ios-" + theme.lowercased() + "-new-coming-soon")
+            press("Restore");XCTAssertTrue(visible("Restore a purchase.").exists);XCTAssertFalse(visible("Restore purchases").isEnabled)
+            launch("next-paywall", theme)
+            press("Continue with free journal");XCTAssertFalse(element("Continue with monthly").exists)
+            launch("next-manage-plan", theme);XCTAssertTrue(visible("Your BarkLog.").exists);shot("ios-" + theme.lowercased() + "-new-manage-plan")
+            press("Explore Premium");XCTAssertTrue(visible("Monthly").exists)
+        }
+        app.terminate()
+    }
+    func testNewPlanMotionAndReducedMotionFrames() {
+        continueAfterFailure = false
+        launch("next-plan", "Light")
+        element("¼×").tap();Thread.sleep(forTimeInterval: 0.2)
+        element("Replay").tap()
+        let started = Date()
+        for (offset, name) in [(0.62, "25"), (1.24, "50"), (1.86, "75")] {
+            Thread.sleep(forTimeInterval: max(0, offset - Date().timeIntervalSince(started)))
+            shot("ios-plan-entry-" + name)
+        }
+        Thread.sleep(forTimeInterval: 4.5);shot("ios-plan-entry-final")
+        for theme in ["Light", "Dark"] {
+            app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "park-premium-safety-v1", "-DesignReviewScreen", "next-paywall",
+                "-barklog_preference_v1_board_review_premiumsafety_v1_theme", theme,
+                "-barklog_preference_v1_board_review_premiumsafety_v1_reduce_motion", "true"]
+            app.launch();Thread.sleep(forTimeInterval: 1)
+            XCTAssertTrue(visible("Monthly").exists)
+            XCTAssertFalse(element("Say hello to the notebook puppy").exists)
+            press("Yearly");XCTAssertTrue(visible("Continue with yearly").exists)
+            shot("ios-" + theme.lowercased() + "-reduced-paywall")
+        }
+        app.terminate()
+    }
+    func testPremiumSafetyConsentAndManualVetSearch() {
+        continueAfterFailure = false
+        launch("next-paywall", "Dark");press("Try Debug Premium preview")
+        launch("first-aid", "Dark")
+        if element("Review AI & your records").exists {
+            press("Review AI & your records");press("I agree to online AI processing");press("Enable BarkLog AI")
+        }
+        press("Ask BarkLog AI");XCTAssertTrue(visible("DESIGN PREVIEW").exists);shot("ios-dark-safety-preview")
+        launch("next-nearby-vet", "Dark")
+        _ = visible("City and country")
+        let query = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", "City and country", "City and country, ")
+        let single = app.textFields.matching(query).firstMatch
+        let input = single.exists ? single : app.textViews.matching(query).firstMatch
+        XCTAssertTrue(input.exists);input.tap();input.typeText("London, UK")
+        if app.keyboards.buttons["Done"].exists { app.keyboards.buttons["Done"].tap() }
+        else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.12)).tap() }
+        Thread.sleep(forTimeInterval: 1)
+        // The search URL is tested separately; avoid opening an external service here.
+        XCTAssertTrue(visible("Find clinics in Maps").isEnabled);shot("ios-dark-nearby-manual-city")
+        launch("next-manage-plan", "Dark");press("End Debug preview")
+        app.terminate()
+    }
+
 }

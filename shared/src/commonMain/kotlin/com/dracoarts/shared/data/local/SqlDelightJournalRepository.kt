@@ -11,6 +11,8 @@ import com.dracoarts.shared.domain.model.CareEventRules
 import com.dracoarts.shared.domain.model.TimelineFilter
 import com.dracoarts.shared.domain.model.TimelinePage
 import com.dracoarts.shared.domain.model.JournalSummary
+import com.dracoarts.shared.domain.model.CareWeekSnapshot
+import com.dracoarts.shared.domain.model.CareWindowSummary
 import com.dracoarts.shared.domain.model.RecordConflictException
 import com.dracoarts.shared.domain.model.RecordNotFoundException
 import com.dracoarts.shared.domain.model.CareItem
@@ -116,6 +118,40 @@ class SqlDelightJournalRepository(
             TimelinePage(q.timeline(filter.dogId, filter.type?.key, filter.fromMillis, filter.untilMillis, limit.toLong()).executeAsList().map(::toEvent),
                 q.timelineCount(filter.dogId, filter.type?.key, filter.fromMillis, filter.untilMillis).executeAsOne())
         }
+    }
+
+    override fun observeMatchingEvents(filter: TimelineFilter, terms: List<String>, limit: Int): Flow<List<CareEvent>> {
+        filter.validate()
+        require(limit in 1..100 && terms.size in 1..3 && terms.all { it.length in 2..40 })
+        val padded = terms.map(String::lowercase) + List(3 - terms.size) { "" }
+        return observeRead { q ->
+            requireDog(q, filter.dogId)
+            q.matchingEvents(filter.dogId, filter.type?.key, filter.fromMillis, filter.untilMillis,
+                padded[0], padded[1], padded[2], limit.toLong()).executeAsList().map(::toEvent)
+        }
+    }
+
+    override fun observeCareWindow(dogId: String, fromMillis: Long, untilMillis: Long): Flow<CareWindowSummary> {
+        require(fromMillis >= 0 && untilMillis > fromMillis)
+        return observeRead { q ->
+            requireDog(q, dogId)
+            CareWindowSummary(q.dailyCounts(dogId, fromMillis, untilMillis).executeAsList().associate {
+                checkNotNull(CareEventType.fromKey(it.type)) to it.event_count.toInt()
+            }, q.timeline(dogId, null, fromMillis, untilMillis, 3).executeAsList().map(::toEvent))
+        }
+    }
+
+    override suspend fun readCareWeek(dogId: String, dayStarts: List<Long>, untilMillis: Long, focus: CareEventType?): CareWeekSnapshot {
+        require(dayStarts.size == 7 && dayStarts.first() >= 0 && dayStarts.zipWithNext().all { (a, b) -> a < b } && untilMillis > dayStarts.last())
+        return read { q -> requireDatabase().transactionWithResult {
+            val dog = q.dogById(dogId).executeAsOneOrNull()?.let(::toDog) ?: throw RecordNotFoundException()
+            fun counts(from: Long, until: Long) = q.dailyCounts(dogId, from, until).executeAsList().associate { checkNotNull(CareEventType.fromKey(it.type)) to it.event_count.toInt() }
+            val from = dayStarts.first()
+            val relevant = if (focus == null) emptyList() else q.timeline(dogId, focus.key, from, untilMillis, 35).executeAsList()
+            val recent = q.timeline(dogId, null, from, untilMillis, 50).executeAsList()
+            CareWeekSnapshot(dog, counts(from, untilMillis), dayStarts.mapIndexed { i, start -> counts(start, dayStarts.getOrNull(i + 1) ?: untilMillis) },
+                (relevant + recent).distinctBy { it.id }.take(50).map(::toEvent))
+        } }
     }
 
     override fun observeSummary(dogId: String, fromMillis: Long, untilMillis: Long): Flow<JournalSummary> {
@@ -315,6 +351,7 @@ class SqlDelightJournalRepository(
         q.dogPhotoContexts(dogId).executeAsList().map { detailsJson.decodeFromString(ObservationContext.serializer(), it) }.mapNotNull { it.photoId }.forEach { q.queueCleanup("photo", it) }
         q.itemsForDog(dogId).executeAsList().map(::toItem).forEach { queueItemCleanup(q, it) }
         q.dogDrafts(dogId).executeAsList().flatMap { detailsJson.decodeFromString(strings, it.photo_ids_json) }.forEach { q.queueCleanup("photo", it) }
+        q.documentsForDog(dogId).executeAsList().flatMap { documentPhotoIds(it.value_json) }.forEach { q.queueCleanup("photo", it) }
         q.deleteDogDocuments(dogId); q.deleteDogDrafts(dogId); q.deleteDogEvents(dogId); q.deleteDogItems(dogId); q.deleteDog(dogId)
     }
     private fun photoFiles(data: CareItemData): List<String> = when (data) { is CareItemData.Photo -> listOf(data.fileId); is CareItemData.Expense -> listOfNotNull(data.receiptId); else -> emptyList() }
@@ -324,15 +361,34 @@ class SqlDelightJournalRepository(
     }
 
     override suspend fun readDocument(id: String): String? = read { it.document(id).executeAsOneOrNull() }
-    override suspend fun writeDocument(id: String, value: String, dogId: String?) {
+    override suspend fun writeDocument(id: String, value: String, dogId: String?, consumedDraftSlot: String?) {
         require(id.length in 1..160 && value.length <= 4194304)
         detailsJson.parseToJsonElement(value)
-        mutate(false) { q -> dogId?.let { requireDog(q, it) }; q.saveDocument(id, dogId, value) }
+        mutate(false) { q -> dogId?.let { requireDog(q, it) }
+            val removed = q.document(id).executeAsOneOrNull()?.let(::documentPhotoIds).orEmpty() - documentPhotoIds(value)
+            q.saveDocument(id, dogId, value)
+            consumedDraftSlot?.let { consumeDraft(q, requireNotNull(dogId), it) }
+            removed.forEach { q.queueCleanup("photo", it) } }
     }
     override suspend fun removeDocuments(prefix: String) {
         require(prefix.length in 1..160)
-        mutate(false) { it.deleteDocuments(prefix.length.toString(), prefix) }
+        mutate(false) { q ->
+            q.documentsWithPrefix(prefix.length.toString(), prefix).executeAsList().flatMap { documentPhotoIds(it.value_json) }.forEach { q.queueCleanup("photo", it) }
+            q.deleteDocuments(prefix.length.toString(), prefix)
+        }
     }
+
+    private fun documentPhotoIds(value: String): Set<String> = runCatching {
+        val found = mutableSetOf<String>()
+        fun visit(element: kotlinx.serialization.json.JsonElement) {
+            when (element) {
+                is kotlinx.serialization.json.JsonObject -> element.values.forEach(::visit)
+                is kotlinx.serialization.json.JsonArray -> element.forEach(::visit)
+                is kotlinx.serialization.json.JsonPrimitive -> element.content.takeIf { LocalAttachmentRules.image.matches(it) }?.let(found::add)
+            }
+        }
+        visit(detailsJson.parseToJsonElement(value)); found
+    }.getOrDefault(emptySet())
 
     override suspend fun loadDraft(dogId: String, slot: String): LocalDraft? = read { q -> q.draft(dogId, slot).executeAsOneOrNull()?.let { LocalDraft(it.value_json, detailsJson.decodeFromString(strings, it.photo_ids_json)) } }
     override suspend fun saveDraft(dogId: String, slot: String, draft: LocalDraft) {

@@ -15,6 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
         if (::platform.isInitialized) platform.device.handleIntent(intent)
+        if (::platform.isInitialized) (platform.authEngine as? AndroidFirebaseAuth)?.handleLink(intent.dataString)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,11 +23,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         val fixture = if (BuildConfig.DEBUG && intent.getBooleanExtra("designReview", false)) com.dracoarts.shared.presentation.review.BoardReviewDataSet.entries.firstOrNull { it.key == intent.getStringExtra("designReviewFixture") } else null
         platform = AndroidPlatform(this, fixture)
+        (platform.authEngine as? AndroidFirebaseAuth)?.handleLink(intent.dataString)
         setContent {
             val state = rememberSaveable(saver = AppState.Saver) { AppState() }
             BackHandler(enabled = state.canGoBack) { state.back() }
             App(platform, state, reviewEnabled = BuildConfig.DEBUG && intent.getBooleanExtra("designReview", false),
-                reviewStart = if (BuildConfig.DEBUG) intent.getStringExtra("designReviewScreen") else null, boardFixture = fixture)
+                reviewStart = if (BuildConfig.DEBUG) intent.getStringExtra("designReviewScreen") else null, boardFixture = fixture, liveAiReview = BuildConfig.DEBUG && intent.getBooleanExtra("liveAiReview", false))
         }
     }
 

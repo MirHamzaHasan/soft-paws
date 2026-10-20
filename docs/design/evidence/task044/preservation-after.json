@@ -1,0 +1,38 @@
+{
+  "android": {
+    "dogs": {
+      "count": 1,
+      "sha256": "d391519c95a6c8293ac8b3c84152bfb44d4d8f06546e17410ed9c6a05007d1cc"
+    },
+    "care_events": {
+      "count": 16,
+      "sha256": "6798b98d6fac882cbdced538348a486016a348708a4531184719aafaf433a6f1"
+    },
+    "care_items": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "local_documents": {
+      "count": 2,
+      "sha256": "c82de6dc800c11f6cef5abd0beab956cdfc697210261cd75151f88c5aa63720c"
+    }
+  },
+  "ios": {
+    "dogs": {
+      "count": 1,
+      "sha256": "29ed43569951215e3a59cf247f2fa6c3a342692135e2a123e331c1f1a4837383"
+    },
+    "care_events": {
+      "count": 5,
+      "sha256": "d56f1d0f914b3f326096088c16552cec2516c50bc733af5efe05d5bef2e2243d"
+    },
+    "care_items": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "local_documents": {
+      "count": 2,
+      "sha256": "5839dfdc24bb4aebd214780273eadb4187b7dc4aeccce558e16da2f8af803d81"
+    }
+  }
+}

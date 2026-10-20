@@ -1,0 +1,12 @@
+// Explicit native acceptance only. Normal unit tests never require model downloads.
+gradle.beforeProject { project ->
+    if (project.path == ':shared') {
+        project.plugins.withId('org.jetbrains.kotlin.multiplatform') {
+            project.kotlin.sourceSets.all { sourceSet ->
+                if (sourceSet.name == 'iosSimulatorArm64Test') {
+                    sourceSet.kotlin.srcDir(new File(project.rootDir, 'tools/native-ai-qa/ios'))
+                }
+            }
+        }
+    }
+}

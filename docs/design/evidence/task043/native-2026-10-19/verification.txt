@@ -1,0 +1,33 @@
+Final code verification · 19 October 2026
+
+python3 tools/verify.py --ios
+Result: Requested verification passed.
+Log: .verify-build/task043-crash-fix-full-verification.log
+Includes metadata/tools, Android Debug/Release, lint, all 137 JVM tests,
+preserving SQLDelight migrations and signed iOS Debug/Release bundle checks.
+This run includes the iOS save-to-Home selection race fix and its SQLite regression.
+
+iOS test host: build-for-testing, Debug, arm64, ad-hoc simulator signing.
+DerivedData: .verify-build/task043-xcode-ui
+No Kotlin/framework/resource build phase was skipped.
+
+Android runtime: AddDogJourneyTest, 1 passed, 272.536 seconds.
+Log: .verify-build/task043-android-settled-runtime.log
+Real SQLite fixture: park-add-dog-v1, separate database/preferences.
+Saved profile/context values and original fixture dog checked directly in SQLite.
+
+iOS runtime: AddDogReviewJourneys, 2 passed, 0 failed, 271.075 seconds.
+Result: .verify-build/task043-ios-complete-flow.xcresult
+Full setup through save-to-Home/profile/switcher and restart/switcher pass.
+Exported app stderr contains no uncaught Kotlin exception.
+All entered fields and zero inherited new-dog care checked in real SQLite.
+
+Normal journal preservation: before/after row hashes match for dogs, care_events,
+care_items and local_documents. Android: 1 dog, 16 care records, 2 documents.
+iOS: 1 dog, 5 care records, 2 documents. Both have 0 care items.
+Both normal apps reopened; automated navigation stopped.
+
+The owned Android emulator runs Android 15; the owned iPhone 14 simulator runs
+iOS 18.5. No physical, full assistive-technology or minimum-OS acceptance is
+claimed. Existing paused Llamatik ICU minimum-version and AVAsset deprecation
+warnings remain separate project gates.

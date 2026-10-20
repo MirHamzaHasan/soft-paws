@@ -1,0 +1,46 @@
+{
+  "universalReleaseApkBytes": 30993003,
+  "riveLibraries": [
+    {
+      "path": "lib/arm64-v8a/librive-android.so",
+      "bytes": 5687760,
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/armeabi-v7a/librive-android.so",
+      "bytes": 5443464,
+      "bits": 32,
+      "loadAlignments": [
+        4096,
+        4096,
+        4096
+      ]
+    },
+    {
+      "path": "lib/x86/librive-android.so",
+      "bytes": 6052036,
+      "bits": 32,
+      "loadAlignments": [
+        4096,
+        4096,
+        4096
+      ]
+    },
+    {
+      "path": "lib/x86_64/librive-android.so",
+      "bytes": 6086696,
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    }
+  ],
+  "rive64BitElf16KbAligned": true
+}

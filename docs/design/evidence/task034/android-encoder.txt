@@ -1,0 +1,8 @@
+
+com.draco.arts.apps.bark.log.dogs.journal.HighlightEncoderTest:.
+
+Time: 10.508
+
+OK (1 test)
+
+

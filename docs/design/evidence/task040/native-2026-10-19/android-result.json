@@ -1,0 +1,38 @@
+{
+  "platform": "Android API 35 emulator",
+  "mode": "normal Debug, no fixture",
+  "nativeFirebaseSignInPassed": true,
+  "savedReplies": [
+    {
+      "question": "hi",
+      "assistant": true,
+      "source": "atlas",
+      "answer": "Hi! I'm BarkLog, your journal assistant for QA Dog Android \u2014 how can I help today?",
+      "profileAttached": true,
+      "recordCount": 0
+    },
+    {
+      "question": "bro sohow can you help me with the health of my dog",
+      "assistant": true,
+      "source": "atlas",
+      "answer": "I can't assess or treat QA Dog Android's health, but I can help you prepare for a vet visit. I can organize observations you type here into factual notes and questions, and I can share general non-clinical tips on routines, grooming, calm handling and enrichment. For any health concern, your veterinarian is the right contact \u2014 urgently if it seems serious.",
+      "profileAttached": true,
+      "recordCount": 0
+    }
+  ],
+  "counts": {
+    "dogs": 1,
+    "care_events": 0,
+    "care_items": 0,
+    "local_documents": 2
+  },
+  "consents": [
+    {
+      "messageConsent": true,
+      "profileConsent": true,
+      "recordConsent": true,
+      "cloudConsent": true
+    }
+  ],
+  "manualInteraction": "Owner used Android during automation; navigation stopped. Reply/history were inspected read-only. Restart verification pending."
+}

@@ -21,9 +21,9 @@ def check() -> None:
 
     android = (ROOT / "androidApp/build.gradle.kts").read_text()
     ios = (ROOT / "iosApp/iosApp.xcodeproj/project.pbxproj").read_text()
-    if 'applicationId = "com.draco.arts.apps.bark.log.dogs.journal"' not in android:
+    if 'applicationId = "com.draco.apps.bark.log"' not in android:
         errors.append("Android identity does not match BarkLog.")
-    if ios.count("PRODUCT_BUNDLE_IDENTIFIER = com.dracoarts.barklog;") != 2:
+    if ios.count("PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.bark.log;") != 2:
         errors.append("iOS Debug/Release identities do not match BarkLog.")
     if ios.count('INFOPLIST_KEY_CFBundleDisplayName = "BarkLog";') != 2:
         errors.append("iOS display name does not match BarkLog.")
@@ -34,12 +34,12 @@ def check() -> None:
         errors.append("Both iOS configurations must use BarkLog's Info.plist.")
 
     plugins = json.loads((ROOT / "template/plugins.json").read_text())["plugins"]
-    prohibited = {"auth", "analytics", "ads", "purchases"}
+    prohibited = {"analytics", "ads"}
     if any(p["enabled"] and p["id"] in prohibited for p in plugins):
-        errors.append("Removed account/telemetry/paid providers cannot be enabled in this foundation.")
+        errors.append("Telemetry/ads providers remain disabled; auth and conditional RevenueCat billing are authorized.")
 
     catalog = (ROOT / "gradle/libs.versions.toml").read_text()
-    for marker in ("com.applovin", "com.android.billingclient", "AppLovinSDK", "PostHog", "RevenueCat"):
+    for marker in ("com.applovin", "com.android.billingclient", "AppLovinSDK", "PostHog"):
         if marker in catalog + android + ios:
             errors.append(f"Unwanted dependency remains: {marker}")
     manifest = ET.parse(ROOT / "androidApp/src/main/AndroidManifest.xml")
@@ -47,7 +47,7 @@ def check() -> None:
         el.attrib.get("{http://schemas.android.com/apk/res/android}name")
         for el in manifest.findall("uses-permission")
     }
-    expected_permissions = {"android.permission.VIBRATE", "android.permission.POST_NOTIFICATIONS", "android.permission.RECEIVE_BOOT_COMPLETED"}
+    expected_permissions = {"android.permission.ACCESS_COARSE_LOCATION", "android.permission.INTERNET", "android.permission.VIBRATE", "android.permission.POST_NOTIFICATIONS", "android.permission.RECEIVE_BOOT_COMPLETED"}
     if permissions != expected_permissions:
         errors.append(f"Unexpected BarkLog permission set: {permissions}")
 

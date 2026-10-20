@@ -1,0 +1,311 @@
+{
+  "checks": [
+    "all three complete recurring USD prices visible; disabled store CTA and visible free path",
+    "new original care-notebook Rive export and controller load; greeting plays",
+    "bounded Rive greeting returns to the same-art still",
+    "offscreen and paused contexts stop Rive playback",
+    "synthetic background visibility event stops Rive playback",
+    "selection glides, reverses from current pose, settles over exactly one checked plan",
+    "Reduce Motion lands on final selected price and still dog immediately",
+    "keyboard Enter selects a plan",
+    "leaving the screen disposes the Rive player and observers",
+    "free journal route remains usable without a purchase",
+    "account plan → paywall → free returns to the account plan; food scanner is explicitly Coming soon",
+    "full dog profile opens, traps focus and dismisses with Escape",
+    "actual rendered plan prices, captions and benefit copy meet contrast in both themes",
+    "plan reveal captured at 25/50/75/100 percent in both themes",
+    "failed runtime export keeps the new transparent notebook vector visible"
+  ],
+  "contrast": [
+    {
+      "theme": "light",
+      "text": "$2.99",
+      "foreground": "rgb(18, 26, 21)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 17.73,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "/ week",
+      "foreground": "rgb(85, 96, 90)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 6.55,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "$6.99",
+      "foreground": "rgb(18, 26, 21)",
+      "background": "rgb(238, 247, 196)",
+      "ratio": 15.82,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "/ month",
+      "foreground": "rgb(85, 96, 90)",
+      "background": "rgb(238, 247, 196)",
+      "ratio": 5.84,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "$39.99",
+      "foreground": "rgb(18, 26, 21)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 17.73,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "/ year",
+      "foreground": "rgb(85, 96, 90)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 6.55,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "Answers with their week in view",
+      "foreground": "rgb(29, 38, 32)",
+      "background": "rgb(243, 241, 234)",
+      "ratio": 13.76,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "BarkLog AI & safety · shared with your consent.",
+      "foreground": "rgb(85, 96, 90)",
+      "background": "rgb(243, 241, 234)",
+      "ratio": 5.79,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "A journal for every dog",
+      "foreground": "rgb(29, 38, 32)",
+      "background": "rgb(243, 241, 234)",
+      "ratio": 13.76,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "Each new dog gets their own complete profile.",
+      "foreground": "rgb(85, 96, 90)",
+      "background": "rgb(243, 241, 234)",
+      "ratio": 5.79,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "Moments to keep and share",
+      "foreground": "rgb(29, 38, 32)",
+      "background": "rgb(243, 241, 234)",
+      "ratio": 13.76,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "PDFs, Memory Books and video exports.",
+      "foreground": "rgb(85, 96, 90)",
+      "background": "rgb(243, 241, 234)",
+      "ratio": 5.79,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "Find a vet nearby",
+      "foreground": "rgb(29, 38, 32)",
+      "background": "rgb(243, 241, 234)",
+      "ratio": 13.76,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "Choose a clinic in Maps, then call.",
+      "foreground": "rgb(85, 96, 90)",
+      "background": "rgb(243, 241, 234)",
+      "ratio": 5.79,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "Subscriptions renew until cancelled in your store.",
+      "foreground": "rgb(85, 96, 90)",
+      "background": "rgb(243, 241, 234)",
+      "ratio": 5.79,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "text": "Store setup pending · no payment starts here.",
+      "foreground": "rgb(85, 96, 90)",
+      "background": "rgb(243, 241, 234)",
+      "ratio": 5.79,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "$2.99",
+      "foreground": "rgb(242, 245, 238)",
+      "background": "rgb(24, 30, 26)",
+      "ratio": 15.39,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "/ week",
+      "foreground": "rgb(169, 179, 171)",
+      "background": "rgb(24, 30, 26)",
+      "ratio": 7.84,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "$6.99",
+      "foreground": "rgb(242, 245, 238)",
+      "background": "rgb(43, 52, 18)",
+      "ratio": 11.9,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "/ month",
+      "foreground": "rgb(169, 179, 171)",
+      "background": "rgb(43, 52, 18)",
+      "ratio": 6.07,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "$39.99",
+      "foreground": "rgb(242, 245, 238)",
+      "background": "rgb(24, 30, 26)",
+      "ratio": 15.39,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "/ year",
+      "foreground": "rgb(169, 179, 171)",
+      "background": "rgb(24, 30, 26)",
+      "ratio": 7.84,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "Answers with their week in view",
+      "foreground": "rgb(227, 232, 224)",
+      "background": "rgb(14, 18, 16)",
+      "ratio": 15.18,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "BarkLog AI & safety · shared with your consent.",
+      "foreground": "rgb(169, 179, 171)",
+      "background": "rgb(14, 18, 16)",
+      "ratio": 8.74,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "A journal for every dog",
+      "foreground": "rgb(227, 232, 224)",
+      "background": "rgb(14, 18, 16)",
+      "ratio": 15.18,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "Each new dog gets their own complete profile.",
+      "foreground": "rgb(169, 179, 171)",
+      "background": "rgb(14, 18, 16)",
+      "ratio": 8.74,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "Moments to keep and share",
+      "foreground": "rgb(227, 232, 224)",
+      "background": "rgb(14, 18, 16)",
+      "ratio": 15.18,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "PDFs, Memory Books and video exports.",
+      "foreground": "rgb(169, 179, 171)",
+      "background": "rgb(14, 18, 16)",
+      "ratio": 8.74,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "Find a vet nearby",
+      "foreground": "rgb(227, 232, 224)",
+      "background": "rgb(14, 18, 16)",
+      "ratio": 15.18,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "Choose a clinic in Maps, then call.",
+      "foreground": "rgb(169, 179, 171)",
+      "background": "rgb(14, 18, 16)",
+      "ratio": 8.74,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "Subscriptions renew until cancelled in your store.",
+      "foreground": "rgb(169, 179, 171)",
+      "background": "rgb(14, 18, 16)",
+      "ratio": 8.74,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "text": "Store setup pending · no payment starts here.",
+      "foreground": "rgb(169, 179, 171)",
+      "background": "rgb(14, 18, 16)",
+      "ratio": 8.74,
+      "minimum": 4.5,
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "external": []
+}

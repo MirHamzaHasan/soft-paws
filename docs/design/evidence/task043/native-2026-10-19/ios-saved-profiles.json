@@ -1,0 +1,42 @@
+[
+  {
+    "id": "52C09E7C-AE58-48B2-8764-72E5A4A7F556",
+    "owner_id": "588CCA39-F3F9-4DC8-AC65-90126686A3EE",
+    "name": "Luna 21434",
+    "created_at": 1792002240000,
+    "details_json": "{\"breed\":\"Beagle\",\"age\":\"1 years, 2 months\",\"sex\":\"Female\",\"companion\":{\"stage\":\"Puppy\",\"years\":\"1\",\"months\":\"2\",\"breeds\":[\"Beagle\"],\"size\":\"Small\",\"weight\":\"9.5\",\"goals\":[\"Remember daily care\",\"Keep their memories\"],\"routines\":[\"Morning & evening\",\"Every day is different\"],\"topics\":[\"Daily routines\",\"Training & play\"],\"traits\":[\"Curious\"],\"activities\":[\"Sniffing walks\"],\"foods\":[\"Wet food\"],\"allergies\":\"New dog sensitivity note\",\"conditions\":\"Caregiver observation\",\"medications\":\"Existing vet instructions\",\"careNotes\":\"Prefers a quiet doorway\"}}",
+    "revision": 1
+  },
+  {
+    "id": "5D72E8E8-5C85-4414-8F4C-A905118B1A7A",
+    "owner_id": "588CCA39-F3F9-4DC8-AC65-90126686A3EE",
+    "name": "Luna 22578",
+    "created_at": 1792002240000,
+    "details_json": "{\"breed\":\"Beagle\",\"age\":\"1 years, 2 months\",\"sex\":\"Female\",\"companion\":{\"stage\":\"Puppy\",\"years\":\"1\",\"months\":\"2\",\"breeds\":[\"Beagle\"],\"size\":\"Small\",\"weight\":\"9.5\",\"allergies\":\"New dog sensitivity note\",\"conditions\":\"Caregiver observation\",\"medications\":\"Existing vet instructions\",\"careNotes\":\"Prefers a quiet doorway\"}}",
+    "revision": 1
+  },
+  {
+    "id": "772C02B6-6A55-45E5-BB97-8F257F9CBAA6",
+    "owner_id": "588CCA39-F3F9-4DC8-AC65-90126686A3EE",
+    "name": "Luna 24457",
+    "created_at": 1792002240000,
+    "details_json": "{\"breed\":\"Beagle\",\"age\":\"1 years, 2 months\",\"sex\":\"Female\",\"companion\":{\"stage\":\"Puppy\",\"years\":\"1\",\"months\":\"2\",\"breeds\":[\"Beagle\"],\"size\":\"Small\",\"weight\":\"9.5\",\"goals\":[\"Remember daily care\",\"Keep their memories\"],\"routines\":[\"Morning & evening\",\"Every day is different\"],\"topics\":[\"Daily routines\",\"Training & play\"],\"traits\":[\"Curious\"],\"activities\":[\"Sniffing walks\"],\"foods\":[\"Wet food\"],\"allergies\":\"New dog sensitivity note\",\"conditions\":\"Caregiver observation\",\"medications\":\"Existing vet instructions\",\"careNotes\":\"Prefers a quiet doorway\"}}",
+    "revision": 1
+  },
+  {
+    "id": "E228C5EB-B5E1-4CC0-815E-178748572084",
+    "owner_id": "588CCA39-F3F9-4DC8-AC65-90126686A3EE",
+    "name": "Luna 24063",
+    "created_at": 1792002240000,
+    "details_json": "{\"breed\":\"Beagle\",\"age\":\"1 years, 2 months\",\"sex\":\"Female\",\"companion\":{\"stage\":\"Puppy\",\"years\":\"1\",\"months\":\"2\",\"breeds\":[\"Beagle\"],\"size\":\"Small\",\"weight\":\"9.5\",\"goals\":[\"Remember daily care\",\"Keep their memories\"],\"routines\":[\"Morning & evening\",\"Every day is different\"],\"topics\":[\"Daily routines\",\"Training & play\"],\"traits\":[\"Curious\"],\"activities\":[\"Sniffing walks\"],\"foods\":[\"Wet food\"],\"allergies\":\"New dog sensitivity note\",\"conditions\":\"Caregiver observation\",\"medications\":\"Existing vet instructions\",\"careNotes\":\"Prefers a quiet doorway\"}}",
+    "revision": 1
+  },
+  {
+    "id": "b04d0022-0001-4000-8000-000000000001",
+    "owner_id": "588CCA39-F3F9-4DC8-AC65-90126686A3EE",
+    "name": "Bruno",
+    "created_at": 1792002240000,
+    "details_json": "{\"breed\":\"Mixed breed\",\"age\":\"4\u20137 years\"}",
+    "revision": 1
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "scope": "Synthetic local web design board only; native context/cards are not implemented",
+  "layouts": 22,
+  "checks": [
+    "Eight states in light/dark; populated/empty/consent at 375\u00d7667 with 130% text; readable end-of-scroll captures",
+    "Exact fixture counts; seven original walk source notes; sheet focus trap, Escape and focus return",
+    "Automatic-context review includes all twelve example rows plus the named dog profile; no per-record picker",
+    "Unchecked consent disables AI; affirmative scope consent opens chat; declining returns to the journal",
+    "Loading can stop without losing the question; stopped/error states retry to a source-backed authored reply",
+    "No logs and no matching logs remain distinct; future placement has no links/actions and is absent in normal answers",
+    "Reduced-motion screen is stable at rest",
+    "Real-time source-sheet frames; no browser errors or external requests"
+  ],
+  "browserErrors": [],
+  "externalRequests": [],
+  "minTextContrast": 5.793857545104181,
+  "minTargetWidth": 48,
+  "minTargetHeight": 48,
+  "horizontalOverflow": [],
+  "motion": [
+    {
+      "targetMs": 105,
+      "observedMs": 106.19999999925494
+    },
+    {
+      "targetMs": 210,
+      "observedMs": 222.2999999988824
+    },
+    {
+      "targetMs": 315,
+      "observedMs": 337.2999999988824
+    }
+  ],
+  "nativeImplemented": false,
+  "physicalAccessibilityVerified": false
+}

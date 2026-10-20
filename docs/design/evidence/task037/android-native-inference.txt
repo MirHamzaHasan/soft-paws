@@ -1,0 +1,31 @@
+INSTRUMENTATION_STATUS: class=com.draco.arts.apps.bark.log.dogs.journal.LocalAiNativeTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.draco.arts.apps.bark.log.dogs.journal.LocalAiNativeTest:
+INSTRUMENTATION_STATUS: test=pinnedTextAndPhotoModelsRunLocallyAndRemovalPreservesOtherFiles
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=
+Local text: 17 minutes (18076 ms)
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=
+Local caption:  A red square. (52656 ms)
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.draco.arts.apps.bark.log.dogs.journal.LocalAiNativeTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=pinnedTextAndPhotoModelsRunLocallyAndRemovalPreservesOtherFiles
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 79.567
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1

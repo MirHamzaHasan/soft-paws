@@ -12,15 +12,29 @@ spec.loader.exec_module(bundle_check)
 
 
 class IosBundleTests(unittest.TestCase):
+    def test_a_stale_bundled_firebase_config_is_rejected_before_runtime(self):
+        with tempfile.TemporaryDirectory() as root:
+            bundle = self.fixture(root)
+            expected = Path(root) / "expected.plist"
+            expected.write_bytes(plistlib.dumps({
+                "BUNDLE_ID": "com.draco.apps.bark.log", "PROJECT_ID": "bark-log", "CLIENT_ID": "new-client",
+            }))
+            with self.assertRaisesRegex(ValueError, "bundled Firebase config is stale"):
+                bundle_check.check("Debug", bundle, expected)
+
     def fixture(self, root):
         bundle = Path(root) / "iosApp.app"
         bundle.mkdir()
+        (bundle / "GoogleService-Info.plist").write_bytes(plistlib.dumps({
+            "BUNDLE_ID": "com.draco.apps.bark.log", "PROJECT_ID": "bark-log",
+        }))
         (bundle / "Info.plist").write_bytes(plistlib.dumps({
-            "CFBundleIdentifier": "com.dracoarts.barklog",
+            "CFBundleIdentifier": "com.draco.apps.bark.log",
             "CFBundleDisplayName": "BarkLog",
             "CFBundleShortVersionString": "1.0.0",
             "CFBundleVersion": "1",
             "CADisableMinimumFrameDurationOnPhone": True,
+            "NSLocationWhenInUseUsageDescription": "Find animal emergency services and nearby veterinary clinics in your area when you ask. You can enter a city instead.",
             "NSCameraUsageDescription": "Take a photo for your dog profile or care record when you choose Take photo.",
         }))
         return bundle

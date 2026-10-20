@@ -33,3 +33,9 @@ setup drafts, demo identity and dog-scoped conversation JSON. Dog deletion remov
 its documents before deleting the FK target. Setup documents also retain selected
 photo references. These documents are real local data; the response and sign-in
 providers are explicitly demos. Nothing is synchronized to an external service.
+
+
+Task036 (18 October): historical demo identity fields in `companion-session`
+are ignored. New writes to that document contain only the explicitly local demo
+Premium setting. Native Firebase SDK state owns authentication; tokens and email
+links are never stored in SQLite. No care-table/schema/filename change is needed.

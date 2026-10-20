@@ -1,0 +1,17 @@
+{
+  "states": [
+    "Hello",
+    "Idle",
+    "Hello",
+    "Idle",
+    "Curious"
+  ],
+  "machines": [
+    "Care Companion"
+  ],
+  "animations": [
+    "Hello",
+    "Curious",
+    "Idle"
+  ]
+}

@@ -131,7 +131,7 @@ fun BoardHandoff(icon: String, title: String, text: String, action: String, enab
 @Composable
 fun BoardDogChip(name: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val source = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
-    Surface(onClick, modifier.heightIn(min = 48.dp).then(pressMotion(source)), interactionSource = source, shape = CircleShape, color = boardColor("panel"), border = BorderStroke(1.dp, boardColor("hair"))) {
+    Surface(soundAction(onClick), modifier.heightIn(min = 48.dp).then(pressMotion(source)), interactionSource = source, shape = CircleShape, color = boardColor("panel"), border = BorderStroke(1.dp, boardColor("hair"))) {
         Row(Modifier.padding(start = 7.dp, end = 15.dp, top = 7.dp, bottom = 7.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(9.dp)) {
             Surface(Modifier.then(stickerPressMotion(source)), shape = CircleShape, color = boardColor("ball")) { Box(Modifier.size(30.dp), contentAlignment = Alignment.Center) { PawMark(Modifier.size(17.dp)) } }
             Text(name, style = MaterialTheme.typography.titleMedium.copy(fontFamily = LocalDisplayFont.current, fontWeight = FontWeight.Bold, fontSize = 16.sp))
@@ -143,7 +143,7 @@ fun BoardDogChip(name: String, onClick: () -> Unit, modifier: Modifier = Modifie
 @Composable
 fun BoardBackButton(onClick: () -> Unit, enabled: Boolean = true) {
     val source = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
-    Surface(onClick, Modifier.heightIn(min = 48.dp).then(pressMotion(source, enabled)), enabled = enabled, interactionSource = source, shape = CircleShape, color = boardColor("panel"), border = BorderStroke(1.dp, boardColor("hair"))) {
+    Surface(soundAction(onClick), Modifier.heightIn(min = 48.dp).then(pressMotion(source, enabled)), enabled = enabled, interactionSource = source, shape = CircleShape, color = boardColor("panel"), border = BorderStroke(1.dp, boardColor("hair"))) {
         Row(Modifier.padding(start = 12.dp, end = 16.dp, top = 12.dp, bottom = 12.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) { BarkIcon("arrow-left", Modifier.size(16.dp).then(glyphPressMotion(source, -1f, enabled))); Text("Back", style = MaterialTheme.typography.labelMedium) }
     }
 }
@@ -167,7 +167,7 @@ fun BoardGuideHero(name: String) {
 fun BoardGuideOption(title: String, subtitle: String, family: String, icon: String, chosen: Boolean, enabled: Boolean = true, onClick: () -> Unit) {
     val source = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
     val checkLanding = selectionLanding(chosen)
-    Surface(onClick, Modifier.fillMaxWidth().heightIn(min = 79.dp).then(pressMotion(source, enabled)).semantics { this.selected = chosen }, enabled = enabled, interactionSource = source, shape = RoundedCornerShape(20.dp), color = boardColor(if (chosen) "accent-soft" else "panel"), border = BorderStroke(1.dp, boardColor(if (chosen) "accent-line" else "hair"))) {
+    Surface(soundAction(onClick, com.dracoarts.shared.services.SoundCue.Selection), Modifier.fillMaxWidth().heightIn(min = 79.dp).then(pressMotion(source, enabled)).semantics { this.selected = chosen }, enabled = enabled, interactionSource = source, shape = RoundedCornerShape(20.dp), color = boardColor(if (chosen) "accent-soft" else "panel"), border = BorderStroke(1.dp, boardColor(if (chosen) "accent-line" else "hair"))) {
         Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(13.dp), verticalAlignment = Alignment.CenterVertically) {
             Surface(Modifier.then(stickerPressMotion(source, enabled)), shape = CircleShape, color = boardColor("$family-dot")) { Box(Modifier.size(45.dp), contentAlignment = Alignment.Center) { BarkIcon(icon, Modifier.size(23.dp), Color.White) } }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) { Text(title, style = MaterialTheme.typography.titleMedium); Text(subtitle, style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp)) }

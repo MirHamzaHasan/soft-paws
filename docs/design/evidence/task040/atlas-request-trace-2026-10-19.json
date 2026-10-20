@@ -1,0 +1,96 @@
+{
+  "scope": "Source trace of current web diagnostic and native client, correlated with the recorded live error. No new inference request was sent by this trace.",
+  "application": "BarkLog",
+  "request": {
+    "method": "POST",
+    "endpoint": "https://atlas.dracoarts.com/v1/chat",
+    "headers": {
+      "X-Atlas-App-Id": "caaf9c52-60f3-4fe2-b71a-3b59d065089a",
+      "X-Atlas-Client-Platform": "web",
+      "Content-Type": "application/json"
+    },
+    "bodyFields": {
+      "capability": "chat",
+      "responseFormat": "text",
+      "stream": false,
+      "maxTokens": 650,
+      "optimization": {
+        "mode": "off"
+      },
+      "metadata": {
+        "contextRequired": true,
+        "contextFeature": "barklog.ask-barklog-ai",
+        "feature": "barklog.ask-barklog-ai"
+      }
+    }
+  },
+  "nativePlatformAttribution": [
+    "ios",
+    "google-play"
+  ],
+  "webPath": [
+    "Browser POST http://127.0.0.1:4281/api/run",
+    "Handler.do_POST",
+    "probe",
+    "remote",
+    "urllib.request.Request",
+    "Atlas POST https://atlas.dracoarts.com/v1/chat"
+  ],
+  "nativePath": [
+    "AppContainer selects AtlasResponseProvider in normal app mode",
+    "AtlasResponseProvider.response",
+    "AtlasClient.answer builds JSON metadata",
+    "KtorAtlasTransport.post sends directly to Atlas; no BarkLog server proxy"
+  ],
+  "assignments": [
+    {
+      "path": "shared/src/commonMain/kotlin/com/dracoarts/shared/services/ai/AtlasClient.kt",
+      "line": 115,
+      "field": "AtlasClient.FEATURE",
+      "value": "barklog.ask-barklog-ai"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/com/dracoarts/shared/services/ai/AtlasClient.kt",
+      "line": 79,
+      "field": "metadata.contextRequired/contextFeature/feature"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/com/dracoarts/shared/services/ai/AtlasClient.kt",
+      "line": 60,
+      "field": "KtorAtlasTransport.APP_ID",
+      "value": "caaf9c52-60f3-4fe2-b71a-3b59d065089a"
+    },
+    {
+      "path": ".verify-build/atlas-web-probe/server.py",
+      "line": 26,
+      "field": "FEATURE",
+      "value": "barklog.ask-barklog-ai"
+    },
+    {
+      "path": ".verify-build/atlas-web-probe/server.py",
+      "line": 90,
+      "field": "metadata.contextRequired/contextFeature/feature"
+    },
+    {
+      "path": ".verify-build/atlas-web-probe/server.py",
+      "line": 25,
+      "field": "APP_ID",
+      "value": "caaf9c52-60f3-4fe2-b71a-3b59d065089a"
+    }
+  ],
+  "contextFeatureAndFeatureConflict": false,
+  "responseDiagnosticClarification": "The diagnostic result.contextFeature is read from the RESPONSE X-Atlas-Context-Feature header, not request.metadata.contextFeature. A null response receipt does not mean the outgoing request omitted its feature.",
+  "recordedLiveFailure": {
+    "timeUtc": "2026-10-19T07:16:17.516806+00:00",
+    "httpStatus": 422,
+    "errorCode": "CONTEXT_FEATURE_UNKNOWN",
+    "requestId": "bb6a72a1-1f8e-46d6-bdfa-76adb6af4a9b"
+  },
+  "serverFollowUp": "Inspect the saved and active feature IDs and policy revision for this exact application. Correlate the request ID with the resolved application and feature; verify that the active tested policy authorizes barklog.ask-barklog-ai.",
+  "unchanged": [
+    "Context checking remains required",
+    "No replacement feature ID",
+    "No token, credential, account identifier or journal content included",
+    "No server policy or Release gate changed"
+  ]
+}

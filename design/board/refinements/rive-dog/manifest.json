@@ -1,0 +1,32 @@
+{
+  "editorFile": "https://editor.rive.app/file/barklog-spaniel-motion-study/2660676",
+  "artboard": "BarkLog Dog \u00b7 Character Study",
+  "stateMachine": "Dog Controller",
+  "viewModel": "Dog",
+  "triggers": {
+    "Hello": "hello",
+    "Curious": "curious",
+    "Saved": "saved",
+    "Sleepy": "sleepy",
+    "Sniff": "sniff",
+    "Ear perk": "ears"
+  },
+  "fps": 60,
+  "clips": {
+    "Idle": 6,
+    "Hello": 2.4,
+    "Curious": 2.8,
+    "Saved": 2.2,
+    "Sleepy": 3.4,
+    "Sniff": 2.4,
+    "Ear perk": 2.4
+  },
+  "sourceSha256": "b1492d101e4435e222a6117c3de6f78fab2cda87aa90825106ec5bc384351579",
+  "runtimeSha256": "951f1719162eec9f261b9cac8f84bbf80690904fcafeb61d966a08f8767c3bc1",
+  "pawSourceSha256": "8b7508fdb5244e495b741b5c730afcbd48e4f99f1f57f2e7c478ca546b50ea32",
+  "motionSourceSha256": "22197c24e7974861a3f7c94821fce950f7946dfbbd72c86f24c12d5822a5e55b",
+  "workspace": "Draco Arts Studios",
+  "exportPlan": "Cadet",
+  "editableSha256": "0f820ac30a155fa4c14755a4c5e7c4c202fdcdc0c62cabc598d4c9536ca3942a",
+  "cancelTrigger": "rest"
+}

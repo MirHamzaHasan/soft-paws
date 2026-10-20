@@ -18,12 +18,14 @@ fun SafetyFeatureScreen(page: FeaturePage, context: FeatureContext) {
     val dog = context.dog
     when (page.feature) {
         Feature.Safety -> {
-            ScreenHeading("Safety Center", "Offline guidance for urgent moments.")
+            ScreenHeading("Safety Center", "Contacts when you need them. Explanations for your dog.")
             SafetyUrgent()
             BoardMenu {
             FeatureRow("Emergency card", "Verified contacts and facts to bring", "phone") { context.open(Feature.Emergency) }
-            FeatureRow("Toxicity lookup", "Search the bounded offline list", "search") { context.open(Feature.Toxicity) }
-            FeatureRow("First-aid topics", "Protective steps while seeking help", "shield") { context.open(Feature.FirstAid) }
+            FeatureRow("Toxicity lookup", "BarkLog AI · Premium", "search") { context.open(Feature.Toxicity) }
+            FeatureRow("Safety topics", "For ${dog.name} · BarkLog AI · Premium", "shield") { context.open(Feature.FirstAid) }
+            FeatureRow("Find a vet nearby", "Choose a clinic in Maps, then call · Premium", "map-pin") { context.open(Feature.NearestVet) }
+            FeatureRow("Train your dog", "Premium · coming soon", "graduation-cap") { context.open(Feature.TrainDog) }
             FeatureRow("What are you seeing?", "Organize observations for a call", "clipboard-list") { context.open(Feature.Triage) }
             }
         }
@@ -60,43 +62,27 @@ fun SafetyFeatureScreen(page: FeaturePage, context: FeatureContext) {
                 context.items.filter { (it.data as? CareItemData.Medication)?.archived == false }.forEach { val plan = it.data as CareItemData.Medication; SupportingText("Recorded plan: ${plan.name} · ${plan.amount}") }
                 CaptionText("For an exposure: exact product, possible amount, time, packaging and any observed signs.")
             }
-            CaptionText("Service availability and fees vary by location. No example or unverified phone numbers are supplied.")
+            EmergencyCountryServices(context)
         }
-        Feature.Toxicity -> {
-            var query by rememberSaveable(page.id) { mutableStateOf(page.id) }
-            var searched by rememberSaveable(page.id) { mutableStateOf(page.id.takeIf(String::isNotBlank)) }
-            DisposableEffect(searched) { val guard: (() -> Boolean)? = if (searched != null) ({ searched = null; true }) else null; context.navigation.backGuard = guard; onDispose { if (context.navigation.backGuard === guard) context.navigation.backGuard = null } }
-            val result = searched?.let(SafetyReference::lookup)
-            if (searched != null) {
-                if (result == null) { FeatureNotice("Not found in the offline list", "This does not mean the substance is safe.", "circle-question-mark", tone = "warn"); JournalCard { SectionTitle("Keep the label or packaging"); SupportingText("Contact a veterinarian or poison-control service with the exact product, possible amount and time.") } }
-                else { ScreenHeading(result.name, "Offline reference match"); SafetyUrgent(); JournalCard { SectionTitle("Contact a professional now"); SupportingText(result.guidance) }; BarkTextAction("Reference source", { context.platform.device.openSource(result.source) }, icon = "arrow-up-right") }
-                BarkButton("Open emergency card", { context.open(Feature.Emergency) }, icon = "phone")
-            } else {
-                ScreenHeading("Toxicity lookup", "Search the offline reference list.")
-                BarkField("Search substance", query, { if (it.length <= 100) query = it }, Modifier.fillMaxWidth(), placeholder = "e.g. chocolate")
-                BarkButton("Search", { searched = query.trim() }, enabled = query.isNotBlank(), icon = "search")
-                CaptionText("The offline list includes chocolate, grapes/raisins and xylitol. A missing match is not proof of safety.")
-            }
-        }
-        Feature.FirstAid -> {
-            val topic = SafetyReference.topics.firstOrNull { it.id == page.id }
-            ScreenHeading(topic?.title ?: "First-aid topics", "While contacting a veterinarian")
-            SafetyUrgent()
-            if (topic == null) SafetyReference.topics.forEach { item -> FeatureRow(item.title, "Offline reference", "shield") { context.open(Feature.FirstAid, item.id) } }
-            else { JournalCard { SupportingText(topic.guidance) }; BarkTextAction("Reference source", { context.platform.device.openSource(topic.source) }, icon = "arrow-up-right") }
-            BarkButton("Open emergency card", { context.open(Feature.Emergency) }, icon = "phone")
+        Feature.Toxicity -> SafetyAiScreen(context, toxicity = true, initialTopic = page.id)
+        Feature.FirstAid -> SafetyAiScreen(context, toxicity = false, initialTopic = page.id)
+        Feature.NearestVet -> NearbyVetScreen(context)
+        Feature.TrainDog -> {
+            ScreenHeading("Train your dog", "BarkLog Premium · coming soon")
+            FeatureNotice("Something to look forward to", "Guided training for ${dog.name} is being planned. It is not available with a subscription yet.", "graduation-cap")
+            BarkButton("Back to Safety", { context.navigation.back() }, secondary = true)
         }
         Feature.Triage -> {
             ScreenHeading("What are you seeing?", "Organize observations for a professional call.")
             SafetyUrgent()
             BoardMenu {
-            listOf("Trouble breathing", "Collapse or unresponsiveness", "Possible poisoning", "Another urgent concern").forEach { sign -> FeatureRow(sign, "Contact a professional", "activity") { context.open(if (sign == "Possible poisoning") Feature.Toxicity else Feature.Emergency) } }
+            listOf("Trouble breathing", "Collapse or unresponsiveness", "Possible poisoning", "Another urgent concern").forEach { sign -> FeatureRow(sign, "Contact a professional", "activity") { context.open(Feature.Emergency) } }
             }
             CaptionText("BarkLog does not diagnose or decide that it is safe to wait.")
         }
         else -> error("Not a safety destination")
     }
-    CaptionText("Available offline · source set AVMA / Merck Veterinary Manual · checked ${SafetyReference.version}. Reference links need a connection.")
+    if (page.feature in setOf(Feature.Safety, Feature.Triage, Feature.Emergency)) CaptionText("Saved contacts and bundled numbers work without AI. Calling needs phone service. Emergency guidance: AVMA / Merck · checked ${SafetyReference.version}.")
 }
 
 @Composable

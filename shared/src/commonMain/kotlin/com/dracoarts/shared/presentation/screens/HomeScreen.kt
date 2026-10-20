@@ -82,7 +82,7 @@ fun HomeScreen(context: FeatureContext) {
         Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.weight(1f)) { BoardDogChip(dog.name, { context.open(Feature.DogSwitcher) }) }
-                Surface(onClick = { context.open(Feature.Safety) }, shape = RoundedCornerShape(50), color = boardColor("symptom-bg"), contentColor = boardColor("symptom-ink"), border = BorderStroke(1.dp, boardColor("symptom-line"))) {
+                Surface(onClick = soundAction({ context.open(Feature.Safety) }), shape = RoundedCornerShape(50), color = boardColor("symptom-bg"), contentColor = boardColor("symptom-ink"), border = BorderStroke(1.dp, boardColor("symptom-line"))) {
                     Row(Modifier.heightIn(min = 48.dp).padding(horizontal = 15.dp), horizontalArrangement = Arrangement.spacedBy(7.dp), verticalAlignment = Alignment.CenterVertically) { BarkIcon("shield", Modifier.size(18.dp)); Text("Safety", style = MaterialTheme.typography.bodyMedium) }
                 }
             }
@@ -126,7 +126,7 @@ fun HomeScreen(context: FeatureContext) {
             } }
             }
             }
-            Surface(onClick = { context.open(Feature.Chooser) }, enabled = !journal.loading && !journal.saving, shape = RoundedCornerShape(50), color = boardColor(if (LocalBarkDarkTheme.current) "inset" else "ink-strong"), contentColor = boardColor(if (LocalBarkDarkTheme.current) "ink-strong" else "panel")) {
+            Surface(onClick = soundAction({ context.open(Feature.Chooser) }), enabled = !journal.loading && !journal.saving, shape = RoundedCornerShape(50), color = boardColor(if (LocalBarkDarkTheme.current) "inset" else "ink-strong"), contentColor = boardColor(if (LocalBarkDarkTheme.current) "ink-strong" else "panel")) {
                 Row(Modifier.fillMaxWidth().heightIn(min = 72.dp).padding(10.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
                     Surface(shape = RoundedCornerShape(50), color = boardColor("ball"), contentColor = boardColor("ball-ink")) { Box(Modifier.size(52.dp), contentAlignment = Alignment.Center) { BarkIcon("notebook-pen", Modifier.size(24.dp)) } }
                     Column(Modifier.weight(1f)) { Text("Create a log", style = MaterialTheme.typography.titleLarge.copy(fontSize = 18.sp)); Text("Observations, notes & the little details", style = MaterialTheme.typography.bodySmall) }; BarkIcon("arrow-right", Modifier.size(20.dp))

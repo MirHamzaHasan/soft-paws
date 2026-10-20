@@ -1,0 +1,29 @@
+{
+  "checks": [
+    "Free Home Ask entry opens the value screen and returns to the journal",
+    "PDF gate gives a contextual offer; prices stay undecided/purchase disabled; dismiss preserves the free preview",
+    "Real local PNG selection, caption, reorder, square format, play/pause and three mid-pan captures; cancelling the video offer preserves the draft",
+    "Reduced motion keeps the preview still and manual photo selection remains available",
+    "Keyboard activation dismisses the offer to the original report"
+  ],
+  "errors": [],
+  "external": [],
+  "timings": [
+    {
+      "name": "pan-25",
+      "targetMs": 700,
+      "observedMs": 701.9000000059605
+    },
+    {
+      "name": "pan-50",
+      "targetMs": 1400,
+      "observedMs": 1401.9000000059605
+    },
+    {
+      "name": "pan-75",
+      "targetMs": 2100,
+      "observedMs": 2115.9000000059605
+    }
+  ],
+  "nativeVideoImplemented": false
+}

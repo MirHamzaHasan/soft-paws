@@ -1,0 +1,146 @@
+{
+  "totals": {
+    "tests": 137,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": [
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.WeeklyContextAndSoundTest",
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.085"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.ModuleRegistryTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.005"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.ModelStoreTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.27"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.HighlightTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.05"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.AtlasAiTest",
+      "tests": "14",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.305"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.BoardRecoveryTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "1.655"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.RiveDogMotionTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.007"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.CompanionTest",
+      "tests": "32",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "6.485"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.JournalControllerTest",
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.02"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.JournalRepositoryTest",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.076"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.CompleteJournalTest",
+      "tests": "13",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.072"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.AuthenticationTest",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.092"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.FoundationTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.058"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.PluginLifecycleTest",
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.024"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.DesignPresentationTest",
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.012"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.DetailJournalTest",
+      "tests": "14",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.219"
+    },
+    {
+      "name": "com.draco.arts.apps.bark.log.dogs.journal.BoardReviewFixtureTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.274"
+    }
+  ]
+}

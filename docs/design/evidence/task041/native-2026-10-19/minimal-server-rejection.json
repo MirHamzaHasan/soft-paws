@@ -1,0 +1,21 @@
+{
+  "scope": "messages-only diagnostic",
+  "endpoint": "https://atlas.dracoarts.com/v1/chat",
+  "appId": "caaf9c52-60f3-4fe2-b71a-3b59d065089a",
+  "metadata": {
+    "contextRequired": true,
+    "contextFeature": "barklog.ask-barklog-ai",
+    "feature": "barklog.ask-barklog-ai"
+  },
+  "httpStatus": 422,
+  "clientRequestId": "0256278d-117a-41c7-96ae-4a51c21e192c",
+  "serverRequestId": null,
+  "contextChecked": null,
+  "contextFeature": null,
+  "bodyBytes": 2783,
+  "responseFields": [
+    "error"
+  ],
+  "error_code": "CONTEXT_FEATURE_UNKNOWN",
+  "error_message": "The requested context feature is not authorized by this application"
+}

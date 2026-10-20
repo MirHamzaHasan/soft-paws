@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-17",
+  "androidDebugReleaseLint": true,
+  "iosDebugReleaseSimulatorHosts": true,
+  "jvm": {
+    "tests": 79,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "toolingTests": 23,
+  "homeAskRestoredBoth": true,
+  "iosAskTap": true,
+  "reportPdfGateAndroidAndIos": true,
+  "memoryPdfGateBoth": true,
+  "iosPremiumBackRetainsPreview": true,
+  "iosCsvActuallyPreparedFree": true,
+  "bothAppsLeftOnHome": true,
+  "journalsResetOrUninstalled": false,
+  "careRecordsMutated": false,
+  "realBillingImplemented": false,
+  "nativeVideoImplemented": false,
+  "physicalQaComplete": false,
+  "nativeDarkAssistiveQaComplete": false,
+  "allScreensMatched": false
+}

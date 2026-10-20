@@ -13,6 +13,11 @@ sealed interface DeviceResult<out T> {
     data class Failed(val message: String) : DeviceResult<Nothing>
 }
 
+/** One-shot area, rounded before leaving the native adapter; never persisted. */
+data class ApproximateArea(val latitude: Double, val longitude: Double, val countryCode: String = "") {
+    val searchPlace get() = "$latitude,$longitude"
+}
+
 enum class ExportFormat { CSV, PDF }
 data class ExportImage(val fileId: String, val caption: String)
 data class ExportDocument(val filename: String, val format: ExportFormat, val title: String, val lines: List<String>, val csv: String = "", val images: List<ExportImage> = emptyList())
@@ -27,6 +32,7 @@ interface DeviceServices {
     suspend fun captureFrame(bounds: DeviceFrameBounds): ImageBitmap? = null
     val foreground: StateFlow<Boolean> get() = foregroundDefault
     fun close() = Unit
+    fun updateAppearance(dark: Boolean, followSystem: Boolean) = Unit
     val reminderOpens: StateFlow<ReminderTarget?>
     fun consumedReminder()
     suspend fun notificationAccess(request: Boolean = false): DeviceResult<Unit> = DeviceResult.Failed("Notification access isn't available in this host.")
@@ -34,6 +40,8 @@ interface DeviceServices {
     suspend fun pickPhoto(): DeviceResult<String>
     suspend fun pickReceipt(): DeviceResult<String> = pickPhoto()
     suspend fun shareAttachment(fileId: String): DeviceResult<Unit> = DeviceResult.Failed("Couldn't open this local attachment.")
+    fun suggestedCountry(): String = ""
+    suspend fun currentArea(): DeviceResult<ApproximateArea> = DeviceResult.Failed("Location isn't available. Enter a city instead.")
     fun openSettings(): Boolean = false
     suspend fun photoBytes(fileId: String): ByteArray?
     suspend fun removePhoto(fileId: String)
@@ -52,3 +60,5 @@ interface DeviceServices {
 }
 
 expect fun decodeLocalPhoto(bytes: ByteArray): ImageBitmap?
+
+expect fun decodeHighlightPhoto(bytes: ByteArray, maxDimension: Int): ImageBitmap?

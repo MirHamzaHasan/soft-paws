@@ -1,0 +1,20 @@
+[
+  {
+    "configuration": "Debug",
+    "simulatorBundleBytes": 92578933,
+    "mascotSha256": "951f1719162eec9f261b9cac8f84bbf80690904fcafeb61d966a08f8767c3bc1",
+    "pngFallbackPresent": true,
+    "riveLicensePresent": true,
+    "riveFrameworkPresent": true,
+    "rivePrivacyManifestPresent": true
+  },
+  {
+    "configuration": "Release",
+    "simulatorBundleBytes": 63854021,
+    "mascotSha256": "951f1719162eec9f261b9cac8f84bbf80690904fcafeb61d966a08f8767c3bc1",
+    "pngFallbackPresent": true,
+    "riveLicensePresent": true,
+    "riveFrameworkPresent": true,
+    "rivePrivacyManifestPresent": true
+  }
+]

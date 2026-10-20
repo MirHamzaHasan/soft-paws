@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="560" viewBox="0 0 480 560">
+  <g id="Companion" stroke-linecap="round" stroke-linejoin="round">
+    <g id="Tail">
+      <path d="M338 405C388 413 418 389 420 346C446 373 432 439 377 452L341 438Z" fill="#26392D" stroke="#E5DBC3" stroke-width="5"/>
+      <path d="M420 346C429 360 433 373 430 388C419 390 409 385 404 379C414 369 418 359 420 346Z" fill="#FFF9E9"/>
+    </g>
+    <g id="Torso">
+      <path d="M170 319C142 344 137 392 141 434L128 466C118 490 129 507 153 507H328C354 507 364 491 355 469L341 438C345 395 339 348 311 322Z" fill="#F2E7CD" stroke="#26392D" stroke-width="6"/>
+      <path d="M190 335C175 366 179 414 194 443C211 466 269 466 286 440C300 414 303 369 286 339Z" fill="#FFF9E9"/>
+      <path d="M151 475V490M166 476V492M324 476V491" fill="none" stroke="#B5A88D" stroke-width="4"/>
+    </g>
+    <g id="Head">
+      <g id="LeftEar">
+        <path d="M146 208C120 183 113 116 127 72C157 76 191 124 193 175Z" fill="#26392D" stroke="#26392D" stroke-width="6"/>
+        <path d="M142 161C132 140 130 112 133 95C153 108 169 133 173 153Z" fill="#CB987C"/>
+      </g>
+      <g id="RightEar">
+        <path d="M286 166C296 123 325 103 349 116C375 132 388 193 365 220C349 237 328 210 320 182Z" fill="#26392D" stroke="#26392D" stroke-width="6"/>
+        <path d="M322 147C341 139 358 160 363 188C352 188 337 177 322 163Z" fill="#CB987C"/>
+      </g>
+      <path d="M139 204C143 152 179 132 239 132C298 132 339 158 345 212L351 263C351 310 309 341 242 341C177 341 133 311 133 266Z" fill="#F2E7CD" stroke="#26392D" stroke-width="6"/>
+      <path d="M258 138C306 142 335 168 341 208L345 256C338 276 317 286 299 276C276 261 264 229 260 198C257 175 250 151 258 138Z" fill="#26392D"/>
+      <path d="M174 196C180 187 192 184 203 188" fill="none" stroke="#A68D6C" stroke-width="5"/>
+      <path d="M280 190C290 185 303 187 308 195" fill="none" stroke="#F2E7CD" stroke-width="5"/>
+      <g id="LeftEye">
+        <ellipse cx="194" cy="227" rx="12" ry="16" fill="#26392D"/>
+        <ellipse cx="190" cy="222" rx="4" ry="5" fill="#FFFDF5"/>
+      </g>
+      <g id="RightEye">
+        <ellipse cx="292" cy="227" rx="13" ry="17" fill="#FFF9E9"/>
+        <ellipse cx="291" cy="228" rx="8" ry="11" fill="#111F18"/>
+        <ellipse cx="288" cy="223" rx="3" ry="4" fill="#FFFDF5"/>
+      </g>
+      <g id="Muzzle">
+        <path d="M185 275C189 252 213 244 241 246C271 244 298 258 299 279C299 302 275 320 242 320C209 320 184 301 185 275Z" fill="#FFF9E9"/>
+        <path d="M226 264C232 258 251 258 258 264C261 271 250 282 242 282C234 282 222 272 226 264Z" fill="#26392D"/>
+        <path d="M242 280V289M242 289C234 298 223 296 220 290M242 289C250 298 262 295 265 289" fill="none" stroke="#26392D" stroke-width="4"/>
+        <path d="M234 296C234 311 250 313 253 296" fill="#CB987C" stroke="#26392D" stroke-width="3"/>
+        <circle cx="205" cy="278" r="2.5" fill="#B5A88D"/><circle cx="214" cy="282" r="2.5" fill="#B5A88D"/>
+        <circle cx="279" cy="277" r="2.5" fill="#B5A88D"/><circle cx="271" cy="282" r="2.5" fill="#B5A88D"/>
+      </g>
+    </g>
+    <g id="Collar">
+      <path d="M164 328C207 347 281 347 322 327L320 345C278 365 208 365 167 346Z" fill="#D6EF61" stroke="#26392D" stroke-width="5"/>
+      <g id="Tag"><circle cx="244" cy="356" r="13" fill="#FFF9E9" stroke="#26392D" stroke-width="4"/><path d="M239 357L243 361L250 352" fill="none" stroke="#26392D" stroke-width="3"/></g>
+    </g>
+    <g id="Notebook">
+      <path d="M119 398C169 381 212 384 244 402C281 383 326 381 371 398L368 511C324 498 285 500 245 517C207 500 165 498 122 510Z" fill="#D6EF61" stroke="#26392D" stroke-width="6"/>
+      <g id="LeftPage">
+        <path d="M127 389C172 377 208 382 244 399V502C207 486 168 481 128 493Z" fill="#FFFEF7" stroke="#26392D" stroke-width="5"/>
+        <path d="M149 418C171 413 194 416 219 426M149 438C169 434 191 437 219 446M149 458C168 455 184 457 201 462" fill="none" stroke="#B8BBAA" stroke-width="5"/>
+      </g>
+      <g id="RightPage">
+        <path d="M244 399C279 382 318 377 363 389L362 493C320 481 283 486 244 502Z" fill="#FFFEF7" stroke="#26392D" stroke-width="5"/>
+        <path d="M267 426C291 416 317 413 340 418M267 446C291 437 315 434 340 438M267 466C287 458 305 455 322 457" fill="none" stroke="#B8BBAA" stroke-width="5"/>
+      </g>
+      <g id="Bookmark"><path d="M306 386L329 387L328 436L317 428L305 435Z" fill="#D6EF61" stroke="#26392D" stroke-width="4"/></g>
+      <path d="M244 402V509" fill="none" stroke="#26392D" stroke-width="5"/>
+    </g>
+    <g id="LeftPaw">
+      <path d="M147 359C134 369 128 389 134 406C141 419 159 423 172 411C180 401 180 384 174 370Z" fill="#F2E7CD" stroke="#26392D" stroke-width="5"/>
+      <path d="M143 398L147 406M155 399L159 408" fill="none" stroke="#B5A88D" stroke-width="3.5"/>
+    </g>
+    <g id="RightPaw">
+      <path d="M319 359C335 361 347 379 349 395C350 410 336 422 321 416C308 411 300 395 303 380Z" fill="#F2E7CD" stroke="#26392D" stroke-width="5"/>
+      <path d="M324 402L329 411M335 398L340 405" fill="none" stroke="#B5A88D" stroke-width="3.5"/>
+    </g>
+  </g>
+</svg>

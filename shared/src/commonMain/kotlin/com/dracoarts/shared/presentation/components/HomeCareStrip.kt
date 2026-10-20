@@ -125,7 +125,7 @@ fun HomeCareStrip(events: List<CareEvent>, zone: TimeZone, loading: Boolean,
                     val source = remember { MutableInteractionSource() }
                     val family = event.type.key.takeIf { "$it-bg" in LocalBoardColors.current } ?: "note"
                     val time = JournalDates.inputTime(event.occurredAtMillis, zone)
-                    Surface(onClick = { onRecord(event) }, interactionSource = source,
+                    Surface(onClick = soundAction({ onRecord(event) }), interactionSource = source,
                         modifier = Modifier.widthIn(min = 92.dp).heightIn(min = 72.dp).then(pressMotion(source))
                             .semantics { contentDescription = "${event.type.label} at $time. View record" },
                         shape = RoundedCornerShape(18.dp), border = BorderStroke(1.dp, boardColor(if (latest) "$family-line" else "hair")),
@@ -149,7 +149,7 @@ fun HomeCareStrip(events: List<CareEvent>, zone: TimeZone, loading: Boolean,
 @Composable
 private fun CareBrowseButton(label: String, description: String, icon: String, enabled: Boolean, onClick: () -> Unit) {
     val source = remember { MutableInteractionSource() }
-    Surface(onClick, Modifier.heightIn(min = 48.dp).widthIn(min = 48.dp).then(pressMotion(source, enabled))
+    Surface(soundAction(onClick), Modifier.heightIn(min = 48.dp).widthIn(min = 48.dp).then(pressMotion(source, enabled))
         .semantics { contentDescription = description }.graphicsLayer { alpha = if (enabled) 1f else .35f },
         enabled = enabled, interactionSource = source, shape = CircleShape, color = boardColor("panel"),
         border = BorderStroke(1.dp, boardColor("hair")), contentColor = boardColor("ink")) {

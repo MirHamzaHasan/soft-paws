@@ -1,0 +1,7 @@
+{
+  "shared/src/androidMain/res/raw/barklog_care_notebook.riv": "87d98161ac43bfb40ef788c157553baf606590c9c757fe07e6d5ed2ade6e66de",
+  "iosApp/iosApp/barklog_care_notebook.riv": "87d98161ac43bfb40ef788c157553baf606590c9c757fe07e6d5ed2ade6e66de",
+  "shared/src/commonMain/composeResources/drawable/care_notebook_rest.png": "3ad0f1595766790fa1aed88bf1002732d104a0a9b9530fd7bffd3359dc47af63",
+  "shared/src/androidMain/res/raw/barklog_spaniel.riv": "951f1719162eec9f261b9cac8f84bbf80690904fcafeb61d966a08f8767c3bc1",
+  "iosApp/iosApp/barklog_spaniel.riv": "951f1719162eec9f261b9cac8f84bbf80690904fcafeb61d966a08f8767c3bc1"
+}

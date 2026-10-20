@@ -1,0 +1,4 @@
+Portrait motion=true 720x1280 8400ms 917999bytes progress=21
+Square motion=true 720x720 8400ms 718548bytes progress=10
+Square motion=false 720x720 8400ms 546159bytes progress=8
+Cancelled partial removed; missing input rejected; no network used.

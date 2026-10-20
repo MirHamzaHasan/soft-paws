@@ -68,6 +68,7 @@ fun BoardScene(state: AppState, device: DeviceServices, modifier: Modifier = Mod
     var tabDirection by remember { mutableFloatStateOf(1f) }
     var restoring by remember { mutableStateOf(false) }
     var preparing by remember { mutableStateOf(false) }
+    var capturing by remember { mutableStateOf(false) }
     var job by remember { mutableStateOf<Job?>(null) }
     var pending by remember { mutableStateOf<(() -> Unit)?>(null) }
     val scope = rememberCoroutineScope()
@@ -81,7 +82,15 @@ fun BoardScene(state: AppState, device: DeviceServices, modifier: Modifier = Mod
             val settings = currentMotion
             val fromTab = state.route.ordinal
             val snapshot = if (settings.reduced || intent == BoardNavigationMove.Cut || frameBounds.width == 0) null
-                else withTimeoutOrNull(160) { device.captureFrame(frameBounds) }
+                else {
+                    // Record the same-art still while native render surfaces are detached.
+                    // It carries with Compose's layers instead of leaving a blank/black twin.
+                    capturing = true
+                    try {
+                        withFrameNanos { }; withFrameNanos { }
+                        withTimeoutOrNull(160) { device.captureFrame(frameBounds) }
+                    } finally { capturing = false }
+                }
             oldImage = snapshot; twins = emptyMap()
             oldParts = registry.parts.mapValues { (key, part) -> movingBounds[key]?.let { part.copy(bounds = it) } ?: part }
             newParts = emptyMap(); movingBounds.clear()
@@ -127,7 +136,8 @@ fun BoardScene(state: AppState, device: DeviceServices, modifier: Modifier = Mod
     LaunchedEffect(motion.reduced) {
         if (motion.reduced) { job?.cancel(); pending?.invoke(); pending = null; preparing = false; clock.snapTo(1f); registry.hidden = emptySet(); oldImage = null; twins = emptyMap(); movingBounds.clear() }
     }
-    CompositionLocalProvider(LocalBoardNavigation provides navigate, LocalBoardParts provides registry, LocalBoardRestoring provides restoring) {
+    CompositionLocalProvider(LocalBoardNavigation provides navigate, LocalBoardParts provides registry, LocalBoardRestoring provides restoring,
+        LocalMascotSnapshot provides (capturing || preparing || navigating)) {
         Box(modifier.background(ground).onGloballyPositioned {
             val bounds = it.boundsInWindow(); registry.origin = bounds.topLeft
             frameBounds = DeviceFrameBounds(bounds.left.roundToInt(), bounds.top.roundToInt(), bounds.width.roundToInt(), bounds.height.roundToInt())
@@ -211,14 +221,18 @@ fun BoardScene(state: AppState, device: DeviceServices, modifier: Modifier = Mod
 @Composable
 fun boardSharedElement(key: String, ground: Color): Modifier {
     val registry = LocalBoardParts.current ?: return Modifier
+    val nativeSurface = key == "dog" && !LocalMascotSnapshot.current
     val generation = registry.generation
     val layer = rememberGraphicsLayer()
     val recorded = remember { MutableStateFlow(-1) }
     DisposableEffect(registry, key, generation) { onDispose { if (registry.parts[key]?.generation == generation) registry.parts.remove(key) } }
     return Modifier.onGloballyPositioned { if (generation == registry.generation) registry.parts[key] = SharedBoardPart(it.boundsInWindow().translate(-registry.origin), ground, generation, layer, recorded) }
         .drawWithContent {
-            layer.record { this@drawWithContent.drawContent() }
-            recorded.value = generation
-            if (key !in registry.hidden) drawLayer(layer)
+            if (nativeSurface) drawContent()
+            else {
+                layer.record { this@drawWithContent.drawContent() }
+                recorded.value = generation
+                if (key !in registry.hidden) drawLayer(layer)
+            }
         }
 }

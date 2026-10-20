@@ -12,6 +12,26 @@ node design/board/tools/serve.mjs 4278
 
 Open <http://localhost:4278/premium/index.html?reducedMotion=false>.
 
+20 October refinement: [Paywall](http://localhost:4278/premium/index.html?reducedMotion=false#play-next-paywall),
+[care plan](http://localhost:4278/premium/index.html?reducedMotion=false#play-next-plan)
+and [your plan](http://localhost:4278/premium/index.html?reducedMotion=false#play-next-manage-plan).
+Task047 now uses a new original notebook puppy, a moving checked price choice and
+the owner-selected three USD prices. Store setup remains pending; this pass is
+a board proposal awaiting review before native UI. The owner rejected reused
+spaniel art and requested this fresh Rive file in #40.
+[Watch the new Rive](http://localhost:4278/refinements/rive-care-notebook/index.html).
+See [refinement notes](research/plan-paywall-047.md).
+
+19 October listening preview: [Soft interaction sounds](http://localhost:4278/premium/index.html#play-next-sounds).
+Enable the switch to compare Soft wood / Soft pop and tap/selection/saved cues.
+Sound stays optional and local; native audio is a subsequent reviewed slice.
+
+19 October review: [BarkLog AI answer cards](http://localhost:4278/premium/index.html?answerTheme=light#play-next-chat-cards),
+[automatic profile/week consent](http://localhost:4278/premium/index.html#play-next-ai-cards-consent)
+and [future product placement](http://localhost:4278/premium/index.html#play-next-chat-cards-products).
+These eight isolated task041 states supersede manual context picking for the new
+proposal only. Native automatic weekly sharing and cards await this board review.
+
 - [Full first session](http://localhost:4278/premium/index.html?reducedMotion=false#play-next-opening)
 - [Free Home](http://localhost:4278/premium/index.html?reducedMotion=false#play-next-home)
 - [Premium Home](http://localhost:4278/premium/index.html?reducedMotion=false#play-next-home-premium)
@@ -90,3 +110,10 @@ See [task026 mascot evidence](../../../docs/design/evidence/task026/README.md),
 and [the original task024 evidence](../../../docs/design/evidence/task024/README.md). Prior
 simulator checks do not validate these new board screens. Native parity, physical
 accessibility/performance, store approval and real integrations remain unproven.
+
+## task038 review — paused after approval
+
+The owner approved `next-chat-grounded` (direct answer, dog identity and recent-care
+bars) on 18 October, then stopped local LLM/RAG work and chose Atlas-only chat.
+The three `next-grounded-chat` board examples remain for later; no native card was
+built. Task039 takes priority. Do not restart local-model/card work unprompted.

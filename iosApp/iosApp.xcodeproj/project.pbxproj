@@ -12,18 +12,39 @@
         B20000000000000000000006 = {isa = PBXContainerItemProxy; containerPortal = A1000000000000000000000E; proxyType = 1; remoteGlobalIDString = A1000000000000000000000A; remoteInfo = iosApp; };
         B20000000000000000000007 = {isa = PBXTargetDependency; target = A1000000000000000000000A; targetProxy = B20000000000000000000006; };
         B20000000000000000000008 = {isa = PBXNativeTarget; buildConfigurationList = B2000000000000000000000B; buildPhases = (B20000000000000000000004, B20000000000000000000005); buildRules = (); dependencies = (B20000000000000000000007); name = BarkLogUITests; productName = BarkLogUITests; productReference = B20000000000000000000003; productType = "com.apple.product-type.bundle.ui-testing"; };
-        B20000000000000000000009 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 15.0; PRODUCT_BUNDLE_IDENTIFIER = com.dracoarts.barklog.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = iosApp; }; name = Debug; };
-        B2000000000000000000000A = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 15.0; PRODUCT_BUNDLE_IDENTIFIER = com.dracoarts.barklog.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = iosApp; }; name = Release; };
+        B20000000000000000000009 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 16.6; PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.bark.log.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = iosApp; }; name = Debug; };
+        B2000000000000000000000A = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 16.6; PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.bark.log.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = iosApp; }; name = Release; };
         B2000000000000000000000B = {isa = XCConfigurationList; buildConfigurations = (B20000000000000000000009, B2000000000000000000000A); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
 
 
 /* Begin PBXBuildFile section */
+        C47000000000000000000003 = {isa = PBXBuildFile; fileRef = C47000000000000000000004; };
+        C46000000000000000000001 = {isa = PBXBuildFile; fileRef = C46000000000000000000002; };
+        C46000000000000000000003 = {isa = PBXBuildFile; productRef = C46000000000000000000004; };
+        C36000000000000000000001 = {isa = PBXBuildFile; fileRef = C36000000000000000000002; };
+        C36000000000000000000003 = {isa = PBXBuildFile; fileRef = C36000000000000000000004; };
+        C36000000000000000000005 = {isa = PBXBuildFile; productRef = C36000000000000000000006; };
+        C36000000000000000000007 = {isa = PBXBuildFile; productRef = C36000000000000000000008; };
+        C36000000000000000000009 = {isa = PBXBuildFile; productRef = C3600000000000000000000A; };
+        C34000000000000000000003 = {isa = PBXBuildFile; fileRef = C34000000000000000000004; };
+        C34000000000000000000001 = {isa = PBXBuildFile; fileRef = C34000000000000000000002; };
+        C32000000000000000000001 = {isa = PBXBuildFile; fileRef = C32000000000000000000002; };
+        C32000000000000000000003 = {isa = PBXBuildFile; fileRef = C32000000000000000000004; };
+        C32000000000000000000005 = {isa = PBXBuildFile; productRef = C32000000000000000000006; };
         A10000000000000000000001 /* DracoArtsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000003 /* DracoArtsApp.swift */; };
         A10000000000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000004 /* ContentView.swift */; };
         A10000000000000000000025 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000026 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+        C47000000000000000000004 = {isa = PBXFileReference; lastKnownFileType = file; path = barklog_care_notebook.riv; sourceTree = "<group>"; };
+        C46000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarkPurchases.swift; sourceTree = "<group>"; };
+        C36000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarkFirebaseAuth.swift; sourceTree = "<group>"; };
+        C36000000000000000000004 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+        C34000000000000000000004 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarkVideoQA.swift; sourceTree = "<group>"; };
+        C34000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarkVideoEngine.swift; sourceTree = "<group>"; };
+        C32000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarkMascot.swift; sourceTree = "<group>"; };
+        C32000000000000000000004 = {isa = PBXFileReference; lastKnownFileType = file; path = barklog_spaniel.riv; sourceTree = "<group>"; };
         A10000000000000000000003 /* DracoArtsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DracoArtsApp.swift; sourceTree = "<group>"; };
         A10000000000000000000004 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
         A10000000000000000000005 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -32,7 +53,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-        A10000000000000000000006 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        A10000000000000000000006 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (C46000000000000000000003, C36000000000000000000005, C36000000000000000000007, C36000000000000000000009, C32000000000000000000005); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -43,7 +64,7 @@
         };
         A10000000000000000000008 /* iosApp */ = {
             isa = PBXGroup;
-            children = (A10000000000000000000003 /* DracoArtsApp.swift */, A10000000000000000000004 /* ContentView.swift */, A10000000000000000000026 /* Assets.xcassets */, A10000000000000000000028 /* Info.plist */);
+            children = (C46000000000000000000002, C36000000000000000000002, C36000000000000000000004, C34000000000000000000004, C34000000000000000000002, C32000000000000000000002, C32000000000000000000004, C47000000000000000000004, A10000000000000000000003 /* DracoArtsApp.swift */, A10000000000000000000004 /* ContentView.swift */, A10000000000000000000026 /* Assets.xcassets */, A10000000000000000000028 /* Info.plist */);
             path = iosApp;
             sourceTree = "<group>";
         };
@@ -63,7 +84,7 @@
             buildRules = ();
             dependencies = ();
             name = iosApp;
-            packageProductDependencies = ();
+            packageProductDependencies = (C46000000000000000000004, C36000000000000000000006, C36000000000000000000008, C3600000000000000000000A, C32000000000000000000006);
             productName = iosApp;
             productReference = A10000000000000000000005 /* iosApp.app */;
             productType = "com.apple.product-type.application";
@@ -84,7 +105,7 @@
             hasScannedForEncodings = 0;
             knownRegions = (en, Base,);
             mainGroup = A10000000000000000000007;
-            packageReferences = ();
+            packageReferences = (C46000000000000000000005, C3600000000000000000000B, C3600000000000000000000C, C32000000000000000000007);
             productRefGroup = A10000000000000000000009 /* Products */;
             projectDirPath = "";
             projectRoot = "";
@@ -96,7 +117,7 @@
         A10000000000000000000027 /* Resources */ = {
             isa = PBXResourcesBuildPhase;
             buildActionMask = 2147483647;
-            files = (A10000000000000000000025 /* Assets.xcassets in Resources */);
+            files = (C47000000000000000000003, C36000000000000000000003, C32000000000000000000003, A10000000000000000000025 /* Assets.xcassets in Resources */);
             runOnlyForDeploymentPostprocessing = 0;
         };
 /* End PBXResourcesBuildPhase section */
@@ -120,10 +141,24 @@
         A1000000000000000000000D /* Sources */ = {
             isa = PBXSourcesBuildPhase;
             buildActionMask = 2147483647;
-            files = (A10000000000000000000001 /* DracoArtsApp.swift in Sources */, A10000000000000000000002 /* ContentView.swift in Sources */);
+            files = (C46000000000000000000001, C36000000000000000000001, C34000000000000000000003, C34000000000000000000001, C32000000000000000000001, A10000000000000000000001 /* DracoArtsApp.swift in Sources */, A10000000000000000000002 /* ContentView.swift in Sources */);
             runOnlyForDeploymentPostprocessing = 0;
         };
 /* End PBXSourcesBuildPhase section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+        C46000000000000000000005 = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm"; requirement = {kind = exactVersion; version = 5.96.0; }; };
+        C3600000000000000000000B = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/firebase/firebase-ios-sdk"; requirement = {kind = exactVersion; version = 12.19.2; }; };
+        C3600000000000000000000C = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/google/GoogleSignIn-iOS"; requirement = {kind = exactVersion; version = 10.0.0; }; };
+        C32000000000000000000007 = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/rive-app/rive-ios"; requirement = {kind = exactVersion; version = 6.28.1; }; };
+/* End XCRemoteSwiftPackageReference section */
+/* Begin XCSwiftPackageProductDependency section */
+        C46000000000000000000004 = {isa = XCSwiftPackageProductDependency; package = C46000000000000000000005; productName = RevenueCat; };
+        C36000000000000000000006 = {isa = XCSwiftPackageProductDependency; package = C3600000000000000000000B; productName = FirebaseCore; };
+        C36000000000000000000008 = {isa = XCSwiftPackageProductDependency; package = C3600000000000000000000B; productName = FirebaseAuth; };
+        C3600000000000000000000A = {isa = XCSwiftPackageProductDependency; package = C3600000000000000000000C; productName = GoogleSignIn; };
+        C32000000000000000000006 = {isa = XCSwiftPackageProductDependency; package = C32000000000000000000007; productName = RiveRuntime; };
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCBuildConfiguration section */
         A10000000000000000000010 /* Debug */ = {
@@ -135,7 +170,7 @@
                 ENABLE_TESTABILITY = YES;
                 ENABLE_USER_SCRIPT_SANDBOXING = NO;
                 GCC_OPTIMIZATION_LEVEL = 0;
-                IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+                IPHONEOS_DEPLOYMENT_TARGET = 16.6;
                 SDKROOT = iphoneos;
                 SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
                 SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -149,7 +184,7 @@
                 CLANG_ENABLE_MODULES = YES;
                 DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
                 ENABLE_USER_SCRIPT_SANDBOXING = NO;
-                IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+                IPHONEOS_DEPLOYMENT_TARGET = 16.6;
                 SDKROOT = iphoneos;
                 SWIFT_OPTIMIZATION_LEVEL = "-O";
             };
@@ -160,9 +195,10 @@
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 CODE_SIGN_STYLE = Automatic;
+                CODE_SIGN_ENTITLEMENTS = iosApp/BarkLog.entitlements;
                 FRAMEWORK_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)");
                 GENERATE_INFOPLIST_FILE = YES;
-                INFOPLIST_FILE = iosApp/Info.plist;
+                INFOPLIST_FILE = iosApp/Info.plist; BARKLOG_REVENUECAT_PUBLIC_KEY = ""; BARKLOG_REVENUECAT_ENTITLEMENT_ID = ""; BARKLOG_REVENUECAT_OFFERING_ID = "";
                 INFOPLIST_KEY_CFBundleDisplayName = "BarkLog";
                 CURRENT_PROJECT_VERSION = 1;
                 MARKETING_VERSION = 1.0.0;
@@ -170,7 +206,7 @@
                 INFOPLIST_KEY_UILaunchScreen_Generation = YES;
                 LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
                 OTHER_LDFLAGS = ("$(inherited)", "-framework", Shared, "-ObjC", "-lsqlite3");
-                PRODUCT_BUNDLE_IDENTIFIER = com.dracoarts.barklog;
+                PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.bark.log;
                 PRODUCT_NAME = "$(TARGET_NAME)";
                 SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
                 SWIFT_EMIT_LOC_STRINGS = YES;
@@ -184,9 +220,10 @@
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 CODE_SIGN_STYLE = Automatic;
+                CODE_SIGN_ENTITLEMENTS = iosApp/BarkLog.entitlements;
                 FRAMEWORK_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)");
                 GENERATE_INFOPLIST_FILE = YES;
-                INFOPLIST_FILE = iosApp/Info.plist;
+                INFOPLIST_FILE = iosApp/Info.plist; BARKLOG_REVENUECAT_PUBLIC_KEY = ""; BARKLOG_REVENUECAT_ENTITLEMENT_ID = ""; BARKLOG_REVENUECAT_OFFERING_ID = "";
                 INFOPLIST_KEY_CFBundleDisplayName = "BarkLog";
                 CURRENT_PROJECT_VERSION = 1;
                 MARKETING_VERSION = 1.0.0;
@@ -194,7 +231,7 @@
                 INFOPLIST_KEY_UILaunchScreen_Generation = YES;
                 LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
                 OTHER_LDFLAGS = ("$(inherited)", "-framework", Shared, "-ObjC", "-lsqlite3");
-                PRODUCT_BUNDLE_IDENTIFIER = com.dracoarts.barklog;
+                PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.bark.log;
                 PRODUCT_NAME = "$(TARGET_NAME)";
                 SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
                 SWIFT_EMIT_LOC_STRINGS = YES;

@@ -1,0 +1,11 @@
+{
+  "sameMascotPixels": true,
+  "intervalSeconds": 0.7,
+  "roi": [
+    700,
+    670,
+    1090,
+    1100
+  ],
+  "brownPixels": 45106
+}

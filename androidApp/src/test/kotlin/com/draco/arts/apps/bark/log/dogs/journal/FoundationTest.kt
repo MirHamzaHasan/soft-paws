@@ -15,6 +15,7 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import java.util.UUID
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.runBlocking
+import kotlin.test.assertFalse
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -39,10 +40,22 @@ class FoundationTest {
             override fun keys() = data.keys.toSet()
             override fun clear() { data.clear() }
         })
+        override val localAi: com.dracoarts.shared.services.ai.LocalAi get() = error("Paused local AI must not be constructed or read")
         var closed = false
         override fun newId() = UUID.randomUUID().toString()
         override fun nowMillis() = 100L
         override fun close() { closed = true }
+    }
+
+    @Test
+    fun realProviderIsUsedNormallyAndLiveReviewRequiresAnExplicitChoice() = runBlocking {
+        for ((review, live, expectedDemo) in listOf(Triple(false,false,false),Triple(true,false,true),Triple(true,true,false))) {
+            val app = AppContainer(Platform(), reviewFaults = if (review) com.dracoarts.shared.presentation.review.BoardReviewFaults("next-chat") else null, liveAiReview = live)
+            app.startup.initialize()
+            assertEquals(expectedDemo,app.companion.demoResponses)
+            assertEquals(!expectedDemo,app.companion.atlasOnly)
+            app.close()
+        }
     }
 
     @Test
@@ -51,9 +64,11 @@ class FoundationTest {
         val app = AppContainer(platform)
         app.startup.initialize()
         assertEquals(StartupState.Ready, app.startup.state.value)
-        assertEquals(setOf("local-data"), app.registry.activeIds.value)
+        assertEquals(setOf("local-data", "local-video", "auth", "purchases", "atlas-text"), app.registry.activeIds.value)
+        assertFalse(app.purchases.state.value.configured)
+        assertFalse(app.purchases.hasAccess)
         assertTrue(platform.storage.getAllKeys().isEmpty())
-        assertEquals(setOf("haptics", "notifications"), TemplatePlugins.enabled)
+        assertEquals(setOf("auth", "purchases", "haptics", "notifications"), TemplatePlugins.enabled)
         app.close()
         assertTrue(platform.closed)
     }

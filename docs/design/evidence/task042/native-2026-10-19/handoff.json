@@ -1,0 +1,10 @@
+{
+  "android": "emulator-5560 / BarkLogExactBoardQA_20261016",
+  "ios": "02668D64-55D6-4702-A689-712B6EC72E62",
+  "screen": "Interaction sounds",
+  "launch": "Debug screen shortcut without a fixture; existing normal journals",
+  "normalSoundDefaults": "off, Soft wood, 35%",
+  "otherAppEmulatorUntouched": true,
+  "normalCareAndProfilesPreserved": true,
+  "automationStoppedForHandoff": true
+}

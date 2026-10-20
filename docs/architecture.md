@@ -1,5 +1,13 @@
 # BarkLog KMP architecture
 
+**Current AI route — task039:** AppContainer selects AtlasResponseProvider. The
+local runtime module is absent from active startup/cleanup and no local AI getter
+is read. The owner paused local models/RAG and the approved new care card before
+native UI. Explicit cloud consent/profile/record selection and Firebase/policy
+receipts remain required; Release stays gated. Earlier task037 sections describe
+the retained paused implementation. See product/local-ai-and-atlas.md.
+
+
 Source lineage: Draco KMP base de1b575911bc514fde95ffba74aca33b0beea0f2.
 One shared Compose UI is hosted by Android ComponentActivity and iOS SwiftUI.
 The shared namespace stays com.dracoarts.shared, as the base's setup tool intends.
@@ -103,8 +111,116 @@ without source claims. Switching dogs cancels and joins the previous writer befo
 loading that dog's workspace. Sign-out preserves conversations; confirmed demo
 account deletion removes them while retaining all care records.
 
+Task033 adds transient `PremiumFeature` context to the existing Premium route.
+`PremiumExportAccess` checks report/Memory Book PDF destinations before file
+preparation; raw CSV and mobile previews remain free. Existing-dog legacy review
+also loads the companion so its actions work. The local demo flag is not a store
+entitlement; real billing/Atlas are still absent. A future photo-highlight renderer
+must be wired behind AppContainer; the current editor is a board proposal only.
+
 Native camera and notification authorization live behind DeviceServices. Android
 uses the system camera through a scoped FileProvider URI; iOS asks for camera
 access in context. Selected photos become bounded private copies. Setup-owned
 check-in tasks reconcile only their stable IDs and never rewrite independent
 task or medication opt-ins. No simulator/device run was requested for this port.
+
+
+## Native Rive mascot (task032)
+
+The approved original spaniel is a bundled .riv, with a shared neutral PNG for
+loading, reduced motion, failure and navigation snapshots. Shared AnimatedDog
+owns greeting/save timing, shuffled quiet idles and viewport/foreground policy.
+Its platform renderer boundary does not read or mutate journal data. Android uses
+the official Compose runtime with owned worker/file/controller resources; iOS
+injects the official Swift Rive renderer factory from the host and lazily caches
+one file/worker, with independent per-view controllers and explicit disposal.
+Compose 1.10.3 supplies the transparent UIKit overlay API needed on iOS. Live native
+surfaces draw directly; a same-art still is recorded during shared-element/page
+transitions to avoid recording a native Texture/Metal surface into a Compose layer.
+The exported art and native rest image remain transparent. Runtime assets are
+local, independent of the Rive editor/workspace subscription and app services.
+
+
+Task034: `HighlightDraft` is a platform-free ordered edit model; SQLite
+`care_drafts` stores JSON and explicit photo references atomically. This preserves
+existing attachment reference counting/cleanup and dog deletion. AppContainer
+owns `HighlightController` and platform `HighlightRenderer`; ModuleRegistry closes
+its coroutine scope before local-data. Shared Compose owns preview/edit/progress;
+Android Media3 and the injected Swift `IosVideoEngine` own native codecs/files.
+
+
+### Chat care tools · task035 (2026-10-17)
+
+The approved compact chat now includes up to three local photo attachments per message, saved vet/emergency call actions and a vet-report mobile preview. SQLite transfers composer attachment ownership atomically into each saved conversation. Report PDF uses the existing Premium gate; mobile preview and care logging remain free. Caregiver messages/selected dog-scoped records are factual inputs; demo AI replies and photos are separate opt-ins. General medication education never selects drugs/doses or treatment. Images are not analyzed or uploaded. Native verification is tracked in task035; real AI, billing and clinical review remain deferred.
+
+
+## task036 Firebase Authentication · 18 October
+
+Owner-selected Android/iOS application ID is now `com.draco.apps.bark.log`.
+`domain/repository/Authentication.kt` defines the token-free identity boundary.
+`services/NativeAuthentication.kt` adapts native callbacks to StateFlow/suspending
+operations and owns listener lifecycle via ModuleRegistry. AppContainer injects
+this service into CompanionController. Native adapters are `AndroidFirebaseAuth`
+and injected Swift `BarkFirebaseAuth`; official SDK secure persistence restores
+identity. Saved historical demo identity is ignored; only demo Premium remains in
+the legacy local session document. Existing local care/conversations stay on the
+phone and are not synchronized. Provider setup and live/device proof remain
+pending; [task036 setup](product/firebase-authentication.md) is authoritative over
+the historical demo-only descriptions above.
+
+## task037 · local AI and Atlas
+
+AppContainer now wires RealResponseProvider in the normal app; demo replies remain
+only in explicit review/test hosts. LocalAi owns optional GGUF models through
+ModelStore and Llamatik native bridges. AtlasClient uses native Firebase tokens,
+a separate bounded HTTP transport and mandatory context receipts. ModuleRegistry
+owns shutdown; weights never load on Home. SQLite preserves response sources and
+cloud choice. See [the data/runtime contract](product/local-ai-and-atlas.md).
+
+Task037 refinement, 18 October: the owner requested automatic local dog context.
+After AI opt-in, each local question receives the current dog's profile and up to
+12 recent/relevant observations from a bounded query of the latest 60 timeline
+records, including structured care details. General non-clinical dog-care
+education does not require logs. Local request context is separate from the
+explicitly allowed Atlas profile/record fields; history filtering prevents
+unshared local-source answers from becoming cloud context. Clinical assessment,
+diagnosis, prescribing and automatic photo/cloud upload remain excluded.
+
+Task039 supersedes local inference in the active app: normal chat is authenticated
+Atlas-only; installed models and legacy source labels remain preserved. Task041
+adds `JournalRepository.readCareWeek`, implemented as a SQLDelight read transaction
+with a fresh dog, seven local-day counts and bounded relevant/latest observations.
+`prepareWeeklyContext` enforces the cloud byte budget, honest total/shared counts
+and source snapshots. Versioned affirmative scope is required before those reads
+and requests; earlier consent cannot expand silently. Native cards render database
+facts independently of model prose. Server feature IDs/receipt checks remain intact.
+
+Task042 adds `InteractionSounds` to AppManagers, with native SoundPool/AVAudioPlayer
+adapters and bundled original PCM resources. Compose control helpers invoke semantic
+cues; committed-write callbacks supply the saved cue. Settings persist only UI
+preferences. No playback failure propagates into a journal write. Lifecycle cleanup,
+foreground/mute checks and one-voice/repeat guards stay in the sound boundary.
+
+Task043 adds the additional-dog mode to the existing CompanionController/Compose
+onboarding. `companion-add-dog` is an independent SQLite document; first-run and
+profile edits retain `companion-setup`. Stable request IDs keep final dog creation
+idempotent. One coordinated navigation action crosses between the companion
+setup and AppState's journal/switcher routes. No schema, app identity or cloud
+persistence changes are required. Native UI QA uses the isolated AddDog review
+data set through the real repositories.
+Journal selection validates against a fresh repository snapshot because the
+screen observer can lag a committed profile. It returns recoverable missing/read
+errors, clears the previous dog's care state on a switch, and opens Home after
+the selected dog's summary is ready.
+
+Task044 routes journal tabs and the companion account menu through
+`CompanionController.navigateTab`. The selected AppState route and menu change
+inside one Tab callback. Separate `show`/`go` requests can cancel the earlier
+deferred transition and leave the selected tab behind the displayed screen.
+
+Task045 keeps AccountSettings inside that journal shell's existing BoardScene.
+The same bottom dock and pill Animatable survive Profile entry/exit, outside the
+page transition. CompanionHostContent reuses the account content with its parent
+handling safe areas and measured dock space. Full-screen companion routes still
+use CompanionHost. Both controllers receive the active scene handler so nested
+account actions retain the existing navigation behavior.

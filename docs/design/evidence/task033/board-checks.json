@@ -1,0 +1,340 @@
+{
+  "ids": [
+    "next-paywall",
+    "next-home",
+    "next-premium-library",
+    "next-report-preview",
+    "next-report-export",
+    "next-memory-export",
+    "next-highlight-editor",
+    "next-highlight-gate",
+    "next-highlight-empty"
+  ],
+  "results": [
+    {
+      "id": "next-paywall",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-premium-library",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-report-preview",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-memory-export",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-report-export",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-highlight-editor",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-highlight-empty",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-highlight-gate",
+      "variant": "light",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-paywall",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-premium-library",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-report-preview",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-memory-export",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-report-export",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-highlight-empty",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-highlight-gate",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-highlight-editor",
+      "variant": "dark",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-premium-library",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-paywall",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-report-export",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-memory-export",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-report-preview",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-highlight-empty",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-highlight-gate",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-highlight-editor",
+      "variant": "large-compact",
+      "reduced": false,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-home",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-premium-library",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-paywall",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-report-preview",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-report-export",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-memory-export",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-highlight-gate",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-highlight-editor",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    },
+    {
+      "id": "next-highlight-empty",
+      "variant": "reduced",
+      "reduced": true,
+      "errors": [],
+      "overflow": false,
+      "badTargets": [],
+      "emptyIcons": []
+    }
+  ],
+  "errors": []
+}

@@ -16,14 +16,14 @@ import com.dracoarts.shared.services.*
 import kotlinx.coroutines.launch
 import kotlin.math.round
 
-@Composable internal fun ColumnScope.CompanionOnboarding(screen: CompanionScreen, controller: CompanionController, platform: AppPlatform) {
+@Composable internal fun ColumnScope.CompanionOnboarding(screen: CompanionScreen, controller: CompanionController, platform: AppPlatform, onDogAdded: suspend (String) -> Unit) {
     val state by controller.state.collectAsState(); val draft = state.draft; val context = draft.context; val scope = rememberCoroutineScope(); val name = draft.name.ifBlank { "your dog" }
     var error by remember(screen) { mutableStateOf<String?>(null) }
     var practice by rememberSaveable(screen) { mutableStateOf(false) }
-    var searched by rememberSaveable { mutableStateOf("") }
-    var ageMode by rememberSaveable { mutableStateOf("Age estimate") }
+    var searched by rememberSaveable(draft.requestId) { mutableStateOf("") }
+    var ageMode by rememberSaveable(draft.requestId) { mutableStateOf(if (context.birthday.isNotBlank()) "Birthday" else "Age estimate") }
     fun edit(change: (DogContext) -> DogContext) = controller.editDraft { it.copy(context = change(it.context)) }
-    fun next(target: CompanionScreen? = null) { scope.launch { try { controller.state.value.draft.context.validate(); val value = target ?: CompanionScreen.fromBoard(CompanionController.onboardingIds.getOrNull(CompanionController.onboardingIds.indexOf(screen.boardId) + 1)) ?: CompanionScreen.Login; controller.continueTo(if (draft.editingDogId != null && screen != CompanionScreen.ContextReview) CompanionScreen.ContextReview else value) } catch (cause: IllegalArgumentException) { error = cause.message } } }
+    fun next(target: CompanionScreen? = null) { scope.launch { try { controller.state.value.draft.context.validate(); val value = target ?: CompanionScreen.fromBoard(CompanionController.onboardingIds.getOrNull(CompanionController.onboardingIds.indexOf(screen.boardId) + 1)) ?: CompanionScreen.Login; controller.continueTo(if ((draft.editingDogId != null || state.reviewingDraft) && screen != CompanionScreen.ContextReview) CompanionScreen.ContextReview else value) } catch (cause: IllegalArgumentException) { error = cause.message } } }
     fun photo(camera: Boolean = false) { scope.launch { when (val result = if (camera) platform.device.takePhoto() else platform.device.pickPhoto()) { is DeviceResult.Success -> controller.editDraft { it.copy(photoId = result.value) }; DeviceResult.Cancelled -> Unit; DeviceResult.Denied -> controller.setError("Photo access was denied. You can choose a photo later."); is DeviceResult.Failed -> controller.setError(result.message) } } }
     when (screen) {
         CompanionScreen.Opening -> {
@@ -102,9 +102,22 @@ import kotlin.math.round
             JournalCard { Text("Their photo, your choice"); draft.photoId?.let { LocalPhoto(it, "$name’s photo", platform.device) }; BarkButton("Choose photo", { photo() },secondary = true); BarkButton("Take photo", { photo(true) },secondary = true); CaptionText(if (draft.photoId == null) "No photo selected" else "Photo selected") }
             CFoot("Review dog details") { next() }
         }
-        CompanionScreen.ContextReview -> { CHeading("Does this sound like $name?", "Your details, ready to use. Edit anything here."); CDog(name); CProfile(ProfileSnapshot(name,draft.sex,context)) { controller.go(it) }; BarkTextAction("Edit name",{controller.go(CompanionScreen.Dog)},icon = "pencil"); CaptionText("These details stay in the profile. AI context is a separate choice."); CFoot(if (draft.editingDogId != null) "Save profile details" else "Use these details") { if (draft.editingDogId != null) scope.launch { if (controller.commitDog() != null) controller.go(CompanionScreen.DogProfile) } else next(CompanionScreen.Practice) } }
+        CompanionScreen.ContextReview -> {
+            CHeading("Does this sound like $name?", "Your details, ready to use. Edit anything here.")
+            CDog(name)
+            CProfile(ProfileSnapshot(name,draft.sex,context), onEdit = controller::reviewDraftAt)
+            BarkTextAction("Edit name", { controller.reviewDraftAt(CompanionScreen.Dog) }, enabled = !state.profileSaving, icon = "pencil")
+            CaptionText("These details stay in the profile. AI context is a separate choice.")
+            CFoot(if (state.profileSaving) "Saving…" else if (draft.editingDogId != null) "Save profile details" else if (draft.addingDog) "Add $name" else "Use these details", enabled = !state.profileSaving) {
+                if (draft.editingDogId != null || draft.addingDog) scope.launch {
+                    controller.commitDog()?.let { dog ->
+                        if (draft.addingDog) onDogAdded(dog.id) else controller.go(CompanionScreen.DogProfile)
+                    }
+                } else next(CompanionScreen.Practice)
+            }
+        }
         CompanionScreen.Practice -> { CHeading("One tap. A little less to remember.", "Time and type now. A note whenever you need one."); CDog(name,reaction = if (practice) "practice" else null); if (practice) JournalCard { Text("Walk · just now"); CaptionText("Practice only · not saved to your journal") }; BarkButton("Log a walk",{practice = true},enabled = !practice,icon = "plus"); CaptionText("Try it once. This won’t become a saved record."); CFoot("See AI in action") { next() } }
-        CompanionScreen.AiDemo -> { CaptionText("Premium · example conversation"); CHeading("Your records, in plain words.", "Ask a question. See the moments behind it."); JournalCard { Text("What did today look like?"); SupportingText("An AI reply can organize only the records you choose. It describes your records, not your dog’s health.") }; CaptionText("Demo mode · sign-in and AI replies are simulated. No data is sent."); CFoot("Make it ours") { next(CompanionScreen.Login) } }
+        CompanionScreen.AiDemo -> { CaptionText("Premium · example conversation"); CHeading("Your records, in plain words.", "Ask a question. See the moments behind it."); JournalCard { Text("What did today look like?"); SupportingText("An AI reply can organize only the records you choose. It describes your records, not your dog’s health.") }; CaptionText("Example AI reply · no model is connected. Sign-in uses Firebase; your journal stays on this device."); CFoot("Make it ours") { next(CompanionScreen.Login) } }
         else -> Unit
     }
     error?.let { ErrorCard(it) }

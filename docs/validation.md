@@ -1,5 +1,14 @@
 # BarkLog validation
 
+## task046 update · 20 October 2026
+
+RevenueCat is now an authorized optional billing dependency, inactive until the
+owner supplies configuration. Android coarse/iOS When In Use location is requested
+only by an explicit Safety area action; there is no startup or background request.
+The older no-billing-dependency statement below is superseded for this slice.
+Use the task046 matrix and [current contract](product/premium-revenuecat-and-safety.md)
+for prices, entitlements, emergency calls and deferred store/device verification.
+
 ## Automated
 
 ```sh
@@ -114,7 +123,7 @@ a journal intended for test records; they create records.
 xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug \
   -destination 'platform=iOS Simulator,id=<owned-device-uuid>,arch=arm64' \
   -derivedDataPath .verify-build/xcode -resultBundlePath .verify-build/journeys.xcresult \
-  ARCHS=arm64 CODE_SIGNING_ALLOWED=NO test
+  ARCHS=arm64 CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- test
 ```
 
 See [native board port](native-board-port.md) and task021 for the delivered scope,
@@ -144,3 +153,159 @@ actual chosen photo/camera cancellation/denial; notification Settings recovery;
 and dog-scoped chat consent/snapshots/stop/regenerate/history. Use an owned QA
 journal and preserve installed data. Real credentials, billing and model
 inference remain explicitly unimplemented.
+
+## task039 Atlas-only acceptance
+
+Normal AppContainer routing is Atlas-only. Startup/cleanup tests use a platform
+that fails on any local-runtime property read. Provider/controller tests check
+explicit cloud consent, selected-source isolation, old local/demo history exclusion,
+photo rejection, source persistence and no automatic journal query. Default design
+fixtures remain deterministic demos. Live Firebase/Atlas receipts on signed native
+clients are still required before the Release gate can be enabled; health 200 is
+not generation proof. Local model/RAG acceptance is paused at the owner's request.
+
+## task037 native model acceptance — retained, paused
+
+`LocalAiNativeTest` runs the production GGUF adapter with pinned catalog files and
+synthetic text/image inputs. It never opens the care database. Stage the three
+files via `adb shell -T` and `run-as` into the owned QA app's private
+`no_backup/ai-native-qa-staged/` folder, build/install
+both Debug APKs in place, and run only this class with `-e localAiModels true`.
+The test verifies chosen-note text, an actual local scene caption and model removal
+preserving unrelated files. It skips without the explicit argument. Native model
+files live in a generated test-only no-backup folder and are removed afterwards.
+
+This is simulator/emulator acceptance, not physical memory, battery, quality or
+clinical sign-off. Atlas still needs live authenticated receipt evidence on both
+platforms before Release can be enabled. See [task037](../tasks/task037-local-ai-and-atlas-fallback.md).
+
+Explicit iOS native inference acceptance (outside the normal test source set):
+
+```sh
+python3 tools/native-ai-qa/prepare_scene.py /tmp/barklog-native-ai-qa-20261018
+# Stage the three exact ModelCatalog GGUF files in that same test-only directory.
+./gradlew :shared:linkDebugTestIosSimulatorArm64 --init-script tools/native-ai-qa.init.gradle
+SIMCTL_CHILD_BARKLOG_LOCAL_AI_QA_DIRECTORY=/tmp/barklog-native-ai-qa-20261018 \
+  xcrun simctl spawn 02668D64-55D6-4702-A689-712B6EC72E62 \
+  "$PWD/shared/build/bin/iosSimulatorArm64/debugTest/test.kexe" \
+  '--ktest_filter=com.dracoarts.shared.services.ai.LocalAiIosNativeTest.*' --ktest_logger=SIMPLE
+```
+
+Use the owned BarkLog simulator only. The explicit init script adds the acceptance
+source; standard builds do not require staged weights. Host Documents access was
+denied to the spawned process, so use a dedicated `/tmp` QA directory; never
+change OS privacy/security settings. The test exercises the production response
+provider with automatic local facts and general care without logs, plus actual
+local scene inference. It makes no network call and never opens a journal.
+
+### Atlas-only UI with an existing review journal
+
+Default design fixtures retain deterministic demo responses. The Debug-only
+`-LiveAIReview` option now selects **AtlasResponseProvider**, not a downloaded local
+model. Use it with `-DesignReview`, `-DesignReviewFixture park-empty-v1` and
+`-DesignReviewScreen next-ai-privacy` to inspect current consent copy while preserving
+the separate fixture journal. Android uses `--ez liveAiReview true` with the existing
+review extras on a fresh Activity launch. Both hosts ignore this option in Release.
+Fixture Firebase/Atlas access remains disabled, so this is UI/provider-selection
+proof only, never a live cloud reply. No fixture records are copied into the normal
+journal. Verify actual Firebase/Atlas traffic in normal Debug mode with an explicitly
+signed-in account and saved cloud/context permission. Premium remains a local demo
+gate, not a purchase entitlement. Do not resume local model/RAG testing unprompted.
+
+## task040 email/password authentication
+
+Default Email uses native Firebase password sign-in, explicit Create account and
+Forgot password. Keep legacy incoming email-link completion. Test wrong/empty
+credentials, provider disabled, weak password, duplicate taps/cancellation,
+network failure and recovery. Login failure must not create an account. Passwords
+must be masked and absent from AX stateDescription, saved state, SQLite documents,
+preferences and logs. Preserve exact password whitespace; clear form secrets on
+route change/background/success. Verify real sign-in before claiming a live Atlas
+reply. See docs/design/evidence/task040/README.md for current evidence.
+
+Task040 runtime correction: use standard simulator code signing (CODE_SIGNING_ALLOWED=YES,
+CODE_SIGN_IDENTITY=-) for Firebase tests. Unsigned compilation passed but session
+persistence failed with Auth Keychain error 17995. Ad-hoc simulator signing fixes
+that; it is not physical/store signing. Live iOS password login passes, while a
+message-only Atlas app request returns 403. Do not bypass the admission gate.
+
+### 19 October live Atlas mobile acceptance
+
+The earlier 403 is historical. Web generation now returns 200 with matching
+required receipts; normal native iOS/Android Debug apps also display and save
+real Atlas replies. See [current native evidence](design/evidence/task040/native-2026-10-19/README.md).
+Physical/store signing and broader policy/release acceptance remain separate.
+
+`LiveAtlasJourneys.testQuestionGetsRealReplyAndSurvivesRelaunch` is an explicit
+live-network XCTest. Build the signed Debug UI-test host normally with
+`build-for-testing`; set `EnvironmentVariables.BARKLOG_LIVE_ATLAS_QA=1` in a copy
+of the generated `.xctestrun` beside its existing products, then run only
+`BarkLogUITests/LiveAtlasJourneys` with `test-without-building`. It skips without
+the marker. Use the owned synthetic journal, existing native Firebase identity,
+local demo Premium and the current explicit profile/seven-day consent; no credential belongs in test
+source or the runner file. The test uses no fixture/DesignReview flags. It sends
+one general question, observes the accepted answer and verifies reply/SDK identity
+restoration after terminating and relaunching. Preserve all existing care data.
+
+
+### 19 October · weekly cards and optional sounds
+
+`SoundAndWeeklyReviewJourneys` (iOS) and `SoundAndWeeklyJourneyTest` (Android)
+exercise the named `park-ai-cards-v1` separate review database: original PCM
+readiness/samples, persisted sound preferences, the weekly walk card, dated source
+sheet and automatic-context review. Replies are labelled demos; fixture Firebase
+and online AI stay disabled. iOS also checks the normal Profile entry. Android's
+volume check uses the real accessibility progress action. Preserve normal care,
+installed models and every other review database.
+
+Save all test edits before `build-for-testing`. Xcode can cache/compile the test
+target while the host Kotlin phase is still running; an edit during that phase
+needs a subsequent build before `test-without-building`. Use the current generated
+runner, the owned simulator ID and a fresh result bundle. Compose Android labels
+can be child nodes; resolve their actionable ancestor for enabled/checked state.
+Scroll inside the chat body above its fixed composer and above the review toolbar.
+
+`AtlasWeeklyDiagnosticTest` requires explicit `liveAtlas=1`. It checks the owned
+synthetic normal profile/consent, uses the existing Firebase SDK identity and
+writes only sanitized status/metadata/errors. Add `messagesOnly=1` for the minimal
+comparison. No credentials are supplied in test source or extracted to the host.
+The current weekly and minimal requests both return 422 `CONTEXT_FEATURE_UNKNOWN`;
+see task041 native evidence and its backend report. Never bypass the checks or
+claim accepted generation from these diagnostics.
+
+Real phone audio/silent mode, headphones/interruption behavior, assistive review,
+native dark/large-text review and task022 individual owner approval remain gates.
+
+### 19 October · adding another dog
+
+`task043` reuses the approved onboarding questions for a new independent dog.
+Use `AddDogJourneyTest` on Android and `AddDogReviewJourneys` on iOS, with the
+explicit `park-add-dog-v1` fixture. The fixture has its own database/preferences
+and uses the real repositories; preserve every normal and other review journal.
+
+Exercise every dog-information screen, enter distinct details, Finish later at
+care notes, relaunch and resume, leave notifications off, review/edit the name,
+then confirm and check both dogs in the switcher. Verify the new dog's saved
+profile and Home selection. No account, entitlement, credential or online reply
+is needed. `CompanionTest` additionally checks all stored fields, original
+profile/record preservation, new-dog AI consent/context separation and real SQLite
+write/cleanup failures with duplicate-safe retry. Check hashes/counts of normal
+journals before and after runtime QA. Native visual/physical acceptance remains
+separate; see [task043](../tasks/task043-additional-dog-onboarding.md).
+
+The save-to-Home regression holds the journal observer behind a real SQLite
+profile commit, then selects that new dog before the screen list refreshes.
+Selection must succeed without inheriting care. Missing profiles/read errors
+must stay recoverable; cancellation must propagate.
+
+
+## task047 plan/Rive review
+
+`PremiumPlanJourneyTest` on Android and the iOS `PremiumSafetyJourneys` methods
+`testNewNotebookPlansAndFreeExit` and `testNewPlanMotionAndReducedMotionFrames`
+cover the approved three-screen slice in the separate Premium/Safety fixture.
+The Android helper targets the actual scrollable viewport; the iOS helper starts
+above the pinned free footer. Restore/purchases remain disabled without setup.
+Large-text and reduced-motion settings are restored after capture. See
+[actual evidence](design/evidence/task047/native/README.md). Both normal journals
+were checked with before/after row hashes; no uninstall or data clear was used.

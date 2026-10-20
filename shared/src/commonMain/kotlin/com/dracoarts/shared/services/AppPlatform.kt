@@ -9,7 +9,15 @@ interface AppPlatform {
     val journalDriverFactory: JournalDriverFactory
     val storage: StorageManager
     val haptics: HapticManager
+    val soundPlayer: InteractionSoundPlayer get() = SilentInteractionSoundPlayer
     val device: DeviceServices get() = error("Native device services are not installed in this host.")
+    val highlights: HighlightRenderer get() = UnavailableHighlightRenderer
+    val authEngine: NativeAuthEngine get() = UnavailableAuthEngine
+    val purchasesEngine: NativePurchasesEngine get() = UnavailablePurchasesEngine
+    val premiumPreviewAllowed: Boolean get() = false
+    val atlasPlatform: String get() = "unsupported"
+    val atlasEnabled: Boolean get() = false
+    val localAi: com.dracoarts.shared.services.ai.LocalAi get() = com.dracoarts.shared.services.ai.UnavailableLocalAi
     fun newId(): String
     fun nowMillis(): Long
     fun monotonicMillis(): Long = nowMillis()

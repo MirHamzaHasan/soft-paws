@@ -1,0 +1,14 @@
+18 October 2026 · owned BarkLog iOS 18.5 simulator · real pinned GGUF models
+Production response provider; Atlas disabled; synthetic facts/image; no journal opened.
+Count regression: eight records, two Walk, wrong prior assistant count of three.
+General-care case has no profile/records and asks for one indoor game.
+
+BARKLOG_SYNTHETIC_TEXT: Milo's recorded walk was 17 minutes. (17.53823479166749 seconds)
+
+BARKLOG_COMPUTED_COUNTS: There are 2 Walk records in the supplied observations. (26.344819041667506 seconds)
+
+BARKLOG_GENERAL_CARE: Fetch (19.25442750000002 seconds)
+
+BARKLOG_SYNTHETIC_CAPTION:  A red square. (18.401938791666907 seconds)
+
+Passed: pinnedModelsAnswerSyntheticTextAndDescribeASyntheticScene (LocalAiIosNativeTest)

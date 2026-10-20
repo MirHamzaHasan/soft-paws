@@ -8,7 +8,9 @@
 5. Validate relevant JVM/domain/storage tests, Android builds/lint and iOS host.
 6. Record device evidence separately, update task and feature status honestly.
 
-All local features are free. No analytics event is delivered by default. Future
+Local care tools, mobile reports and raw CSV are free. The owner's task033
+direction makes report/Memory Book PDF, print and PDF sharing Premium; prices
+and real billing remain deferred. No analytics event is delivered by default. Future
 telemetry requires an owner request, minimal non-care properties, and a non-blocking
 adapter. Permission prompts are triggered by an explicit caregiving action.
 

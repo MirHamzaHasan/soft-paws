@@ -37,11 +37,11 @@ import com.dracoarts.shared.presentation.review.BoardReviewFaults
 import com.dracoarts.shared.presentation.review.boardReviewEntry
 
 @Composable
-fun App(platform: AppPlatform, state: AppState, modules: List<AppModule> = emptyList(), reviewEnabled: Boolean = false, reviewStart: String? = null, boardFixture: BoardReviewDataSet? = null) {
-    val initialScreen = if (reviewEnabled) { if (reviewStart?.startsWith("next-") == true) reviewStart else boardReviewEntry(reviewStart) } else null
+fun App(platform: AppPlatform, state: AppState, modules: List<AppModule> = emptyList(), reviewEnabled: Boolean = false, reviewStart: String? = null, boardFixture: BoardReviewDataSet? = null, liveAiReview: Boolean = false) {
+    val initialScreen = if (reviewEnabled) { if (reviewStart == "next-sounds") "Sounds" else if (reviewStart?.startsWith("next-") == true) reviewStart else boardReviewEntry(reviewStart) } else null
     val faults = remember(platform, reviewEnabled, boardFixture, initialScreen) { if (reviewEnabled && boardFixture != null) BoardReviewFaults(initialScreen) else null }
     val runtimePlatform = remember(platform, faults) { faults?.platform(platform) ?: platform }
-    val container = remember(runtimePlatform, modules) { AppContainer(runtimePlatform, modules, faults) }
+    val container = remember(runtimePlatform, modules, liveAiReview) { AppContainer(runtimePlatform, modules, faults, liveAiReview = reviewEnabled && boardFixture != null && liveAiReview) }
     val cleanupScope = remember(container) { CoroutineScope(SupervisorJob() + Dispatchers.Main) }
     DisposableEffect(container) {
         onDispose {
@@ -71,10 +71,13 @@ fun App(platform: AppPlatform, state: AppState, modules: List<AppModule> = empty
         }
     }
     val settings by container.settings.state.collectAsState()
+    val soundForeground by runtimePlatform.device.foreground.collectAsState()
+    androidx.compose.runtime.SideEffect { container.managers.sounds.configure(settings.sounds, settings.soundVolume, settings.soundTexture, soundForeground) }
     val dark = when (settings.theme) { "Dark" -> true; "Light" -> false; else -> isSystemInDarkTheme() }
 
+    androidx.compose.runtime.SideEffect { runtimePlatform.device.updateAppearance(dark, settings.theme == "System") }
     AppTheme(darkTheme = dark, contrast = settings.contrast) {
-    CompositionLocalProvider(com.dracoarts.shared.presentation.components.LocalMascotForeground provides runtimePlatform.device.foreground.collectAsState().value, LocalBarkMotion provides BarkMotion(reduced = rememberSystemReducedMotion() || settings.reduceMotion || (faults != null && initialScreen == "reduced-motion-state"))) {
+    CompositionLocalProvider(com.dracoarts.shared.presentation.components.LocalInteractionSounds provides container.managers.sounds, com.dracoarts.shared.presentation.components.LocalMascotForeground provides soundForeground, LocalBarkMotion provides BarkMotion(reduced = rememberSystemReducedMotion() || settings.reduceMotion || (faults != null && initialScreen == "reduced-motion-state"))) {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             when (val status = startup) {
                 StartupState.Loading -> StartupMessage("Opening BarkLog…")
@@ -84,11 +87,11 @@ fun App(platform: AppPlatform, state: AppState, modules: List<AppModule> = empty
                         StartupMessage(if (fixtureError) "Couldn't prepare the separate review journal." else "Preparing the separate review journal…", if (fixtureError) ({ retry++ }) else null)
                         return@Surface
                     }
-                    val journal = remember(container) { JournalController(container.journalAccess, container.managers.storage, container.managers.haptics, platform::nowMillis, platform::timeZone) }
+                    val journal = remember(container) { JournalController(container.journalAccess, container.managers.storage, container.managers.haptics, platform::nowMillis, platform::timeZone) { container.managers.sounds.play(com.dracoarts.shared.services.SoundCue.Saved) } }
                     val events = remember(container) { container.createEventController(journal::recordSaved) }
                     val timeline = remember(container) { container.createTimelineController() }
                     val care = remember(container) { container.createCareController() }
-                    BarkLogShell(state, journal, runtimePlatform, timeline, events, care, container.settings, container.journalAccess, container.companion, reviewEnabled, initialScreen, faults)
+                    BarkLogShell(state, journal, runtimePlatform, timeline, events, care, container.settings, container.journalAccess, container.companion, reviewEnabled, initialScreen, faults, container.highlights)
                 }
             }
         }

@@ -13,7 +13,7 @@ kotlin {
     androidLibrary {
         namespace = "com.dracoarts.shared"
         compileSdk = 36
-        minSdk = 24
+        minSdk = 26
 
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
@@ -35,6 +35,9 @@ kotlin {
     sourceSets {
         commonTest.dependencies { implementation(kotlin("test")) }
         commonMain.dependencies {
+            implementation(libs.llamatik)
+            implementation(libs.okio)
+            implementation(libs.ktor.client.core)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -45,8 +48,15 @@ kotlin {
             api(libs.sqldelight.runtime)
             implementation(libs.kotlinx.datetime)
         }
-        androidMain.dependencies { implementation(libs.sqldelight.android) }
-        iosMain.dependencies { implementation(libs.sqldelight.native) }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.android)
+            implementation(libs.sqldelight.android)
+            implementation(libs.rive.android)
+        }
+        iosMain.dependencies {
+            implementation(libs.sqldelight.native)
+            implementation(libs.ktor.client.darwin)
+        }
     }
 }
 

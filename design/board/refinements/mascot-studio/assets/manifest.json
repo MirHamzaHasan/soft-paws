@@ -1,0 +1,65 @@
+[
+  {
+    "action": "idle",
+    "frames": 360,
+    "bytes": 20515,
+    "editable": "idle.rawr",
+    "exported": "idle.lottie.json"
+  },
+  {
+    "action": "curious",
+    "frames": 126,
+    "bytes": 21306,
+    "editable": "curious.rawr",
+    "exported": "curious.lottie.json"
+  },
+  {
+    "action": "glance",
+    "frames": 138,
+    "bytes": 20888,
+    "editable": "glance.rawr",
+    "exported": "glance.lottie.json"
+  },
+  {
+    "action": "ears",
+    "frames": 114,
+    "bytes": 21158,
+    "editable": "ears.rawr",
+    "exported": "ears.lottie.json"
+  },
+  {
+    "action": "sniff",
+    "frames": 126,
+    "bytes": 20645,
+    "editable": "sniff.rawr",
+    "exported": "sniff.lottie.json"
+  },
+  {
+    "action": "hello",
+    "frames": 132,
+    "bytes": 22222,
+    "editable": "hello.rawr",
+    "exported": "hello.lottie.json"
+  },
+  {
+    "action": "stretch",
+    "frames": 150,
+    "bytes": 21755,
+    "editable": "stretch.rawr",
+    "exported": "stretch.lottie.json"
+  },
+  {
+    "action": "celebrate",
+    "frames": 108,
+    "bytes": 26100,
+    "editable": "celebrate.rawr",
+    "exported": "celebrate.lottie.json"
+  },
+  {
+    "action": "still",
+    "frames": 60,
+    "bytes": 19153,
+    "editable": "still.rawr",
+    "exported": "still.lottie.json"
+  }
+]

@@ -1,0 +1,116 @@
+{
+  "nativeRiveCapture": {
+    "file": "rive-neutral.png",
+    "width": 640,
+    "height": 640,
+    "opaqueBounds": [
+      146,
+      69,
+      520,
+      576
+    ],
+    "transparentEdges": true
+  },
+  "contrast": [
+    {
+      "theme": "light",
+      "foreground": "#17221b",
+      "background": "#f3f1e9",
+      "ratio": 14.5,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "#17221b",
+      "background": "#fffefa",
+      "ratio": 16.24,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "#55615a",
+      "background": "#f3f1e9",
+      "ratio": 5.72,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "#55615a",
+      "background": "#fffefa",
+      "ratio": 6.42,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "#758171",
+      "background": "#f3f1e9",
+      "ratio": 3.62,
+      "minimum": 3
+    },
+    {
+      "theme": "light",
+      "foreground": "#758171",
+      "background": "#fffefa",
+      "ratio": 4.05,
+      "minimum": 3
+    },
+    {
+      "theme": "dark",
+      "foreground": "#f4f3e9",
+      "background": "#16211c",
+      "ratio": 14.86,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "#f4f3e9",
+      "background": "#202d25",
+      "ratio": 12.88,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "#b9c4ba",
+      "background": "#16211c",
+      "ratio": 9.2,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "#b9c4ba",
+      "background": "#202d25",
+      "ratio": 7.97,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "#829386",
+      "background": "#16211c",
+      "ratio": 5.1,
+      "minimum": 3
+    },
+    {
+      "theme": "dark",
+      "foreground": "#829386",
+      "background": "#202d25",
+      "ratio": 4.42,
+      "minimum": 3
+    },
+    {
+      "theme": "accent",
+      "foreground": "#17221b",
+      "background": "#daf547",
+      "ratio": 13.37,
+      "minimum": 4.5
+    },
+    {
+      "theme": "accent",
+      "foreground": "#405026",
+      "background": "#daf547",
+      "ratio": 7.16,
+      "minimum": 4.5
+    }
+  ],
+  "runtimeBytes": 32036,
+  "editableBackup": "Rive refused .rev export for this workspace plan; not retried."
+}

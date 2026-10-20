@@ -48,6 +48,7 @@ fun ProfileHub(context: FeatureContext) {
         Triple(Feature.Training, "Training", "Short, kind practice sessions"),
         Triple(Feature.Photos, "Photo journal", "Photos and baselines"),
         Triple(Feature.Expenses, "Expenses", "Local receipts and totals"),
+        Triple(Feature.VideoHighlight, "Video highlights", "Free editing and preview · Premium MP4"),
         Triple(Feature.Memory, "Memory Book", "Highlights from your records"),
         Triple(Feature.Safety, "Safety Center", "Offline guidance and contacts"),
     ).forEach { (feature, title, sub) -> FeatureRow(title, sub, featureIcon(feature)) { context.open(feature) } } }
@@ -70,14 +71,32 @@ fun ProfileFeatureScreen(page: FeaturePage, context: FeatureContext) {
             BoardMenu { context.journal.dogs.forEach { saved -> FeatureRow(saved.name, listOf(saved.details.breed, saved.details.age).filter(String::isNotBlank).joinToString(" · ").ifBlank { "Details optional" }, if (saved.id == dog.id) "circle-check" else "user-round", meta = if (saved.id == dog.id) "Selected" else "") {
                 scope.launch { context.journalController.selectDog(saved.id); context.navigation.show(Route.Profile) }
             } } }
-            BarkButton("Add another dog", { context.open(Feature.DogAdd) }, secondary = true, icon = "plus")
+            BarkButton("Add another dog", { if (context.companion?.requestPremium(com.dracoarts.shared.presentation.companion.PremiumFeature.AdditionalDog) == true) context.open(Feature.DogAdd) }, secondary = true, icon = "plus")
+            CaptionText("Adding another dog is part of Premium. Your existing dogs stay available.")
         }
-        Feature.DogAdd, Feature.DogEdit, Feature.EmergencyEdit -> {
-            val editing = page.feature != Feature.DogAdd; val contacts = page.feature == Feature.EmergencyEdit
-            val initial = if (editing) mapOf("name" to dog.name, "breed" to dog.details.breed, "age" to dog.details.age, "sex" to dog.details.sex,
-                "vet" to dog.details.vetName, "phone" to dog.details.vetPhone, "emergency" to dog.details.emergencyPhone, "emergencyName" to dog.details.emergencyServiceName, "notes" to dog.details.notes, "photo" to dog.details.photoId.orEmpty()) else mapOf("sex" to "Not recorded")
+        Feature.DogAdd -> {
+            val companion = context.companion
+            var retry by remember { mutableIntStateOf(0) }
+            var failed by remember { mutableStateOf(false) }
+            LaunchedEffect(companion, retry) {
+                if (companion?.hasPremium == true) failed = !companion.beginAddDog(context.navigation)
+            }
+            ScreenHeading("Add another dog", "Their own profile, care records and conversations.")
+            if (companion?.hasPremium != true) {
+                FeatureNotice("A journal for each dog", "Adding another dog is part of Premium. Your existing dogs stay available.", "lock-keyhole")
+                BarkButton("See Premium", { companion?.requestPremium(com.dracoarts.shared.presentation.companion.PremiumFeature.AdditionalDog) })
+                BarkTextAction("Back to dogs", { context.navigation.back() })
+            } else if (failed) {
+                ErrorCard(companion?.state?.value?.error ?: "Couldn't open dog setup. Please try again.")
+                BarkButton("Retry dog setup", { failed = false; retry++ })
+            } else CaptionText("Opening dog setup…")
+        }
+        Feature.DogEdit, Feature.EmergencyEdit -> {
+            val contacts = page.feature == Feature.EmergencyEdit
+            val initial = mapOf("name" to dog.name, "breed" to dog.details.breed, "age" to dog.details.age, "sex" to dog.details.sex,
+                "vet" to dog.details.vetName, "phone" to dog.details.vetPhone, "emergency" to dog.details.emergencyPhone, "emergencyName" to dog.details.emergencyServiceName, "notes" to dog.details.notes, "photo" to dog.details.photoId.orEmpty())
             val form = rememberFeatureForm(context, "profile-${page.feature}-${dog.id}", initial)
-            ScreenHeading(if (contacts) "Emergency contacts" else if (editing) "Edit dog" else "Add a dog", if (contacts) "Verify each number for your location." else "Only the name is required.")
+            ScreenHeading(if (contacts) "Emergency contacts" else "Edit dog", if (contacts) "Verify each number for your location." else "Only the name is required.")
             var additional by rememberSaveable(page.feature, dog.id) { mutableStateOf(false) }
             if (!contacts) {
                 FeatureInput(form, "name", "Dog’s name", !context.saving, max = 80)
@@ -87,28 +106,17 @@ fun ProfileFeatureScreen(page: FeaturePage, context: FeatureContext) {
                 BarkTextAction(if (additional) "Hide optional details" else "Photo and more details", { additional = !additional }, icon = if (additional) "x" else "plus")
                 if (additional) { PhotoPickerControl(context, form, "photo", "Profile photo · optional"); FeatureInput(form, "notes", "Profile notes · optional", !context.saving, multiline = true) }
             }
-            if (editing && (contacts || additional)) {
+            if (contacts || additional) {
                 FeatureInput(form, "vet", if (contacts) "Emergency clinic name" else "Clinic name · optional", !context.saving, max = 160)
                 FeatureInput(form, "phone", if (contacts) "Phone number" else "Vet phone · optional", !context.saving, max = 40)
                 FeatureInput(form, "emergencyName", "Poison-control service · optional", !context.saving, max = 160)
                 FeatureInput(form, "emergency", "Emergency / poison-control phone · optional", !context.saving, max = 40)
             }
             FeatureFormError(form)
-            BarkButton(if (context.saving) "Saving…" else if (contacts) "Save contacts" else if (editing) "Save details" else "Add dog", {
+            BarkButton(if (context.saving) "Saving…" else if (contacts) "Save contacts" else "Save details", {
                 scope.launch { form.attempt {
-                    if (editing) {
-                        val details = dog.details.copy(breed = form["breed"].trim(), age = form["age"].trim(), sex = form["sex"], vetName = form["vet"].trim(), vetPhone = form["phone"].trim(), emergencyPhone = form["emergency"].trim(), emergencyServiceName = form["emergencyName"].trim(), notes = form["notes"].trim(), photoId = form["photo"].takeIf { it.isNotBlank() })
-                        if (context.care.updateDog(dog.copy(revision = form.expectedRevision ?: dog.revision), form["name"], details, form.slot).also { if (it != null) form.completed = true } != null) context.navigation.back()
-                    } else {
-                        require(form["name"].isNotBlank()) { "Enter a dog name." }
-                        val details = DogDetails(form["breed"].trim(), form["age"].trim(), form["sex"], notes = form["notes"].trim(), photoId = form["photo"].takeIf { it.isNotBlank() })
-                        details.validate()
-                        context.journalController.addDog(form["name"], details, form.requestId, com.dracoarts.shared.domain.repository.DraftSource(dog.id, form.slot))
-                        val added = context.journalController.state.value.selectedDog
-                        if (added != null && added.id != dog.id) {
-                            form.reset(context.platform.newId(), mapOf("sex" to "Not recorded")); context.navigation.show(Route.Profile)
-                        }
-                    }
+                    val details = dog.details.copy(breed = form["breed"].trim(), age = form["age"].trim(), sex = form["sex"], vetName = form["vet"].trim(), vetPhone = form["phone"].trim(), emergencyPhone = form["emergency"].trim(), emergencyServiceName = form["emergencyName"].trim(), notes = form["notes"].trim(), photoId = form["photo"].takeIf { it.isNotBlank() })
+                    if (context.care.updateDog(dog.copy(revision = form.expectedRevision ?: dog.revision), form["name"], details, form.slot).also { if (it != null) form.completed = true } != null) context.navigation.back()
                 } }
             }, enabled = !context.saving, icon = "check")
             CaptionText("Profiles and contacts stay on this device.")
@@ -116,7 +124,8 @@ fun ProfileFeatureScreen(page: FeaturePage, context: FeatureContext) {
         Feature.Settings -> {
             val settings by context.settings.state.collectAsState()
             ScreenHeading("Settings", "This device and how BarkLog feels.")
-            BoardMenu { FeatureRow("Edit ${dog.name}", "Identity and optional details", "pencil") { context.open(Feature.DogEdit) }; FeatureRow("Export journal", "CSV or PDF before deletion", "file-down") { context.open(Feature.Report) } }
+            FeatureRow("Interaction sounds", "Soft taps, selections and saved notes", "music") { context.open(Feature.Sounds) }
+            BoardMenu { FeatureRow("Edit ${dog.name}", "Identity and optional details", "pencil") { context.open(Feature.DogEdit) }; FeatureRow("Export journal", "Free CSV · PDF with Premium", "file-down") { context.open(Feature.Report) } }
             JournalCard { Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) { SectionTitle("Stored on this device"); BarkIcon("shield-check", Modifier.size(24.dp)) }; SupportingText("No account, cloud sync or remote backup. Deleting the app or its data can remove this journal.") }
             JournalCard {
                 SectionTitle("Accessibility")

@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-19",
+  "scope": "Live authenticated web acceptance using the native Atlas request shape; not native-device or Release acceptance",
+  "applicationId": "caaf9c52-60f3-4fe2-b71a-3b59d065089a",
+  "requiredFeature": "barklog.ask-barklog-ai",
+  "result": {
+    "timeUtc": "2026-10-19T08:10:12.456275+00:00",
+    "platform": "web",
+    "question": "How can you help me related to my dog?",
+    "httpStatus": 200,
+    "nativeTransportAccepted": true,
+    "durationSeconds": 8.39,
+    "requestId": "47f40596-3d9f-4cc5-9d88-4b68364f9838",
+    "contextChecked": "true",
+    "contextFeature": "barklog.ask-barklog-ai",
+    "dailyBudgetMicrousd": "1000000",
+    "errorCode": null,
+    "errorMessage": null,
+    "answer": "I can help with general, non-clinical dog-care education and with organizing caregiver observations you explicitly provide. I can assist with grooming, routines, calm handling, enrichment, basic training, and preparing factual notes or questions for a veterinary visit. I cannot diagnose, assess health, interpret symptoms or photos, triage, choose medication, give doses, or recommend treatment; health concerns should go to a veterinarian, and urgent concerns to emergency veterinary care. No saved observations were supplied here, so I won\u2019t make dog-specific claims.",
+    "answerWithheld": false,
+    "scope": "Synthetic question only; no profile, records, photos or conversation history."
+  },
+  "boundaries": [
+    "Existing owner-authorized QA Firebase account; credentials not recorded",
+    "No app rebuild or journal access",
+    "No profile, records, photos or prior conversations shared",
+    "Server changes were made by the server owner, not by the diagnostic",
+    "Release Atlas remains disabled pending native-device proof and approval"
+  ],
+  "answerValidation": "Live response checked against current native length and prohibited-pattern rules without launching or rebuilding the app."
+}

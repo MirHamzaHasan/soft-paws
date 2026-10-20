@@ -19,7 +19,7 @@ fun BoardSelect(label: String, value: String, choices: List<Pair<String, String>
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(label, style = MaterialTheme.typography.labelMedium)
         Box {
-            Surface(onClick = { expanded = true }, enabled = enabled, modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp).semantics {
+            Surface(onClick = soundAction({ expanded = true }), enabled = enabled, modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp).semantics {
                 contentDescription = "$label, $selectedLabel"
                 stateDescription = if (expanded) "Expanded" else "Collapsed"
             }, shape = RoundedCornerShape(16.dp), color = boardColor("panel"), border = BorderStroke(1.5.dp, boardColor("hair"))) {
