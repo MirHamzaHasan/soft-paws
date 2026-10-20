@@ -21,7 +21,7 @@ final class BarkFirebaseAuth: NSObject, NativeAuthEngine, ASAuthorizationControl
     func idToken(forceRefresh: Bool, completion: @escaping (NativeIdToken) -> Void) {
         Task { @MainActor in
             guard FirebaseApp.app() != nil, let user = Auth.auth().currentUser else {
-                completion(NativeIdToken(token: nil, uid: nil, error: "Sign in to use BarkLog AI.")); return
+                completion(NativeIdToken(token: nil, uid: nil, error: "Sign in to use Soft Paws AI.")); return
             }
             do {
                 let token = try await user.getIDToken(forcingRefresh: forceRefresh)
@@ -29,7 +29,7 @@ final class BarkFirebaseAuth: NSObject, NativeAuthEngine, ASAuthorizationControl
                     completion(NativeIdToken(token: nil, uid: nil, error: "Your account changed. Sign in again.")); return
                 }
                 completion(NativeIdToken(token: token, uid: user.uid, error: nil))
-            } catch { completion(NativeIdToken(token: nil, uid: nil, error: "Sign in again or reconnect to use BarkLog AI.")) }
+            } catch { completion(NativeIdToken(token: nil, uid: nil, error: "Sign in again or reconnect to use Soft Paws AI.")) }
         }
     }
 

@@ -146,5 +146,5 @@ fun HealthFeatureScreen(page: FeaturePage, context: FeatureContext) {
 @Composable
 private fun HealthSource() {
     HorizontalDivider(color = com.dracoarts.shared.presentation.theme.boardColor("hair"))
-    Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.Top) { BarkIcon("info", Modifier.size(14.dp)); CaptionText("Caregiver-entered record. BarkLog does not calculate doses or recommend treatment.", Modifier.weight(1f)) }
+    Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.Top) { BarkIcon("info", Modifier.size(14.dp)); CaptionText("Caregiver-entered record. Soft Paws does not calculate doses or recommend treatment.", Modifier.weight(1f)) }
 }

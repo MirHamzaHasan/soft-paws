@@ -63,7 +63,7 @@ internal fun answerSections(text: String): Pair<String, String?> {
     val state by controller.state.collectAsState()
     val scope = rememberCoroutineScope()
     var agree by remember(state.workspace.weeklyAllowed) { mutableStateOf(state.workspace.weeklyAllowed) }
-    CaptionText("BarkLog AI")
+    CaptionText("Soft Paws AI")
     CHeading("A little context. A clearer answer.", "Your dog’s week, ready when you ask.")
     listOf(Triple("paw-print", "$name’s profile", "Name, age, breed and the care details you’ve saved."),
         Triple("notebook-pen", "The past seven days", "This dog’s care records are included automatically with each question. No need to select logs."),
@@ -71,9 +71,9 @@ internal fun answerSections(text: String): Pair<String, String?> {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) { BarkIcon(icon, Modifier.size(22.dp)); Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) { Text(title, style = MaterialTheme.typography.titleSmall); CaptionText(text) } }
     }
     if (controller.demoResponses) CaptionText("Design review · demo replies. No messages or records leave this phone.")
-    CaptionText("BarkLog AI gives general care information and organizes observations. It cannot assess health, diagnose or prescribe. Your journal works without AI.")
+    CaptionText("Soft Paws AI gives general care information and organizes observations. It cannot assess health, diagnose or prescribe. Your journal works without AI.")
     CCheck("I agree to online AI processing of my messages, $name’s profile and the past seven days of care records.", agree) { agree = it }
-    BarkButton("Enable BarkLog AI", { scope.launch {
+    BarkButton("Enable Soft Paws AI", { scope.launch {
         if (controller.updateAiContext { it.copy(messageConsent = true, profileConsent = true, recordConsent = true, cloudConsent = true, week = true, selectedRecords = emptyList(), weeklyConsentVersion = 1) }) controller.completeAiConsent()
     } }, enabled = agree && !state.busy)
     BarkTextAction("Keep using my journal", { scope.launch { if (controller.updateAiContext { it.copy(messageConsent = false, cloudConsent = false, profileConsent = false, recordConsent = false, weeklyConsentVersion = 0) }) controller.go(null) } })
@@ -89,9 +89,9 @@ internal fun answerSections(text: String): Pair<String, String?> {
     LaunchedEffect(dogId, retry) { error = false; context = null; try { context = prepareWeeklyContext(repository, dogId, state.composer.text, platform.nowMillis(), platform.timeZone()) } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled } catch (_: Exception) { error = true } }
     CDialog("Included with every question", onDismiss, actions = {
         BarkButton("Back to chat", onDismiss)
-        BarkTextAction("Turn off BarkLog AI", { scope.launch { if (controller.updateAiContext { it.copy(messageConsent = false, cloudConsent = false, profileConsent = false, recordConsent = false, weeklyConsentVersion = 0) }) { onDismiss(); controller.go(null) } } })
+        BarkTextAction("Turn off Soft Paws AI", { scope.launch { if (controller.updateAiContext { it.copy(messageConsent = false, cloudConsent = false, profileConsent = false, recordConsent = false, weeklyConsentVersion = 0) }) { onDismiss(); controller.go(null) } } })
     }) {
-        CaptionText("The current dog’s saved profile and past seven days are included automatically while BarkLog AI is enabled. No photos, documents, contacts, other dogs or older records.")
+        CaptionText("The current dog’s saved profile and past seven days are included automatically while Soft Paws AI is enabled. No photos, documents, contacts, other dogs or older records.")
         if (error) { ErrorCard("Couldn’t read weekly context. Your journal is unchanged."); BarkButton("Try again", { retry++ }, secondary = true) }
         else if (context == null) CaptionText("Reading this dog’s week…")
         context?.let { snapshot ->

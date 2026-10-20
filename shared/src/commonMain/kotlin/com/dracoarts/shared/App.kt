@@ -80,7 +80,7 @@ fun App(platform: AppPlatform, state: AppState, modules: List<AppModule> = empty
     CompositionLocalProvider(com.dracoarts.shared.presentation.components.LocalInteractionSounds provides container.managers.sounds, com.dracoarts.shared.presentation.components.LocalMascotForeground provides soundForeground, LocalBarkMotion provides BarkMotion(reduced = rememberSystemReducedMotion() || settings.reduceMotion || (faults != null && initialScreen == "reduced-motion-state"))) {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             when (val status = startup) {
-                StartupState.Loading -> StartupMessage("Opening BarkLog…")
+                StartupState.Loading -> StartupMessage("Opening Soft Paws…")
                 is StartupState.Failed -> StartupMessage(status.message, onRetry = { retry++ })
                 StartupState.Ready -> {
                     if (!fixtureReady) {

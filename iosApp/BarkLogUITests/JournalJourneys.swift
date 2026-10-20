@@ -1308,3 +1308,81 @@ final class PremiumSafetyJourneys: XCTestCase {
     }
 
 }
+
+/// Soft Paws only: separate app container and explicit synthetic SQLite fixture.
+final class SoftPawsCoreJourneys: XCTestCase {
+    private var app: XCUIApplication!
+    private let fixturePreference = "-barklog_preference_v1_board_review_softpawsday_v1_"
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication(bundleIdentifier: "com.draco.apps.soft.paws")
+    }
+    private func launch(theme: String = "Light", reduced: Bool = true) {
+        if app.state != .notRunning { app.terminate() }
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "soft-paws-day-v1", "-DesignReviewScreen", "home",
+            fixturePreference + "theme", theme, fixturePreference + "reduce_motion", reduced ? "true" : "false"]
+        app.launch()
+        XCTAssertTrue(item("A quick check-in").waitForExistence(timeout: 25))
+    }
+    private func item(_ label: String) -> XCUIElement {
+        app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", label)).firstMatch
+    }
+    private func press(_ label: String) {
+        let target = item(label)
+        XCTAssertTrue(target.waitForExistence(timeout: 15), "Missing \(label): \(app.debugDescription)")
+        for _ in 0..<6 {
+            if target.isHittable { target.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap(); return }
+            app.swipeUp()
+        }
+        XCTFail("Control not reachable: \(label)")
+    }
+    private func capture(_ name: String) {
+        let image = XCTAttachment(screenshot: app.screenshot())
+        image.name = name; image.lifetime = .keepAlways; add(image)
+    }
+    func testLitterSaveReopensAndFiveTabsRemainSelected() throws {
+        launch()
+        sleep(4); capture("ios-light-home")
+        press("Litter")
+        XCTAssertTrue(item("A little litter check.").waitForExistence(timeout: 12))
+        capture("ios-light-log-litter")
+        press("Urine observed")
+        press("Keep this check-in")
+        XCTAssertTrue(item("A small thing, kept.").waitForExistence(timeout: 12))
+        capture("ios-light-saved")
+        press("Back to today")
+        app.terminate(); app.launch()
+        XCTAssertTrue(item("A quick check-in").waitForExistence(timeout: 20))
+        capture("ios-light-reopened")
+        for (tab, heading) in [("Journal", "Timeline"), ("Care", "Care, in one place."), ("Memories", "Ordinary, lovely days."), ("You", "A place for both of you.")] {
+            press(tab)
+            XCTAssertTrue(item(heading).waitForExistence(timeout: 12))
+            XCTAssertTrue(app.buttons[tab].isSelected)
+            capture("ios-light-\(tab.lowercased())")
+        }
+        press("Today")
+        XCTAssertTrue(item("A quick check-in").waitForExistence(timeout: 12))
+        capture("ios-returned-home")
+    }
+    func testAccessibilityWithLiveCatAndDarkPalette() throws {
+        launch(reduced: false)
+        press("Say hello to Miso")
+        Thread.sleep(forTimeInterval: 0.2); capture("ios-cat-motion-200")
+        Thread.sleep(forTimeInterval: 0.7); capture("ios-cat-motion-900")
+        Thread.sleep(forTimeInterval: 0.9); capture("ios-cat-motion-1800")
+        for _ in 0..<2 {
+            for (tab, heading) in [("Journal", "Timeline"), ("Care", "Care, in one place."), ("Memories", "Ordinary, lovely days."), ("You", "A place for both of you.")] {
+                press(tab)
+                XCTAssertTrue(item(heading).waitForExistence(timeout: 12))
+                XCTAssertGreaterThan(app.buttons.count, 0)
+            }
+            press("Today")
+            XCTAssertTrue(item("A quick check-in").waitForExistence(timeout: 12))
+        }
+        launch(theme: "Dark")
+        sleep(2); capture("ios-dark-home")
+        press("Care")
+        XCTAssertTrue(item("Care, in one place.").waitForExistence(timeout: 12))
+        capture("ios-dark-care")
+    }
+}

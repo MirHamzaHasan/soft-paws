@@ -26,7 +26,7 @@ CREATE INDEX dogs_owner ON dogs(owner_id, created_at, id);
 CREATE TABLE care_events (
   id TEXT NOT NULL PRIMARY KEY,
   dog_id TEXT NOT NULL REFERENCES dogs(id),
-  type TEXT NOT NULL CHECK (type IN ('poop', 'pee', 'meal', 'walk', 'medication', 'symptom', 'mood', 'behavior', 'grooming', 'weight', 'training', 'task')),
+  type TEXT NOT NULL CHECK (type IN ('poop', 'pee', 'meal', 'walk', 'medication', 'symptom', 'mood', 'behavior', 'grooming', 'weight', 'training', 'task', 'water', 'litter', 'play', 'sleep', 'note')),
   occurred_at INTEGER NOT NULL CHECK (occurred_at >= 0),
   created_at INTEGER NOT NULL CHECK (created_at >= 0),
   note TEXT CHECK (length(note) <= 2000),

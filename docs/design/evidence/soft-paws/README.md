@@ -2,6 +2,8 @@
 
 20 October 2026. This evidence covers the new **web design prototype**, not a
 native app port, physical-device validation or a live service integration.
+It records the initial moss palette. The later owner-requested colourful pass
+and current evidence are in [soft-paws-color](../soft-paws-color/README.md).
 
 The source is [`design/soft-paws/`](../../../../design/soft-paws/README.md).
 See [the delivery task](../../../../tasks/soft-paws-task001-cat-redesign.md)
@@ -65,6 +67,6 @@ real login, AI request, call, location request, photo upload, export or transact
 was performed. A prototype save is in memory, not SQLite. Prices are carried-over
 design proposals; the new app has no configured store entitlement.
 
-The new direction still needs owner review before shared Compose adoption.
-Native cat behaviour/parity, independent Soft Paws app/service identifiers,
-VoiceOver/TalkBack, signed devices and real service/store checks remain open.
+The owner subsequently approved this direction for shared Compose adoption.
+Separate Soft Paws app identifiers are now implemented; current native delivery,
+remaining parity, assistive/device and service/store gates are tracked in task002.

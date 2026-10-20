@@ -116,9 +116,10 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
     LaunchedEffect(reviewEnabled, journal.selectedDogId) {
         if (reviewEnabled && !reviewStarted && journal.selectedDogId != null) {
             reviewStarted = true
-            val route = boardReviewTabs[reviewStart] ?: Route.entries.firstOrNull { it.name.equals(reviewStart, true) }
+            val route = when (reviewStart) { "health" -> Route.Care; "photos" -> Route.Memories; "profile" -> Route.Profile; else -> null }
+                ?: boardReviewTabs[reviewStart] ?: Route.entries.firstOrNull { it.name.equals(reviewStart, true) }
             val feature = boardReviewFeatures[reviewStart] ?: Feature.entries.firstOrNull { it.name.equals(reviewStart, true) }
-            val type = CareEventRules.detailedTypes.firstOrNull { it.name.equals(reviewStart?.removePrefix("form-"), true) }
+            val type = if (reviewStart == "log-groom") CareEventType.Grooming else CareEventRules.detailedTypes.firstOrNull { it.name.equals(reviewStart?.removePrefix("form-")?.removePrefix("log-"), true) }
             when {
                 route != null -> state.show(route)
                 feature != null -> state.open(feature, if (reviewStart in boardReviewFeatures) boardReviewArgument(reviewStart, feature, platform::newId) else "")
@@ -153,7 +154,7 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
     // selected pill retains its live position when entering/leaving the account menu.
     val accountTab = useCompanion && companionState.route == com.dracoarts.shared.presentation.companion.CompanionScreen.AccountSettings
     if (useCompanion && companionState.route != null && !accountTab) {
-        com.dracoarts.shared.presentation.companion.CompanionHost(companion, journal, controller, care, platform, state, repository, reviewEnabled = reviewEnabled,
+        com.dracoarts.shared.presentation.companion.CompanionHost(companion, journal, controller, care, platform, state, repository, reviewEnabled = reviewEnabled && reviewStart == null,
             onEnterJournal = onEnterJournal)
         return
     }
@@ -164,7 +165,7 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
     val showTabs = accountTab || (context != null && !reviewOnboarding && !onboardingInProgress && state.page == null && state.featurePage == null)
     var bottomDockHeight by remember { mutableStateOf(170.dp) }
     val aiDensity = androidx.compose.ui.platform.LocalDensity.current
-    val homeCompanion = useCompanion && !accountTab && showTabs && state.route == Route.Home
+    val homeCompanion = false // The approved Home AI/contact card is in the scroll content.
     val floatingTabs = showTabs && !(reviewEnabled && reviewStart == null)
     CompositionLocalProvider(LocalBarkMotion provides BarkMotion(parentMotion.reduced, if (reviewEnabled) speed else 1f, replay), LocalBoardFooter provides publishFooter, LocalBoardCoach provides publishCoach) {
         Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing).imePadding().pointerInput(focus) {
@@ -208,7 +209,9 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                                     when (state.route) {
                                         Route.Home -> HomeScreen(context)
                                         Route.Insights -> InsightsScreen(context)
-                                        Route.Profile -> ProfileHub(context)
+                                        Route.Profile -> SoftPawsYouScreen(context)
+                                        Route.Care -> SoftPawsCareScreen(context)
+                                        Route.Memories -> SoftPawsMemoriesScreen(context)
                                         Route.Timeline -> Unit
                                     }
                                 }
@@ -240,24 +243,26 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
 internal fun JournalTabBar(state: AppState, platform: AppPlatform, onNavigate: ((Route) -> Unit)? = null) {
     val motion = LocalBarkMotion.current
     val sounds = LocalInteractionSounds.current
-    Surface(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), shape = RoundedCornerShape(40.dp), color = boardColor("tab-bg")) {
+    Surface(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), shape = RoundedCornerShape(24.dp), color = boardColor("tab-bg"), border = androidx.compose.foundation.BorderStroke(1.dp, boardColor("hair"))) {
         BoxWithConstraints(Modifier.fillMaxWidth().padding(6.dp)) {
-            val width = maxWidth / Route.entries.size
-            val position = remember { Animatable(state.route.ordinal.toFloat()) }
+            val routes = Route.dockRoutes
+            val selectedIndex = routes.indexOf(state.route.dockRoute)
+            val width = maxWidth / routes.size
+            val position = remember { Animatable(selectedIndex.toFloat()) }
             LaunchedEffect(state.route, motion.reduced, motion.speed) {
-                if (motion.reduced) position.snapTo(state.route.ordinal.toFloat())
-                else position.animateTo(state.route.ordinal.toFloat(), spring(.78f, ((2 * PI / .42).pow(2) * motion.speed.pow(2)).toFloat()))
+                if (motion.reduced) position.snapTo(selectedIndex.toFloat())
+                else position.animateTo(selectedIndex.toFloat(), spring(.78f, ((2 * PI / .42).pow(2) * motion.speed.pow(2)).toFloat()))
             }
             Surface(Modifier.width(width).height(56.dp).graphicsLayer {
                 translationX = width.toPx() * position.value
                 val stretch = if (motion.reduced) 0f else (abs(position.velocity) * .014f).coerceAtMost(.18f)
                 scaleX = 1 + stretch; scaleY = 1 - stretch * .4f
-            }, shape = RoundedCornerShape(40.dp), color = boardColor("ball")) {}
+            }, shape = RoundedCornerShape(18.dp), color = boardColor("accent-soft")) {}
             Row(Modifier.fillMaxWidth()) {
-                Route.entries.forEach { route ->
-                    val selected = state.route == route; val source = remember { MutableInteractionSource() }
-                    val proximity = ((1 - abs(position.value - route.ordinal) - .45f) / .30f).coerceIn(0f, 1f)
-                    val color = lerp(boardColor("tab-ink"), boardColor("ball-ink"), proximity)
+                routes.forEachIndexed { index, route ->
+                    val selected = state.route.dockRoute == route; val source = remember { MutableInteractionSource() }
+                    val proximity = ((1 - abs(position.value - index) - .45f) / .30f).coerceIn(0f, 1f)
+                    val color = lerp(boardColor("tab-ink"), boardColor("accent-text"), proximity)
                     val iconLanding = selectionLanding(selected, 36)
                     Column(Modifier.weight(1f).heightIn(min = 56.dp).then(pressMotion(source)).semantics { this.selected = selected }
                         .clickable(interactionSource = source, indication = null, role = Role.Tab) { if (!selected) { sounds?.play(com.dracoarts.shared.services.SoundCue.Selection); platform.haptics.selectionChange(); onNavigate?.invoke(route) ?: state.show(route) } },

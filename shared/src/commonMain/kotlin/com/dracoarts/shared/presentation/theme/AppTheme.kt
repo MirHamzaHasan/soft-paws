@@ -24,42 +24,66 @@ import com.dracoarts.shared.generated.resources.bricolage_section
 import org.jetbrains.compose.resources.Font
 
 object BarkLogColors {
-    val ink = GeneratedDesignTokens.Light.ink
-    val paper = GeneratedDesignTokens.Light.ground
-    val surface = GeneratedDesignTokens.Light.inset
-    val border = GeneratedDesignTokens.Light.hair
-    val muted = GeneratedDesignTokens.Light.inkMuted
-    val danger = GeneratedDesignTokens.Light.bad
+    val ink = SoftPawsDesignTokens.Light.ink
+    val paper = SoftPawsDesignTokens.Light.ground
+    val surface = SoftPawsDesignTokens.Light.inset
+    val border = SoftPawsDesignTokens.Light.hair
+    val muted = SoftPawsDesignTokens.Light.inkMuted
+    val danger = SoftPawsDesignTokens.Light.bad
 }
 
 object AppSpacing {
-    val page = 20.dp
+    val page = SoftPawsDesignTokens.pagePadding.dp
     val section = 32.dp
-    val controlHeight = 56.dp
+    val controlHeight = SoftPawsDesignTokens.controlHeight.dp
     val contentMaxWidth = 640.dp
 }
 
 private val LightColors = lightColorScheme(
-    primary = GeneratedDesignTokens.Light.btn, onPrimary = GeneratedDesignTokens.Light.btnInk,
+    primary = SoftPawsDesignTokens.Light.btn, onPrimary = SoftPawsDesignTokens.Light.btnInk,
+    primaryContainer = SoftPawsDesignTokens.Light.accentSoft, onPrimaryContainer = SoftPawsDesignTokens.Light.accentText,
+    secondary = SoftPawsDesignTokens.Light.lilacInk, onSecondary = SoftPawsDesignTokens.Light.panel,
+    secondaryContainer = SoftPawsDesignTokens.Light.lilac, onSecondaryContainer = SoftPawsDesignTokens.Light.lilacInk,
+    tertiary = SoftPawsDesignTokens.Light.roseInk, onTertiary = SoftPawsDesignTokens.Light.panel,
+    tertiaryContainer = SoftPawsDesignTokens.Light.rose, onTertiaryContainer = SoftPawsDesignTokens.Light.roseInk,
     background = BarkLogColors.paper, onBackground = BarkLogColors.ink,
-    surface = GeneratedDesignTokens.Light.panel, onSurface = BarkLogColors.ink,
+    surface = SoftPawsDesignTokens.Light.panel, onSurface = BarkLogColors.ink,
     surfaceVariant = BarkLogColors.surface, onSurfaceVariant = BarkLogColors.muted,
     outline = BarkLogColors.muted, outlineVariant = BarkLogColors.border,
     error = BarkLogColors.danger,
+    onError = SoftPawsDesignTokens.Light.panel,
+    errorContainer = SoftPawsDesignTokens.Light.badSoft, onErrorContainer = SoftPawsDesignTokens.Light.bad,
+    surfaceContainerLowest = SoftPawsDesignTokens.Light.ground, surfaceContainerLow = SoftPawsDesignTokens.Light.panel,
+    surfaceContainer = SoftPawsDesignTokens.Light.panel, surfaceContainerHigh = SoftPawsDesignTokens.Light.inset,
+    surfaceContainerHighest = SoftPawsDesignTokens.Light.hover, surfaceBright = SoftPawsDesignTokens.Light.panel,
+    surfaceDim = SoftPawsDesignTokens.Light.sunken, surfaceTint = androidx.compose.ui.graphics.Color.Transparent,
+    scrim = SoftPawsDesignTokens.Light.scrim,
 )
 
-val LocalBoardColors = staticCompositionLocalOf { GeneratedDesignTokens.Light.values }
+val LocalBoardColors = staticCompositionLocalOf { SoftPawsDesignTokens.Light.values }
 val LocalBarkDarkTheme = staticCompositionLocalOf { false }
 val LocalDisplayFont = staticCompositionLocalOf<FontFamily> { FontFamily.Default }
 val LocalNumberFont = staticCompositionLocalOf<FontFamily> { FontFamily.Default }
 @Composable fun boardColor(name: String) = LocalBoardColors.current.getValue(name)
 private val DarkColors = darkColorScheme(
-    primary = GeneratedDesignTokens.Dark.btn, onPrimary = GeneratedDesignTokens.Dark.btnInk,
-    background = GeneratedDesignTokens.Dark.ground, onBackground = GeneratedDesignTokens.Dark.ink,
-    surface = GeneratedDesignTokens.Dark.panel, onSurface = GeneratedDesignTokens.Dark.ink,
-    surfaceVariant = GeneratedDesignTokens.Dark.inset, onSurfaceVariant = GeneratedDesignTokens.Dark.inkMuted,
-    outline = GeneratedDesignTokens.Dark.hair2, outlineVariant = GeneratedDesignTokens.Dark.hair,
-    error = GeneratedDesignTokens.Dark.bad,
+    primary = SoftPawsDesignTokens.Dark.btn, onPrimary = SoftPawsDesignTokens.Dark.btnInk,
+    primaryContainer = SoftPawsDesignTokens.Dark.accentSoft, onPrimaryContainer = SoftPawsDesignTokens.Dark.accentText,
+    secondary = SoftPawsDesignTokens.Dark.lilacInk, onSecondary = SoftPawsDesignTokens.Dark.ground,
+    secondaryContainer = SoftPawsDesignTokens.Dark.lilac, onSecondaryContainer = SoftPawsDesignTokens.Dark.lilacInk,
+    tertiary = SoftPawsDesignTokens.Dark.roseInk, onTertiary = SoftPawsDesignTokens.Dark.ground,
+    tertiaryContainer = SoftPawsDesignTokens.Dark.rose, onTertiaryContainer = SoftPawsDesignTokens.Dark.roseInk,
+    background = SoftPawsDesignTokens.Dark.ground, onBackground = SoftPawsDesignTokens.Dark.ink,
+    surface = SoftPawsDesignTokens.Dark.panel, onSurface = SoftPawsDesignTokens.Dark.ink,
+    surfaceVariant = SoftPawsDesignTokens.Dark.inset, onSurfaceVariant = SoftPawsDesignTokens.Dark.inkMuted,
+    outline = SoftPawsDesignTokens.Dark.hair2, outlineVariant = SoftPawsDesignTokens.Dark.hair,
+    error = SoftPawsDesignTokens.Dark.bad,
+    onError = SoftPawsDesignTokens.Dark.ground,
+    errorContainer = SoftPawsDesignTokens.Dark.badSoft, onErrorContainer = SoftPawsDesignTokens.Dark.bad,
+    surfaceContainerLowest = SoftPawsDesignTokens.Dark.ground, surfaceContainerLow = SoftPawsDesignTokens.Dark.panel,
+    surfaceContainer = SoftPawsDesignTokens.Dark.panel, surfaceContainerHigh = SoftPawsDesignTokens.Dark.inset,
+    surfaceContainerHighest = SoftPawsDesignTokens.Dark.hover, surfaceBright = SoftPawsDesignTokens.Dark.panel,
+    surfaceDim = SoftPawsDesignTokens.Dark.sunken, surfaceTint = androidx.compose.ui.graphics.Color.Transparent,
+    scrim = SoftPawsDesignTokens.Dark.scrim,
 )
 
 @Composable
@@ -92,7 +116,7 @@ fun AppTheme(darkTheme: Boolean = isSystemInDarkTheme(), contrast: Boolean = fal
         labelMedium = style(12, FontWeight.Medium),
         labelSmall = style(10),
     )
-    val boardTokens = if (darkTheme) GeneratedDesignTokens.Dark.values else GeneratedDesignTokens.Light.values
+    val boardTokens = if (darkTheme) SoftPawsDesignTokens.Dark.values else SoftPawsDesignTokens.Light.values
     val accessibleTokens = if (contrast) boardTokens.mapValues { (name, color) -> when {
         name == "hair" || name.endsWith("-line") -> boardTokens.getValue("ink-muted")
         name == "hair-2" -> boardTokens.getValue("ink-strong")

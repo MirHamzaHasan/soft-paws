@@ -17,10 +17,12 @@ Open <http://localhost:4285/>. Use Research, Kit, Screens, Transitions, Pick/Not
 and Play the flow. All board records are synthetic and stay in memory; it does
 not read native journals or call AI, authentication, billing or location services.
 
-**Native status:** the inherited app remains the BarkLog base. The new Soft Paws
-screens await review before shared Compose adoption. Do not install the inherited
-IDs over BarkLog journals. Separate application/service identities and cat domain
-adaptation are subsequent work; no native cat-parity or release claim is made.
+**Native status:** the owner approved the full Android/iOS port on 20 October
+2026. Task002 is in progress: separate `com.draco.apps.soft.paws` containers,
+cat observation contracts, preserving SQLite v5 migration, CSS-derived native
+tokens, original cat Rive and the first shared screens. Build/storage checks and
+screen parity are tracked separately. Own service registrations, store setup and
+live AI proof remain deferred; no complete native-parity/release claim is made.
 
 [Soft Paws product truth](docs/source-of-truth/soft-paws-product-engineering.md) ·
 [Original Rive cat](design/soft-paws/assets/cat/manifest.json) ·

@@ -129,7 +129,7 @@ internal fun PremiumPlanScreen(
                             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                                     Surface(shape = CircleShape, color = boardColor("ball"), contentColor = boardColor("ball-ink")) { Box(Modifier.size(23.dp), contentAlignment = Alignment.Center) { PawMark(Modifier.size(13.dp)) } }
-                                    Text("BarkLog Premium", style = MaterialTheme.typography.bodyMedium.copy(fontSize = 11.sp, fontWeight = FontWeight.Medium))
+                                    Text("Soft Paws Premium", style = MaterialTheme.typography.bodyMedium.copy(fontSize = 11.sp, fontWeight = FontWeight.Medium))
                                 }
                                 PlanTitle("More for\n$name.")
                             }
@@ -172,7 +172,7 @@ internal fun PremiumPlanScreen(
                         }
                         Column(planEnter(140), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                             Text(if (state.premiumAccess) "Alongside your journal" else "Always here for you", style = MaterialTheme.typography.headlineSmall.copy(fontSize = 22.sp, lineHeight = 24.2.sp), modifier = Modifier.semantics { heading() })
-                            val included = if (state.premiumAccess) listOf("BarkLog AI & safety, with your consent", "Additional dog profiles", "PDFs, Memory Books & video exports") else listOf("Care logs, photos and reminders", "Timelines, charts and on-phone reports", "Your records, with raw CSV export")
+                            val included = if (state.premiumAccess) listOf("Soft Paws AI & safety, with your consent", "Additional dog profiles", "PDFs, Memory Books & video exports") else listOf("Care logs, photos and reminders", "Timelines, charts and on-phone reports", "Your records, with raw CSV export")
                             included.forEach { value -> Row(horizontalArrangement = Arrangement.spacedBy(11.dp)) { BarkIcon("check", Modifier.size(18.dp)); Text(value, style = MaterialTheme.typography.bodyMedium.copy(fontSize = 13.sp, lineHeight = 19.5.sp)) } }
                         }
                         if (state.premiumAccess) FoodScannerComingSoon()
@@ -227,7 +227,7 @@ internal fun PremiumPlanScreen(
 @Composable private fun PlanBenefits(modifier: Modifier) {
     Column(modifier, verticalArrangement = Arrangement.spacedBy(15.dp)) {
         listOf(
-            Triple("message-circle", "Answers with their week in view", "BarkLog AI & safety · shared with your consent."),
+            Triple("message-circle", "Answers with their week in view", "Soft Paws AI & safety · shared with your consent."),
             Triple("paw-print", "A journal for every dog", "Each new dog gets their own complete profile."),
             Triple("file-text", "Moments to keep and share", "PDFs, Memory Books and video exports."),
             Triple("map-pin", "Find a vet nearby", "Choose a clinic in Maps, then call."),

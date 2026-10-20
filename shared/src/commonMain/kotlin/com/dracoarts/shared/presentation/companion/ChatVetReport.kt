@@ -29,7 +29,7 @@ fun chatVetReport(dog: Dog, includeProfile: Boolean, events: List<CareEvent>, me
         if (includeConversation) {
             add("AI REPLIES · optional and unverified")
             add("Scene captions describe visible content only. AI replies must not be treated as veterinary findings or instructions.")
-            messages.filter { it.assistant }.takeLast(40).forEach { add("${when (it.responseSource) { "local" -> "On-device AI"; "journal" -> "Saved journal facts"; "local-caption" -> "On-device photo draft"; "atlas" -> "BarkLog AI"; "safety" -> "BarkLog safety guidance"; else -> "Demo AI" }} · unverified · ${JournalDates.dateAndTime(it.at, zone)}\n${barkLogAiText(it.text, it.profile?.name)}") }
+            messages.filter { it.assistant }.takeLast(40).forEach { add("${when (it.responseSource) { "local" -> "On-device AI"; "journal" -> "Saved journal facts"; "local-caption" -> "On-device photo draft"; "atlas" -> "Soft Paws AI"; "safety" -> "BarkLog safety guidance"; else -> "Demo AI" }} · unverified · ${JournalDates.dateAndTime(it.at, zone)}\n${barkLogAiText(it.text, it.profile?.name)}") }
         }
         add("ATTACHED CAREGIVER PHOTOS · ${images.size}")
         if (images.isNotEmpty()) add("Images are provided for the veterinarian to review. BarkLog makes no image assessment.")

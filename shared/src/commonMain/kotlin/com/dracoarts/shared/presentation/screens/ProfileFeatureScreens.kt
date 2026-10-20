@@ -25,7 +25,7 @@ import kotlinx.coroutines.withContext
 fun ProfileHub(context: FeatureContext) {
     val dog = context.dog
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { BoardDogChip(dog.name, { context.open(Feature.DogSwitcher) }); BarkTextAction("Safety", { context.open(Feature.Safety) }, icon = "shield", leading = true) }
-    BoardHeading("Profile", "Dog details and this device’s journal.", BoardFolio("YOUR DOG, ALL TOGETHER", "user-round", "walk", display = true))
+    BoardHeading("Profile", "Cat details and this device’s journal.", BoardFolio("YOUR CAT, ALL TOGETHER", "user-round", "walk", display = true))
     Surface(shape = RoundedCornerShape(30.dp), color = boardColor("panel")) {
         Box {
             Surface(Modifier.fillMaxWidth().height(72.dp), color = boardColor("ball")) {}
@@ -37,7 +37,7 @@ fun ProfileHub(context: FeatureContext) {
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text(dog.name, style = MaterialTheme.typography.displayLarge.copy(fontSize = 30.sp))
                     Text(listOf(dog.details.breed, dog.details.age).filter { it.isNotBlank() }.joinToString(" · ").ifBlank { "Details optional" }, style = MaterialTheme.typography.bodySmall, color = boardColor("ink-muted"))
-                    BarkTextAction("Switch dog", { context.open(Feature.DogSwitcher) }, icon = "chevron-right")
+                    BarkTextAction("Switch cat", { context.open(Feature.DogSwitcher) }, icon = "chevron-right")
                 }
             }
         }
@@ -45,7 +45,7 @@ fun ProfileHub(context: FeatureContext) {
     BoardMenu { listOf(
         Triple(Feature.Health, "Health records", "Medication and vaccination"),
         Triple(Feature.Calendar, "Care calendar", "Tasks and opt-in reminders"),
-        Triple(Feature.Training, "Training", "Short, kind practice sessions"),
+        Triple(Feature.TrainDog, "Train your cat", "Premium · Coming soon"),
         Triple(Feature.Photos, "Photo journal", "Photos and baselines"),
         Triple(Feature.Expenses, "Expenses", "Local receipts and totals"),
         Triple(Feature.VideoHighlight, "Video highlights", "Free editing and preview · Premium MP4"),
@@ -67,12 +67,12 @@ fun ProfileFeatureScreen(page: FeaturePage, context: FeatureContext) {
     val scope = rememberCoroutineScope(); val dog = context.dog
     when (page.feature) {
         Feature.DogSwitcher -> {
-            ScreenHeading("Choose a dog", "Every dog-scoped screen follows this choice.")
+            ScreenHeading("Choose a cat", "Each cat keeps their own records and conversations.")
             BoardMenu { context.journal.dogs.forEach { saved -> FeatureRow(saved.name, listOf(saved.details.breed, saved.details.age).filter(String::isNotBlank).joinToString(" · ").ifBlank { "Details optional" }, if (saved.id == dog.id) "circle-check" else "user-round", meta = if (saved.id == dog.id) "Selected" else "") {
                 scope.launch { context.journalController.selectDog(saved.id); context.navigation.show(Route.Profile) }
             } } }
-            BarkButton("Add another dog", { if (context.companion?.requestPremium(com.dracoarts.shared.presentation.companion.PremiumFeature.AdditionalDog) == true) context.open(Feature.DogAdd) }, secondary = true, icon = "plus")
-            CaptionText("Adding another dog is part of Premium. Your existing dogs stay available.")
+            BarkButton("Add another cat", { if (context.companion?.requestPremium(com.dracoarts.shared.presentation.companion.PremiumFeature.AdditionalDog) == true) context.open(Feature.DogAdd) }, secondary = true, icon = "plus")
+            CaptionText("Adding another cat is part of Premium. Your existing cats stay available.")
         }
         Feature.DogAdd -> {
             val companion = context.companion
@@ -81,25 +81,25 @@ fun ProfileFeatureScreen(page: FeaturePage, context: FeatureContext) {
             LaunchedEffect(companion, retry) {
                 if (companion?.hasPremium == true) failed = !companion.beginAddDog(context.navigation)
             }
-            ScreenHeading("Add another dog", "Their own profile, care records and conversations.")
+            ScreenHeading("Add another cat", "Their own profile, care records and conversations.")
             if (companion?.hasPremium != true) {
-                FeatureNotice("A journal for each dog", "Adding another dog is part of Premium. Your existing dogs stay available.", "lock-keyhole")
+                FeatureNotice("A journal for each cat", "Adding another cat is part of Premium. Your existing cats stay available.", "lock-keyhole")
                 BarkButton("See Premium", { companion?.requestPremium(com.dracoarts.shared.presentation.companion.PremiumFeature.AdditionalDog) })
-                BarkTextAction("Back to dogs", { context.navigation.back() })
+                BarkTextAction("Back to cats", { context.navigation.back() })
             } else if (failed) {
-                ErrorCard(companion?.state?.value?.error ?: "Couldn't open dog setup. Please try again.")
-                BarkButton("Retry dog setup", { failed = false; retry++ })
-            } else CaptionText("Opening dog setup…")
+                ErrorCard(companion?.state?.value?.error ?: "Couldn't open cat setup. Please try again.")
+                BarkButton("Retry cat setup", { failed = false; retry++ })
+            } else CaptionText("Opening cat setup…")
         }
         Feature.DogEdit, Feature.EmergencyEdit -> {
             val contacts = page.feature == Feature.EmergencyEdit
             val initial = mapOf("name" to dog.name, "breed" to dog.details.breed, "age" to dog.details.age, "sex" to dog.details.sex,
                 "vet" to dog.details.vetName, "phone" to dog.details.vetPhone, "emergency" to dog.details.emergencyPhone, "emergencyName" to dog.details.emergencyServiceName, "notes" to dog.details.notes, "photo" to dog.details.photoId.orEmpty())
             val form = rememberFeatureForm(context, "profile-${page.feature}-${dog.id}", initial)
-            ScreenHeading(if (contacts) "Emergency contacts" else "Edit dog", if (contacts) "Verify each number for your location." else "Only the name is required.")
+            ScreenHeading(if (contacts) "Emergency contacts" else "Edit cat", if (contacts) "Verify each number for your location." else "Only the name is required.")
             var additional by rememberSaveable(page.feature, dog.id) { mutableStateOf(false) }
             if (!contacts) {
-                FeatureInput(form, "name", "Dog’s name", !context.saving, max = 80)
+                FeatureInput(form, "name", "Cat’s name", !context.saving, max = 80)
                 FeatureInput(form, "breed", "Breed or mix · optional", !context.saving, max = 100)
                 FeatureInput(form, "age", "Birthday or estimate · optional", !context.saving, max = 60)
                 BoardSelect("Sex · optional", form["sex"], listOf("Not recorded", "Female", "Male").map { it to it }, !context.saving) { form["sex"] = it }
@@ -123,28 +123,28 @@ fun ProfileFeatureScreen(page: FeaturePage, context: FeatureContext) {
         }
         Feature.Settings -> {
             val settings by context.settings.state.collectAsState()
-            ScreenHeading("Settings", "This device and how BarkLog feels.")
+            ScreenHeading("Settings", "Make Soft Paws comfortable for you.")
             FeatureRow("Interaction sounds", "Soft taps, selections and saved notes", "music") { context.open(Feature.Sounds) }
             BoardMenu { FeatureRow("Edit ${dog.name}", "Identity and optional details", "pencil") { context.open(Feature.DogEdit) }; FeatureRow("Export journal", "Free CSV · PDF with Premium", "file-down") { context.open(Feature.Report) } }
-            JournalCard { Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) { SectionTitle("Stored on this device"); BarkIcon("shield-check", Modifier.size(24.dp)) }; SupportingText("No account, cloud sync or remote backup. Deleting the app or its data can remove this journal.") }
+            JournalCard { Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) { SectionTitle("Stored on this device"); BarkIcon("shield-check", Modifier.size(24.dp)) }; SupportingText("Your journal stays on this device. Deleting the app or its data can remove these records.") }
             JournalCard {
                 SectionTitle("Accessibility")
                 FeatureToggle("Reduce motion", "Keep final states without travel.", settings.reduceMotion) { scope.launch { context.settings.save(settings.copy(reduceMotion = it)) } }
                 FeatureToggle("Stronger contrast", "Use stronger control borders.", settings.contrast) { scope.launch { context.settings.save(settings.copy(contrast = it)) } }
             }
             settings.error?.let { ErrorCard(it) }
-            BoardMenu { FeatureRow("Delete this dog", "${dog.name} and their records", "trash") { context.open(Feature.DeleteDog) }; FeatureRow("Delete all local data", "Every dog and record in this journal", "trash") { context.open(Feature.DeleteAll) } }
+            BoardMenu { FeatureRow("Delete this cat", "${dog.name} and their records", "trash") { context.open(Feature.DeleteDog) }; FeatureRow("Delete all local data", "Every cat and record in this journal", "trash") { context.open(Feature.DeleteAll) } }
             JournalCard { SectionTitle("Appearance"); ChoiceField("Theme", settings.theme, listOf("System", "Light", "Dark").map { it to it }) { scope.launch { context.settings.save(settings.copy(theme = it)) } } }
             HomeShortcutSettings(context)
-            CaptionText("BarkLog · 1.0.0 · free local journal")
+            CaptionText("Soft Paws · 1.0.0 · local cat journal")
         }
         Feature.DeleteDog, Feature.DeleteAll -> {
             val all = page.feature == Feature.DeleteAll
             var confirm by remember { mutableStateOf(false) }
             ScreenHeading(if (all) "Delete every local journal?" else "Delete ${dog.name}?", "This cannot be undone.")
-            FeatureNotice("Local records will be removed", if (all) "Removes all ${context.journal.dogs.size} dogs and their care records, tasks, photos, expenses and memories." else "Removes ${dog.name}, ${context.journal.totalCount} care records and their other saved data. Other dogs stay saved.", "trash")
+            FeatureNotice("Local records will be removed", if (all) "Removes all ${context.journal.dogs.size} cats and their care records, tasks, photos, expenses and memories." else "Removes ${dog.name}, ${context.journal.totalCount} care records and their other saved data. Other cats stay saved.", "trash")
             BarkButton("Export first", { context.open(Feature.Report) }, secondary = true, icon = "file-down")
-            BarkButton(if (all) "Delete all data permanently" else "Delete dog permanently", { confirm = true }, enabled = !context.saving, secondary = true)
+            BarkButton(if (all) "Delete all data permanently" else "Delete cat permanently", { confirm = true }, enabled = !context.saving, secondary = true)
             if (confirm) ConfirmChange(if (all) "Delete every journal?" else "Delete ${dog.name}?", "These records will be permanently removed from this app. Export a copy first if you want to keep them.", "Delete permanently", context.saving, { confirm = false }) {
                 scope.launch {
                     val removed = if (all) context.care.deleteAll() else context.care.deleteDog(dog.id)

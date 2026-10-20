@@ -18,14 +18,14 @@ fun SafetyFeatureScreen(page: FeaturePage, context: FeatureContext) {
     val dog = context.dog
     when (page.feature) {
         Feature.Safety -> {
-            ScreenHeading("Safety Center", "Contacts when you need them. Explanations for your dog.")
+            ScreenHeading("Safety Center", "Contacts when you need them. Cat care when you choose it.")
             SafetyUrgent()
             BoardMenu {
             FeatureRow("Emergency card", "Verified contacts and facts to bring", "phone") { context.open(Feature.Emergency) }
-            FeatureRow("Toxicity lookup", "BarkLog AI · Premium", "search") { context.open(Feature.Toxicity) }
-            FeatureRow("Safety topics", "For ${dog.name} · BarkLog AI · Premium", "shield") { context.open(Feature.FirstAid) }
+            FeatureRow("Toxicity lookup", "Soft Paws AI · Premium", "search") { context.open(Feature.Toxicity) }
+            FeatureRow("Safety topics", "For ${dog.name} · Soft Paws AI · Premium", "shield") { context.open(Feature.FirstAid) }
             FeatureRow("Find a vet nearby", "Choose a clinic in Maps, then call · Premium", "map-pin") { context.open(Feature.NearestVet) }
-            FeatureRow("Train your dog", "Premium · coming soon", "graduation-cap") { context.open(Feature.TrainDog) }
+            FeatureRow("Cat enrichment", "Premium · coming soon", "graduation-cap") { context.open(Feature.TrainDog) }
             FeatureRow("What are you seeing?", "Organize observations for a call", "clipboard-list") { context.open(Feature.Triage) }
             }
         }
@@ -53,7 +53,7 @@ fun SafetyFeatureScreen(page: FeaturePage, context: FeatureContext) {
             BarkButton("Edit emergency contacts", { context.open(Feature.EmergencyEdit) }, secondary = true, icon = "pencil")
             JournalCard {
                 SectionTitle("Facts to bring")
-                Text("Dog: ${dog.name}")
+                Text("Cat: ${dog.name}")
                 val measurement = lastWeight?.details as? CareDetails.Weight
                 if (weightRead) SupportingText(if (measurement != null) "Last recorded weight: ${measurement.amount} ${measurement.unit.label} · ${JournalDates.dateLabel(JournalDates.day(lastWeight!!.occurredAtMillis, context.zone))}" else "No measured weight recorded.")
                 if (weightFailed) { CaptionText("Couldn't read the last measured weight. You can still use the contacts above."); BarkTextAction("Try weight again", { weightRetry++ }, icon = "refresh-cw") }
@@ -68,7 +68,7 @@ fun SafetyFeatureScreen(page: FeaturePage, context: FeatureContext) {
         Feature.FirstAid -> SafetyAiScreen(context, toxicity = false, initialTopic = page.id)
         Feature.NearestVet -> NearbyVetScreen(context)
         Feature.TrainDog -> {
-            ScreenHeading("Train your dog", "BarkLog Premium · coming soon")
+            ScreenHeading("Cat enrichment", "Soft Paws Premium · coming soon")
             FeatureNotice("Something to look forward to", "Guided training for ${dog.name} is being planned. It is not available with a subscription yet.", "graduation-cap")
             BarkButton("Back to Safety", { context.navigation.back() }, secondary = true)
         }
@@ -76,14 +76,14 @@ fun SafetyFeatureScreen(page: FeaturePage, context: FeatureContext) {
             ScreenHeading("What are you seeing?", "Organize observations for a professional call.")
             SafetyUrgent()
             BoardMenu {
-            listOf("Trouble breathing", "Collapse or unresponsiveness", "Possible poisoning", "Another urgent concern").forEach { sign -> FeatureRow(sign, "Contact a professional", "activity") { context.open(Feature.Emergency) } }
+            listOf("Trouble breathing", "Collapse or unresponsiveness", "Straining with little or no urine", "Possible poisoning or lily exposure", "Another urgent concern").forEach { sign -> FeatureRow(sign, "Contact a professional", "activity") { context.open(Feature.Emergency) } }
             }
-            CaptionText("BarkLog does not diagnose or decide that it is safe to wait.")
+            CaptionText("Soft Paws does not diagnose or decide that it is safe to wait.")
         }
         else -> error("Not a safety destination")
     }
-    if (page.feature in setOf(Feature.Safety, Feature.Triage, Feature.Emergency)) CaptionText("Saved contacts and bundled numbers work without AI. Calling needs phone service. Emergency guidance: AVMA / Merck · checked ${SafetyReference.version}.")
+    if (page.feature in setOf(Feature.Safety, Feature.Triage, Feature.Emergency)) CaptionText("Saved contacts and bundled numbers work without AI. Calling needs phone service. Cat safety sources: Cornell / FDA / ASPCA · checked ${SafetyReference.version}.")
 }
 
 @Composable
-private fun SafetyUrgent() { FeatureNotice("If your dog may be in immediate danger", SafetyReference.urgent.substringAfter(", ").replaceFirstChar { it.uppercase() }, "phone", tone = "bad") }
+private fun SafetyUrgent() { FeatureNotice("If your cat may be in immediate danger", SafetyReference.urgent.substringAfter(", ").replaceFirstChar { it.uppercase() }, "phone", tone = "bad") }

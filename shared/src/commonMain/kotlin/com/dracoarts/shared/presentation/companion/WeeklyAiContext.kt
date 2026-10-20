@@ -8,7 +8,11 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 
 fun questionCareType(question: String): CareEventType? = when {
-    Regex("walk|exercise|activit", RegexOption.IGNORE_CASE).containsMatchIn(question) -> CareEventType.Walk
+    Regex("water|drink|hydrat", RegexOption.IGNORE_CASE).containsMatchIn(question) -> CareEventType.Water
+    Regex("litter", RegexOption.IGNORE_CASE).containsMatchIn(question) -> CareEventType.Litter
+    Regex("play|exercise|activit", RegexOption.IGNORE_CASE).containsMatchIn(question) -> CareEventType.Play
+    Regex("sleep|nap|resting", RegexOption.IGNORE_CASE).containsMatchIn(question) -> CareEventType.Sleep
+    Regex("walk", RegexOption.IGNORE_CASE).containsMatchIn(question) -> CareEventType.Walk
     Regex("brush|groom|coat", RegexOption.IGNORE_CASE).containsMatchIn(question) -> CareEventType.Grooming
     Regex("food|meal|eating|appetite|diet", RegexOption.IGNORE_CASE).containsMatchIn(question) -> CareEventType.Meal
     Regex("poop|stool", RegexOption.IGNORE_CASE).containsMatchIn(question) -> CareEventType.Poop
@@ -43,18 +47,19 @@ suspend fun prepareWeeklyContext(repository: JournalRepository, dogId: String, q
     var records = snapshot.records.map(::sourceRecord)
     var weekly = WeeklyAiContext(starts.first(), until, zone.id, snapshot.counts.values.sum(), records.size, counts(snapshot.counts),
         dates.mapIndexed { i, date -> CareWeekDay(date.toString(), counts(snapshot.dailyCounts[i])) }, focus?.label,
-        showCard = focus != null || question.contains(dog.name, true) || Regex("dog|care|health|week|routine|day", RegexOption.IGNORE_CASE).containsMatchIn(question),
+        showCard = focus != null || question.contains(dog.name, true) || Regex("cat|dog|care|health|week|routine|day", RegexOption.IGNORE_CASE).containsMatchIn(question),
         profileLimited = profileFacts(profile).any { boundedProfileFact(it.second) != it.second })
     while (cloudContextJson(profile, records, weekly, now, zone.id).encodeToByteArray().size > 23_000 && records.isNotEmpty()) {
         records = records.dropLast(1); weekly = weekly.copy(shared = records.size)
     }
-    check(cloudContextJson(profile, records, weekly, now, zone.id).encodeToByteArray().size <= 23_000) { "This dog’s profile is too large for an online reply. Review its care notes." }
+    check(cloudContextJson(profile, records, weekly, now, zone.id).encodeToByteArray().size <= 23_000) { "This cat’s profile is too large for an online reply. Review its care notes." }
     return PreparedWeeklyContext(profile, records, weekly)
 }
 
 internal fun cloudContextJson(profile: ProfileSnapshot?, records: List<SourceRecord>, weekly: WeeklyAiContext?, at: Long?, zone: String): String = buildJsonObject {
+    put("species", "cat")
     profile?.let { put("caregiverProfile", buildJsonObject {
-        put("relationship", "The person asking owns and cares for this dog.")
+        put("relationship", "The person asking owns and cares for this cat.")
         profileFacts(it).filter { (_, value) -> value.isNotBlank() && value !in setOf("Not sure", "Not recorded") }.forEach { (key, value) -> put(key, boundedProfileFact(value)) }
     }) }
     at?.let { put("questionTimeUtcMillis", it); put("timeZone", zone) }
@@ -64,4 +69,4 @@ internal fun cloudContextJson(profile: ProfileSnapshot?, records: List<SourceRec
     put("selectedObservations", buildJsonArray { records.forEachIndexed { i, r -> add(buildJsonObject { put("source", i + 1); put("type", r.type); put("occurredAtUtcMillis", r.at); put("caregiverNote", r.note) }) } })
 }.toString()
 
-fun barkLogAiText(text: String, dogName: String? = null): String = if (dogName.equals("Atlas", true)) text else Regex("\\bAtlas(?: AI)?\\b", RegexOption.IGNORE_CASE).replace(text, "BarkLog AI")
+fun barkLogAiText(text: String, dogName: String? = null): String = if (dogName.equals("Atlas", true)) text else Regex("\\bAtlas(?: AI)?\\b", RegexOption.IGNORE_CASE).replace(text, "Soft Paws AI")

@@ -9,6 +9,8 @@ import com.dracoarts.shared.managers.StorageBackend
 import kotlinx.datetime.*
 
 enum class BoardReviewDataSet(val key: String, val databaseName: String) {
+    SoftPawsDay("soft-paws-day-v1", "soft_paws_review_day_v1.db"),
+    SoftPawsSetup("soft-paws-setup-v1", "soft_paws_review_setup_v1.db"),
     PremiumSafety("park-premium-safety-v1", "barklog_review_premium_safety_v1.db"),
     AddDog("park-add-dog-v1", "barklog_review_add_dog_v1.db"),
     AiCards("park-ai-cards-v1", "barklog_review_ai_cards_v1.db"),
@@ -21,7 +23,11 @@ enum class BoardReviewDataSet(val key: String, val databaseName: String) {
     Contexts("park-contexts-v1", "barklog_review_park_contexts_v1.db"),
     Paged("park-paged-v1", "barklog_review_park_paged_v1.db");
     val preferencePrefix get() = if (this == Day) "board_review_v1_" else "board_review_${name.lowercase()}_v1_"
-    val nowMillis get() = if (this == AiCards) LocalDateTime.parse("2026-10-19T20:00").toInstant(BoardReviewFixture.zone).toEpochMilliseconds() else BoardReviewFixture.now
+    val nowMillis get() = when (this) {
+        SoftPawsDay, SoftPawsSetup -> LocalDateTime.parse("2026-10-20T09:41").toInstant(BoardReviewFixture.zone).toEpochMilliseconds()
+        AiCards -> LocalDateTime.parse("2026-10-19T20:00").toInstant(BoardReviewFixture.zone).toEpochMilliseconds()
+        else -> BoardReviewFixture.now
+    }
 }
 
 /** Opt-in host Debug fixture. A separate SQLite file and preference namespace are mandatory. */
@@ -37,6 +43,16 @@ object BoardReviewFixture {
     private fun at(day: String, time: String) = LocalDateTime.parse("${day}T$time").toInstant(zone).toEpochMilliseconds()
 
     suspend fun seed(repository: JournalRepository, dataSet: BoardReviewDataSet = BoardReviewDataSet.Day) {
+        if (dataSet == BoardReviewDataSet.SoftPawsSetup) return
+        if (dataSet == BoardReviewDataSet.SoftPawsDay) {
+            val cat = repository.addDog("Miso", DogDetails(companion = DogContext.catDefaults().copy(stage = "Adult", lifestyle = "Indoor")), "50f70002-0001-4000-8000-000000000001")
+            listOf(
+                CareEventInput(CareEventType.Meal, at("2026-10-20", "08:10"), "Breakfast", CareDetails.Meal(offeredGrams = 35.0, eaten = MealEaten.Mostly)),
+                CareEventInput(CareEventType.Litter, at("2026-10-20", "08:34"), details = CareDetails.Litter(LitterObservation.Urine, 1)),
+                CareEventInput(CareEventType.Play, at("2026-10-20", "08:50"), "Feather toy", CareDetails.Play(PlayInterest.Interested, 7)),
+            ).forEachIndexed { i, input -> repository.createEvent(cat.id, "50f70002-0001-4000-8000-${(i + 100).toString().padStart(12, '0')}", input) }
+            return
+        }
         if (dataSet in setOf(BoardReviewDataSet.Setup, BoardReviewDataSet.NoDog)) return
         repository.addDog("Bruno", if (dataSet == BoardReviewDataSet.AiCards) DogDetails(breed = "Cocker Spaniel", age = "3 years", companion = DogContext(years = "3", breeds = listOf("Cocker Spaniel"))) else DogDetails(breed = "Mixed breed", age = "4–7 years"), dogId)
         if (dataSet == BoardReviewDataSet.AiCards) {

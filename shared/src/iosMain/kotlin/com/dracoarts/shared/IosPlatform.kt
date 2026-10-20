@@ -16,7 +16,8 @@ class IosPlatform(private val boardFixture: BoardReviewDataSet? = null, videoEng
     @OptIn(kotlin.experimental.ExperimentalNativeApi::class)
     override val premiumPreviewAllowed = kotlin.native.Platform.isDebugBinary
     @OptIn(kotlin.experimental.ExperimentalNativeApi::class)
-    override val atlasEnabled = kotlin.native.Platform.isDebugBinary && boardFixture == null
+    // Separate product admission and live proof remain deferred in every build.
+    override val atlasEnabled = false
     override val journalDriverFactory = IosJournalDriverFactory(boardFixture?.databaseName ?: JOURNAL_DATABASE_NAME)
     override val storage = StorageManager(IosStorageBackend().let { if (boardFixture != null) BoardReviewPreferences(it, boardFixture.preferencePrefix) else it })
     override val haptics = IosHapticManager()

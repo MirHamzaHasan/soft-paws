@@ -19,7 +19,7 @@ window.BOARD = {
       id: "foundations",
       view: "kit",
       title: "The Soft Paws kit",
-      intent: "Moss, paper, honest records. One original tabby.",
+      intent: "Apricot, teal and seven care colours. One original tabby.",
     },
     {
       id: "opening",
@@ -95,13 +95,18 @@ window.BOARD = {
     ],
     home: [
       {
+        title: "Finch · a companion beside useful actions",
+        took: "Keep the companion present while daily actions stay distinct and easy to find. Soft Paws uses its own cat, colour roles and layout.",
+        url: "https://mobbin.com/screens/b63e72e3-54bd-4a16-9950-0f3b496fc7d4",
+      },
+      {
         title: "Fi · current pet as the anchor",
         took: "Put the selected animal and dated care above discovery content.",
         url: "https://mobbin.com/screens/64c4ae66-ff01-43e1-b36f-964bb3c2cdfb",
       },
       {
         title: "BitePal · one direct logging prompt",
-        took: "Give logging a direct named action instead of a dashboard of metrics.",
+        took: "Keep the main logging action readable beside a character. Soft Paws assigns stable colours to its own named care categories.",
         url: "https://mobbin.com/screens/eb74890f-44ab-41bd-8933-7beebe1036c3",
       },
     ],

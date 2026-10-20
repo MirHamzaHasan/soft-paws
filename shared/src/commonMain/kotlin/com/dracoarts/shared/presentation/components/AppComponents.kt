@@ -48,6 +48,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.dracoarts.shared.presentation.theme.AppSpacing
+import com.dracoarts.shared.presentation.theme.SoftPawsDesignTokens
 import com.dracoarts.shared.presentation.theme.pressMotion
 import com.dracoarts.shared.presentation.theme.softBubble
 import com.dracoarts.shared.presentation.theme.textEntrance
@@ -75,7 +76,7 @@ fun BrandHeader(storageLabel: String = "On this device") {
     FlowRow(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             PawMark(Modifier.size(20.dp))
-            Text("BarkLog", style = MaterialTheme.typography.labelMedium)
+            Text("Soft Paws", style = MaterialTheme.typography.labelMedium)
         }
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             BarkIcon("shield-check", Modifier.size(14.dp), MaterialTheme.colorScheme.onSurfaceVariant)
@@ -93,13 +94,13 @@ fun SectionTitle(text: String) {
 fun JournalCard(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(26.dp),
+        shape = RoundedCornerShape(24.dp),
         color = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
         tonalElevation = 0.dp, shadowElevation = 0.dp,
     ) {
-        Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp), content = content)
+        Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(8.dp), content = content)
     }
 }
 
@@ -147,7 +148,7 @@ fun CaptionText(text: String, modifier: Modifier = Modifier) {
 @Composable
 fun BarkButton(label: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, secondary: Boolean = false, icon: String? = null, danger: Boolean = false, outlineWidth: Dp = 1.5.dp) {
     val source = remember { MutableInteractionSource() }
-    val shape = RoundedCornerShape(50)
+    val shape = RoundedCornerShape(SoftPawsDesignTokens.controlRadius.dp)
     val position = modifier.fillMaxWidth().heightIn(min = AppSpacing.controlHeight).then(pressMotion(source, enabled)).clip(shape)
         .then(softBubble(source, if (secondary) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onPrimary, enabled))
     val content: @Composable androidx.compose.foundation.layout.RowScope.() -> Unit = {

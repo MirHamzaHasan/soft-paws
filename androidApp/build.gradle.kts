@@ -1,8 +1,9 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
+import groovy.json.JsonSlurper
 
 plugins {
-    alias(libs.plugins.googleServices)
+    alias(libs.plugins.googleServices) apply false
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.composeCompiler)
@@ -14,26 +15,38 @@ kotlin {
     }
 }
 
-val barkLogBillingProperties = Properties().apply {
+// A copied BarkLog registration must never initialize Soft Paws services.
+val softPawsApplicationId = "com.draco.apps.soft.paws"
+val softPawsFirebaseConfigured = file("google-services.json").takeIf { it.isFile }?.let { config ->
+    val data = JsonSlurper().parse(config) as Map<*, *>
+    (data["client"] as? List<*>)?.count { client ->
+        val info = (client as? Map<*, *>)?.get("client_info") as? Map<*, *>
+        (info?.get("android_client_info") as? Map<*, *>)?.get("package_name") == softPawsApplicationId
+    } == 1
+} ?: false
+if (softPawsFirebaseConfigured) apply(plugin = "com.google.gms.google-services")
+
+val softPawsBillingProperties = Properties().apply {
     rootProject.file("local.properties").takeIf { it.isFile }?.inputStream()?.use { load(it) }
 }
-fun barkLogBillingValue(name: String): String = (providers.gradleProperty(name).orNull
-    ?: barkLogBillingProperties.getProperty(name).orEmpty()).replace("\\", "\\\\").replace("\"", "\\\"")
+fun softPawsBillingValue(name: String): String = (providers.gradleProperty(name).orNull
+    ?: softPawsBillingProperties.getProperty(name).orEmpty()).replace("\\", "\\\\").replace("\"", "\\\"")
 
 android {
     namespace = "com.draco.arts.apps.bark.log.dogs.journal"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.draco.apps.bark.log"
+        applicationId = "com.draco.apps.soft.paws"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "REVENUECAT_PUBLIC_KEY", "\"${barkLogBillingValue("barklog.revenuecat.androidPublicKey")}\"")
-        buildConfigField("String", "REVENUECAT_ENTITLEMENT_ID", "\"${barkLogBillingValue("barklog.revenuecat.entitlementId")}\"")
-        buildConfigField("String", "REVENUECAT_OFFERING_ID", "\"${barkLogBillingValue("barklog.revenuecat.offeringId")}\"")
+        buildConfigField("boolean", "FIREBASE_CONFIGURED", softPawsFirebaseConfigured.toString())
+        buildConfigField("String", "REVENUECAT_PUBLIC_KEY", "\"${softPawsBillingValue("softpaws.revenuecat.androidPublicKey")}\"")
+        buildConfigField("String", "REVENUECAT_ENTITLEMENT_ID", "\"${softPawsBillingValue("softpaws.revenuecat.entitlementId")}\"")
+        buildConfigField("String", "REVENUECAT_OFFERING_ID", "\"${softPawsBillingValue("softpaws.revenuecat.offeringId")}\"")
     }
 
     compileOptions {

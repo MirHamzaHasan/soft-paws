@@ -23,10 +23,10 @@ class SafetyAiController(
         val initial = state()
         val uid = identity()
         fun checkAccess() {
-            if (!premium()) throw AiException("BarkLog Premium is needed for AI safety topics. Emergency calls stay free.")
+            if (!premium()) throw AiException("Soft Paws Premium is needed for AI safety topics. Emergency calls stay free.")
             if (state().dogId != dogId || !state().workspace.weeklyAllowed || identity() != uid)
                 throw AiException("The dog, account or AI consent changed. Review it before asking again.")
-            if (provider !is DemoResponseProvider && uid == null) throw AiException("Sign in to use BarkLog AI. Emergency calls stay available.")
+            if (provider !is DemoResponseProvider && uid == null) throw AiException("Sign in to use Soft Paws AI. Emergency calls stay available.")
         }
         if (!initial.workspace.weeklyAllowed) throw AiException("Review AI & your records before sending this topic.")
         checkAccess()

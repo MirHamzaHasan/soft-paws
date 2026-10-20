@@ -65,8 +65,11 @@ photo upload. The owner deferred live AI rechecks and real store configuration.
 The new board is `design/soft-paws/`, built with the installed Ungenerated engine
 and skills. Research uses actual Mobbin MCP results; links and “what we took”
 notes are on its Research view. Other apps' screenshots/artwork are not bundled.
-Paper ground, moss actions, clear borders, Bricolage Grotesque display and Inter
-reading. No decorative gradients or shadows. Light/dark tokens, ≥48 px action
+The owner's later colour refinement selects warm cream, an apricot cat card,
+teal actions and butter/lilac/mint/rose/sky/periwinkle care categories. The source
+is `css/tokens.css` plus `js/color-roles.js`, generated into Compose. Keep clear
+borders, Bricolage Grotesque display and Inter reading. No decorative gradients
+or shadows. Light/dark tokens, ≥48 px action
 targets, 130% text checks, explicit selected checks and reduced motion are required.
 
 Original Rive file 2667919 is separate from the inherited spaniels/notebook puppy.
@@ -81,16 +84,31 @@ The review board is a synthetic in-memory prototype, not a new journal backend.
 Its account, AI, call, picker, location, sharing and payment controls do not invoke
 real services. Reviewer Picks/Notes alone may persist in the ignored review store.
 
-The native source remains the inherited BarkLog base. Native cat adaptation,
-Soft Paws app/store identifiers and independent Firebase/service registrations
-are still pending. Do not install that base as Soft Paws or reuse BarkLog private
-registrations. Do not uninstall, clear or migrate existing device data as a side
-effect of the redesign. Review this new board before shared Compose UI adoption.
+The native port now includes separate Soft Paws identities, safe unconfigured
+services, preserving cat observation contracts/SQLite v5, shared cat setup,
+Home, five-tab navigation, care hubs and the original native Rive cat. The
+Android offline save/reopen/tab journey and 152 JVM tests pass. The initial iOS
+host compiled; its accessibility crash was corrected with the official iOS
+renderer update and the repeated-navigation/save/relaunch tests now pass.
+Full downstream native cat adaptation, paired screen parity, store preparation
+and independent Firebase/service registrations remain pending. Do not reuse
+BarkLog's private registrations or uninstall/clear existing device data as a
+side effect of this port. The board's direction approval is already granted.
 
 KMP, Compose, SQLDelight, AppContainer/ModuleRegistry separation and preserving
 local writes remain the selected foundation. The existing database filename and
 migrations stay preserved until a deliberate, tested Soft Paws storage/identity
 decision. No blind global rename of persisted types/keys or service contracts.
 
-See [the delivery task](../../tasks/soft-paws-task001-cat-redesign.md) for evidence
+See [the native delivery task](../../tasks/soft-paws-task002-native-port.md) for evidence
 and remaining gates. Earlier BarkLog task files describe the base's history only.
+
+## Native authorization · 20 October 2026
+
+The owner explicitly approved the complete direction: “Approve the native port.”
+See task002 and `tasks/soft-paws-native-parity.json` for actual delivery status.
+The first storage slice adds cat observations and profile facts through preserving
+schema v5. Both hosts use `com.draco.apps.soft.paws`; inherited Firebase client
+registrations/callbacks are excluded. Atlas remains disabled in every build until
+Soft Paws has its own approved admission and live proof. Own billing IDs/keys stay
+deferred. Current native screen work is not a claim of completed visual parity.

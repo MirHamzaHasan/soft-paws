@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct BarkLogApp: App {
+struct SoftPawsApp: App {
     init() { BarkFirebaseAuth.configure() }
     var body: some Scene {
         WindowGroup {

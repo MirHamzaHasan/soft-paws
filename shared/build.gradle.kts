@@ -54,6 +54,12 @@ kotlin {
             implementation(libs.rive.android)
         }
         iosMain.dependencies {
+            // Apply the official accessibility fix to the affected platform. The iOS
+            // graph resolves these groups together; Android retains its API 36 baseline.
+            implementation("org.jetbrains.compose.runtime:runtime:${libs.versions.compose.ios.runtime.get()}")
+            implementation("org.jetbrains.compose.foundation:foundation:${libs.versions.compose.ios.runtime.get()}")
+            implementation("org.jetbrains.compose.ui:ui:${libs.versions.compose.ios.runtime.get()}")
+            implementation("org.jetbrains.compose.material3:material3:${libs.versions.compose.ios.material3.get()}")
             implementation(libs.sqldelight.native)
             implementation(libs.ktor.client.darwin)
         }

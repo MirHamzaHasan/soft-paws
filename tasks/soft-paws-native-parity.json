@@ -1,0 +1,770 @@
+{
+  "board": "design/soft-paws/screen-inventory.json",
+  "ownerDirectionApproval": "2026-10-20 \u00b7 Approve the native port",
+  "screens": [
+    {
+      "id": "welcome",
+      "section": "opening",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionOnboarding.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "cat-name",
+      "section": "setup",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionOnboarding.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "cat-life",
+      "section": "setup",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionOnboarding.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "cat-age",
+      "section": "setup",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionOnboarding.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "cat-details",
+      "section": "setup",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionOnboarding.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "cat-weight",
+      "section": "setup",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionOnboarding.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "cat-needs",
+      "section": "setup",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionOnboarding.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "cat-goals",
+      "section": "setup",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionOnboarding.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "reminder-setup",
+      "section": "setup",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionOnboarding.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "plan-reveal",
+      "section": "setup",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsPlanReveal.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "home",
+      "section": "home",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HomeScreen.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "log-chooser",
+      "section": "journal",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/FeatureScreens.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "log-meal",
+      "section": "journal",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "log-water",
+      "section": "journal",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "log-litter",
+      "section": "journal",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "log-play",
+      "section": "journal",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "log-sleep",
+      "section": "journal",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "log-mood",
+      "section": "journal",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "log-groom",
+      "section": "journal",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "log-weight",
+      "section": "journal",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "log-note",
+      "section": "journal",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "saved",
+      "section": "journal",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsSavedRecord.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "timeline",
+      "section": "journal",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "record",
+      "section": "journal",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "record-edit",
+      "section": "journal",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "delete-record",
+      "section": "journal",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "health",
+      "section": "health",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsHubs.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "medications",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "med-form",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "med-detail",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "med-history",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "vaccinations",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "vaccine-form",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "calendar",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "task-detail",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "task-form",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "insights",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "weight-history",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "report",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "export-options",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "export-progress",
+      "section": "health",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "safety",
+      "section": "safety",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "symptoms",
+      "section": "safety",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "contacts",
+      "section": "safety",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "contact-form",
+      "section": "safety",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "region",
+      "section": "safety",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "nearby-vets",
+      "section": "safety",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "location-denied",
+      "section": "safety",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "toxicity",
+      "section": "safety",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "safety-topics",
+      "section": "safety",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "photos",
+      "section": "memories",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsHubs.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "photo-picker",
+      "section": "memories",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "photo-detail",
+      "section": "memories",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "memory-book",
+      "section": "memories",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "video-editor",
+      "section": "memories",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "video-preview",
+      "section": "memories",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "expenses",
+      "section": "memories",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "expense-form",
+      "section": "memories",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "expense-detail",
+      "section": "memories",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "ai-entry",
+      "section": "ai",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "ai-consent",
+      "section": "ai",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "chat",
+      "section": "ai",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "chat-source",
+      "section": "ai",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "chat-unavailable",
+      "section": "ai",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "profile",
+      "section": "account",
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsHubs.kt"
+      ],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "cat-profile",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "profile-edit",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "cat-switcher",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "add-cat",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "sign-in",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "email-sign-in",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "create-account",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "password-reset",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "paywall",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "account-plan",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "manage-subscription",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "settings",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "sound-settings",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "data-settings",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "delete-cat",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "delete-account",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "future-features",
+      "section": "account",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "empty",
+      "section": "states",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "loading",
+      "section": "states",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "offline",
+      "section": "states",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "save-failure",
+      "section": "states",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "permission-denied",
+      "section": "states",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "missing-photo",
+      "section": "states",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    },
+    {
+      "id": "revision-conflict",
+      "section": "states",
+      "status": "pending",
+      "nativeSources": [],
+      "androidEvidence": [],
+      "iosEvidence": []
+    }
+  ],
+  "colourEvidence": "docs/design/evidence/soft-paws-color/README.md",
+  "scopeNote": "25 cat surfaces implemented but not approved for full paired visual parity; 64 downstream ports remain pending. Colour/core-journey evidence is separate."
+}

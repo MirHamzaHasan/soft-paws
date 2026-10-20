@@ -62,6 +62,7 @@ fun EventPageScreen(page: JournalPage, dogName: String, controller: EventControl
         status.readError -> { BarkTextAction("Back", navigation::back, icon = "arrow-left", leading = true); ScreenHeading("Couldn't read this record"); ErrorText(status.error ?: "Couldn't read this record."); BarkButton("Try again", { retry++ }, icon = "refresh-cw") }
         status.record == null -> { ScreenHeading("Record unavailable", "This record is no longer available for $dogName."); BarkButton("Back to journal", navigation::closePage, secondary = true) }
         page.kind == JournalPage.Kind.Edit -> EventEditor(page.sessionId, EventDraft.edit(status.record!!, zone), true, controller, navigation, context)
+        page.kind == JournalPage.Kind.Saved -> SoftPawsSavedRecord(status.record!!, context)
         else -> EventDetail(status.record!!, dogName, controller, navigation, newId, zone, context)
     }
 }
@@ -129,7 +130,8 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
         return
     }
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { BarkTextAction("Close", { keyboard?.hide(); navigation.back() }, enabled = !status.saving, icon = "x", leading = true); CaptionText("${context.dog.name} · local journal") }
-    BoardEditorHero(draft.type, "${if (editing) "Edit" else "Log"} ${draft.type.label.lowercase()}", logSubtitle(draft.type), context.dog.name)
+    SoftPawsKicker(context.dog.name.uppercase())
+    SoftPawsHeading(if (editing) "Edit this ${draft.type.label.lowercase()}." else catLogTitle(draft.type), logSubtitle(draft.type))
     if (restored) Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) { BarkIcon("notebook-pen", Modifier.size(16.dp)); CaptionText("Draft restored · your notes and choices are here.") }
     Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
         BoardSection("01", logPrompt(draft.type), draft.type.key) {
@@ -137,6 +139,8 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
             CareEventType.Poop -> ChoiceChips("Consistency · optional", draft.choice, StoolConsistency.entries.map { it.name to it.label }, !status.saving, stoolArt = true) { draft = draft.copy(choice = it) }
             CareEventType.Pee -> ChoiceChips("Amount · optional", draft.choice, ObservedAmount.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(choice = it) }
             CareEventType.Meal -> {
+                FormField("Amount offered (g) · optional", draft.measuredAmount, !status.saving, { draft = draft.copy(measuredAmount = it) }, maximum = 16, numeric = true)
+                ChoiceChips("How much did they eat?", draft.mealEaten, MealEaten.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(mealEaten = it) }
                 FormField("Food or recipe · optional", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 200, placeholder = "e.g. chicken kibble")
                 val units = listOf("g", "cups", "mL", "Other")
                 val unit = draft.second.substringAfterLast(' ').takeIf { it in units } ?: "g"
@@ -150,21 +154,51 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
                 FormField("Duration · optional", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 4, numeric = true, placeholder = "24", trailingText = "minutes")
             }
             CareEventType.Symptom, CareEventType.Behavior -> FormField("What did you observe?", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 2000, multiline = true)
-            CareEventType.Mood -> ChoiceChips("Mood you observed", draft.choice, ObservedMood.entries.map { it.name to it.label }, !status.saving, icon = "heart") { draft = draft.copy(choice = it) }
-            CareEventType.Grooming -> ChoiceChips("Grooming activity", draft.choice, listOf(GroomingActivity.Brushing, GroomingActivity.Bath, GroomingActivity.Nails, GroomingActivity.Teeth, GroomingActivity.Ears, GroomingActivity.Other).map { it.name to it.label }, !status.saving) { draft = draft.copy(choice = it) }
+            CareEventType.Mood -> {
+                FormField("Context · optional", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 200)
+                ChoiceChips("How did they seem?", draft.choice, (listOf(ObservedMood.Settled, ObservedMood.Playful, ObservedMood.Hiding, ObservedMood.Different) + ObservedMood.entries.filter { it.name == draft.choice }).distinct().map { it.name to it.label }, !status.saving, icon = "heart") { draft = draft.copy(choice = it) }
+            }
+            CareEventType.Grooming -> {
+                FormField("Minutes · optional", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 4, numeric = true)
+                ChoiceChips("Your care", draft.choice, (listOf(GroomingActivity.Brushing, GroomingActivity.NailsChecked, GroomingActivity.CoatChecked, GroomingActivity.Other) + GroomingActivity.entries.filter { it.name == draft.choice }).distinct().map { it.name to it.label }, !status.saving) { draft = draft.copy(choice = it) }
+            }
             CareEventType.Weight -> {
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     FormField("Measured weight", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 16, numeric = true, modifier = Modifier.weight(1f), placeholder = "14.6")
                     Box(Modifier.weight(.7f)) { BoardSelect("Weight unit", draft.choice, WeightUnit.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(choice = it) } }
                 }
-                CaptionText("Use a measured value. BarkLog does not estimate weight.")
+                CaptionText("Use a known measurement. Soft Paws does not estimate weight.")
+            }
+            CareEventType.Water -> {
+                FormField("Measured amount (ml), if known", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 16, numeric = true)
+                ChoiceChips("What did you observe?", draft.choice, WaterObservation.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(choice = it) }
+                CaptionText("A water check is an observation. It does not measure daily intake.")
+            }
+            CareEventType.Litter -> {
+                FormField("Number of visits observed · optional", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 4, numeric = true)
+                ChoiceChips("Record what you saw", draft.choice, LitterObservation.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(choice = it, urineAmount = "", stoolConsistency = "") }
+                if (draft.choice in listOf(LitterObservation.Urine.name, LitterObservation.Both.name)) ChoiceChips("Urine amount · optional", draft.urineAmount, ObservedAmount.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(urineAmount = it) }
+                if (draft.choice in listOf(LitterObservation.Stool.name, LitterObservation.Both.name)) ChoiceChips("Stool consistency · optional", draft.stoolConsistency, StoolConsistency.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(stoolConsistency = it) }
+                CaptionText("Only the visits and output you observed are recorded.")
+            }
+            CareEventType.Play -> {
+                FormField("Minutes · optional", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 4, numeric = true)
+                ChoiceChips("Their pace, their choice", draft.choice, PlayInterest.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(choice = it) }
+            }
+            CareEventType.Sleep -> {
+                FormField("Minutes observed · optional", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 4, numeric = true)
+                ChoiceChips("Record an observed rest", draft.choice, SleepObservation.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(choice = it) }
+            }
+            CareEventType.Note -> {
+                FormField("Title · optional", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 200)
+                ChoiceChips("Kind of note", draft.choice, NoteCategory.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(choice = it) }
             }
             else -> Unit
         }
         val extras = when (draft.type) {
             CareEventType.Poop -> listOf("Color")
             CareEventType.Pee -> listOf("Appearance")
-            CareEventType.Meal -> listOf("Eaten")
+            CareEventType.Meal -> if (draft.observations["Eaten"].isNullOrBlank()) emptyList() else listOf("Eaten")
             CareEventType.Walk -> listOf("Pace")
             CareEventType.Symptom -> listOf("Frequency")
             CareEventType.Behavior -> listOf("Trigger")
@@ -222,14 +256,14 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
         if (error != null) Box(Modifier.bringIntoViewRequester(errorRequester)) { ErrorText(error) }
         BoardStickyAction {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) { BarkIcon("shield-check", Modifier.size(14.dp)); Spacer(Modifier.width(6.dp)); CaptionText("${draft.date} · ${draft.time}") }
-        BarkButton(if (status.saving) "Saving on this device…" else if (editing) "Save changes" else "Save ${draft.type.label.lowercase()}", onClick = {
+        BarkButton(if (status.saving) "Saving on this device…" else if (editing) "Save changes" else if (draft.type == CareEventType.Note) "Keep this note" else "Keep this check-in", onClick = {
             scope.launch {
                 draftLock.withLock {
                     if (completed) return@withLock
                     val input = try { draft.input() } catch (cause: IllegalArgumentException) { validationError = cause.message; return@withLock }
                     validationError = null; conflictDismissed = false; keyboard?.hide()
                     val saved = if (editing) controller.update(draft.originalRecord(), input) else controller.create(draft.dogId, draft.requestId, input)
-                    if (saved != null) { completed = true; navigation.backGuard = null; navigation.detail(saved.dogId, saved.id) }
+                    if (saved != null) { completed = true; navigation.backGuard = null; if (editing) navigation.detail(saved.dogId, saved.id) else navigation.saved(saved.dogId, saved.id) }
                 }
             }
         }, enabled = !status.saving, icon = "check")
@@ -302,16 +336,17 @@ private fun EventDetail(record: CareEvent, dogName: String, controller: EventCon
 fun detailLines(details: CareDetails?): List<String> = when (details) {
     is CareDetails.Poop -> listOf("Consistency: ${details.consistency?.label ?: "Not recorded"}")
     is CareDetails.Pee -> listOf("Amount: ${details.amount?.label ?: "Not recorded"}")
-    is CareDetails.Meal -> listOf("Food: ${details.food ?: "Not recorded"}", "Portion: ${details.portion ?: "Not recorded"}")
+    is CareDetails.Meal -> listOf("Food: ${details.food ?: "Not recorded"}", "Portion: ${details.portion ?: "Not recorded"}") + listOfNotNull(details.offeredGrams?.let { "Amount offered: $it g" }, details.eaten?.label)
     is CareDetails.Walk -> listOf("Duration: ${details.durationMinutes?.let { "$it minutes" } ?: "Not recorded"}")
     is CareDetails.Symptom -> listOf("Observed: ${details.observation}")
-    is CareDetails.Mood -> listOf("Observed mood: ${details.observedMood.label}")
+    is CareDetails.Mood -> listOfNotNull("Observed mood: ${details.observedMood.label}", details.context)
     is CareDetails.Behavior -> listOf("Observed: ${details.observation}")
-    is CareDetails.Grooming -> listOf("Activity: ${details.activity.label}")
+    is CareDetails.Grooming -> listOfNotNull("Activity: ${details.activity.label}", details.durationMinutes?.let { "$it minutes observed" })
     is CareDetails.Weight -> listOf("Measured weight: ${details.amount} ${details.unit.label}")
     is CareDetails.Medication -> listOf("Medication: ${details.name}", "Amount recorded: ${details.amount}", "Recorded as given by caregiver")
     is CareDetails.Training -> listOf("Program: ${TrainingCatalog.programs.firstOrNull { it.id == details.programId }?.title ?: details.programId}", "Step: ${details.step + 1}", "Duration: ${details.seconds} seconds", "Observed: ${details.rating} · ${details.mood}")
     is CareDetails.Task -> listOf("Task: ${details.title}", "Occurrence: ${details.dueDate}", "Completed by caregiver")
+    is CareDetails.Water, is CareDetails.Litter, is CareDetails.Play, is CareDetails.Sleep, is CareDetails.Note -> listOf(JournalReport.details(details))
     null -> emptyList()
 }
 
@@ -384,6 +419,18 @@ private fun logPrompt(type: CareEventType) = when (type) {
     CareEventType.Symptom -> "Write what you can see."; CareEventType.Mood -> "How did they seem?"
     CareEventType.Behavior -> "The moment around it."; CareEventType.Grooming -> "A little care, recorded."
     CareEventType.Weight -> "One measurement at a time."; else -> type.label
+}
+private fun catLogTitle(type: CareEventType) = when (type) {
+    CareEventType.Meal -> "A meal, remembered."
+    CareEventType.Water -> "A water check."
+    CareEventType.Litter -> "A little litter check."
+    CareEventType.Play -> "A moment of play."
+    CareEventType.Sleep -> "A quiet stretch."
+    CareEventType.Mood -> "How did they seem?"
+    CareEventType.Grooming -> "A little freshen-up."
+    CareEventType.Weight -> "A measured moment."
+    CareEventType.Note -> "One thing to remember."
+    else -> "${type.label}, remembered."
 }
 fun logSubtitle(type: CareEventType) = when (type) {
     CareEventType.Poop -> "Consistency, colour and anything worth remembering."

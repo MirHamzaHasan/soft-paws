@@ -18,13 +18,23 @@ def luminance(value):
 results = []
 for theme, body in [('light', light), ('dark', dark)]:
     tokens = dict(re.findall(r'--([\w-]+):\s*(#[\da-fA-F]{6})', body))
-    for foreground, background, minimum in [
+    pairs = [
         ('ink', 'ground', 4.5), ('ink', 'panel', 4.5),
         ('ink-muted', 'ground', 4.5), ('ink-muted', 'panel', 4.5),
         ('ink-muted', 'accent-soft', 4.5), ('ink-muted', 'warn-soft', 4.5),
         ('accent-text', 'ground', 4.5), ('btn-ink', 'btn', 4.5),
         ('bad', 'bad-soft', 4.5), ('hair-2', 'panel', 3),
-    ]:
+        ('good', 'good-soft', 4.5), ('warn', 'warn-soft', 4.5), ('info', 'info-soft', 4.5),
+        ('accent-text', 'accent-soft', 4.5),
+        ('ink-strong', 'cat-field', 4.5), ('ink-muted', 'cat-field', 4.5),
+        ('photo-caption', 'peach', 4.5),
+    ]
+    tones = ('butter', 'lilac', 'mint', 'rose', 'sky', 'peach', 'periwinkle')
+    pairs += [(f'{tone}-ink', tone, 4.5) for tone in tones]
+    pairs += [(f'{tone}-ink', 'panel', 4.5) for tone in tones]
+    pairs += [('ink-muted', tone, 4.5) for tone in ('butter', 'lilac', 'peach')]
+    pairs += [('ink', tone, 4.5) for tone in tones]
+    for foreground, background, minimum in pairs:
         a, b = sorted([luminance(tokens[foreground]), luminance(tokens[background])])
         ratio = (b + .05) / (a + .05)
         results.append(dict(theme=theme, foreground=foreground, background=background,

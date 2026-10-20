@@ -1,7 +1,9 @@
 # Soft Paws work
 
 - [soft-paws-task001 · repository, cat design board and original Rive companion](soft-paws-task001-cat-redesign.md)
-  — board authored and verified; native adoption awaits owner review.
+  — design approved on 20 October 2026; repository/design scope complete.
+- [soft-paws-task002 · approved Android/iOS native port](soft-paws-task002-native-port.md)
+  — in progress; cat storage and identity checks pass; screen parity remains unverified.
 
 The BarkLog tasks below are inherited foundation history, not Soft Paws approvals.
 

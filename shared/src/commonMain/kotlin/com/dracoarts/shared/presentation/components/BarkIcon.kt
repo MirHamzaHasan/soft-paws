@@ -20,7 +20,7 @@ fun BarkIcon(name: String, modifier: Modifier = Modifier, tint: Color = LocalCon
     Icon((vectors[name] ?: vectors.getValue("info")).value, contentDescription = null, modifier = modifier, tint = tint)
 }
 
-private val vectors = GeneratedBoardIcons.paths.mapValues { (name, paths) -> lazy {
+private val vectors = (GeneratedBoardIcons.paths + SoftPawsIcons.paths).mapValues { (name, paths) -> lazy {
         ImageVector.Builder(name, 24.dp, 24.dp, 24f, 24f,
             autoMirror = name in setOf("arrow-left", "arrow-right", "chevron-right")).apply {
             paths.forEach { data ->
@@ -43,12 +43,19 @@ fun CareEventType.iconName(): String = when (this) {
     CareEventType.Medication -> "pill"
     CareEventType.Training -> "graduation-cap"
     CareEventType.Task -> "calendar"
+    CareEventType.Water -> "droplet"
+    CareEventType.Litter -> "archive"
+    CareEventType.Play -> "sparkles"
+    CareEventType.Sleep -> "moon"
+    CareEventType.Note -> "notebook-pen"
     else -> "file-text"
 }
 
 fun Route.iconName(): String = when (this) {
-    Route.Home -> "layout-dashboard"
-    Route.Timeline -> "list"
+    Route.Home -> "house"
+    Route.Timeline -> "notebook-pen"
     Route.Insights -> "chart-no-axes-column-increasing"
     Route.Profile -> "user-round"
+    Route.Care -> "heart"
+    Route.Memories -> "image"
 }

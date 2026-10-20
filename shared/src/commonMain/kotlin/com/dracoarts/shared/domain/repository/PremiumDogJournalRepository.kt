@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-class PremiumRequiredException : IllegalStateException("Adding another dog is part of BarkLog Premium. Your existing dogs stay available.")
+class PremiumRequiredException : IllegalStateException("Adding another dog is part of Soft Paws Premium. Your existing dogs stay available.")
 
 /** Enforces the product rule at every app dog-creation path, including retained drafts. */
 class PremiumDogJournalRepository(

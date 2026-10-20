@@ -12,17 +12,17 @@
         B20000000000000000000006 = {isa = PBXContainerItemProxy; containerPortal = A1000000000000000000000E; proxyType = 1; remoteGlobalIDString = A1000000000000000000000A; remoteInfo = iosApp; };
         B20000000000000000000007 = {isa = PBXTargetDependency; target = A1000000000000000000000A; targetProxy = B20000000000000000000006; };
         B20000000000000000000008 = {isa = PBXNativeTarget; buildConfigurationList = B2000000000000000000000B; buildPhases = (B20000000000000000000004, B20000000000000000000005); buildRules = (); dependencies = (B20000000000000000000007); name = BarkLogUITests; productName = BarkLogUITests; productReference = B20000000000000000000003; productType = "com.apple.product-type.bundle.ui-testing"; };
-        B20000000000000000000009 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 16.6; PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.bark.log.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = iosApp; }; name = Debug; };
-        B2000000000000000000000A = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 16.6; PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.bark.log.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = iosApp; }; name = Release; };
+        B20000000000000000000009 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 16.6; PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.soft.paws.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = iosApp; }; name = Debug; };
+        B2000000000000000000000A = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 16.6; PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.soft.paws.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = iosApp; }; name = Release; };
         B2000000000000000000000B = {isa = XCConfigurationList; buildConfigurations = (B20000000000000000000009, B2000000000000000000000A); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
 
 
 /* Begin PBXBuildFile section */
+        D01000000000000000000001 = {isa = PBXBuildFile; fileRef = D01000000000000000000002; };
         C47000000000000000000003 = {isa = PBXBuildFile; fileRef = C47000000000000000000004; };
         C46000000000000000000001 = {isa = PBXBuildFile; fileRef = C46000000000000000000002; };
         C46000000000000000000003 = {isa = PBXBuildFile; productRef = C46000000000000000000004; };
         C36000000000000000000001 = {isa = PBXBuildFile; fileRef = C36000000000000000000002; };
-        C36000000000000000000003 = {isa = PBXBuildFile; fileRef = C36000000000000000000004; };
         C36000000000000000000005 = {isa = PBXBuildFile; productRef = C36000000000000000000006; };
         C36000000000000000000007 = {isa = PBXBuildFile; productRef = C36000000000000000000008; };
         C36000000000000000000009 = {isa = PBXBuildFile; productRef = C3600000000000000000000A; };
@@ -37,10 +37,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+        D01000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = file; path = soft_paws_cat.riv; sourceTree = "<group>"; };
         C47000000000000000000004 = {isa = PBXFileReference; lastKnownFileType = file; path = barklog_care_notebook.riv; sourceTree = "<group>"; };
         C46000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarkPurchases.swift; sourceTree = "<group>"; };
         C36000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarkFirebaseAuth.swift; sourceTree = "<group>"; };
-        C36000000000000000000004 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
         C34000000000000000000004 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarkVideoQA.swift; sourceTree = "<group>"; };
         C34000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarkVideoEngine.swift; sourceTree = "<group>"; };
         C32000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarkMascot.swift; sourceTree = "<group>"; };
@@ -64,7 +64,7 @@
         };
         A10000000000000000000008 /* iosApp */ = {
             isa = PBXGroup;
-            children = (C46000000000000000000002, C36000000000000000000002, C36000000000000000000004, C34000000000000000000004, C34000000000000000000002, C32000000000000000000002, C32000000000000000000004, C47000000000000000000004, A10000000000000000000003 /* DracoArtsApp.swift */, A10000000000000000000004 /* ContentView.swift */, A10000000000000000000026 /* Assets.xcassets */, A10000000000000000000028 /* Info.plist */);
+            children = (D01000000000000000000002, C46000000000000000000002, C36000000000000000000002, C34000000000000000000004, C34000000000000000000002, C32000000000000000000002, C32000000000000000000004, C47000000000000000000004, A10000000000000000000003 /* DracoArtsApp.swift */, A10000000000000000000004 /* ContentView.swift */, A10000000000000000000026 /* Assets.xcassets */, A10000000000000000000028 /* Info.plist */);
             path = iosApp;
             sourceTree = "<group>";
         };
@@ -117,7 +117,7 @@
         A10000000000000000000027 /* Resources */ = {
             isa = PBXResourcesBuildPhase;
             buildActionMask = 2147483647;
-            files = (C47000000000000000000003, C36000000000000000000003, C32000000000000000000003, A10000000000000000000025 /* Assets.xcassets in Resources */);
+            files = (D01000000000000000000001, C47000000000000000000003, C32000000000000000000003, A10000000000000000000025 /* Assets.xcassets in Resources */);
             runOnlyForDeploymentPostprocessing = 0;
         };
 /* End PBXResourcesBuildPhase section */
@@ -133,7 +133,7 @@
             outputPaths = ();
             runOnlyForDeploymentPostprocessing = 0;
             shellPath = /bin/sh;
-            shellScript = "if [ \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" = \"YES\" ]; then\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
+            shellScript = "if [ \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" = \"YES\" ]; then\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode --init-script tools/isolated-build.gradle.kts --no-build-cache --max-workers=2\n";
         };
 /* End PBXShellScriptBuildPhase section */
 
@@ -196,17 +196,17 @@
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 CODE_SIGN_STYLE = Automatic;
                 CODE_SIGN_ENTITLEMENTS = iosApp/BarkLog.entitlements;
-                FRAMEWORK_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)");
+                FRAMEWORK_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/../.verify-build/shared/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)");
                 GENERATE_INFOPLIST_FILE = YES;
-                INFOPLIST_FILE = iosApp/Info.plist; BARKLOG_REVENUECAT_PUBLIC_KEY = ""; BARKLOG_REVENUECAT_ENTITLEMENT_ID = ""; BARKLOG_REVENUECAT_OFFERING_ID = "";
-                INFOPLIST_KEY_CFBundleDisplayName = "BarkLog";
+                INFOPLIST_FILE = iosApp/Info.plist; SOFTPAWS_REVENUECAT_PUBLIC_KEY = ""; SOFTPAWS_REVENUECAT_ENTITLEMENT_ID = ""; SOFTPAWS_REVENUECAT_OFFERING_ID = "";
+                INFOPLIST_KEY_CFBundleDisplayName = "Soft Paws";
                 CURRENT_PROJECT_VERSION = 1;
                 MARKETING_VERSION = 1.0.0;
                 INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
                 INFOPLIST_KEY_UILaunchScreen_Generation = YES;
                 LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
                 OTHER_LDFLAGS = ("$(inherited)", "-framework", Shared, "-ObjC", "-lsqlite3");
-                PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.bark.log;
+                PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.soft.paws;
                 PRODUCT_NAME = "$(TARGET_NAME)";
                 SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
                 SWIFT_EMIT_LOC_STRINGS = YES;
@@ -221,17 +221,17 @@
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 CODE_SIGN_STYLE = Automatic;
                 CODE_SIGN_ENTITLEMENTS = iosApp/BarkLog.entitlements;
-                FRAMEWORK_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)");
+                FRAMEWORK_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/../.verify-build/shared/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)");
                 GENERATE_INFOPLIST_FILE = YES;
-                INFOPLIST_FILE = iosApp/Info.plist; BARKLOG_REVENUECAT_PUBLIC_KEY = ""; BARKLOG_REVENUECAT_ENTITLEMENT_ID = ""; BARKLOG_REVENUECAT_OFFERING_ID = "";
-                INFOPLIST_KEY_CFBundleDisplayName = "BarkLog";
+                INFOPLIST_FILE = iosApp/Info.plist; SOFTPAWS_REVENUECAT_PUBLIC_KEY = ""; SOFTPAWS_REVENUECAT_ENTITLEMENT_ID = ""; SOFTPAWS_REVENUECAT_OFFERING_ID = "";
+                INFOPLIST_KEY_CFBundleDisplayName = "Soft Paws";
                 CURRENT_PROJECT_VERSION = 1;
                 MARKETING_VERSION = 1.0.0;
                 INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
                 INFOPLIST_KEY_UILaunchScreen_Generation = YES;
                 LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
                 OTHER_LDFLAGS = ("$(inherited)", "-framework", Shared, "-ObjC", "-lsqlite3");
-                PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.bark.log;
+                PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.soft.paws;
                 PRODUCT_NAME = "$(TARGET_NAME)";
                 SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
                 SWIFT_EMIT_LOC_STRINGS = YES;

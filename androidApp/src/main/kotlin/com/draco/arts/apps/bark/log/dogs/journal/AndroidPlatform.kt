@@ -14,7 +14,8 @@ class AndroidPlatform(context: ComponentActivity, private val boardFixture: Boar
     override val atlasPlatform = "google-play"
     override val premiumPreviewAllowed = BuildConfig.DEBUG
     override val purchasesEngine: com.dracoarts.shared.services.NativePurchasesEngine = if(boardFixture == null) AndroidPurchases(context) else com.dracoarts.shared.services.UnavailablePurchasesEngine
-    override val atlasEnabled = BuildConfig.DEBUG && boardFixture == null
+    // Soft Paws needs its own admission/policy proof. The redesign authorizes no live retry.
+    override val atlasEnabled = false
     override val journalDriverFactory = AndroidJournalDriverFactory(context, boardFixture?.databaseName ?: JOURNAL_DATABASE_NAME)
     override val storage = StorageManager(AndroidStorageBackend(context).let { if (boardFixture != null) BoardReviewPreferences(it, boardFixture.preferencePrefix) else it })
     override val haptics = AndroidHapticManager(context)
@@ -27,7 +28,7 @@ class AndroidPlatform(context: ComponentActivity, private val boardFixture: Boar
             { context.noBackupFilesDir.usableSpace })
     }
     override val highlights = AndroidHighlightRenderer(context)
-    override val authEngine: com.dracoarts.shared.services.NativeAuthEngine = if (boardFixture != null) com.dracoarts.shared.services.UnavailableAuthEngine else AndroidFirebaseAuth(context)
+    override val authEngine: com.dracoarts.shared.services.NativeAuthEngine = if (boardFixture != null || !BuildConfig.FIREBASE_CONFIGURED) com.dracoarts.shared.services.UnavailableAuthEngine else AndroidFirebaseAuth(context)
     override fun newId(): String = UUID.randomUUID().toString()
     override fun nowMillis(): Long = boardFixture?.nowMillis ?: System.currentTimeMillis()
     override fun monotonicMillis(): Long = android.os.SystemClock.elapsedRealtime()

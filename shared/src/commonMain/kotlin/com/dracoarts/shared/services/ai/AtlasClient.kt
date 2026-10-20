@@ -52,7 +52,7 @@ class KtorAtlasTransport(private val platform: String) : AtlasTransport {
                 if (read < 0) break
                 count += read
             }
-            if (count > 65_536) throw AiException("BarkLog AI returned too much text. Try a shorter question.")
+            if (count > 65_536) throw AiException("Soft Paws AI returned too much text. Try a shorter question.")
             AtlasHttpResponse(response.status.value, bytes.decodeToString(0, count), response.headers["X-Atlas-Context-Checked"], response.headers["X-Atlas-Context-Feature"])
         }
     }
@@ -69,7 +69,7 @@ class AtlasClient(private val identity: AtlasIdentity, private val transport: At
     override suspend fun close() = transport.close()
     suspend fun answer(messages: JsonArray, requestId: String): String {
         if (!enabled) throw AiException("Online AI is not enabled in this build. Your journal still works.")
-        if (identity.currentUid == null) throw AiException("Sign in to use BarkLog AI. Your journal stays available offline.")
+        if (identity.currentUid == null) throw AiException("Sign in to use Soft Paws AI. Your journal stays available offline.")
         require(Regex("[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}").matches(requestId))
         require(messages.size in 1..8)
         val body = buildJsonObject {
@@ -88,22 +88,22 @@ class AtlasClient(private val identity: AtlasIdentity, private val transport: At
             val response = try { transport.post(body, token.value, requestId) }
             catch (cancelled: CancellationException) { throw cancelled }
             catch (cause: AiException) { throw cause }
-            catch (_: Exception) { throw AiException("BarkLog AI couldn’t connect. Your message is saved; try again when online.") }
+            catch (_: Exception) { throw AiException("Soft Paws AI couldn’t connect. Your message is saved; try again when online.") }
             currentCoroutineContext().ensureActive()
             if (identity.currentUid != expectedUid) throw AiException("Your signed-in account changed. Send the question again.")
             if (response.status == 401 && attempt == 0) continue
             if (response.status !in 200..299) {
                 val policyCode = runCatching { Json.parseToJsonElement(response.body).jsonObject["error"]?.jsonObject?.get("code")?.jsonPrimitive?.content }.getOrNull()
-                if (policyCode in setOf("CONTEXT_FEATURE_UNKNOWN", "CONTEXT_POLICY_REQUIRED")) throw AiException("BarkLog AI’s online setup needs updating. Your message is saved; try again later.")
+                if (policyCode in setOf("CONTEXT_FEATURE_UNKNOWN", "CONTEXT_POLICY_REQUIRED")) throw AiException("Soft Paws AI’s online setup needs updating. Your message is saved; try again later.")
                 throw AiException(when (response.status) {
-                401 -> "Sign in again to use BarkLog AI. Your saved messages stay here."
-                403 -> "BarkLog AI hasn’t allowed this account or Firebase project. Your journal stays available."
-                429 -> "BarkLog AI is busy or a usage limit was reached. Try again later."
-                400, 422 -> "BarkLog AI couldn’t accept this question. Try a shorter question within dog-care observations."
-                else -> "BarkLog AI is unavailable or its BarkLog policy isn’t ready. Try again later."
+                401 -> "Sign in again to use Soft Paws AI. Your saved messages stay here."
+                403 -> "Soft Paws AI hasn’t allowed this account or Firebase project. Your journal stays available."
+                429 -> "Soft Paws AI is busy or a usage limit was reached. Try again later."
+                400, 422 -> "Soft Paws AI couldn’t accept this question. Try a shorter question within cat-care observations."
+                else -> "Soft Paws AI is unavailable or its Soft Paws policy isn’t ready. Try again later."
                 })
             }
-            if (response.contextChecked != "true" || response.feature != FEATURE) throw AiException("BarkLog AI couldn’t verify BarkLog’s context policy. The answer was withheld.")
+            if (response.contextChecked != "true" || response.feature != FEATURE) throw AiException("Soft Paws AI couldn’t verify Soft Paws’ context policy. The answer was withheld.")
             val text = runCatching {
                 val parsed = Json.parseToJsonElement(response.body).jsonObject
                 val id = parsed["requestId"]!!.jsonPrimitive
@@ -111,10 +111,10 @@ class AtlasClient(private val identity: AtlasIdentity, private val transport: At
                 val content = parsed["output"]!!.jsonObject["content"]!!.jsonPrimitive
                 require(content.isString && content.content.isNotBlank() && content.content.length <= 16_000)
                 content.content
-            }.getOrNull() ?: throw AiException("BarkLog AI returned an unreadable answer. Your message is saved; try again.")
+            }.getOrNull() ?: throw AiException("Soft Paws AI returned an unreadable answer. Your message is saved; try again.")
             return text
         }
-        throw AiException("Sign in again to use BarkLog AI.")
+        throw AiException("Sign in again to use Soft Paws AI.")
     }
-    companion object { const val FEATURE = "barklog.ask-barklog-ai" }
+    companion object { const val FEATURE = "softpaws.ask-soft-paws-ai" }
 }

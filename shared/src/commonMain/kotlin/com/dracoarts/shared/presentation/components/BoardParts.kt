@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dracoarts.shared.presentation.theme.*
+import com.dracoarts.shared.generated.resources.soft_paws_cat_rest
 
 data class BoardFolio(val eyebrow: String, val icon: String, val family: String, val sticker: String = family, val display: Boolean = false)
 val LocalBoardFolio = staticCompositionLocalOf<BoardFolio?> { null }
@@ -42,28 +43,15 @@ fun BoardStickyAction(content: BoardFooterContent) {
     DisposableEffect(publish) { publish { latest() }; onDispose { publish(null) } }
 }
 
-private val portraitParts by lazy { listOf(
-    "dog-ear" to "M24 43C8 38 8 16 19 12c11-4 19 9 21 19",
-    "dog-ear" to "M72 43c16-5 16-27 5-31-11-4-19 9-21 19",
-    "dog-fur" to "M19 48c0-24 12-37 29-37s29 13 29 37c0 22-12 37-29 37S19 70 19 48Z",
-    "dog-muzzle" to "M48 42c14 0 23 9 23 21 0 13-10 22-23 22s-23-9-23-22c0-12 9-21 23-21Z",
-    "dog-ink" to "M33.7 43a3.3 4.2 0 1 0 6.6 0a3.3 4.2 0 1 0 -6.6 0Z",
-    "dog-ink" to "M55.7 43a3.3 4.2 0 1 0 6.6 0a3.3 4.2 0 1 0 -6.6 0Z",
-    "dog-ink" to "M41 58c2-4 12-4 14 0 1 4-3 7-7 7s-8-3-7-7Z",
-    "dog-collar" to "M30 79c7 7 29 7 36 0v10H30Z",
-    "stroke" to "M39 69c5 5 13 5 18 0",
-).map { (token, path) -> token to PathParser().parsePathString(path).toPath() } }
-
-/** Exact 96-point portrait paths from B.dogPortrait, used by the board ID card. */
+/** Same owned cat still used by the native Rive fallback. Decorative inside a labelled profile. */
 @Composable
 fun BoardDogPortrait(modifier: Modifier = Modifier) {
-    val colors = LocalBoardColors.current
-    Canvas(modifier.clearAndSetSemantics {}) {
-        val scale = minOf(size.width, size.height) / 96f
-        withTransform({ translate((size.width - 96 * scale) / 2, (size.height - 96 * scale) / 2); scale(scale, scale, Offset.Zero) }) {
-            portraitParts.forEach { (token, path) -> if (token == "stroke") drawPath(path, colors.getValue("dog-ink"), style = Stroke(2.5f, cap = StrokeCap.Round)) else drawPath(path, colors.getValue(token)) }
-        }
-    }
+    androidx.compose.foundation.Image(
+        org.jetbrains.compose.resources.painterResource(com.dracoarts.shared.generated.resources.Res.drawable.soft_paws_cat_rest),
+        contentDescription = null,
+        modifier = modifier.clearAndSetSemantics {},
+        contentScale = androidx.compose.ui.layout.ContentScale.Fit,
+    )
 }
 
 /** Same parts as the live folio: flat family ground, editorial title, tilted sticker. */
@@ -78,7 +66,7 @@ fun BoardHeading(title: String, subtitle: String?, folio: BoardFolio) {
                 subtitle?.let { Text(it, style = MaterialTheme.typography.bodyMedium, color = ink.copy(alpha = .86f)) }
             }
             Surface(Modifier.align(Alignment.TopEnd).graphicsLayer { rotationZ = -10f }, shape = CircleShape, color = boardColor("${folio.sticker}-dot")) {
-                Box(Modifier.size(62.dp), contentAlignment = Alignment.Center) { BarkIcon(folio.icon, Modifier.size(38.dp), Color.White) }
+                Box(Modifier.size(62.dp), contentAlignment = Alignment.Center) { BarkIcon(folio.icon, Modifier.size(38.dp), boardColor("${folio.sticker}-bg")) }
             }
         }
     }
@@ -114,7 +102,7 @@ fun MarkerHeading(title: String, marked: String, modifier: Modifier = Modifier, 
 fun BoardIdentityHeading(title: String, subtitle: String, icon: String, family: String, sharedKey: String? = null) {
     Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(30.dp), color = boardColor("$family-bg"), contentColor = boardColor("$family-ink")) {
         Row(Modifier.padding(18.dp), horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
-            Surface(Modifier.size(84.dp).then(if (sharedKey != null) boardSharedElement(sharedKey, boardColor("$family-bg")) else Modifier), shape = CircleShape, color = boardColor("$family-dot")) { Box(contentAlignment = Alignment.Center) { BarkIcon(icon, Modifier.size(31.dp), Color.White) } }
+            Surface(Modifier.size(84.dp).then(if (sharedKey != null) boardSharedElement(sharedKey, boardColor("$family-bg")) else Modifier), shape = CircleShape, color = boardColor("$family-dot")) { Box(contentAlignment = Alignment.Center) { BarkIcon(icon, Modifier.size(31.dp), boardColor("$family-bg")) } }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) { Text(title, style = MaterialTheme.typography.displaySmall, modifier = Modifier.semantics { heading() }); Text(subtitle, style = MaterialTheme.typography.bodyMedium) }
         }
     }
@@ -158,7 +146,7 @@ fun BoardGuideHero(name: String) {
     Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(28.dp), color = boardColor("panel"), border = BorderStroke(1.dp, boardColor("hair"))) {
       Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(Modifier.fillMaxWidth().heightIn(min = 24.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) { Text(name, Modifier.weight(1f).then(boardSharedElement("dog-name", boardColor("panel"))), style = MaterialTheme.typography.bodyMedium.copy(fontSize = 13.sp, lineHeight = 18.2.sp)); Text("A local journal", style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp)) }
-        AnimatedDog(Modifier.align(Alignment.CenterHorizontally).size(176.dp, 192.dp).then(boardSharedElement("dog", boardColor("panel"))), cropped = true)
+        AnimatedCat(Modifier.align(Alignment.CenterHorizontally).size(176.dp, 192.dp).then(boardSharedElement("dog", boardColor("panel"))), cropped = true)
       }
     }
 }
@@ -169,7 +157,7 @@ fun BoardGuideOption(title: String, subtitle: String, family: String, icon: Stri
     val checkLanding = selectionLanding(chosen)
     Surface(soundAction(onClick, com.dracoarts.shared.services.SoundCue.Selection), Modifier.fillMaxWidth().heightIn(min = 79.dp).then(pressMotion(source, enabled)).semantics { this.selected = chosen }, enabled = enabled, interactionSource = source, shape = RoundedCornerShape(20.dp), color = boardColor(if (chosen) "accent-soft" else "panel"), border = BorderStroke(1.dp, boardColor(if (chosen) "accent-line" else "hair"))) {
         Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(13.dp), verticalAlignment = Alignment.CenterVertically) {
-            Surface(Modifier.then(stickerPressMotion(source, enabled)), shape = CircleShape, color = boardColor("$family-dot")) { Box(Modifier.size(45.dp), contentAlignment = Alignment.Center) { BarkIcon(icon, Modifier.size(23.dp), Color.White) } }
+            Surface(Modifier.then(stickerPressMotion(source, enabled)), shape = CircleShape, color = boardColor("$family-dot")) { Box(Modifier.size(45.dp), contentAlignment = Alignment.Center) { BarkIcon(icon, Modifier.size(23.dp), boardColor("$family-bg")) } }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) { Text(title, style = MaterialTheme.typography.titleMedium); Text(subtitle, style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp)) }
             Surface(shape = CircleShape, color = if (chosen) boardColor("btn") else Color.Transparent, border = BorderStroke(1.dp, boardColor(if (chosen) "btn" else "hair-2"))) { Box(Modifier.size(22.dp), contentAlignment = Alignment.Center) { if (chosen) BarkIcon("check", Modifier.size(13.dp).then(checkLanding), boardColor("btn-ink")) } }
         }
@@ -179,7 +167,7 @@ fun BoardGuideOption(title: String, subtitle: String, family: String, icon: Stri
 @Composable
 fun BoardLogMark(type: com.dracoarts.shared.domain.model.CareEventType, size: androidx.compose.ui.unit.Dp, modifier: Modifier = Modifier, tile: Boolean = false) {
     Surface(modifier.size(size), shape = CircleShape, color = boardColor("${type.key}-dot")) {
-        Box(contentAlignment = Alignment.Center) { BarkIcon(type.iconName(), Modifier.size(if (tile) 26.dp else 34.dp), Color.White) }
+        Box(contentAlignment = Alignment.Center) { BarkIcon(type.iconName(), Modifier.size(if (tile) 26.dp else 34.dp), boardColor("${type.key}-bg")) }
     }
 }
 

@@ -5,12 +5,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import app.rive.*
 import com.dracoarts.shared.R
-import com.dracoarts.shared.presentation.companion.RiveDogCue
+import com.dracoarts.shared.presentation.companion.CatCue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Composable
-internal actual fun RiveDogSurface(modifier: Modifier, cue: RiveDogCue?, playing: Boolean, onReady: (Boolean) -> Unit, notebook: Boolean) {
+internal actual fun RiveCatSurface(modifier: Modifier, cue: CatCue?, playing: Boolean, onReady: (Boolean) -> Unit) {
     val context = LocalContext.current.applicationContext
     var initialized by remember { mutableStateOf(false) }
     LaunchedEffect(context) {
@@ -21,9 +21,9 @@ internal actual fun RiveDogSurface(modifier: Modifier, cue: RiveDogCue?, playing
     if (!initialized) return
     val errors = remember { mutableStateOf<Throwable?>(null) }
     val worker = rememberRiveWorkerOrNull(errors) ?: return
-    val file = (rememberRiveFile(RiveFileSource.RawRes.from(if (notebook) R.raw.barklog_care_notebook else R.raw.barklog_spaniel), worker) as? Result.Success)?.value ?: return
-    val artboard = (rememberArtboardResult(file, if (notebook) "BarkLog Care Notebook" else "BarkLog Dog · Character Study") as? Result.Success)?.value ?: return
-    val machine = (rememberStateMachineResult(artboard, if (notebook) "Care Companion" else "Dog Controller") as? Result.Success)?.value ?: return
+    val file = (rememberRiveFile(RiveFileSource.RawRes.from(R.raw.soft_paws_cat), worker) as? Result.Success)?.value ?: return
+    val artboard = (rememberArtboardResult(file, "Soft Paws Cat") as? Result.Success)?.value ?: return
+    val machine = (rememberStateMachineResult(artboard, "Cat Companion") as? Result.Success)?.value ?: return
     val binding = (rememberViewModelInstanceResult(file, remember(artboard) { ViewModelSource.DefaultForArtboard(artboard).defaultInstance() }) as? Result.Success)?.value ?: return
     val ready by rememberUpdatedState(onReady)
     DisposableEffect(binding) { onDispose { ready(false) } }

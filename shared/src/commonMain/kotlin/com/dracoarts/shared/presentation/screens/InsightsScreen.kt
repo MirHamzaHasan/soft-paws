@@ -92,5 +92,5 @@ fun InsightsScreen(context: FeatureContext, monthly: Boolean = false) {
             BarkTextAction("Open source records", { context.navigation.show(Route.Timeline) }, icon = "list")
         }
     }
-    CaptionText("Descriptive counts only. BarkLog does not diagnose, predict or recommend treatment.")
+    CaptionText("Descriptive counts only. Soft Paws does not diagnose, predict or recommend treatment.")
 }

@@ -4,7 +4,7 @@ import com.dracoarts.shared.domain.model.DogContext
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CompanionDraft(val requestId: String, val name: String = "", val sex: String = "Not recorded", val photoId: String? = null, val context: DogContext = DogContext(), val step: String = "next-opening", val editingDogId: String? = null, val addingDog: Boolean = false)
+data class CompanionDraft(val requestId: String, val name: String = "", val sex: String = "Not recorded", val photoId: String? = null, val context: DogContext = DogContext.catDefaults(), val step: String = "next-opening", val editingDogId: String? = null, val addingDog: Boolean = false)
 @Serializable
 data class DemoSession(val signedIn: Boolean = false, val provider: String = "", val email: String = "", val premium: Boolean = false)
 @Serializable

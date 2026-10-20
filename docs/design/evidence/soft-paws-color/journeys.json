@@ -1,0 +1,66 @@
+{
+  "checks": 15,
+  "results": [
+    {
+      "name": "Name-only start preserves the entered cat name",
+      "passed": true
+    },
+    {
+      "name": "Example save produces a clear saved state",
+      "passed": true
+    },
+    {
+      "name": "Committed preview record appears back on Home",
+      "passed": true
+    },
+    {
+      "name": "Journal filter keeps meal entries only",
+      "passed": true
+    },
+    {
+      "name": "Draft feedback is honest about in-memory preview",
+      "passed": true
+    },
+    {
+      "name": "Cloud context starts unchecked and cannot continue",
+      "passed": true
+    },
+    {
+      "name": "Explicit scope choice opens clearly labelled example chat",
+      "passed": true
+    },
+    {
+      "name": "All recurring prices are visible before any selection",
+      "passed": true
+    },
+    {
+      "name": "Unconfigured purchases remain disabled",
+      "passed": true
+    },
+    {
+      "name": "Paywall has a working free-journal exit",
+      "passed": true
+    },
+    {
+      "name": "Reduced motion uses same-art still with no loaded runtime file",
+      "passed": true
+    },
+    {
+      "name": "Real Rive export and view model load",
+      "passed": true
+    },
+    {
+      "name": "Real save reaction runs on a transparent surface",
+      "passed": true
+    },
+    {
+      "name": "Reaction returns to a bounded rest",
+      "passed": true
+    },
+    {
+      "name": "Offscreen companion pauses",
+      "passed": true
+    }
+  ],
+  "runtime": []
+}

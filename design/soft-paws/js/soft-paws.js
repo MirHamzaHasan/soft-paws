@@ -31,6 +31,7 @@
     }
   };
   S.icon = (n, size = 21) => F.icon(n, { size });
+  S.tone = (icon) => ({ "data-tone": SP_COLOR_ROLES.icons[icon] || "mint" });
   S.caption = (text, cls = "") =>
     h("p.sp-caption" + (cls ? "." + cls : ""), text);
   S.btn = (c, label, action, kind = "") => {
@@ -71,6 +72,7 @@
   S.card = (title, body, cls = "") =>
     h(
       "section.sp-card" + (cls ? "." + cls : ""),
+      ["butter", "lilac", "mint", "rose", "sky", "peach", "periwinkle"].includes(cls) ? { "data-tone": cls } : {},
       title ? h("h2", title) : null,
       typeof body === "string" ? h("p", body) : body,
     );
@@ -84,7 +86,7 @@
     const e = h(
       action ? "button.sp-row" : "div.sp-row",
       action ? { type: "button" } : {},
-      icon ? h("span.sp-mark", S.icon(icon)) : null,
+      icon ? h("span.sp-mark", S.tone(icon), S.icon(icon)) : null,
       h("span.sp-copy", h("strong", title), sub ? h("small", sub) : null),
       tail || (action ? S.icon("chevron-right", 17) : null),
     );
@@ -216,7 +218,7 @@
       const b = tiles
         ? h(
             "button.sp-choice",
-            { type: "button" },
+            { type: "button", ...S.tone(icon) },
             S.icon(icon || "circle"),
             h("strong", label),
             h("span.sp-pickcheck"),
@@ -288,7 +290,7 @@
         h(
           "div.sp-event",
           h("time", time),
-          h("span.sp-mark", S.icon(icon || "notebook-pen", 18)),
+          h("span.sp-mark", S.tone(icon || "notebook-pen"), S.icon(icon || "notebook-pen", 18)),
           h(
             "button",
             {

@@ -76,7 +76,7 @@ fun WalkTrendsScreen(context: FeatureContext) {
         }
     }
     BarkTextAction(if (weights) "View walk minutes" else "View weight observations", { weights = !weights }, icon = "chart-no-axes-column-increasing")
-    CaptionText("Recorded observations only. BarkLog does not diagnose or fill gaps with assumptions.")
+    CaptionText("Recorded observations only. Soft Paws does not diagnose or fill gaps with assumptions.")
 }
 
 private fun bucketLabel(bucket: WalkTrendBucket): String = if (bucket.from == bucket.through) bucket.from.day.toString() else if (bucket.from.month == bucket.through.month) "${bucket.from.day}–${bucket.through.day} ${bucket.from.month.name.take(3).lowercase().replaceFirstChar { it.uppercase() }}" else "${bucket.from.day} ${bucket.from.month.name.take(3).lowercase().replaceFirstChar { it.uppercase() }}–${bucket.through.day} ${bucket.through.month.name.take(3).lowercase().replaceFirstChar { it.uppercase() }}"

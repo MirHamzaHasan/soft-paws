@@ -9,8 +9,8 @@ private final class BarkMascotAssets {
     static let shared = BarkMascotAssets()
     private var loading: [String: Task<RiveRuntime.File, Error>] = [:]
 
-    func file(notebook: Bool) async throws -> RiveRuntime.File {
-        let name = notebook ? "barklog_care_notebook" : "barklog_spaniel"
+    func file() async throws -> RiveRuntime.File {
+        let name = "soft_paws_cat"
         if let task = loading[name] { return try await task.value }
         let task = Task { @MainActor in
             let worker = try await Worker(configuration: .init(enableGPUCanvas: false))
@@ -24,8 +24,8 @@ private final class BarkMascotAssets {
 
 @MainActor
 final class BarkMascotFactory: NSObject, @preconcurrency IosMascotFactory {
-    func create(notebook: Bool, onReady: @escaping (KotlinBoolean) -> Void) -> any IosMascotRenderer {
-        BarkMascotRenderer(notebook: notebook, onReady: onReady)
+    func create(onReady: @escaping (KotlinBoolean) -> Void) -> any IosMascotRenderer {
+        BarkMascotRenderer(onReady: onReady)
     }
 }
 
@@ -42,7 +42,7 @@ private final class BarkMascotRenderer: NSObject, @preconcurrency IosMascotRende
     private var serial: Int32 = 0
     private var firedSerial: Int32 = 0
 
-    init(notebook: Bool, onReady: @escaping (KotlinBoolean) -> Void) {
+    init(onReady: @escaping (KotlinBoolean) -> Void) {
         self.onReady = onReady
         super.init()
         view.backgroundColor = .clear
@@ -51,11 +51,11 @@ private final class BarkMascotRenderer: NSObject, @preconcurrency IosMascotRende
         view.accessibilityElementsHidden = true
         loading = Task { @MainActor [weak self] in
             do {
-                let file = try await BarkMascotAssets.shared.file(notebook: notebook)
+                let file = try await BarkMascotAssets.shared.file()
                 try Task.checkCancellation()
-                let artboard = try await file.createArtboard(notebook ? "BarkLog Care Notebook" : "BarkLog Dog · Character Study")
+                let artboard = try await file.createArtboard("Soft Paws Cat")
                 let binding = try await file.createViewModelInstance(.viewModelDefault(from: .artboardDefault(artboard)))
-                let machine = try await artboard.createStateMachine(notebook ? "Care Companion" : "Dog Controller", binding: binding)
+                let machine = try await artboard.createStateMachine("Cat Companion", binding: binding)
                 let rive = try await Rive(file: file, artboard: artboard, stateMachine: machine)
                 try Task.checkCancellation()
                 guard let self, !self.closed else { return }
@@ -75,7 +75,7 @@ private final class BarkMascotRenderer: NSObject, @preconcurrency IosMascotRende
                     rendered.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
                 ])
                 #if DEBUG
-                NSLog("BarkLogMascot ready %@", notebook ? "care-notebook" : "spaniel")
+                NSLog("SoftPawsCat ready")
                 #endif
                 self.onReady?(KotlinBoolean(value: true))
                 self.firePendingCue()
@@ -83,7 +83,7 @@ private final class BarkMascotRenderer: NSObject, @preconcurrency IosMascotRende
                 // Leaving the screen cancels only this instance, never the shared file load.
             } catch {
                 #if DEBUG
-                NSLog("BarkLogMascot load failed: %@", String(describing: error))
+                NSLog("SoftPawsCat load failed: %@", String(describing: error))
                 #endif
                 self?.showFallback()
             }
@@ -103,7 +103,7 @@ private final class BarkMascotRenderer: NSObject, @preconcurrency IosMascotRende
         guard playing, !closed, serial != firedSerial, let trigger, let binding else { return }
         firedSerial = serial
         #if DEBUG
-        NSLog("BarkLogMascot cue %@ (%d), bounds %@, attached %d", trigger, serial,
+        NSLog("SoftPawsCat cue %@ (%d), bounds %@, attached %d", trigger, serial,
               String(describing: view.bounds), view.window != nil)
         #endif
         binding.fire(trigger: TriggerProperty(path: trigger))
@@ -116,7 +116,7 @@ private final class BarkMascotRenderer: NSObject, @preconcurrency IosMascotRende
         if case .noDrawable = didReceiveError { return }
         if case .noRenderer = didReceiveError, view.window == nil { return }
         #if DEBUG
-        NSLog("BarkLogMascot render failed: %@", String(describing: didReceiveError))
+        NSLog("SoftPawsCat render failed: %@", String(describing: didReceiveError))
         #endif
         showFallback()
     }

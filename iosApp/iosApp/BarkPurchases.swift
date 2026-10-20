@@ -15,15 +15,15 @@ final class BarkPurchases: NSObject, NativePurchasesEngine, PurchasesDelegate {
         let value = (Bundle.main.object(forInfoDictionaryKey: key) as? String ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         return value.hasPrefix("$(") ? "" : value
     }
-    private var entitlementID: String { setting("BarkLogRevenueCatEntitlementID") }
-    private var configured: Bool { !setting("BarkLogRevenueCatPublicKey").isEmpty && !entitlementID.isEmpty }
+    private var entitlementID: String { setting("SoftPawsRevenueCatEntitlementID") }
+    private var configured: Bool { !setting("SoftPawsRevenueCatPublicKey").isEmpty && !entitlementID.isEmpty }
     private func main(_ action: @escaping () -> Void) { if Thread.isMainThread { action() } else { DispatchQueue.main.async(execute: action) } }
     private func result(_ error: String? = nil, cancelled: Bool = false) -> NativePurchaseResult { NativePurchaseResult(error: error, cancelled: cancelled) }
     func observe(listener_ listener: @escaping (PremiumCustomer) -> Void) {
         main { [self] in
             self.listener = listener; closed = false
             guard configured else { publish(); return }
-            if !Purchases.isConfigured { Purchases.configure(withAPIKey: setting("BarkLogRevenueCatPublicKey")) }
+            if !Purchases.isConfigured { Purchases.configure(withAPIKey: setting("SoftPawsRevenueCatPublicKey")) }
             Purchases.shared.delegate = self
             publish(); refresh { _ in }; loadOffers()
         }
@@ -46,7 +46,7 @@ final class BarkPurchases: NSObject, NativePurchasesEngine, PurchasesDelegate {
         Purchases.shared.getOfferings { [weak self] offerings, error in self?.main { [weak self] in
             guard let self, !closed else { return }
             guard let offerings, error == nil else { publish(error: "Couldn't load store prices. Check your connection and try again."); return }
-            let id = setting("BarkLogRevenueCatOfferingID")
+            let id = setting("SoftPawsRevenueCatOfferingID")
             let offering = id.isEmpty ? offerings.current : offerings.offering(identifier: id)
             packages = [:]
             for package in offering?.availablePackages ?? [] {

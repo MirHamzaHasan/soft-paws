@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
             CaptionText("${spec.title} · ${spec.sizeLabel} · Apache 2.0")
             when (status.phase) {
                 "downloaded" -> CaptionText("Downloaded · checked again before use. AI drafts can be wrong; review before keeping them.")
-                "unsupported" -> CaptionText("This host has too little memory or no native model runtime. BarkLog AI can answer text with your permission.")
+                "unsupported" -> CaptionText("This host has too little memory or no native model runtime. Soft Paws AI can answer text with your permission.")
                 "downloading" -> {
                     val progress = if (status.total > 0) (status.downloaded.toFloat() / status.total).coerceIn(0f, 1f) else 0f
                     LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())

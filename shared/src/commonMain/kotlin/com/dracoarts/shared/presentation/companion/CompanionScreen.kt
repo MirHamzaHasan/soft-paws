@@ -4,6 +4,7 @@ package com.dracoarts.shared.presentation.companion
 enum class CompanionScreen(val boardId: String) {
     Opening("next-opening"),
     Dog("next-dog"),
+    Lifestyle("cat-life"),
     Stage("next-stage"),
     Age("next-age"),
     Breed("next-breed"),
@@ -56,5 +57,18 @@ enum class CompanionScreen(val boardId: String) {
     WeeklyRecap("next-weekly-recap"),
     VetQuestions("next-vet-questions"),
     MemoryCaption("next-memory-caption"),;
-    companion object { fun fromBoard(id: String?) = entries.firstOrNull { it.boardId == id } }
+    companion object {
+        fun fromBoard(id: String?): CompanionScreen? = entries.firstOrNull { it.boardId == id } ?: when (id) {
+            "welcome" -> Opening
+            "cat-name" -> Dog
+            "cat-age" -> Stage
+            "cat-details" -> Breed
+            "cat-weight" -> Size
+            "cat-needs" -> CareNotes
+            "cat-goals" -> Goals
+            "reminder-setup" -> Permissions
+            "plan-reveal" -> Plan
+            else -> null
+        }
+    }
 }

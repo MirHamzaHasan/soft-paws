@@ -33,8 +33,11 @@ player's in-memory session; they never touch native SQLDelight journals or files
 Account, AI, calls, native pickers, exports, location and billing are honest
 handoff previews and cannot operate a service. No transactions are enabled.
 
-The new direction needs owner review before native adoption, as required by
-Ungenerated and the project guide. Native code is still the inherited KMP base.
+The owner approved the complete direction for native Android/iOS adoption on
+20 October 2026. The shared Compose port is in progress, tracked in task002;
+the web board remains a prototype. The subsequent colour refinement uses cream,
+apricot, teal and seven care-category colours, with refreshed Mobbin research.
+See [the review log](feedback.md).
 
 ## Cat companion
 

@@ -65,7 +65,7 @@ class CompanionController(private val documents: LocalDocumentRepository, privat
             val snapshot = authentication?.snapshot?.value
             val user = snapshot?.user
             val session = saved.copy(signedIn = user != null, provider = user?.provider.orEmpty(), email = user?.email.orEmpty())
-            val draft = documents.readDocument("companion-setup")?.let { json.decodeFromString<CompanionDraft>(it) } ?: CompanionDraft(platform.newId(), name = dog?.name.orEmpty(), sex = dog?.details?.sex ?: "Not recorded", photoId = dog?.details?.photoId, context = dog?.details?.companion ?: DogContext())
+            val draft = documents.readDocument("companion-setup")?.let { json.decodeFromString<CompanionDraft>(it) } ?: CompanionDraft(platform.newId(), name = dog?.name.orEmpty(), sex = dog?.details?.sex ?: "Not recorded", photoId = dog?.details?.photoId, context = dog?.details?.companion ?: DogContext.catDefaults())
             _state.value = CompanionState(premiumCustomer = purchases?.state?.value ?: PremiumCustomer(), premiumPreviewAllowed = platform.premiumPreviewAllowed, loading = false, session = session, draft = draft, emailLinkPending = snapshot?.emailLinkPending == true, route = review ?: if (snapshot?.emailLinkPending == true) CompanionScreen.CheckEmail else if (dog == null) CompanionScreen.fromBoard(draft.step) ?: CompanionScreen.Opening else null)
             initialized = true
             if (purchases != null && purchaseObserver == null) purchaseObserver = scope.launch {
@@ -182,7 +182,7 @@ class CompanionController(private val documents: LocalDocumentRepository, privat
     fun navigateTab(navigation: com.dracoarts.shared.presentation.navigation.AppState, tab: com.dracoarts.shared.presentation.navigation.Route) {
         val action = {
             navigation.enterJournal(tab)
-            _state.update { it.copy(route = if (tab == com.dracoarts.shared.presentation.navigation.Route.Profile) CompanionScreen.AccountSettings else null, reviewingDraft = false, error = null) }
+            _state.update { it.copy(route = null, reviewingDraft = false, error = null) }
         }
         (navigation.navigationHandler ?: navigationHandler)?.invoke(com.dracoarts.shared.presentation.navigation.BoardNavigationMove.Tab, action) ?: action()
     }
@@ -306,7 +306,7 @@ class CompanionController(private val documents: LocalDocumentRepository, privat
         var result: Dog? = null
         val saved = operation {
             val draft = state.value.draft; draft.context.validate()
-            require(draft.name.trim().length in 1..80 && draft.name.none(Char::isISOControl)) { "Enter a dog name from 1 to 80 characters." }
+            require(draft.name.trim().length in 1..80 && draft.name.none(Char::isISOControl)) { "Enter a cat name from 1 to 80 characters." }
             if (draft.context.birthday.isNotBlank()) require(kotlinx.datetime.LocalDate.parse(draft.context.birthday) <= com.dracoarts.shared.presentation.state.JournalDates.day(platform.nowMillis(), platform.timeZone())) { "Birthday can’t be in the future." }
             val old = if (draft.editingDogId != null) originalDog ?: journal.observeDogs().first().firstOrNull { it.id == draft.editingDogId } ?: kotlin.error("This dog no longer exists.") else null
             val details = (old?.details ?: DogDetails()).copy(breed = draft.context.breeds.joinToString(" × ").take(100), age = draft.context.ageLabel().take(60), sex = draft.sex, photoId = draft.photoId, companion = draft.context)
@@ -445,7 +445,10 @@ class CompanionController(private val documents: LocalDocumentRepository, privat
     catch (_: Exception) { setError("Couldn't save locally. Your details are still here. Try again."); false }
     companion object {
         private const val ADD_DOG_DRAFT = "companion-add-dog"
-        val dogSetupIds = CompanionScreen.entries.slice(CompanionScreen.Dog.ordinal..CompanionScreen.ContextReview.ordinal).map { it.boardId }
-        val onboardingIds = listOf("next-opening", "next-dog", "next-stage", "next-age", "next-breed", "next-sex", "next-size", "next-experience", "next-goals", "next-rhythm", "next-focus", "next-personality", "next-activities", "next-food", "next-care-notes", "next-reminder", "next-permissions", "next-context-review", "next-practice", "next-ai-demo")
+        val catSetupIds = listOf("next-dog", "cat-life", "next-stage", "next-breed", "next-size", "next-care-notes", "next-goals", "next-permissions", "next-context-review")
+        // Retain readable routes for unfinished inherited setup/profile documents.
+        val legacySetupIds = listOf("next-age", "next-sex", "next-experience", "next-rhythm", "next-focus", "next-personality", "next-activities", "next-food", "next-reminder", "next-practice", "next-ai-demo")
+        val dogSetupIds = catSetupIds + legacySetupIds
+        val onboardingIds = listOf("next-opening") + catSetupIds + legacySetupIds
     }
 }

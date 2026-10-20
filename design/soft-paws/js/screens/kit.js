@@ -165,7 +165,7 @@
   S.define(
     "kit-type",
     "foundations",
-    "Paper, moss and readable type",
+    "Apricot, colour and readable type",
     (c) => {
       const { scroll } = S.frame(c);
       scroll.append(
@@ -181,16 +181,25 @@
         ),
         S.card(
           "Ground & panel",
-          "Warm paper, moss actions and clear borders. No decorative shadows or gradients.",
+          "Warm cream, teal actions and an apricot welcome. Clear borders, with no decorative shadows or gradients.",
         ),
         h(
           "div.sp-grid2",
-          S.card("Moss", "Primary action", "soft"),
+          S.card("Teal", "Primary action", "soft"),
           S.card("Attention", "Meaning + label", "warn"),
         ),
         S.caption(
           "Cards 24 · rows 16 · tiles 12 · 24 px gutters · controls ≥48 px.",
         ),
+        h("div.sp-swatches", [
+          ["butter", "Butter", "Meals & daily plans"],
+          ["lilac", "Lilac", "Litter & medication"],
+          ["mint", "Mint", "Play & care contacts"],
+          ["rose", "Rose", "Notes & mood"],
+          ["sky", "Sky", "Water & measurements"],
+          ["peach", "Apricot", "Cat & memories"],
+          ["periwinkle", "Periwinkle", "Sleep & rest"],
+        ].map(([tone, name, purpose]) => h("div.sp-swatch", { "data-tone": tone }, h("strong", name), h("small", purpose)))),
       );
     },
     { flow: false },

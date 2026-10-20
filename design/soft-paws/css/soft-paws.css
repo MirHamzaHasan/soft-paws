@@ -257,6 +257,7 @@
   border-radius: 28px;
   padding: 22px;
   margin: 8px 0 18px;
+  border: 1px solid var(--peach-line);
 }
 .sp-greeting .sp-cat {
   position: absolute;
@@ -300,8 +301,42 @@
   font-size: calc(11px * var(--text-scale));
 }
 .sp-quick .ic {
-  color: var(--accent-text);
+  color: inherit;
 }
+/* Named category colours carry through quick actions, journal marks and care rows. */
+[data-tone="butter"] { --tone: var(--butter); --tone-ink: var(--butter-ink); --tone-line: var(--butter-line); }
+[data-tone="lilac"] { --tone: var(--lilac); --tone-ink: var(--lilac-ink); --tone-line: var(--lilac-line); }
+[data-tone="mint"] { --tone: var(--mint); --tone-ink: var(--mint-ink); --tone-line: var(--mint-line); }
+[data-tone="rose"] { --tone: var(--rose); --tone-ink: var(--rose-ink); --tone-line: var(--rose-line); }
+[data-tone="sky"] { --tone: var(--sky); --tone-ink: var(--sky-ink); --tone-line: var(--sky-line); }
+[data-tone="peach"] { --tone: var(--peach); --tone-ink: var(--peach-ink); --tone-line: var(--peach-line); }
+[data-tone="periwinkle"] { --tone: var(--periwinkle); --tone-ink: var(--periwinkle-ink); --tone-line: var(--periwinkle-line); }
+.sp-quick button[data-tone], .sp-mark[data-tone] {
+  background: var(--tone) !important;
+  color: var(--tone-ink);
+  border: 1px solid var(--tone-line) !important;
+}
+.sp-card[data-tone] {
+  background: var(--tone);
+  border-color: var(--tone-line);
+}
+.sp-choice[data-tone] > .ic { color: var(--tone-ink); }
+.sp-swatches {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0;
+}
+.sp-swatch {
+  background: var(--tone);
+  color: var(--tone-ink);
+  border: 1px solid var(--tone-line);
+  border-radius: 16px;
+  padding: 16px;
+  min-height: 92px;
+}
+.sp-swatch strong, .sp-swatch small { display: block; }
+.sp-swatch small { margin-top: 8px; font-size: 11px; line-height: 1.5; }
 .sp-tabs {
   display: flex;
   margin: 0 16px 25px;
@@ -547,7 +582,7 @@
   bottom: 10px;
   left: 12px;
   font-size: 10px;
-  color: #393b34;
+  color: var(--photo-caption);
 }
 .sp-photo.tall {
   height: 280px;

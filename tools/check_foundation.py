@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check BarkLog identities, free/local integration policy and repository documentation."""
+"""Check Soft Paws identities, free/local integration policy and repository documentation."""
 
 from pathlib import Path
 import json
@@ -21,12 +21,12 @@ def check() -> None:
 
     android = (ROOT / "androidApp/build.gradle.kts").read_text()
     ios = (ROOT / "iosApp/iosApp.xcodeproj/project.pbxproj").read_text()
-    if 'applicationId = "com.draco.apps.bark.log"' not in android:
-        errors.append("Android identity does not match BarkLog.")
-    if ios.count("PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.bark.log;") != 2:
-        errors.append("iOS Debug/Release identities do not match BarkLog.")
-    if ios.count('INFOPLIST_KEY_CFBundleDisplayName = "BarkLog";') != 2:
-        errors.append("iOS display name does not match BarkLog.")
+    if 'applicationId = "com.draco.apps.soft.paws"' not in android:
+        errors.append("Android identity does not match Soft Paws.")
+    if ios.count("PRODUCT_BUNDLE_IDENTIFIER = com.draco.apps.soft.paws;") != 2:
+        errors.append("iOS Debug/Release identities do not match Soft Paws.")
+    if ios.count('INFOPLIST_KEY_CFBundleDisplayName = "Soft Paws";') != 2:
+        errors.append("iOS display name does not match Soft Paws.")
     info = plistlib.loads((ROOT / "iosApp/iosApp/Info.plist").read_bytes())
     if info.get("CADisableMinimumFrameDurationOnPhone") is not True:
         errors.append("Compose's required iPhone frame-duration plist setting is absent.")
@@ -74,7 +74,7 @@ def check() -> None:
 
     if errors:
         raise ValueError("\n".join(errors))
-    print("BarkLog identities, local/free policy, resources and documentation links passed.")
+    print("Soft Paws identities, local/free policy, resources and documentation links passed.")
 
 
 if __name__ == "__main__":

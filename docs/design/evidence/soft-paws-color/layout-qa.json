@@ -1,0 +1,12 @@
+{
+  "screens": 94,
+  "passes": 282,
+  "integrity": {
+    "duplicateIds": [],
+    "sectionsWithoutScreens": [],
+    "brokenSequences": [],
+    "brokenTargets": [],
+    "brokenAssets": []
+  },
+  "issues": []
+}

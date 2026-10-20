@@ -62,7 +62,11 @@ internal fun CompanionHostContent(controller: CompanionController, journal: Jour
         }
         return
     }
-    if (route in setOf(CompanionScreen.Plan, CompanionScreen.Paywall, CompanionScreen.ManagePlan)) {
+    if (route == CompanionScreen.Plan) {
+        SoftPawsPlanReveal(controller, journal, applySafeInsets, onEnterJournal)
+        return
+    }
+    if (route in setOf(CompanionScreen.Paywall, CompanionScreen.ManagePlan)) {
         PremiumPlanScreen(route, controller, journal, applySafeInsets, ::back, onEnterJournal)
         return
     }
@@ -75,12 +79,12 @@ internal fun CompanionHostContent(controller: CompanionController, journal: Jour
             Column(Modifier.fillMaxWidth().verticalScroll(scroll).heightIn(min = viewport).padding(horizontal = 20.dp,vertical = 12.dp),verticalArrangement = Arrangement.spacedBy(22.dp)) {
                 if (route != CompanionScreen.Opening) Row(Modifier.fillMaxWidth(),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(18.dp)) {
                     BoardBackButton(::back, !state.profileSaving)
-                    val steps = if (state.draft.addingDog) CompanionController.dogSetupIds else CompanionController.onboardingIds
+                    val steps = listOf(CompanionScreen.Opening.boardId) + CompanionController.catSetupIds
                     val index = steps.indexOf(route.boardId)
                     if (index >= 0) {
                         val progress by animateFloatAsState(index.toFloat() / (steps.size - 1), if (motion.reduced) snap() else tween(motion.milliseconds(460), easing = CubicBezierEasing(.16f,1f,.3f,1f)),label = "setup progress")
                         LinearProgressIndicator(progress = { progress },modifier = Modifier.weight(1f).height(4.dp),color = boardColor("ink-strong"),trackColor = boardColor("hair"),drawStopIndicator = {})
-                    } else { Spacer(Modifier.weight(1f)); BrandHeader(if (controller.atlasOnly && route == CompanionScreen.AiPrivacy) "Text via BarkLog AI" else "On this device") }
+                    } else { Spacer(Modifier.weight(1f)); BrandHeader(if (controller.atlasOnly && route == CompanionScreen.AiPrivacy) "Text via Soft Paws AI" else "On this device") }
                 }
                 state.error?.let { ErrorCard(it) }
                 when {
@@ -101,12 +105,17 @@ internal fun CompanionHostContent(controller: CompanionController, journal: Jour
 fun CompanionHost(controller: CompanionController,journal: JournalState,journalController: JournalController,care: CareController,platform: AppPlatform,navigation: AppState,repository: JournalRepository,reviewEnabled: Boolean=false,onEnterJournal: suspend (String)->Unit) {
     val parent=LocalBarkMotion.current;var speed by rememberSaveable {mutableFloatStateOf(1f)};var replay by remember {mutableIntStateOf(0)}
     val current by controller.state.collectAsState()
-    CompositionLocalProvider(LocalBarkMotion provides BarkMotion(parent.reduced,if(reviewEnabled)speed else parent.speed,replay)) {
+    var footer by remember { mutableStateOf<BoardFooterContent?>(null) }
+    val publishFooter = remember { { value: BoardFooterContent? -> footer = value } }
+    CompositionLocalProvider(LocalBoardFooter provides publishFooter, LocalBarkMotion provides BarkMotion(parent.reduced,if(reviewEnabled)speed else parent.speed,replay)) {
       BoardScene(navigation,platform.device,Modifier.fillMaxSize()) {
         val handler=LocalBoardNavigation.current
         DisposableEffect(handler) {controller.navigationHandler=handler;onDispose {if(controller.navigationHandler===handler)controller.navigationHandler=null}}
-        Column(Modifier.fillMaxSize()) {
-            Box(Modifier.weight(1f)) {CompanionHostContent(controller,journal,journalController,care,platform,navigation,repository,onEnterJournal=onEnterJournal)}
+        Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing).imePadding()) {
+            Box(Modifier.weight(1f)) {CompanionHostContent(controller,journal,journalController,care,platform,navigation,repository,applySafeInsets=false,onEnterJournal=onEnterJournal)}
+            footer?.let { action -> Surface(color = boardColor("ground"), border = androidx.compose.foundation.BorderStroke(1.dp, boardColor("hair"))) {
+                Column(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.page, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) { action() }
+            } }
             if(reviewEnabled && WindowInsets.ime.getBottom(LocalDensity.current) == 0) Surface(color=boardColor("inset")) {Column(Modifier.fillMaxWidth().padding(8.dp)) {
                 BoardSelect("Native board screen",current.route?.boardId.orEmpty(),CompanionScreen.entries.map {it.boardId to "${it.ordinal+1}/54 · ${it.boardId}"}) {id->controller.go(CompanionScreen.fromBoard(id))}
                 Row {BarkTextAction("Replay",{replay++});BarkTextAction("1×",{speed=1f});BarkTextAction("½×",{speed=.5f});BarkTextAction("¼×",{speed=.25f})}

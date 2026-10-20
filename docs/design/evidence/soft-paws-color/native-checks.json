@@ -1,0 +1,36 @@
+{
+  "scope": "Native Debug colour/core journey and real Rive tap samples; full 89-screen parity remains unverified.",
+  "date": "2026-10-20",
+  "fixture": "soft-paws-day-v1 \u00b7 synthetic SQLite journal",
+  "android": {
+    "appId": "com.draco.apps.soft.paws",
+    "coreJourney": "passed",
+    "latestJourneySeconds": 113.246,
+    "testedTabs": [
+      "Today",
+      "Journal",
+      "Care",
+      "Memories",
+      "You"
+    ],
+    "baselineOfflineSaveReopen": "passed",
+    "tapFrameDifference": "visible in cat bounds",
+    "compileUiBaseline": "1.10.3",
+    "debugReleaseLintMigrationsAndJvm": "passed",
+    "jvmTests": 152,
+    "latestJourneyNetwork": "Airplane mode enabled",
+    "debugStartupLimit": "Fresh-install instrumented Debug startup hit DEX-verification timeout during concurrent native compilation; ART package compilation preceded the final passing emulator run. Cold physical startup is unverified."
+  },
+  "ios": {
+    "appId": "com.draco.apps.soft.paws",
+    "os": "18.5 simulator",
+    "renderer": "1.12.2",
+    "coreTestsPassed": 2,
+    "additionalTapAndAccessibilityTestPassed": 1,
+    "reportedAccessibilityCrashRecurred": false,
+    "debugBundleCheck": "passed",
+    "release": "passed",
+    "debugReleaseAndBundleChecks": "passed"
+  },
+  "services": "No real authentication, AI, purchase, upload, call or location request was made."
+}

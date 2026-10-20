@@ -37,7 +37,7 @@ class GgufLocalAi(private val store: ModelStore, private val device: DeviceServi
         downloadJob.value = currentCoroutineContext()[Job]
         val spec = ModelCatalog.spec(kind)
         try {
-            if (memoryBytes < minimumMemory(kind)) throw AiException("This device has too little memory for this local model. BarkLog AI text fallback is available with your permission.")
+            if (memoryBytes < minimumMemory(kind)) throw AiException("This device has too little memory for this local model. Soft Paws AI text fallback is available with your permission.")
             update(kind, LocalModelStatus("downloading", total = spec.bytes))
             store.install(spec) { update(kind, LocalModelStatus("downloading", it, spec.bytes)) }
             update(kind, LocalModelStatus("downloaded", spec.bytes, spec.bytes))

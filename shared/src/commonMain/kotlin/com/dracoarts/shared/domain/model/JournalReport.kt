@@ -10,16 +10,21 @@ object JournalReport {
     fun details(value: CareDetails?): String = when (value) {
         is CareDetails.Poop -> value.consistency?.label.orEmpty()
         is CareDetails.Pee -> value.amount?.label.orEmpty()
-        is CareDetails.Meal -> listOfNotNull(value.food, value.portion).joinToString(" · ")
+        is CareDetails.Meal -> listOfNotNull(value.food, value.portion, value.offeredGrams?.let { "$it g offered" }, value.eaten?.label).joinToString(" · ")
         is CareDetails.Walk -> value.durationMinutes?.let { "$it minutes" }.orEmpty()
         is CareDetails.Symptom -> value.observation
         is CareDetails.Behavior -> value.observation
-        is CareDetails.Mood -> value.observedMood.label
-        is CareDetails.Grooming -> value.activity.label
+        is CareDetails.Mood -> listOfNotNull(value.observedMood.label, value.context).joinToString(" · ")
+        is CareDetails.Grooming -> listOfNotNull(value.activity.label, value.durationMinutes?.let { "$it minutes observed" }).joinToString(" · ")
         is CareDetails.Weight -> "${value.amount} ${value.unit.label}"
         is CareDetails.Medication -> "${value.name} · ${value.amount} · recorded as given"
         is CareDetails.Training -> "${TrainingCatalog.programs.firstOrNull { it.id == value.programId }?.title ?: value.programId} · ${value.seconds} seconds · ${value.rating} · ${value.mood}"
         is CareDetails.Task -> "${value.title} · completed for ${value.dueDate}"
+        is CareDetails.Water -> listOfNotNull(value.observation.label, value.measuredMillilitres?.let { "$it ml measured" }).joinToString(" · ")
+        is CareDetails.Litter -> listOfNotNull(value.observation.label, value.visits?.let { "$it visits observed" }, value.urineAmount?.let { "Urine amount: ${it.label}" }, value.stoolConsistency?.let { "Stool: ${it.label}" }).joinToString(" · ")
+        is CareDetails.Play -> listOfNotNull(value.interest.label, value.durationMinutes?.let { "$it minutes observed" }).joinToString(" · ")
+        is CareDetails.Sleep -> listOfNotNull(value.observation.label, value.durationMinutes?.let { "$it minutes observed" }).joinToString(" · ")
+        is CareDetails.Note -> listOfNotNull(value.title, value.category.label).joinToString(" · ")
         null -> ""
     }
     fun csvCell(value: String): String {
@@ -29,7 +34,7 @@ object JournalReport {
     }
     fun csv(report: ReportSnapshot): String {
         fun row(values: List<String>) = values.joinToString(",", transform = ::csvCell)
-        val rows = mutableListOf(row(listOf("record_id", "dog_id", "dog_name", "record_type", "occurred_at_utc", "local_date_time", "timezone", "details", "notes", "amount", "currency", "location", "recorded_by", "observations", "photo_reference")))
+        val rows = mutableListOf(row(listOf("record_id", "cat_id", "cat_name", "record_type", "occurred_at_utc", "local_date_time", "timezone", "details", "notes", "amount", "currency", "location", "recorded_by", "observations", "photo_reference")))
         report.events.forEach { event -> rows += row(listOf(event.id, report.dog.id, report.dog.name, event.type.key,
             Instant.fromEpochMilliseconds(event.occurredAtMillis).toString(), Instant.fromEpochMilliseconds(event.occurredAtMillis).toLocalDateTime(report.zone).toString(), report.zone.id, details(event.details), event.note.orEmpty(), "", "",
             event.context.location, event.context.caregiver, event.context.observations.entries.joinToString(" · ") { "${it.key}: ${it.value}" }, if (event.context.photoId != null) "Local attachment recorded" else "")) }
@@ -50,7 +55,7 @@ object JournalReport {
         return rows.joinToString("\r\n", postfix = "\r\n")
     }
     fun lines(report: ReportSnapshot): List<String> = buildList {
-        add("Dog: ${report.dog.name}")
+        add("Cat: ${report.dog.name}")
         add("Care range: ${report.from} through ${report.through} · ${report.zone.id}")
         add("Prepared: ${Instant.fromEpochMilliseconds(report.preparedAt)}")
         add("Caregiver-entered observations, plus current recorded medication plans. This is not a diagnosis or treatment recommendation.")

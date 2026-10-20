@@ -65,18 +65,9 @@ private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
         Feature.VideoHighlight, Feature.VideoHighlightGate -> HighlightFeatureScreen(page, context)
         Feature.Monthly -> InsightsScreen(context, monthly = true)
         Feature.Chooser -> {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) { CaptionText("KEEP THE LITTLE DETAILS"); MarkerHeading("Create a log.", "log."); SupportingText("A quick observation, a proper note, or both.") }
-            listOf("The everyday things" to CareEventRules.detailedTypes.take(4), "What you noticed" to CareEventRules.detailedTypes.drop(4).take(3), "A little extra care" to CareEventRules.detailedTypes.takeLast(2)).forEach { (title, types) ->
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            SectionTitle(title)
-            types.chunked(2).forEach { pair ->
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(11.dp)) {
-                    pair.forEach { type ->
-                        LogLibraryTile(type, pair.size == 1, Modifier.weight(1f)) { context.navigation.newLog(context.dog.id, type, context.platform.newId()) }
-                    }
-                }
-            }
-            }
+            SoftPawsHeading("What did you notice?", "Keep one thing about ${context.dog.name}’s day.")
+            CareEventType.catJournalTypes.forEach { type ->
+                SoftPawsRow(type.label, "", type.iconName()) { context.navigation.newLog(context.dog.id, type, context.platform.newId()) }
             }
             CaptionText("Caregiver observations only. Everything saves on this device.")
         }

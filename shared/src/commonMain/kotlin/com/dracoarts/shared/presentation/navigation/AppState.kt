@@ -8,11 +8,16 @@ import com.dracoarts.shared.domain.model.CareEventType
 import com.dracoarts.shared.domain.model.CareEventRules
 
 data class JournalPage(val kind: Kind, val dogId: String, val eventId: String, val typeKey: String = "", val sessionId: String = eventId) {
-    enum class Kind { New, Detail, Edit }
+    enum class Kind { New, Detail, Edit, Saved }
 }
 
 enum class Route(val label: String, val symbol: String) {
-    Home("Home", "⌂"), Timeline("Timeline", "≡"), Insights("Insights", "↗"), Profile("Profile", "○");
+    Home("Today", "⌂"), Timeline("Journal", "≡"), Insights("Insights", "↗"), Profile("You", "○"),
+    Care("Care", "♡"), Memories("Memories", "□");
+
+    /** Insights remains restorable from inherited state; it is reached through Care. */
+    val dockRoute get() = if (this == Insights) Care else this
+    companion object { val dockRoutes = listOf(Home, Timeline, Care, Memories, Profile) }
 }
 
 enum class Feature {
@@ -65,6 +70,10 @@ class AppState(initialRoute: Route = Route.Home) {
         page = JournalPage(JournalPage.Kind.Detail, dogId, eventId)
     }
     fun edit(dogId: String, eventId: String, sessionId: String) = change(BoardNavigationMove.Carry) { page = JournalPage(JournalPage.Kind.Edit, dogId, eventId, sessionId = sessionId) }
+    fun saved(dogId: String, eventId: String) = change(BoardNavigationMove.Carry) {
+        if (featurePage?.feature == Feature.Chooser) featureStack = featureStack.dropLast(1)
+        page = JournalPage(JournalPage.Kind.Saved, dogId, eventId)
+    }
     fun closePage() = change(BoardNavigationMove.Back) { page = null; featureStack = emptyList() }
     fun returnTo(feature: Feature, id: String = "") = change(BoardNavigationMove.Back) {
         require(!id.contains('|') && !id.contains('~') && !id.contains(':'))

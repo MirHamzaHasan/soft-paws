@@ -2,7 +2,8 @@
 
 20 October 2026. Read-only inspection of the inherited native source after the
 cat board was authored. This is an implementation map, not native delivery or
-design approval. The owner review gate remains open.
+design approval. The owner subsequently approved the full native port on
+20 October 2026; implementation is tracked in task002.
 
 The full target remains the cat app with the existing function range, both native
 hosts, the new shared screens and original Rive companion. The board's 89 product
@@ -45,7 +46,7 @@ host. Keep AppContainer wiring, ModuleRegistry cleanup, local writes before
 feedback, retained stable request IDs, optimistic revisions and attachment
 reference counting. Photos and highlight rendering remain native/local adapters.
 
-## Work sequence once the board is approved
+## Approved implementation sequence
 
 1. Establish independent app identity and safe unconfigured service behaviour.
    Compile both hosts without installing over existing app containers.
@@ -62,4 +63,5 @@ reference counting. Photos and highlight rendering remain native/local adapters.
 
 No native source, identity, schema, service configuration, saved journal or
 device installation was changed by this audit. It does not authorise a live AI
-request, transaction, upload of personal records, or a native UI port before review.
+request, transaction or upload of personal records. The subsequent explicit
+owner approval authorizes the native UI port.

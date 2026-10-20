@@ -27,7 +27,7 @@
       ["Play", "sparkles", "log-play"],
       ["Note", "notebook-pen", "log-note"],
     ].forEach(([l, i, id]) => {
-      const b = h("button", { type: "button" }, S.icon(i), l);
+      const b = h("button", { type: "button", ...S.tone(i) }, S.icon(i), l);
       F.press(c, b, { onTap: () => S.go(c, id) });
       q.append(b);
     });
@@ -58,6 +58,7 @@
             () => S.go(c, "symptoms"),
           ),
         ),
+        "lilac",
       ),
       S.row(c, "Care coming up", "Your chosen reminders", "calendar", () =>
         S.go(c, "calendar"),

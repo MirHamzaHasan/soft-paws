@@ -16,7 +16,7 @@
             S.go(c, "calendar"),
           ),
         ),
-        "soft",
+        "butter",
       ),
       S.list(
         S.row(

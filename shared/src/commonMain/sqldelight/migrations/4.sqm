@@ -1,0 +1,23 @@
+-- Extend the observation taxonomy without changing any existing record meaning.
+-- No table references care_events; profile/item/draft/document tables stay intact.
+CREATE TABLE care_events_cat (
+  id TEXT NOT NULL PRIMARY KEY,
+  dog_id TEXT NOT NULL REFERENCES dogs(id),
+  type TEXT NOT NULL CHECK (type IN ('poop', 'pee', 'meal', 'walk', 'medication', 'symptom', 'mood', 'behavior', 'grooming', 'weight', 'training', 'task', 'water', 'litter', 'play', 'sleep', 'note')),
+  occurred_at INTEGER NOT NULL CHECK (occurred_at >= 0),
+  created_at INTEGER NOT NULL CHECK (created_at >= 0),
+  note TEXT CHECK (length(note) <= 2000),
+  details_json TEXT,
+  revision INTEGER NOT NULL DEFAULT 1,
+  updated_at INTEGER NOT NULL DEFAULT 0,
+  context_json TEXT NOT NULL DEFAULT '{}'
+);
+
+INSERT INTO care_events_cat(id, dog_id, type, occurred_at, created_at, note, details_json, revision, updated_at, context_json)
+SELECT id, dog_id, type, occurred_at, created_at, note, details_json, revision, updated_at, context_json FROM care_events;
+DROP INDEX events_dog_time;
+DROP INDEX events_dog_type_time;
+DROP TABLE care_events;
+ALTER TABLE care_events_cat RENAME TO care_events;
+CREATE INDEX events_dog_time ON care_events(dog_id, occurred_at DESC, created_at DESC, id DESC);
+CREATE INDEX events_dog_type_time ON care_events(dog_id, type, occurred_at DESC);

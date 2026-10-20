@@ -4,7 +4,13 @@ This repository is now Soft Paws, a separate cat-care app based on BarkLog.
 Read [Soft Paws product and engineering truth](../source-of-truth/soft-paws-product-engineering.md)
 and [the redesign task](../../tasks/soft-paws-task001-cat-redesign.md) first.
 The native implementation below is inherited BarkLog status; the new cat board
-requires review before native adoption and separate service registrations.
+was approved for the native port on 20 October 2026. Task002 is implementing
+the cat app with separate app identities. The colourful palette refinement is
+in the board and generated native theme. Cat SQLite contracts, core screens and
+the Android offline save/reopen journey are implemented. The iOS accessibility
+crash reproducer now passes with the updated renderer; full native parity
+remains in progress. Own service
+registrations remain deferred.
 
 ---
 

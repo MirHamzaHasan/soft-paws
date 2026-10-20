@@ -3,23 +3,26 @@ package com.dracoarts.shared.domain.model
 data class SafetyTopic(val id: String, val title: String, val guidance: String, val source: String)
 data class ToxicityReference(val name: String, val aliases: Set<String>, val guidance: String, val source: String)
 
-/** Bounded, source-checked reference copy. No dosage, diagnosis or wait-at-home decision. */
+/** Species-specific, bounded contact guidance. Never a diagnosis, dose or safe-to-wait decision. */
 object SafetyReference {
-    const val version = "2026-10-15"
+    const val version = "2026-10-20-cat-v1"
     const val avma = "https://ebusiness.avma.org/files/productdownloads/mcm-client-brochures-pet-first-aid-2023.pdf"
-    const val poison = "https://www.merckvetmanual.com/special-pet-topics/poisoning/general-treatment-of-poisoning"
-    const val urgent = "If your dog may be in immediate danger, contact a veterinarian or local emergency veterinary hospital now. This guide cannot assess severity."
+    const val hazards = "https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/common-cat-hazards"
+    const val poison = "https://www.aspca.org/news/it-ever-safe-induce-vomiting"
+    const val lilies = "https://www.fda.gov/animal-veterinary/animal-health-literacy/lovely-lilies-and-curious-cats-dangerous-combination"
+    const val urinary = "https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feline-lower-urinary-tract-disease"
+    const val urgent = "If your cat may be in immediate danger, contact a veterinarian or local emergency veterinary hospital now. This guide cannot assess severity."
     val topics = listOf(
-        SafetyTopic("bleeding", "Bleeding", "If safe, hold clean cloth firmly against the wound. Add cloth over soaked layers. Seek urgent veterinary help for severe bleeding.", avma),
-        SafetyTopic("heat", "Possible heatstroke", "Arrange emergency veterinary care immediately. Move into shade or a comfortably cool space. Begin cooling with room-temperature wet towels and airflow.", avma),
-        SafetyTopic("seizure", "Seizure", "Clear nearby hazards. Keep hands away from the mouth and avoid restraint. Time the episode if safe, then contact emergency veterinary care.", avma),
-        SafetyTopic("injury", "Injury", "An injured dog may bite. Limit movement during transport and avoid removing objects embedded in a wound. Contact a veterinary hospital.", avma),
-        SafetyTopic("poison", "Possible poisoning", "Call a veterinary professional promptly. Keep packaging and note the possible amount and exposure time. Avoid inducing vomiting or giving remedies unless directed.", poison),
+        SafetyTopic("urination", "Straining with little or no urine", "Repeated attempts to urinate with little or no urine can be an emergency. Contact an emergency veterinarian immediately; do not wait for a journal or AI assessment.", urinary),
+        SafetyTopic("poison", "Suspected exposure", "Contact a veterinarian or animal poison service immediately. Do not try to make your cat vomit or give home remedies. Follow the veterinary professional’s instructions.", poison),
+        SafetyTopic("lilies", "Possible lily exposure", "If your cat may have eaten a lily, licked its pollen or drunk its vase water, call a veterinarian or animal poison service immediately. Keep the plant name or a photo if available.", lilies),
+        SafetyTopic("medicines", "Medicines and flea products", "Human medicines and dog flea treatments can be toxic to cats. For a possible exposure, call a veterinarian immediately and keep the product label.", hazards),
+        SafetyTopic("prepare", "Details for the call", "Keep the substance or product label, when exposure may have happened and what you observed. Do not delay the call to complete the journal.", hazards),
     )
     val toxicity = listOf(
-        ToxicityReference("Chocolate", setOf("chocolate", "cocoa", "cacao"), "Risk varies with the product and amount. Contact a veterinary professional with the packaging, estimated amount and exposure time.", "https://www.merckvetmanual.com/toxicology/food-hazards/chocolate-toxicosis-in-animals"),
-        ToxicityReference("Grapes and raisins", setOf("grape", "grapes", "raisin", "raisins", "sultana", "sultanas"), "These exposures can harm dogs. Contact a veterinary professional promptly; keep the product and exposure details.", "https://www.merckvetmanual.com/toxicology/food-hazards/grape-raisin-and-tamarind-vitis-spp-tamarindus-spp-toxicosis-in-dogs"),
-        ToxicityReference("Xylitol", setOf("xylitol", "birch sugar"), "Xylitol can cause serious poisoning in dogs. Contact a veterinary professional immediately and keep the ingredient label.", "https://www.merckvetmanual.com/toxicology/food-hazards/xylitol-toxicosis-in-dogs"),
+        ToxicityReference("Lilies", setOf("lily", "lilies", "daylily", "daylilies", "lily pollen", "lily vase water"), topics.first { it.id == "lilies" }.guidance, lilies),
+        ToxicityReference("Human medicines", setOf("acetaminophen", "paracetamol", "ibuprofen", "aspirin", "human medicine", "human medicines"), topics.first { it.id == "medicines" }.guidance, hazards),
+        ToxicityReference("Dog flea treatments", setOf("dog flea treatment", "dog flea treatments", "dog flea product"), topics.first { it.id == "medicines" }.guidance, hazards),
     )
     fun lookup(query: String): ToxicityReference? {
         val normalized = query.trim().lowercase().replace(Regex("\\s+"), " ")

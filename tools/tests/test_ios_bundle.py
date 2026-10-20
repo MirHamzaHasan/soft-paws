@@ -12,30 +12,26 @@ spec.loader.exec_module(bundle_check)
 
 
 class IosBundleTests(unittest.TestCase):
-    def test_a_stale_bundled_firebase_config_is_rejected_before_runtime(self):
+    def test_inherited_firebase_registration_is_rejected_before_runtime(self):
         with tempfile.TemporaryDirectory() as root:
             bundle = self.fixture(root)
-            expected = Path(root) / "expected.plist"
-            expected.write_bytes(plistlib.dumps({
-                "BUNDLE_ID": "com.draco.apps.bark.log", "PROJECT_ID": "bark-log", "CLIENT_ID": "new-client",
+            (bundle / "GoogleService-Info.plist").write_bytes(plistlib.dumps({
+                "BUNDLE_ID": "com.draco.apps.bark.log", "PROJECT_ID": "bark-log",
             }))
-            with self.assertRaisesRegex(ValueError, "bundled Firebase config is stale"):
-                bundle_check.check("Debug", bundle, expected)
+            with self.assertRaisesRegex(ValueError, "inherited Firebase registration"):
+                bundle_check.check("Debug", bundle)
 
     def fixture(self, root):
         bundle = Path(root) / "iosApp.app"
         bundle.mkdir()
-        (bundle / "GoogleService-Info.plist").write_bytes(plistlib.dumps({
-            "BUNDLE_ID": "com.draco.apps.bark.log", "PROJECT_ID": "bark-log",
-        }))
         (bundle / "Info.plist").write_bytes(plistlib.dumps({
-            "CFBundleIdentifier": "com.draco.apps.bark.log",
-            "CFBundleDisplayName": "BarkLog",
+            "CFBundleIdentifier": "com.draco.apps.soft.paws",
+            "CFBundleDisplayName": "Soft Paws",
             "CFBundleShortVersionString": "1.0.0",
             "CFBundleVersion": "1",
             "CADisableMinimumFrameDurationOnPhone": True,
             "NSLocationWhenInUseUsageDescription": "Find animal emergency services and nearby veterinary clinics in your area when you ask. You can enter a city instead.",
-            "NSCameraUsageDescription": "Take a photo for your dog profile or care record when you choose Take photo.",
+            "NSCameraUsageDescription": "Take a photo for your cat profile or care record when you choose Take photo.",
         }))
         return bundle
 
@@ -61,7 +57,7 @@ class IosBundleTests(unittest.TestCase):
             path.write_bytes(plistlib.dumps(info))
             with self.assertRaisesRegex(ValueError, "NSCameraUsageDescription"):
                 bundle_check.check("Debug", bundle)
-            info["NSCameraUsageDescription"] = "Take a photo for your dog profile or care record when you choose Take photo."
+            info["NSCameraUsageDescription"] = "Take a photo for your cat profile or care record when you choose Take photo."
             info["NSMicrophoneUsageDescription"] = "Not part of the photo action"
             path.write_bytes(plistlib.dumps(info))
             with self.assertRaisesRegex(ValueError, "unexpected privacy permission"):

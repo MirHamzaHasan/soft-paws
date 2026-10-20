@@ -55,16 +55,17 @@ def tokens():
     return '\n'.join(result)
 
 
-def icon_paths():
+def icon_paths(shapes=None, object_name='GeneratedBoardIcons'):
     code = """const fs=require('fs'),vm=require('vm');
     const c={window:{F:{setReduced(){}},BARK_MOTION:{}},URLSearchParams,location:{search:''}};
     for(const p of ['design/board/js/icons.js','design/board/js/barklog.js','design/board/premium/parts.js'])vm.runInNewContext(fs.readFileSync(p,'utf8'),c);
     console.log(JSON.stringify(c.window.F_ICONS));"""
-    shapes = json.loads(subprocess.check_output(['node', '-e', code], cwd=ROOT, text=True))
+    if shapes is None:
+        shapes = json.loads(subprocess.check_output(['node', '-e', code], cwd=ROOT, text=True))
     names = sorted(shapes)
     result = ['// Generated from the approved board Lucide subset. ISC notice: Lucide-LICENSE.txt.',
               'package com.dracoarts.shared.presentation.components', '',
-              'object GeneratedBoardIcons {', '    val paths: Map<String, List<String>> = mapOf(']
+              f'object {object_name} {{', '    val paths: Map<String, List<String>> = mapOf(']
     for name in names:
         paths = []
         for shape in shapes[name]:

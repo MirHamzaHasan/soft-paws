@@ -37,7 +37,7 @@ class AndroidFirebaseAuth(private val activity: ComponentActivity) : NativeAuthE
                 check(auth.currentUser?.uid == user.uid && !token.isNullOrBlank())
                 NativeIdToken(token = token, uid = user.uid)
             } catch (cancelled: CancellationException) { return@launch }
-            catch (_: Exception) { NativeIdToken(error = "Sign in again or reconnect to use BarkLog AI.") }
+            catch (_: Exception) { NativeIdToken(error = "Sign in again or reconnect to use Soft Paws AI.") }
             completion(result)
         }
     }

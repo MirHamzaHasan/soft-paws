@@ -3,6 +3,8 @@ package com.dracoarts.shared.presentation.companion
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,7 +27,7 @@ import kotlin.math.PI
     }
 }
 @Composable internal fun CDog(name: String, large: Boolean = false, reaction: String? = null) {
-    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { AnimatedDog(Modifier.size(if (large) 198.dp else 86.dp, if (large) 224.dp else 104.dp), reactionId = reaction, greetingLabel = if (large) "Say hello to $name" else null) }
+    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { AnimatedCat(Modifier.size(if (large) 198.dp else 86.dp, if (large) 224.dp else 104.dp), reactionId = reaction, greetingLabel = if (large) "Say hello to $name" else null) }
 }
 @Composable internal fun CChoice(title: String, subtitle: String = "", icon: String = "paw-print", selected: Boolean, multi: Boolean = false, onClick: () -> Unit) {
     val motion = LocalBarkMotion.current
@@ -68,11 +70,20 @@ import kotlin.math.PI
     }
 }
 @Composable internal fun ColumnScope.CFoot(label: String, enabled: Boolean = true, secondary: String? = null, onSecondary: (() -> Unit)? = null, onClick: () -> Unit) {
-    Spacer(Modifier.weight(1f).heightIn(min = 16.dp))
-    BarkButton(label, onClick, enabled = enabled)
-    if (secondary != null && onSecondary != null) BarkTextAction(secondary, onSecondary, Modifier.align(Alignment.CenterHorizontally))
+    BoardStickyAction {
+        BarkButton(label, onClick, enabled = enabled)
+        if (secondary != null && onSecondary != null) BarkTextAction(secondary, onSecondary, Modifier.align(Alignment.CenterHorizontally), enabled = enabled)
+    }
 }
-internal val profileEdits = mapOf("Sex" to CompanionScreen.Sex, "Life stage" to CompanionScreen.Stage, "Age" to CompanionScreen.Age, "Breed or mix" to CompanionScreen.Breed, "Neutered or spayed" to CompanionScreen.Sex, "Size" to CompanionScreen.Size, "Recorded weight" to CompanionScreen.Size, "Your experience" to CompanionScreen.Experience, "Care priorities" to CompanionScreen.Goals, "Routines" to CompanionScreen.Rhythm, "AI topics" to CompanionScreen.Focus, "Personality" to CompanionScreen.Personality, "Activities" to CompanionScreen.Activities, "Food" to CompanionScreen.Food, "Allergies or sensitivities" to CompanionScreen.Food, "Known conditions" to CompanionScreen.CareNotes, "Existing care instructions" to CompanionScreen.CareNotes, "Care notes" to CompanionScreen.CareNotes)
+@Composable internal fun CWeekdays(selected: List<Int>, onChange: (List<Int>) -> Unit) {
+    Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday").forEachIndexed { index, label ->
+            val day = index + 1
+            FilterChip(day in selected, { onChange(if (day in selected) selected - day else (selected + day).sorted()) }, label = { Text(label.take(3)) }, modifier = Modifier.heightIn(min = 48.dp).semantics { contentDescription = label })
+        }
+    }
+}
+internal val profileEdits = mapOf("Sex" to CompanionScreen.Sex, "Life stage" to CompanionScreen.Stage, "Lifestyle" to CompanionScreen.Lifestyle, "Age" to CompanionScreen.Age, "Breed or mix" to CompanionScreen.Breed, "Neutered or spayed" to CompanionScreen.Sex, "Recorded weight" to CompanionScreen.Size, "Care priorities" to CompanionScreen.Goals, "Food" to CompanionScreen.Food, "Allergies or sensitivities" to CompanionScreen.Food, "Known conditions" to CompanionScreen.CareNotes, "Existing care instructions" to CompanionScreen.CareNotes, "Care notes" to CompanionScreen.CareNotes)
 @Composable internal fun CProfile(snapshot: ProfileSnapshot, onEdit: ((CompanionScreen) -> Unit)? = null) {
     JournalCard { Text(snapshot.name, style = MaterialTheme.typography.headlineMedium); (listOf("Sex" to snapshot.sex).filter {it.second != "Not recorded"} + snapshot.context.facts() + listOf("Other breed note" to snapshot.breed, "Other age note" to snapshot.age, "Other care notes" to snapshot.notes).filter { it.second.isNotBlank() }).forEachIndexed { index, (key,value) -> Column(Modifier.fillMaxWidth().then(profileValueEntrance(index)), verticalArrangement = Arrangement.spacedBy(5.dp)) { CaptionText(key); Row(verticalAlignment = Alignment.CenterVertically) { Text(value, Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge); if (onEdit != null) BarkTextAction("Edit", { onEdit(profileEdits[key] ?: CompanionScreen.ContextReview) }, icon = "pencil") }; HorizontalDivider(color = boardColor("hair")) } } }
     if(onEdit!=null) BoardSelect("Add or change a detail","",profileEdits.entries.map {it.value.boardId to it.key}.distinctBy {it.first}) {id->CompanionScreen.fromBoard(id)?.let(onEdit)}
@@ -83,7 +94,7 @@ internal val profileEdits = mapOf("Sex" to CompanionScreen.Sex, "Life stage" to 
     Surface(onClick=soundAction({controller.go(if(!state.premiumAccess)CompanionScreen.AiGate else if(controller.requiresAiConsent)CompanionScreen.AiPrivacy else CompanionScreen.Chat)}),modifier=modifier.fillMaxWidth().heightIn(min=70.dp),shape=RoundedCornerShape(19.dp),color=boardColor("panel"),border=BorderStroke(1.dp,boardColor("hair-2"))) {
         Row(Modifier.padding(horizontal=16.dp,vertical=12.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
             Surface(shape=RoundedCornerShape(15.dp),color=boardColor("ball"),contentColor=boardColor("ball-ink")) {Box(Modifier.size(44.dp),contentAlignment=Alignment.Center) {PawMark(Modifier.size(24.dp))}}
-            Column(Modifier.weight(1f)) {Text("Ask about $name",style=MaterialTheme.typography.titleMedium);CaptionText(if (!state.premiumAccess) "AI chat · Premium" else if (controller.demoResponses) "Demo AI · profile + past 7 days" else if (controller.atlasOnly) "BarkLog AI · profile + past 7 days" else "On-device AI · automatic context")};BarkIcon(if(state.premiumAccess)"arrow-up-right" else "lock-keyhole",Modifier.size(20.dp))
+            Column(Modifier.weight(1f)) {Text("Ask about $name",style=MaterialTheme.typography.titleMedium);CaptionText(if (!state.premiumAccess) "AI chat · Premium" else if (controller.demoResponses) "Demo AI · profile + past 7 days" else if (controller.atlasOnly) "Soft Paws AI · profile + past 7 days" else "On-device AI · automatic context")};BarkIcon(if(state.premiumAccess)"arrow-up-right" else "lock-keyhole",Modifier.size(20.dp))
         }
     }
 }

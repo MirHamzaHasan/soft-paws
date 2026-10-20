@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 @Composable internal fun ColumnScope.CompanionAccount(route: CompanionScreen,controller: CompanionController,journal: JournalState,platform: AppPlatform,navigation: AppState,onEnterJournal: suspend (String) -> Unit) {
     val state by controller.state.collectAsState(); val scope = rememberCoroutineScope(); val dog = journal.selectedDog
-    val name = dog?.name ?: state.draft.name.ifBlank { "your dog" }
+    val name = dog?.name ?: state.draft.name.ifBlank { "your cat" }
     var email by rememberSaveable { mutableStateOf(state.session.email.takeIf { '@' in it }.orEmpty()) }
     // Passwords are transient: never use rememberSaveable, controller state or journal drafts.
     var password by remember(route) { mutableStateOf("") }
@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
         CompanionScreen.Login -> {
             CHeading("Make this your BarkLog.","Sign in for your account. Your journal stays on this device.")
             JournalCard { CDog(name); Text(name,Modifier.align(Alignment.CenterHorizontally),style = MaterialTheme.typography.headlineMedium) }
-            CaptionText("Sign-in uses Firebase Authentication. AI replies use BarkLog AI with your permission and need a connection. Premium purchases become available after store setup.")
+            CaptionText("Sign-in uses Firebase Authentication. AI replies use Soft Paws AI with your permission and need a connection. Premium purchases become available after store setup.")
             CFoot("Continue with Apple", enabled = !state.authBusy) { signedIn("Apple") }
             BarkButton("Continue with Google",{signedIn("Google")},secondary = true, enabled = !state.authBusy)
             BarkTextAction("Continue with email",{controller.go(CompanionScreen.Email)},Modifier.align(Alignment.CenterHorizontally))
@@ -97,16 +97,16 @@ import kotlinx.coroutines.launch
         }
         else -> Unit
     }
-    if(confirm) ConfirmChange(if(route == CompanionScreen.DeleteAccount) "Delete your account?" else "Sign out on this phone?",if(route == CompanionScreen.DeleteAccount) "Saved conversations will be removed. Your dog journal stays." else "Your device journal and conversations stay here. Signing in again needs a connection.",if(route == CompanionScreen.DeleteAccount) "Delete account" else "Sign out",false,{confirm = false},keepLabel = "Keep account",danger = route == CompanionScreen.DeleteAccount) {confirm = false;scope.launch {if(route == CompanionScreen.DeleteAccount) controller.deleteAccount() else controller.signOut()} }
+    if(confirm) ConfirmChange(if(route == CompanionScreen.DeleteAccount) "Delete your account?" else "Sign out on this phone?",if(route == CompanionScreen.DeleteAccount) "Saved conversations will be removed. Your cat’s local journal stays." else "Your device journal and conversations stay here. Signing in again needs a connection.",if(route == CompanionScreen.DeleteAccount) "Delete account" else "Sign out",false,{confirm = false},keepLabel = "Keep account",danger = route == CompanionScreen.DeleteAccount) {confirm = false;scope.launch {if(route == CompanionScreen.DeleteAccount) controller.deleteAccount() else controller.signOut()} }
 }
 
 @Composable internal fun ColumnScope.CompanionPlan(route: CompanionScreen,controller: CompanionController,journal: JournalState,onEnterJournal: suspend (String) -> Unit) {
-    val state by controller.state.collectAsState(); val scope = rememberCoroutineScope(); val name = journal.selectedDog?.name ?: state.draft.name.ifBlank { "your dog" }
+    val state by controller.state.collectAsState(); val scope = rememberCoroutineScope(); val name = journal.selectedDog?.name ?: state.draft.name.ifBlank { "your cat" }
     fun openJournal() { scope.launch {val id = journal.selectedDog?.id ?: controller.commitDog()?.id;if (id != null) onEnterJournal(id)} }
     fun demoPremium() {scope.launch {controller.tryDemoPremium()} }
     when(route) {
-        CompanionScreen.Ready,CompanionScreen.PremiumReady -> { CHeading(if(state.premiumAccess) "Let’s talk about your dog." else "A fresh page for $name.","Your journal is free. ${if(state.premiumAccess) if (controller.demoResponses) "Demo AI is ready to explore." else "BarkLog AI answers need sign-in and a connection." else "Premium can wait."}"); CDog(name,true); CompanionBenefits(); CFoot("Open $name’s journal") {openJournal()} }
-        CompanionScreen.AiGate -> { CHeading("Ask about $name.","Start with their moments. Follow your curiosity."); CDog(name); JournalCard { Text("What did today look like?"); SupportingText("BarkLog AI answers using the profile and care records you choose. Sign-in and a connection are required.") }; CFoot("See Premium",secondary = "Keep using free journal",onSecondary = {controller.go(null)}) {controller.go(CompanionScreen.Paywall)}; if (state.premiumPreviewAllowed) BarkTextAction("Try Debug Premium preview",::demoPremium) }
+        CompanionScreen.Ready,CompanionScreen.PremiumReady -> { CHeading(if(state.premiumAccess) "Let’s talk about your cat." else "A fresh page for $name.","Your journal is free. ${if(state.premiumAccess) if (controller.demoResponses) "Demo AI is ready to explore." else "Soft Paws AI answers need sign-in and a connection." else "Premium can wait."}"); CDog(name,true); CompanionBenefits(); CFoot("Open $name’s journal") {openJournal()} }
+        CompanionScreen.AiGate -> { CHeading("Ask about $name.","Start with their moments. Follow your curiosity."); CDog(name); JournalCard { Text("What did today look like?"); SupportingText("Soft Paws AI answers using the profile and care records you choose. Sign-in and a connection are required.") }; CFoot("See Premium",secondary = "Keep using free journal",onSecondary = {controller.go(null)}) {controller.go(CompanionScreen.Paywall)}; if (state.premiumPreviewAllowed) BarkTextAction("Try Debug Premium preview",::demoPremium) }
         CompanionScreen.Trial -> { CHeading("Choose your plan.", "Weekly, monthly or yearly. No trial is configured."); PremiumPlan.entries.forEach { Text("${it.title} · ${it.referenceCharge}") }; CFoot("See plans") { controller.go(CompanionScreen.Paywall) } }
         CompanionScreen.Restore -> {
             CHeading("Restore a purchase.","Use the same store account that paid for Premium.")
@@ -115,7 +115,7 @@ import kotlinx.coroutines.launch
             BarkButton(if(state.purchaseBusy) "Checking…" else "Restore purchases", { scope.launch { controller.restorePremium() } }, enabled = state.premiumCustomer.configured && !state.purchaseBusy)
             CFoot(if(state.premiumFeature != null) "Back to preview" else "Continue free") { if(state.premiumFeature != null) controller.dismissPremium() else controller.go(CompanionScreen.Ready) }
         }
-        CompanionScreen.Cancel -> { CHeading("Before you go.","Optional: what would make BarkLog more useful?"); listOf("It doesn’t fit my budget","I’m taking a break","I need something different","I got what I needed").forEach { value -> CChoice(value,selected = false) {controller.go(CompanionScreen.StoreManage)} }; CFoot("Skip · manage in store",secondary = "Back to my plan",onSecondary = {controller.go(CompanionScreen.ManagePlan)}) {controller.go(CompanionScreen.StoreManage)} }
+        CompanionScreen.Cancel -> { CHeading("Before you go.","Optional: what would make Soft Paws more useful?"); listOf("It doesn’t fit my budget","I’m taking a break","I need something different","I got what I needed").forEach { value -> CChoice(value,selected = false) {controller.go(CompanionScreen.StoreManage)} }; CFoot("Skip · manage in store",secondary = "Back to my plan",onSecondary = {controller.go(CompanionScreen.ManagePlan)}) {controller.go(CompanionScreen.StoreManage)} }
         CompanionScreen.StoreManage -> {
             CHeading("Your store handles billing.","Manage or cancel through Apple or Google.")
             CaptionText(if(state.premiumCustomer.configured) "Your store shows the current renewal date, price and cancellation options. Your dog journals stay available." else "No store connection is configured. A Debug preview does not create a subscription.")
@@ -127,5 +127,5 @@ import kotlinx.coroutines.launch
     }
 }
 @Composable internal fun CompanionBenefits() {
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) { listOf(Triple("paw-print","A journal for each dog","Add another dog with a complete, separate profile."),Triple("message-circle","BarkLog AI & safety","Answers with your dog’s profile and past seven days, with your consent."),Triple("map-pin","Find a vet nearby","Choose a veterinary clinic in Maps, then call."),Triple("file-text","Reports to take with you","Export, print and share a PDF of chosen care records."),Triple("image","Memory Books to keep","Export selected memories and photos as a PDF."),Triple("notebook-pen","A week in plain words","Generated recaps and questions from saved care observations.")).forEach { (icon,title,sub) -> Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {BarkIcon(icon,Modifier.size(22.dp));Column {Text(title,style = MaterialTheme.typography.titleMedium);CaptionText(sub)}} } }
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) { listOf(Triple("paw-print","A journal for each dog","Add another dog with a complete, separate profile."),Triple("message-circle","Soft Paws AI & safety","Answers with your dog’s profile and past seven days, with your consent."),Triple("map-pin","Find a vet nearby","Choose a veterinary clinic in Maps, then call."),Triple("file-text","Reports to take with you","Export, print and share a PDF of chosen care records."),Triple("image","Memory Books to keep","Export selected memories and photos as a PDF."),Triple("notebook-pen","A week in plain words","Generated recaps and questions from saved care observations.")).forEach { (icon,title,sub) -> Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {BarkIcon(icon,Modifier.size(22.dp));Column {Text(title,style = MaterialTheme.typography.titleMedium);CaptionText(sub)}} } }
 }

@@ -29,7 +29,7 @@ fun PhotoFeatureScreen(page: FeaturePage, context: FeatureContext) {
             ScreenHeading(if (baseline) "Baselines" else "Photo journal", "${context.dog.name} · ${if (baseline) "caregiver categories" else "local moments"}")
             if (!baseline) BarkButton("Add a photo", { context.open(Feature.PhotoForm, "picker") }, icon = "image")
             else {
-                FeatureNotice("Photos are reference points", "BarkLog does not compare images or detect changes.", "image")
+                FeatureNotice("Photos are reference points", "Soft Paws does not compare images or detect changes.", "image")
                 BoardMenu { photoCategories.filter { it != "Everyday" }.forEach { value -> val count = context.items.count { (it.data as? CareItemData.Photo)?.category == value }; FeatureRow(value, if (count == 0) "No photos" else "$count dated ${if (count == 1) "photo" else "photos"}", "image", meta = if (count == 0) "Empty" else "View", tone = "photo") { category = value } } }
                 BarkButton("Add a baseline", { context.open(Feature.PhotoForm, "baseline") }, secondary = true, icon = "plus")
             }
@@ -39,7 +39,7 @@ fun PhotoFeatureScreen(page: FeaturePage, context: FeatureContext) {
             shown.firstOrNull()?.let { item -> PhotoGridCard(item, context) }
             shown.drop(1).chunked(2).forEach { pair -> Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) { pair.forEach { item -> Box(Modifier.weight(1f)) { PhotoGridCard(item, context) } }; if (pair.size == 1) Spacer(Modifier.weight(1f)) } }
             if (!baseline) BarkTextAction("View baselines", { context.open(Feature.Baselines) }, icon = "arrow-right")
-            CaptionText("References only. BarkLog does not compare photos or assess medical changes.")
+            CaptionText("References only. Soft Paws does not compare photos or assess medical changes.")
         }
         Feature.PhotoForm -> {
             val old = selected?.data as? CareItemData.Photo
@@ -62,7 +62,7 @@ fun PhotoFeatureScreen(page: FeaturePage, context: FeatureContext) {
                     else -> { ScreenHeading("Choose a photo", "Continue in the operating system."); BoardHandoff("image", "Native photo picker", "Select one photo. The picker decides which items BarkLog can access.", if (picking) "Opening platform picker…" else "Open platform picker", !picking) { pick() }; BarkButton("Cancel", context.navigation::back, secondary = true) }
                 }
                 FeatureFormError(form)
-                CaptionText("BarkLog does not request broad photo-library access. Nothing is uploaded.")
+                CaptionText("Soft Paws does not request broad photo-library access. Nothing is uploaded.")
                 return
             }
             ScreenHeading(if (old == null) "Add photo details" else "Edit photo details", "Describe what you want to remember.")

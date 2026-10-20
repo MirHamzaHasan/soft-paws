@@ -10,7 +10,9 @@ and Rive.
 Repository linked; full cat-care screen proposal and original Rive cat authored.
 Board verification and source handoff are recorded in
 [the evidence index](../docs/design/evidence/soft-paws/README.md).
-**Owner review of this new direction is pending. Native cat adoption is pending.**
+**Owner approved the native Android/iOS port on 20 October 2026.**
+Task001's design/repository scope is complete; implementation continues in
+[task002](soft-paws-task002-native-port.md). Native parity is not yet verified.
 Previous BarkLog board/native approvals do not approve the Soft Paws direction.
 
 - `origin` fetch/push: `https://github.com/MirHamzaHasan/soft-paws.git`.

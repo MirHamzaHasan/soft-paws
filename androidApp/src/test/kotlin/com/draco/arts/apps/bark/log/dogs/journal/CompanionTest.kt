@@ -249,7 +249,7 @@ class CompanionTest {
         assertTrue(c.beginAddDog(navigation));val request=c.state.value.draft.requestId
         assertEquals(CompanionScreen.Dog,c.state.value.route)
         assertEquals("",c.state.value.draft.name);assertNull(c.state.value.draft.photoId)
-        assertEquals("Not recorded",c.state.value.draft.sex);assertEquals(DogContext(),c.state.value.draft.context)
+        assertEquals("Not recorded",c.state.value.draft.sex);assertEquals(DogContext.catDefaults(),c.state.value.draft.context)
         assertNull(c.state.value.draft.editingDogId);assertNotEquals(first.id,request)
         val context=DogContext(stage="Puppy",years="1",months="2",breeds=listOf("Beagle","Mixed breed"),neutered="No",size="Small",weight="9.5",weightUnit="kg",experience="Dogs are my life",goals=listOf("Keep their memories"),routines=listOf("Every day is different"),topics=listOf("Training & play"),traits=listOf("Curious","Social"),activities=listOf("Sniff walks"),foods=listOf("Wet food"),allergies="Luna only",conditions="Caregiver condition note",medications="Existing vet instructions",careNotes="Prefers a quiet doorway",reminderDays=listOf(2,4),reminderTime="18:30")
         c.editDraft {it.copy(name="Luna",sex="Female",context=context)}
@@ -280,7 +280,7 @@ class CompanionTest {
         assertTrue(resumed.beginAddDog(navigation));assertEquals("",resumed.state.value.draft.name)
         assertNotEquals(request,resumed.state.value.draft.requestId);resumed.close()
     }
-    @Test fun tabSelectionAndAccountMenuChangeInOneDeferredTransition()=store {repo,_,p->
+    @Test fun fiveTabSelectionClearsOverlayInOneDeferredTransition()=store {repo,_,p->
         val dog=repo.addDog("Milo");val c=controller(repo,p);c.load(dog)
         val queued=mutableListOf<()->Unit>()
         val handler:com.dracoarts.shared.presentation.navigation.BoardNavigationHandler={move,action->
@@ -288,14 +288,14 @@ class CompanionTest {
             queued+=action
         }
         try {
-            for(start in com.dracoarts.shared.presentation.navigation.Route.entries.filter {it!=com.dracoarts.shared.presentation.navigation.Route.Profile}) {
+            for(start in com.dracoarts.shared.presentation.navigation.Route.dockRoutes.filter {it!=com.dracoarts.shared.presentation.navigation.Route.Profile}) {
                 val navigation=com.dracoarts.shared.presentation.navigation.AppState(start)
                 navigation.navigationHandler=handler;c.navigationHandler=handler
                 c.navigateTab(navigation,com.dracoarts.shared.presentation.navigation.Route.Profile)
                 assertEquals(1,queued.size);assertEquals(start,navigation.route);assertNull(c.state.value.route)
                 queued.removeAt(0).invoke()
                 assertEquals(com.dracoarts.shared.presentation.navigation.Route.Profile,navigation.route)
-                assertEquals(CompanionScreen.AccountSettings,c.state.value.route)
+                assertNull(c.state.value.route)
                 assertEquals(navigation.route,com.dracoarts.shared.presentation.navigation.AppState.restoreValue(navigation.savedValue()).route)
                 c.navigateTab(navigation,start);assertEquals(1,queued.size)
                 queued.removeAt(0).invoke();assertEquals(start,navigation.route);assertNull(c.state.value.route)
@@ -496,7 +496,7 @@ class CompanionTest {
         assertFalse(c.state.value.session.signedIn);c.close()
     }
     @Test fun allCompanionBoardRoutesExist() {
-        assertEquals(54,CompanionScreen.entries.size);assertEquals(54,CompanionScreen.entries.map {it.boardId}.distinct().size)
+        assertEquals(55,CompanionScreen.entries.size);assertEquals(55,CompanionScreen.entries.map {it.boardId}.distinct().size)
     }
     @Test fun legacyHomeAndReportReviewKeepCompanionWhileOldFirstRunRemainsReviewable() {
         for (screen in listOf(null, "Home", "home", "report-preview", "export-progress", "memory-share")) {

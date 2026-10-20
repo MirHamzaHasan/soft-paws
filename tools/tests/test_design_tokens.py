@@ -73,7 +73,7 @@ def returned_icons(expression):
 
 class DesignTokensTest(unittest.TestCase):
     def test_native_icon_references_exist_in_board_export(self):
-        available = set(re.findall(r'"([^"\n]+)" to listOf', export.icon_paths()))
+        available = set(re.findall(r'"([^"\n]+)" to listOf', export.icon_paths() + (ROOT / "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/components/SoftPawsIcons.kt").read_text()))
         # PawMark is the existing filled five-oval brand Canvas, not a Lucide stroke glyph.
         available.add("paw-print")
         self.assertIn('PawMark(modifier)', (ROOT / "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/components/BarkIcon.kt").read_text())
