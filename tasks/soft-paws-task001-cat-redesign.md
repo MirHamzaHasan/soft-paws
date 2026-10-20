@@ -71,6 +71,13 @@ unavailable future features. No live AI recheck was attempted.
 
 ## Native continuation after review
 
+The [native adaptation audit](../docs/soft-paws-native-readiness.md) records the
+actual source gaps: new cat event keys require a preserving SQLite migration,
+lifestyle/stage facts need compatible contracts, navigation changes from four
+to five tabs, the safety/policy context is canine, and both Rive bridges select
+hard-coded dog resources. This read-only preflight is complete; it is not a
+native implementation or design approval.
+
 1. Record the owner's Picks/Notes and approved direction, preserving liked screens.
 2. Define independent Soft Paws Android/iOS identifiers and service registration
    boundaries. Do not install inherited IDs over BarkLog or reuse its Firebase.
