@@ -37,3 +37,7 @@ design/board/.backup/
 # Owner-supplied Firebase client configuration
 androidApp/google-services.json
 iosApp/iosApp/GoogleService-Info.plist
+
+# Soft Paws private reviewer notes and temporary captures
+design/soft-paws/review/store.json
+design/soft-paws/.qa/

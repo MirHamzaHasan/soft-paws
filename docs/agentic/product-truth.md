@@ -1,3 +1,13 @@
+# Soft Paws · current product direction
+
+This repository is now Soft Paws, a separate cat-care app based on BarkLog.
+Read [Soft Paws product and engineering truth](../source-of-truth/soft-paws-product-engineering.md)
+and [the redesign task](../../tasks/soft-paws-task001-cat-redesign.md) first.
+The native implementation below is inherited BarkLog status; the new cat board
+requires review before native adoption and separate service registrations.
+
+---
+
 **20 October task047:** the approved new notebook-puppy Rive and three plan/paywall/
 membership compositions are implemented in shared Compose on Android/iOS. Scoped
 native/build/data-preservation checks pass; physical/assistive and global parity

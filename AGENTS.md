@@ -1,3 +1,46 @@
+# Soft Paws KMP Agent Guide
+
+## Latest owner direction · 20 October 2026 · Soft Paws task001
+
+This workspace is **Soft Paws**, a separate cat-care app based on BarkLog's KMP
+foundation. The owner explicitly selected `https://github.com/MirHamzaHasan/soft-paws.git`
+as its repository. Never push this workspace to the BarkLog repository.
+
+The owner requested the same feature range redesigned for cats using Ungenerated,
+Mobbin MCP and Rive. The new live board is `design/soft-paws/`; the original
+`design/board/` and previous task approvals are inherited references, not approval
+of a Soft Paws screen. New direction needs board review before native UI adoption.
+
+- Read `docs/source-of-truth/soft-paws-product-engineering.md` and
+  `tasks/soft-paws-task001-cat-redesign.md` first.
+- Start visual work with Ungenerated `app-design-workflow`. Use actual Mobbin MCP
+  references for flow research, with source links; do not copy other apps' artwork.
+- Original Soft Paws cat: Rive file **2667919**. Editable SVG, motion source,
+  real `.riv` / `.rev` exports and manifest: `design/soft-paws/assets/cat/`.
+  Never modify inherited BarkLog Rive files for Soft Paws.
+- Shared Compose, domain/data separation, local SQLDelight persistence, committed
+  save feedback, accessibility, reduced motion and truthful safety remain required.
+- Cat care includes meals, water, litter (urine/stool observations), play/movement,
+  sleep, behaviour, grooming, weight and notes. Dog-specific clinical copy and
+  assumptions must not be carried over through blind global text replacement.
+- Do not launch/install the inherited native build as Soft Paws: it still has
+  BarkLog's app IDs and private local service registrations. Separate app IDs,
+  Firebase registrations, billing IDs and native cat adapters are pending the
+  reviewed native slice. Preserve all existing device journals and drafts.
+- No real AI retries, billing transactions, new service configuration or uploads
+  of journal/photos are authorised by this redesign. Retain the inherited gates.
+- First cat's care, existing records, on-phone reports, raw CSV and direct saved
+  emergency contacts stay free. Additional cats, AI, nearby search and premium
+  outputs retain the base's boundaries; proposed prices are shown honestly.
+- Mark feature delivery and visual approval separately. A prototype screen is
+  never proof that a new native cat feature exists.
+
+The following BarkLog guide is historical base context. Soft Paws direction above
+and later explicit owner instructions take precedence over its product identity,
+dog wording, references and previous screen approvals.
+
+---
+
 # BarkLog KMP Agent Guide
 
 ## Latest owner direction · 20 October 2026 · task046

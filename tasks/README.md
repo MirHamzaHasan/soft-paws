@@ -1,3 +1,12 @@
+# Soft Paws work
+
+- [soft-paws-task001 · repository, cat design board and original Rive companion](soft-paws-task001-cat-redesign.md)
+  — board authored and verified; native adoption awaits owner review.
+
+The BarkLog tasks below are inherited foundation history, not Soft Paws approvals.
+
+---
+
 # BarkLog KMP rebuild tasks
 
 Fresh backlog created 2026-10-14. Old tasks were removed from the current checkout

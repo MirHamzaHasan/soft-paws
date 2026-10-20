@@ -1,0 +1,1 @@
+Official Rive canvas runtime copied from the inherited pinned board runtime, originally bundled 17 October 2026. Both rive.js and rive.wasm are loaded locally; no runtime CDN is needed. See Rive-LICENSE.txt. The new cat exports and source are original Soft Paws artwork.

@@ -1,0 +1,27 @@
+{
+  "editorFile": "https://editor.rive.app/file/soft-paws-cat-companion/2667919",
+  "fileId": 2667919,
+  "artboard": "Soft Paws Cat",
+  "stateMachine": "Cat Companion",
+  "viewModel": "Care",
+  "triggers": {
+    "Hello": "hello",
+    "Curious": "curious",
+    "Saved": "saved"
+  },
+  "cancelTrigger": "rest",
+  "fps": 60,
+  "clips": {
+    "Idle": 7,
+    "Hello": 2.4,
+    "Curious": 2.8,
+    "Saved": 2.2
+  },
+  "sourceSha256": "f7b2a13d6aafcfab2a14da73ad4658276c897f71d23df858e158b147691c2e67",
+  "runtimeSha256": "cf8b4a3f89f43c3a99f18afacc1ab92c4966dddd7c2e463d99fa1bb88938ce80",
+  "editableSha256": "6053a35a592f0f95dba6c5ed0d8ca9c68dbebf053d50493ccc78895c8a3f204c",
+  "editableError": null,
+  "motionSourceSha256": "bbf3b8e4dbe22dcee7dc11ad7d11fea6f6dacc4d5c6850294c0f88ba56f991f0",
+  "scope": "Original cat artwork and Rive motion for the Soft Paws board; native adoption awaits board review.",
+  "stillSha256": "f095483240b056b503737e474ff7e0b7fd948dbc7e98f26ca24c55b9540007a7"
+}

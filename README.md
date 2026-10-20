@@ -1,3 +1,38 @@
+# Soft Paws
+
+A cat-care journal built from the Draco/BarkLog Kotlin Multiplatform foundation.
+This is the separate [Soft Paws repository](https://github.com/MirHamzaHasan/soft-paws).
+
+The new design is a complete review board with cat onboarding, daily care,
+litter logging, timeline, health, reminders, insights, safety, photos, expenses,
+Memory Book, highlights, AI and account/Premium flows. Its original tabby is a
+real Rive asset with an editable backup. See [the board](design/soft-paws/README.md)
+and [current scope and status](tasks/soft-paws-task001-cat-redesign.md).
+
+```sh
+node design/soft-paws/tools/serve.mjs 4285
+```
+
+Open <http://localhost:4285/>. Use Research, Kit, Screens, Transitions, Pick/Note
+and Play the flow. All board records are synthetic and stay in memory; it does
+not read native journals or call AI, authentication, billing or location services.
+
+**Native status:** the inherited app remains the BarkLog base. The new Soft Paws
+screens await review before shared Compose adoption. Do not install the inherited
+IDs over BarkLog journals. Separate application/service identities and cat domain
+adaptation are subsequent work; no native cat-parity or release claim is made.
+
+[Soft Paws product truth](docs/source-of-truth/soft-paws-product-engineering.md) ·
+[Original Rive cat](design/soft-paws/assets/cat/manifest.json) ·
+[Inherited base guide](AGENTS.md)
+
+---
+
+## Inherited BarkLog README (historical)
+
+The text below records the foundation's history. Its identity and historical
+service/status statements are not Soft Paws delivery claims.
+
 # BarkLog
 
 Daily dog health, in one tap.

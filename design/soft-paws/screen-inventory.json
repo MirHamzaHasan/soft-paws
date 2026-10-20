@@ -1,0 +1,566 @@
+[
+  {
+    "id": "welcome",
+    "section": "opening",
+    "name": "A little closer, every day",
+    "product": true
+  },
+  {
+    "id": "cat-name",
+    "section": "setup",
+    "name": "Who is your little shadow?",
+    "product": true
+  },
+  {
+    "id": "cat-life",
+    "section": "setup",
+    "name": "A homebody or an explorer?",
+    "product": true
+  },
+  {
+    "id": "cat-age",
+    "section": "setup",
+    "name": "Tiny paws or old soul?",
+    "product": true
+  },
+  {
+    "id": "cat-details",
+    "section": "setup",
+    "name": "A few familiar details",
+    "product": true
+  },
+  {
+    "id": "cat-weight",
+    "section": "setup",
+    "name": "One useful starting point",
+    "product": true
+  },
+  {
+    "id": "cat-needs",
+    "section": "setup",
+    "name": "Anything we should keep in view?",
+    "product": true
+  },
+  {
+    "id": "cat-goals",
+    "section": "setup",
+    "name": "What would help you most?",
+    "product": true
+  },
+  {
+    "id": "reminder-setup",
+    "section": "setup",
+    "name": "A nudge when you choose",
+    "product": true
+  },
+  {
+    "id": "plan-reveal",
+    "section": "setup",
+    "name": "A place for Miso’s days",
+    "product": true
+  },
+  {
+    "id": "home",
+    "section": "home",
+    "name": "Miso’s kind of day",
+    "product": true
+  },
+  {
+    "id": "log-chooser",
+    "section": "journal",
+    "name": "What did you notice?",
+    "product": true
+  },
+  {
+    "id": "log-meal",
+    "section": "journal",
+    "name": "A meal, remembered.",
+    "product": true
+  },
+  {
+    "id": "log-water",
+    "section": "journal",
+    "name": "A water check.",
+    "product": true
+  },
+  {
+    "id": "log-litter",
+    "section": "journal",
+    "name": "A little litter check.",
+    "product": true
+  },
+  {
+    "id": "log-play",
+    "section": "journal",
+    "name": "A moment of play.",
+    "product": true
+  },
+  {
+    "id": "log-sleep",
+    "section": "journal",
+    "name": "A quiet stretch.",
+    "product": true
+  },
+  {
+    "id": "log-mood",
+    "section": "journal",
+    "name": "How did they seem?",
+    "product": true
+  },
+  {
+    "id": "log-groom",
+    "section": "journal",
+    "name": "A little freshen-up.",
+    "product": true
+  },
+  {
+    "id": "log-weight",
+    "section": "journal",
+    "name": "A measured moment.",
+    "product": true
+  },
+  {
+    "id": "log-note",
+    "section": "journal",
+    "name": "One thing to remember.",
+    "product": true
+  },
+  {
+    "id": "saved",
+    "section": "journal",
+    "name": "A small thing, safely kept",
+    "product": true
+  },
+  {
+    "id": "timeline",
+    "section": "journal",
+    "name": "The little things, in order",
+    "product": true
+  },
+  {
+    "id": "record",
+    "section": "journal",
+    "name": "A record with its context",
+    "product": true
+  },
+  {
+    "id": "record-edit",
+    "section": "journal",
+    "name": "Edit a remembered moment",
+    "product": true
+  },
+  {
+    "id": "delete-record",
+    "section": "journal",
+    "name": "Delete this record?",
+    "product": true
+  },
+  {
+    "id": "health",
+    "section": "health",
+    "name": "Care, all in one place",
+    "product": true
+  },
+  {
+    "id": "medications",
+    "section": "health",
+    "name": "Your vet’s plan, remembered",
+    "product": true
+  },
+  {
+    "id": "med-form",
+    "section": "health",
+    "name": "Keep the prescribed details",
+    "product": true
+  },
+  {
+    "id": "med-detail",
+    "section": "health",
+    "name": "A plan with a clear history",
+    "product": true
+  },
+  {
+    "id": "med-history",
+    "section": "health",
+    "name": "Care history stays readable",
+    "product": true
+  },
+  {
+    "id": "vaccinations",
+    "section": "health",
+    "name": "Dates worth keeping close",
+    "product": true
+  },
+  {
+    "id": "vaccine-form",
+    "section": "health",
+    "name": "Add a vaccination record",
+    "product": true
+  },
+  {
+    "id": "calendar",
+    "section": "health",
+    "name": "The care you planned",
+    "product": true
+  },
+  {
+    "id": "task-detail",
+    "section": "health",
+    "name": "One task, on your terms",
+    "product": true
+  },
+  {
+    "id": "task-form",
+    "section": "health",
+    "name": "Make a little room for care",
+    "product": true
+  },
+  {
+    "id": "insights",
+    "section": "health",
+    "name": "Their week, in your words",
+    "product": true
+  },
+  {
+    "id": "weight-history",
+    "section": "health",
+    "name": "Measured, not guessed",
+    "product": true
+  },
+  {
+    "id": "report",
+    "section": "health",
+    "name": "A calmer start to the visit",
+    "product": true
+  },
+  {
+    "id": "export-options",
+    "section": "health",
+    "name": "Take the facts with you",
+    "product": true
+  },
+  {
+    "id": "export-progress",
+    "section": "health",
+    "name": "Prepare, then share",
+    "product": true
+  },
+  {
+    "id": "safety",
+    "section": "safety",
+    "name": "A clear place to start",
+    "product": true
+  },
+  {
+    "id": "symptoms",
+    "section": "safety",
+    "name": "What are you seeing?",
+    "product": true
+  },
+  {
+    "id": "contacts",
+    "section": "safety",
+    "name": "Your people, close by",
+    "product": true
+  },
+  {
+    "id": "contact-form",
+    "section": "safety",
+    "name": "Keep a number close",
+    "product": true
+  },
+  {
+    "id": "region",
+    "section": "safety",
+    "name": "Start with your region",
+    "product": true
+  },
+  {
+    "id": "nearby-vets",
+    "section": "safety",
+    "name": "A vet near your place",
+    "product": true
+  },
+  {
+    "id": "location-denied",
+    "section": "safety",
+    "name": "Your place, typed instead",
+    "product": true
+  },
+  {
+    "id": "toxicity",
+    "section": "safety",
+    "name": "Keep exposure details together",
+    "product": true
+  },
+  {
+    "id": "safety-topics",
+    "section": "safety",
+    "name": "Read with your cat in mind",
+    "product": true
+  },
+  {
+    "id": "photos",
+    "section": "memories",
+    "name": "Their ordinary, lovely days",
+    "product": true
+  },
+  {
+    "id": "photo-picker",
+    "section": "memories",
+    "name": "One moment at a time",
+    "product": true
+  },
+  {
+    "id": "photo-detail",
+    "section": "memories",
+    "name": "A moment with its own story",
+    "product": true
+  },
+  {
+    "id": "memory-book",
+    "section": "memories",
+    "name": "October, in small moments",
+    "product": true
+  },
+  {
+    "id": "video-editor",
+    "section": "memories",
+    "name": "A few moments, together",
+    "product": true
+  },
+  {
+    "id": "video-preview",
+    "section": "memories",
+    "name": "A memory in motion",
+    "product": true
+  },
+  {
+    "id": "expenses",
+    "section": "memories",
+    "name": "The costs of a little life",
+    "product": true
+  },
+  {
+    "id": "expense-form",
+    "section": "memories",
+    "name": "A cost with its context",
+    "product": true
+  },
+  {
+    "id": "expense-detail",
+    "section": "memories",
+    "name": "An expense, kept clearly",
+    "product": true
+  },
+  {
+    "id": "ai-entry",
+    "section": "ai",
+    "name": "A question about your cat",
+    "product": true
+  },
+  {
+    "id": "ai-consent",
+    "section": "ai",
+    "name": "You choose the context",
+    "product": true
+  },
+  {
+    "id": "chat",
+    "section": "ai",
+    "name": "Ask about Miso",
+    "product": true
+  },
+  {
+    "id": "chat-source",
+    "section": "ai",
+    "name": "Where that detail came from",
+    "product": true
+  },
+  {
+    "id": "chat-unavailable",
+    "section": "ai",
+    "name": "Your question can wait here",
+    "product": true
+  },
+  {
+    "id": "profile",
+    "section": "account",
+    "name": "A place for both of you",
+    "product": true
+  },
+  {
+    "id": "cat-profile",
+    "section": "account",
+    "name": "All the familiar details",
+    "product": true
+  },
+  {
+    "id": "profile-edit",
+    "section": "account",
+    "name": "Keep their profile current",
+    "product": true
+  },
+  {
+    "id": "cat-switcher",
+    "section": "account",
+    "name": "Every cat, their own story",
+    "product": true
+  },
+  {
+    "id": "add-cat",
+    "section": "account",
+    "name": "Room for another little shadow",
+    "product": true
+  },
+  {
+    "id": "sign-in",
+    "section": "account",
+    "name": "For the extras, an account",
+    "product": true
+  },
+  {
+    "id": "email-sign-in",
+    "section": "account",
+    "name": "Welcome back to Soft Paws",
+    "product": true
+  },
+  {
+    "id": "create-account",
+    "section": "account",
+    "name": "Make an account when you need one",
+    "product": true
+  },
+  {
+    "id": "password-reset",
+    "section": "account",
+    "name": "A way back in",
+    "product": true
+  },
+  {
+    "id": "paywall",
+    "section": "account",
+    "name": "A little more room for care",
+    "product": true
+  },
+  {
+    "id": "account-plan",
+    "section": "account",
+    "name": "Your plan, plainly",
+    "product": true
+  },
+  {
+    "id": "manage-subscription",
+    "section": "account",
+    "name": "Your store manages billing",
+    "product": true
+  },
+  {
+    "id": "settings",
+    "section": "account",
+    "name": "Make yourself at home",
+    "product": true
+  },
+  {
+    "id": "sound-settings",
+    "section": "account",
+    "name": "A quieter kind of tap",
+    "product": true
+  },
+  {
+    "id": "data-settings",
+    "section": "account",
+    "name": "Your records, your choice",
+    "product": true
+  },
+  {
+    "id": "delete-cat",
+    "section": "account",
+    "name": "A deliberate goodbye",
+    "product": true
+  },
+  {
+    "id": "delete-account",
+    "section": "account",
+    "name": "An account is separate from care",
+    "product": true
+  },
+  {
+    "id": "future-features",
+    "section": "account",
+    "name": "Some things take a little longer",
+    "product": true
+  },
+  {
+    "id": "empty",
+    "section": "states",
+    "name": "Every story starts somewhere",
+    "product": true
+  },
+  {
+    "id": "loading",
+    "section": "states",
+    "name": "Finding your local journal",
+    "product": true
+  },
+  {
+    "id": "offline",
+    "section": "states",
+    "name": "Still here without a signal",
+    "product": true
+  },
+  {
+    "id": "save-failure",
+    "section": "states",
+    "name": "Your note is still here",
+    "product": true
+  },
+  {
+    "id": "permission-denied",
+    "section": "states",
+    "name": "A photo can wait",
+    "product": true
+  },
+  {
+    "id": "missing-photo",
+    "section": "states",
+    "name": "The memory still has its words",
+    "product": true
+  },
+  {
+    "id": "revision-conflict",
+    "section": "states",
+    "name": "A newer version is here",
+    "product": true
+  },
+  {
+    "id": "kit-type",
+    "section": "foundations",
+    "name": "Paper, moss and readable type",
+    "product": false
+  },
+  {
+    "id": "kit-controls",
+    "section": "foundations",
+    "name": "Controls in their actual states",
+    "product": false
+  },
+  {
+    "id": "kit-cat",
+    "section": "foundations",
+    "name": "An original tabby, in Rive",
+    "product": false
+  },
+  {
+    "id": "motion-companion",
+    "section": "motion",
+    "name": "Small reactions, then rest",
+    "product": false
+  },
+  {
+    "id": "motion-press",
+    "section": "motion",
+    "name": "Firm, with a soft release",
+    "product": false
+  }
+]
