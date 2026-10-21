@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.first
 enum class BoardReviewDataSet(val key: String, val databaseName: String) {
     SoftPawsDay("soft-paws-day-v1", "soft_paws_review_day_v1.db"),
     SoftPawsVideo("soft-paws-video-v1", "soft_paws_review_video_v1.db"),
+    SoftPawsAccount("soft-paws-account-v1", "soft_paws_review_account_v1.db"),
     SoftPawsSetup("soft-paws-setup-v1", "soft_paws_review_setup_v1.db"),
     PremiumSafety("park-premium-safety-v1", "barklog_review_premium_safety_v1.db"),
     AddDog("park-add-dog-v1", "barklog_review_add_dog_v1.db"),
@@ -26,7 +27,7 @@ enum class BoardReviewDataSet(val key: String, val databaseName: String) {
     Paged("park-paged-v1", "barklog_review_park_paged_v1.db");
     val preferencePrefix get() = if (this == Day) "board_review_v1_" else "board_review_${name.lowercase()}_v1_"
     val nowMillis get() = when (this) {
-        SoftPawsDay, SoftPawsSetup, SoftPawsVideo -> LocalDateTime.parse("2026-10-20T09:41").toInstant(BoardReviewFixture.zone).toEpochMilliseconds()
+        SoftPawsDay, SoftPawsSetup, SoftPawsVideo, SoftPawsAccount -> LocalDateTime.parse("2026-10-20T09:41").toInstant(BoardReviewFixture.zone).toEpochMilliseconds()
         AiCards -> LocalDateTime.parse("2026-10-19T20:00").toInstant(BoardReviewFixture.zone).toEpochMilliseconds()
         else -> BoardReviewFixture.now
     }
@@ -46,6 +47,13 @@ object BoardReviewFixture {
 
     suspend fun seed(repository: JournalRepository, dataSet: BoardReviewDataSet = BoardReviewDataSet.Day) {
         if (dataSet == BoardReviewDataSet.SoftPawsSetup) return
+        if (dataSet == BoardReviewDataSet.SoftPawsAccount) {
+            val cat = repository.addDog("Miso", DogDetails(companion = DogContext.catDefaults().copy(stage = "Adult", lifestyle = "Indoor")), "50f70011-0001-4000-8000-000000000001")
+            repository.createEvent(cat.id, "50f70011-0001-4000-8000-000000000100", CareEventInput(CareEventType.Note, dataSet.nowMillis, "Owned account QA · keep this journal note", CareDetails.Note()))
+            val care = repository as CareRepository
+            if (care.loadDraft(cat.id, "cat-account-proof-v1") == null) care.saveDraft(cat.id, "cat-account-proof-v1", com.dracoarts.shared.domain.repository.LocalDraft("{\"note\":\"Owned account QA retained draft\"}"))
+            return
+        }
         if (dataSet == BoardReviewDataSet.SoftPawsVideo) {
             val cat = repository.addDog("Miso", DogDetails(companion = DogContext.catDefaults().copy(stage = "Adult", lifestyle = "Indoor")), "50f70010-0001-4000-8000-000000000001")
             val care = repository as CareRepository

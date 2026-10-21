@@ -56,7 +56,10 @@ enum class CompanionScreen(val boardId: String) {
     ThreadReadonly("next-thread-readonly"),
     WeeklyRecap("next-weekly-recap"),
     VetQuestions("next-vet-questions"),
-    MemoryCaption("next-memory-caption"),;
+    MemoryCaption("next-memory-caption"),
+    CreateAccount("create-account"),
+    PasswordReset("password-reset"),
+    FutureFeatures("future-features"),;
     companion object {
         fun fromBoard(id: String?): CompanionScreen? = entries.firstOrNull { it.boardId == id } ?: when (id) {
             "welcome" -> Opening
@@ -68,6 +71,11 @@ enum class CompanionScreen(val boardId: String) {
             "cat-goals" -> Goals
             "reminder-setup" -> Permissions
             "plan-reveal" -> Plan
+            "sign-in" -> Login
+            "email-sign-in" -> Email
+            "paywall" -> Paywall
+            "account-plan" -> ManagePlan
+            "manage-subscription" -> StoreManage
             else -> null
         }
     }

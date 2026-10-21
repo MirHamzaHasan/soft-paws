@@ -1,13 +1,14 @@
 # Current KMP feature status
 
 **Soft Paws · 21 October 2026:** This repository is now the separate cat app.
-Its current port has 60 implemented-unverified / 29 pending surfaces, including
+Its current port has 68 implemented-unverified / 21 pending surfaces, including
 the native cat/Rive idle, Journal, prescribed-care/documents and care planning
 with real native date/time controls, plus nine Safety/contact destinations, five
 observations/report surfaces, three expense destinations and three photo/Memory
 Book destinations with real local files, atomic selection and guarded native PDF.
 Cat photo films add a preserving title, separate free preview and actual guarded
-MP4 export/share; the reported preview navigation crash is corrected. All 179
+MP4 export/share; the reported preview navigation crash is corrected. Optional account/plan screens now use the cat kit, actual native availability,
+transient passwords, full prices and free exits. All 182
 JVM tests, Android/iOS builds and scoped native journeys pass. Individual visual
 approval and physical/assistive coverage remain open. See the
 [Soft Paws source of truth](../source-of-truth/soft-paws-product-engineering.md)

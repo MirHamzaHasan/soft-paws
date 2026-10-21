@@ -24,6 +24,9 @@
 - [soft-paws-task010 · cat photo films](soft-paws-task010-cat-video-highlights.md)
   — implemented; 179 JVM tests, normal/larger-text native video journeys, both encoders and Android/iOS Debug/Release checks pass; preview crash corrected, individual visual/physical review remains open.
 
+- [soft-paws-task011 · optional cat account and plans](soft-paws-task011-cat-account-and-plans.md)
+  — implemented; 182 JVM tests, normal/larger-text native account/access journeys, journal preservation and both platform builds pass; provider/store setup and individual visual/physical review remain open.
+
 The BarkLog tasks below are inherited foundation history, not Soft Paws approvals.
 
 ---

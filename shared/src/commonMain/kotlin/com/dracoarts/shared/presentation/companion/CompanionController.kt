@@ -42,6 +42,7 @@ class CompanionController(private val documents: LocalDocumentRepository, privat
     val demoResponses get() = responder is DemoResponseProvider
     val atlasOnly get() = responder is AtlasResponseProvider
     val hasPremium get() = purchases?.hasAccess == true || (platform.premiumPreviewAllowed && state.value.session.premium)
+    val authenticationConfigured get() = authentication?.configured == true
     val requiresAiConsent get() = if (atlasOnly) !state.value.workspace.weeklyAllowed else !state.value.workspace.messageConsent
     suspend fun prepareModels() {
         try { localAi.restore() }
@@ -159,11 +160,14 @@ class CompanionController(private val documents: LocalDocumentRepository, privat
         if (!persistDraft()) return false
         go(screen); return true
     }
-    fun go(screen: CompanionScreen?) {
+    fun go(screen: CompanionScreen?) = navigate(screen, null)
+    /** Account links have an explicit direction; enum order is not a navigation hierarchy. */
+    fun go(screen: CompanionScreen?, move: com.dracoarts.shared.presentation.navigation.BoardNavigationMove) = navigate(screen, move)
+    private fun navigate(screen: CompanionScreen?, move: com.dracoarts.shared.presentation.navigation.BoardNavigationMove?) {
         if (state.value.route == CompanionScreen.AiPrivacy && screen != CompanionScreen.AiPrivacy) safetyConsentReturn = false
         val action = { _state.update { it.copy(route = screen, error = null, reviewingDraft = it.reviewingDraft && screen != CompanionScreen.ContextReview && screen != null, draft = if (screen?.boardId in onboardingIds) it.draft.copy(step = screen!!.boardId) else it.draft) } }
         val back = screen == null || (screen.ordinal < (state.value.route?.ordinal ?: 0))
-        navigationHandler?.invoke(if(back) com.dracoarts.shared.presentation.navigation.BoardNavigationMove.Back else com.dracoarts.shared.presentation.navigation.BoardNavigationMove.Push, action) ?: action()
+        navigationHandler?.invoke(move ?: if(back) com.dracoarts.shared.presentation.navigation.BoardNavigationMove.Back else com.dracoarts.shared.presentation.navigation.BoardNavigationMove.Push, action) ?: action()
     }
     fun openJournalTool(navigation: com.dracoarts.shared.presentation.navigation.AppState, feature: com.dracoarts.shared.presentation.navigation.Feature) {
         val action = {

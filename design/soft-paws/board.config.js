@@ -153,6 +153,16 @@ window.BOARD = {
     ],
     account: [
       {
+        title: "Moonly · recurring charge beside each plan",
+        took: "Keep the full recurring charge and billing period beside every choice, with an accessible exit and no invented trial.",
+        url: "https://mobbin.com/screens/b2a7f4f6-e03e-4875-97ec-79c299a244c7",
+      },
+      {
+        title: "GoPro Quik · a separate way back in",
+        took: "Keep email/password sign-in short and give password recovery its own clear path; local care remains available without an account.",
+        url: "https://mobbin.com/screens/ba660508-b08d-4fc5-80d2-88761e240455",
+      },
+      {
         title: "Lovi · plans that can be compared",
         took: "Keep plan choices on one screen. Use complete recurring prices and a clear exit; omit unverified claims.",
         url: "https://mobbin.com/screens/b19ae89c-7af8-4485-b23a-2188aaf0522d",

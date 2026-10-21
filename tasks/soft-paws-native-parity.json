@@ -961,58 +961,128 @@
     {
       "id": "sign-in",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAccountScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionController.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-account/android-light-sign-in.png",
+        "docs/design/evidence/soft-paws-account/android-dark-sign-in.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-account/ios-light-sign-in.png",
+        "docs/design/evidence/soft-paws-account/ios-dark-sign-in.png"
+      ],
+      "verificationNote": "Actual unconfigured native account/store guards, protected transient passwords/background/routes, full recurring prices, free exit, Terms/Privacy setup notes and separate Debug preview/end-preview. Normal/larger-text native journeys and Android/iOS Debug/Release checks pass. Three pre-existing journals per platform preserve all table hashes. Paired screenshots inspected; individual visual approval, physical/assistive, minimum-OS and real provider/store success remain open."
     },
     {
       "id": "email-sign-in",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAccountScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionController.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-account/android-light-email-sign-in.png",
+        "docs/design/evidence/soft-paws-account/android-dark-email-sign-in.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-account/ios-light-email-sign-in.png",
+        "docs/design/evidence/soft-paws-account/ios-dark-email-sign-in.png"
+      ],
+      "verificationNote": "Actual unconfigured native account/store guards, protected transient passwords/background/routes, full recurring prices, free exit, Terms/Privacy setup notes and separate Debug preview/end-preview. Normal/larger-text native journeys and Android/iOS Debug/Release checks pass. Three pre-existing journals per platform preserve all table hashes. Paired screenshots inspected; individual visual approval, physical/assistive, minimum-OS and real provider/store success remain open."
     },
     {
       "id": "create-account",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAccountScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionController.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-account/android-light-create-account.png",
+        "docs/design/evidence/soft-paws-account/android-dark-create-account.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-account/ios-light-create-account.png",
+        "docs/design/evidence/soft-paws-account/ios-dark-create-account.png"
+      ],
+      "verificationNote": "Actual unconfigured native account/store guards, protected transient passwords/background/routes, full recurring prices, free exit, Terms/Privacy setup notes and separate Debug preview/end-preview. Normal/larger-text native journeys and Android/iOS Debug/Release checks pass. Three pre-existing journals per platform preserve all table hashes. Paired screenshots inspected; individual visual approval, physical/assistive, minimum-OS and real provider/store success remain open."
     },
     {
       "id": "password-reset",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAccountScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionController.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-account/android-light-password-reset.png",
+        "docs/design/evidence/soft-paws-account/android-dark-password-reset.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-account/ios-light-password-reset.png",
+        "docs/design/evidence/soft-paws-account/ios-dark-password-reset.png"
+      ],
+      "verificationNote": "Actual unconfigured native account/store guards, protected transient passwords/background/routes, full recurring prices, free exit, Terms/Privacy setup notes and separate Debug preview/end-preview. Normal/larger-text native journeys and Android/iOS Debug/Release checks pass. Three pre-existing journals per platform preserve all table hashes. Paired screenshots inspected; individual visual approval, physical/assistive, minimum-OS and real provider/store success remain open."
     },
     {
       "id": "paywall",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAccountScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionController.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-account/android-light-paywall.png",
+        "docs/design/evidence/soft-paws-account/android-dark-paywall.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-account/ios-light-paywall.png",
+        "docs/design/evidence/soft-paws-account/ios-dark-paywall.png"
+      ],
+      "verificationNote": "Actual unconfigured native account/store guards, protected transient passwords/background/routes, full recurring prices, free exit, Terms/Privacy setup notes and separate Debug preview/end-preview. Normal/larger-text native journeys and Android/iOS Debug/Release checks pass. Three pre-existing journals per platform preserve all table hashes. Paired screenshots inspected; individual visual approval, physical/assistive, minimum-OS and real provider/store success remain open."
     },
     {
       "id": "account-plan",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAccountScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionController.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-account/android-light-account-plan.png",
+        "docs/design/evidence/soft-paws-account/android-dark-account-plan.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-account/ios-light-account-plan.png",
+        "docs/design/evidence/soft-paws-account/ios-dark-account-plan.png"
+      ],
+      "verificationNote": "Actual unconfigured native account/store guards, protected transient passwords/background/routes, full recurring prices, free exit, Terms/Privacy setup notes and separate Debug preview/end-preview. Normal/larger-text native journeys and Android/iOS Debug/Release checks pass. Three pre-existing journals per platform preserve all table hashes. Paired screenshots inspected; individual visual approval, physical/assistive, minimum-OS and real provider/store success remain open."
     },
     {
       "id": "manage-subscription",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAccountScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionController.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-account/android-light-manage-subscription.png",
+        "docs/design/evidence/soft-paws-account/android-dark-manage-subscription.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-account/ios-light-manage-subscription.png",
+        "docs/design/evidence/soft-paws-account/ios-dark-manage-subscription.png"
+      ],
+      "verificationNote": "Actual unconfigured native account/store guards, protected transient passwords/background/routes, full recurring prices, free exit, Terms/Privacy setup notes and separate Debug preview/end-preview. Normal/larger-text native journeys and Android/iOS Debug/Release checks pass. Three pre-existing journals per platform preserve all table hashes. Paired screenshots inspected; individual visual approval, physical/assistive, minimum-OS and real provider/store success remain open."
     },
     {
       "id": "settings",
@@ -1057,10 +1127,20 @@
     {
       "id": "future-features",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAccountScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionController.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-account/android-light-future-features.png",
+        "docs/design/evidence/soft-paws-account/android-dark-future-features.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-account/ios-light-future-features.png",
+        "docs/design/evidence/soft-paws-account/ios-dark-future-features.png"
+      ],
+      "verificationNote": "Actual unconfigured native account/store guards, protected transient passwords/background/routes, full recurring prices, free exit, Terms/Privacy setup notes and separate Debug preview/end-preview. Normal/larger-text native journeys and Android/iOS Debug/Release checks pass. Three pre-existing journals per platform preserve all table hashes. Paired screenshots inspected; individual visual approval, physical/assistive, minimum-OS and real provider/store success remain open."
     },
     {
       "id": "empty",

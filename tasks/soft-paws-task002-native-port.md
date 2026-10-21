@@ -272,3 +272,21 @@ light/dark, larger-text and failure/handoff evidence is inspected in
 The inventory is now **60 implemented-unverified / 29 pending**. Individual native
 visual, physical/assistive, minimum-OS, receiving-app playback and Android live
 font-change review remain open. The full cat port stays active.
+
+
+## 21 October · optional account and plan screens
+
+Task011 ports eight approved account/access destinations using the original cat,
+shared kit and native controllers. Actual configuration guards unavailable auth
+before credentials reach an engine. Protected transient passwords clear on routes
+and real background transitions. Full recurring charges, free exits, restore/store
+management, setup-note policy dialogs and explicit Debug preview stay honest.
+Future training/scanning concepts remain unavailable. No service setup occurs.
+
+182 JVM and 30 tooling checks, Android/iOS Debug/Release, normal/larger-text native
+journeys and three-journal preservation per platform pass. Paired captures are in
+[account evidence](../docs/design/evidence/soft-paws-account/README.md). Only these
+eight surfaces change status, leaving **68 implemented-unverified / 21 pending**.
+Individual native visual approval, physical/assistive and real provider/store
+success remain open. The owner's later scope question is pending; no additional
+screen set starts from this pass.

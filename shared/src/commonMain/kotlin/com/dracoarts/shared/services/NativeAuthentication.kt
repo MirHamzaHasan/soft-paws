@@ -16,6 +16,7 @@ import kotlin.coroutines.resume
 data class NativeAuthResult(val error: String? = null, val cancelled: Boolean = false)
 class NativeIdToken(val token: String? = null, val uid: String? = null, val error: String? = null)
 interface NativeAuthEngine {
+    fun isConfigured(): Boolean = true
     fun observe(listener: (AuthSnapshot) -> Unit)
     fun execute(action: String, provider: String, email: String, password: String, completion: (NativeAuthResult) -> Unit)
     fun cancel()
@@ -24,6 +25,7 @@ interface NativeAuthEngine {
 }
 
 class NativeAuthentication(private val engine: NativeAuthEngine) : Authentication, AppModule, com.dracoarts.shared.services.ai.AtlasIdentity {
+    override val configured get() = !unavailable && engine.isConfigured()
     override val id = "auth"
     override val priority = 60
     private val state = MutableStateFlow(AuthSnapshot())
@@ -55,7 +57,7 @@ class NativeAuthentication(private val engine: NativeAuthEngine) : Authenticatio
     }
     override suspend fun close() { engine.close() }
     override suspend fun perform(action: String, provider: String, email: String, password: String) {
-        if (unavailable) throw AuthenticationException("Sign-in isn't available in this build. Your journal still works.")
+        if (!configured) throw AuthenticationException("Sign-in is unavailable in this host. Your journal still works without an account.")
         if (!mutex.tryLock()) throw AuthenticationException("Finish the current sign-in step first.")
         try {
             val result = withTimeout(120_000) {
@@ -75,6 +77,7 @@ class NativeAuthentication(private val engine: NativeAuthEngine) : Authenticatio
 }
 
 object UnavailableAuthEngine : NativeAuthEngine {
+    override fun isConfigured() = false
     override fun observe(listener: (AuthSnapshot) -> Unit) { listener(AuthSnapshot()) }
     override fun execute(action: String, provider: String, email: String, password: String, completion: (NativeAuthResult) -> Unit) {
         completion(NativeAuthResult("Sign-in is unavailable in this host. Your journal still works without an account."))

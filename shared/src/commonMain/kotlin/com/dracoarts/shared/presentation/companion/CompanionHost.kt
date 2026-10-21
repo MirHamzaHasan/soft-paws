@@ -29,12 +29,17 @@ internal fun CompanionHostContent(controller: CompanionController, journal: Jour
     val scope = rememberCoroutineScope(); val motion = LocalBarkMotion.current
     val focus = LocalFocusManager.current
     fun back() {
-        if (state.profileSaving) return
+        if (state.profileSaving || state.authBusy || state.purchaseBusy) return
         val index = CompanionController.onboardingIds.indexOf(route.boardId)
         when {
             state.reviewingDraft -> controller.go(CompanionScreen.ContextReview)
             state.draft.addingDog && route == CompanionScreen.Dog -> { scope.launch { controller.pauseAddDog(navigation) }; Unit }
             state.premiumFeature != null && route in setOf(CompanionScreen.Paywall, CompanionScreen.Restore) -> controller.dismissPremium()
+            route in setOf(CompanionScreen.CreateAccount, CompanionScreen.PasswordReset) -> controller.go(CompanionScreen.Email, BoardNavigationMove.Back)
+            route == CompanionScreen.Email -> controller.go(CompanionScreen.Login, BoardNavigationMove.Back)
+            route in setOf(CompanionScreen.Login, CompanionScreen.ManagePlan, CompanionScreen.FutureFeatures) -> controller.navigateTab(navigation, Route.Profile)
+            route in setOf(CompanionScreen.StoreManage, CompanionScreen.Restore) -> controller.go(CompanionScreen.ManagePlan, BoardNavigationMove.Back)
+            route == CompanionScreen.Paywall -> if (journal.selectedDog == null) controller.go(if (state.draft.name.isBlank()) CompanionScreen.Dog else CompanionScreen.Plan, BoardNavigationMove.Back) else controller.enterJournal(navigation)
             route == CompanionScreen.ContextReview && state.draft.editingDogId != null -> controller.go(CompanionScreen.DogProfile)
             index > 0 -> controller.go(CompanionScreen.fromBoard(CompanionController.onboardingIds[index-1]))
             route in setOf(CompanionScreen.Email,CompanionScreen.CheckEmail,CompanionScreen.EmailExpired,CompanionScreen.AuthOffline) -> controller.go(CompanionScreen.Login)
@@ -64,6 +69,10 @@ internal fun CompanionHostContent(controller: CompanionController, journal: Jour
     }
     if (route == CompanionScreen.Plan) {
         SoftPawsPlanReveal(controller, journal, applySafeInsets, onEnterJournal)
+        return
+    }
+    if (route in softPawsAccountScreens) {
+        SoftPawsAccountScreen(route, controller, journal, platform, navigation, applySafeInsets, ::back, onEnterJournal)
         return
     }
     if (route in setOf(CompanionScreen.Paywall, CompanionScreen.ManagePlan)) {
@@ -117,7 +126,7 @@ fun CompanionHost(controller: CompanionController,journal: JournalState,journalC
                 Column(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.page, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) { action() }
             } }
             if(reviewEnabled && WindowInsets.ime.getBottom(LocalDensity.current) == 0) Surface(color=boardColor("inset")) {Column(Modifier.fillMaxWidth().padding(8.dp)) {
-                BoardSelect("Native board screen",current.route?.boardId.orEmpty(),CompanionScreen.entries.map {it.boardId to "${it.ordinal+1}/54 · ${it.boardId}"}) {id->controller.go(CompanionScreen.fromBoard(id))}
+                BoardSelect("Native board screen",current.route?.boardId.orEmpty(),CompanionScreen.entries.map {it.boardId to "${it.ordinal+1}/${CompanionScreen.entries.size} · ${it.boardId}"}) {id->controller.go(CompanionScreen.fromBoard(id))}
                 Row {BarkTextAction("Replay",{replay++});BarkTextAction("1×",{speed=1f});BarkTextAction("½×",{speed=.5f});BarkTextAction("¼×",{speed=.25f})}
             }}
         }

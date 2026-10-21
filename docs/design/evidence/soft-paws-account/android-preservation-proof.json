@@ -1,0 +1,125 @@
+{
+  "barklog_kmp_v1.db": {
+    "version": 5,
+    "tables": {
+      "android_metadata": {
+        "rows": 1,
+        "sha256": "b75020507f255a4045d7df8db986dd0206736f9357d605c63a69c44381f02787"
+      },
+      "care_drafts": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "care_events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "care_items": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "device_cleanup": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "dogs": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "journal_metadata": {
+        "rows": 1,
+        "sha256": "4016538371a1cd463033d70e3b4cbff539afd4140abcc3de601136f4dab3d83a"
+      },
+      "local_documents": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "local_owner": {
+        "rows": 1,
+        "sha256": "510adedb459a8430fac15e4b69faf3976ede6a912cca10abdae1b7573987eca5"
+      }
+    }
+  },
+  "soft_paws_review_day_v1.db": {
+    "version": 5,
+    "tables": {
+      "android_metadata": {
+        "rows": 1,
+        "sha256": "b75020507f255a4045d7df8db986dd0206736f9357d605c63a69c44381f02787"
+      },
+      "care_drafts": {
+        "rows": 1,
+        "sha256": "89cb65f065ff6806bcbdc263a280198971e778ab25853ca18f758ff1792d4675"
+      },
+      "care_events": {
+        "rows": 31,
+        "sha256": "58c68955465af5cdf6ae0f64f6a361edcb673c2e0e3cc7a6c4443d549776e5aa"
+      },
+      "care_items": {
+        "rows": 83,
+        "sha256": "48e13c4e95c14c46a3727aff8ce0355950a79f51cb322dc513b4035579fcc9dd"
+      },
+      "device_cleanup": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "dogs": {
+        "rows": 1,
+        "sha256": "2cabaad57e9f1f9c76d85ac2af0d8e3f56ac676fa30b54a37949f0f832699eac"
+      },
+      "journal_metadata": {
+        "rows": 1,
+        "sha256": "4016538371a1cd463033d70e3b4cbff539afd4140abcc3de601136f4dab3d83a"
+      },
+      "local_documents": {
+        "rows": 1,
+        "sha256": "cfda12cd9ab8255d5e3b01468f47b18f7f954d384b0e960b9313b13514c1bff7"
+      },
+      "local_owner": {
+        "rows": 1,
+        "sha256": "69e02fac8bce93c250f5250e98a576d49260dbaa64627c4c87096af2987a8690"
+      }
+    }
+  },
+  "soft_paws_review_video_v1.db": {
+    "version": 5,
+    "tables": {
+      "android_metadata": {
+        "rows": 1,
+        "sha256": "b75020507f255a4045d7df8db986dd0206736f9357d605c63a69c44381f02787"
+      },
+      "care_drafts": {
+        "rows": 1,
+        "sha256": "39f6d8b00ac99f5f66a31d64f11af95cf398cff7c25c7862cc2d7f5b0261007e"
+      },
+      "care_events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "care_items": {
+        "rows": 3,
+        "sha256": "7aa3c3509128dbf91aa20cdb69b74190682ca5cb9ef26304199edffbd47d2cde"
+      },
+      "device_cleanup": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "dogs": {
+        "rows": 1,
+        "sha256": "fca29b8d6fdba9c9b7503088a7d0c0a8fc2c8d60515698108d2814f1610ed9a9"
+      },
+      "journal_metadata": {
+        "rows": 1,
+        "sha256": "4016538371a1cd463033d70e3b4cbff539afd4140abcc3de601136f4dab3d83a"
+      },
+      "local_documents": {
+        "rows": 1,
+        "sha256": "cfda12cd9ab8255d5e3b01468f47b18f7f954d384b0e960b9313b13514c1bff7"
+      },
+      "local_owner": {
+        "rows": 1,
+        "sha256": "1d9b425c3b9b47be7d602f9bf5f944c1a342bc5532898bd2c252e815b8ab15ec"
+      }
+    }
+  }
+}

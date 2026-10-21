@@ -2888,3 +2888,162 @@ final class SoftPawsVideoJourneys: XCTestCase {
 
 
 }
+
+final class SoftPawsAccountJourneys: XCTestCase {
+    private let app = XCUIApplication(bundleIdentifier: "com.draco.apps.soft.paws")
+    private let fixturePreference = "-barklog_preference_v1_board_review_softpawsaccount_v1_"
+    private func launch(_ screen: String, _ theme: String = "Light", reduced: Bool = true) {
+        app.terminate()
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "soft-paws-account-v1", "-DesignReviewScreen", screen,
+            fixturePreference + "theme", theme, fixturePreference + "reduce_motion", reduced ? "true" : "false"]
+        app.launch()
+        let headings = ["sign-in":"For the extras, an account.","email-sign-in":"Welcome back to Soft Paws.","create-account":"An account, when you need one.","password-reset":"A way back in.","paywall":"A little more care.","account-plan":"Your plan, plainly.","manage-subscription":"Your store manages billing.","future-features":"A little further ahead."]
+        if let heading = headings[screen] { XCTAssertTrue(item(heading).waitForExistence(timeout: 25)) }
+        Thread.sleep(forTimeInterval: 0.5)
+    }
+    private func item(_ label: String) -> XCUIElement {
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@ OR label == %@ OR label BEGINSWITH %@", label, label + ", ", "✓ " + label, "✓ " + label + ", ")
+        for query in [app.buttons.matching(predicate), app.secureTextFields.matching(predicate), app.textFields.matching(predicate), app.textViews.matching(predicate)] {
+            if query.firstMatch.exists { return query.firstMatch }
+        }
+        return app.descendants(matching: .any).matching(predicate).firstMatch
+    }
+    private func reveal(_ label: String) -> XCUIElement {
+        for attempt in 0..<32 {
+            let value = item(label)
+            let confirmation = item("Choose your cat’s photos").exists || item("This edit hasn’t saved yet.").exists
+            let labels = ["Continue with Apple","Continue with Google","Continue with email","Keep using the journal","Sign in","Create account","Send reset email","Back to sign in","Use the local journal","Purchases unavailable","Keep using the free journal","Back to preview","Back to the journal","Back to your plan","Back to your journal"]
+            let footers = confirmation ? [] : labels.map { app.buttons[$0] }.filter { $0.exists && $0.isHittable && $0.frame.minY > 200 }
+            let bottom = footers.map { $0.frame.minY - 14 }.min() ?? app.frame.maxY - 22
+            if value.exists && value.isHittable && (value.elementType != .button || value.frame.height >= 44) && value.frame.minY > 30 && (footers.contains(where: { $0.label == label }) || value.frame.maxY < bottom) {
+                Thread.sleep(forTimeInterval: 0.4); return item(label)
+            }
+            let x = app.frame.width - 9
+            let back = app.buttons["Back"]
+            let headerAbove = ["Name this moment", "Your caption", "Choose replacement", "Collection caption"].contains(label) && back.exists && back.frame.maxY < 40
+            let upwards = label == "Back" || headerAbove || (value.exists && value.frame.maxY < 40) || (!value.exists && attempt >= 16)
+            let start = upwards ? CGFloat(150) : min(app.frame.height * 0.5, max(220, bottom - 25))
+            let end = upwards ? min(bottom - 24, CGFloat(420)) : max(90, start - 240)
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: start)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: end)),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        capture("ios-account-missing-control"); XCTFail("Missing control \(label): \(app.debugDescription)"); return item(label)
+    }
+    private func press(_ label: String) {
+        var value = reveal(label)
+        for _ in 0..<5 {
+            let frame = value.frame; Thread.sleep(forTimeInterval: 0.3); value = item(label)
+            if abs(value.frame.midY - frame.midY) < 1 { break }
+        }
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        Thread.sleep(forTimeInterval: 0.6)
+    }
+    private func fill(_ label: String, _ text: String) {
+        let value = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@ OR label == %@ OR label BEGINSWITH %@", label, label + ", ", "✓ " + label, "✓ " + label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let secure = app.secureTextFields.matching(predicate).firstMatch
+        let input = secure.exists ? secure : single.exists ? single : app.textViews.matching(predicate).firstMatch
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.2, dy: 0.3)).tap()
+        if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { input.tap() }
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 4))
+        input.typeText(text)
+        let protectedInput = label.lowercased().contains("password")
+        let expected = protectedInput ? "Entered" : text
+        let entered = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", expected), object: input)
+        XCTAssertEqual(XCTWaiter.wait(for: [entered], timeout: 3), .completed)
+        let done = app.keyboards.buttons["Done"]
+        if done.exists { done.tap() }
+        else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.12)).tap() }
+        Thread.sleep(forTimeInterval: 1)
+    }
+    private func capture(_ name: String) {
+        let image = XCTAttachment(screenshot: app.screenshot()); image.name = name; image.lifetime = .keepAlways; add(image)
+    }
+    private func value(_ label: String) -> String {
+        _ = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@ OR label == %@ OR label BEGINSWITH %@", label, label + ", ", "✓ " + label, "✓ " + label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let field = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        XCTAssertTrue(field.exists, app.debugDescription)
+        return field.value as? String ?? ""
+    }
+
+
+    private func passwordIsEmpty(_ label: String = "Password") -> Bool {
+        let field = reveal(label)
+        // Shared Compose exposes a protected TextView with only Empty/Entered values.
+        XCTAssertTrue(field.elementType == .secureTextField || field.elementType == .textView)
+        let current = field.value as? String ?? ""
+        return current.isEmpty || current == "Empty"
+    }
+    func testAUnavailableAccountRequestsAndLocalJournalExit() {
+        continueAfterFailure = false
+        launch("sign-in")
+        press("Continue with Apple"); XCTAssertTrue(item("Sign-in is unavailable in this host. Your journal still works without an account.").waitForExistence(timeout: 5)); capture("ios-account-apple-unavailable")
+        press("Continue with Google"); XCTAssertTrue(item("Sign-in is unavailable in this host. Your journal still works without an account.").exists)
+        press("Continue with email"); press("Sign in")
+        XCTAssertTrue(item("Enter a valid email address.").waitForExistence(timeout: 5)); capture("ios-account-validation")
+        press("Back"); press("Keep using the journal")
+        XCTAssertTrue(item("A quick check-in").waitForExistence(timeout: 10))
+    }
+    func testBPasswordsClearOnBackgroundAndRouteChanges() {
+        continueAfterFailure = false
+        launch("email-sign-in")
+        let generatedEmail = "cat-" + UUID().uuidString.lowercased() + "@example.invalid"
+        let generatedInput = UUID().uuidString
+        fill("Email address", generatedEmail); fill("Password", generatedInput)
+        XCUIDevice.shared.press(.home); app.activate()
+        XCTAssertTrue(passwordIsEmpty(), "Password survived background")
+        fill("Password", generatedInput); press("Sign in")
+        XCTAssertTrue(item("Sign-in is unavailable in this host. Your journal still works without an account.").waitForExistence(timeout: 5))
+        press("Create account"); XCTAssertTrue(passwordIsEmpty()); XCTAssertTrue(passwordIsEmpty("Confirm password"))
+        fill("Password", generatedInput); fill("Confirm password", UUID().uuidString); press("Create account")
+        XCTAssertTrue(item("The passwords don't match. Enter them again.").waitForExistence(timeout: 5))
+        press("Back"); XCTAssertTrue(passwordIsEmpty()); press("Forgot password?")
+        press("Send reset email")
+        XCTAssertTrue(item("Sign-in is unavailable in this host. Your journal still works without an account.").waitForExistence(timeout: 5))
+        XCTAssertFalse(item("If this address has an account, check your inbox and spam folder for a reset link.").exists)
+        capture("ios-account-reset-unavailable"); press("Back to sign in"); XCTAssertTrue(passwordIsEmpty())
+    }
+    func testCPlansKeepFreeAccessAndLabelTheDebugPreview() {
+        continueAfterFailure = false
+        launch("account-plan")
+        if item("Debug Premium preview").waitForExistence(timeout: 2) { press("End Debug preview") }
+        defer { launch("account-plan"); if item("Debug Premium preview").waitForExistence(timeout: 2) { press("End Debug preview") } }
+        launch("paywall")
+        for label in ["Weekly, $2.99, billed every week","Monthly, $6.99, billed every month","Yearly, $39.99, billed every year"] {
+            press(label); XCTAssertTrue(item(label).isSelected)
+        }
+        XCTAssertFalse(reveal("Purchases unavailable").isEnabled); capture("ios-account-plan-selection")
+        press("Terms"); XCTAssertTrue(item("Terms · setup preview").waitForExistence(timeout: 5)); press("Close")
+        press("Privacy"); XCTAssertTrue(item("Privacy · setup preview").waitForExistence(timeout: 5)); press("Close")
+        press("Restore purchases"); XCTAssertTrue(item("Store setup is pending").waitForExistence(timeout: 5)); XCTAssertFalse(reveal("Restore purchases").isEnabled); capture("ios-account-restore-unavailable")
+        press("Back to your plan"); press("Manage a store subscription")
+        XCTAssertFalse(item("Open subscriptions").exists); capture("ios-account-store-unavailable"); press("Back to your plan")
+        launch("paywall"); press("Try Debug Premium preview"); launch("account-plan")
+        XCTAssertTrue(item("Debug Premium preview").waitForExistence(timeout: 10)); capture("ios-account-debug-preview")
+        press("End Debug preview"); launch("account-plan"); XCTAssertTrue(item("Free journal").waitForExistence(timeout: 10))
+        press("Back to the journal"); XCTAssertTrue(item("A quick check-in").waitForExistence(timeout: 10))
+    }
+    func testDApprovedAccountScreensInBothThemes() {
+        continueAfterFailure = false
+        let screens = ["sign-in","email-sign-in","create-account","password-reset","paywall","account-plan","manage-subscription","future-features"]
+        for theme in ["Light","Dark"] {
+            for screen in screens {
+                launch(screen, theme); capture("ios-" + theme.lowercased() + "-" + screen)
+                if screen == "paywall" { _ = reveal("Yearly, $39.99, billed every year"); capture("ios-" + theme.lowercased() + "-paywall-more") }
+            }
+        }
+    }
+    func testEOriginalRiveCatIsAvailableOnThePlan() {
+        continueAfterFailure = false
+        launch("paywall", reduced: false)
+        let cat = app.buttons["Say hello to the Soft Paws cat"]
+        XCTAssertTrue(cat.waitForExistence(timeout: 15))
+        XCTAssertGreaterThanOrEqual(cat.frame.width, 48); XCTAssertGreaterThanOrEqual(cat.frame.height, 48)
+        cat.tap(); capture("ios-account-cat-live")
+    }
+}

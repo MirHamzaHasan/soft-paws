@@ -500,7 +500,50 @@ class CompanionTest {
         assertFalse(c.state.value.session.signedIn);c.close()
     }
     @Test fun allCompanionBoardRoutesExist() {
-        assertEquals(55,CompanionScreen.entries.size);assertEquals(55,CompanionScreen.entries.map {it.boardId}.distinct().size)
+        assertEquals(58,CompanionScreen.entries.size);assertEquals(58,CompanionScreen.entries.map {it.boardId}.distinct().size)
+        val account = mapOf("sign-in" to CompanionScreen.Login, "email-sign-in" to CompanionScreen.Email,
+            "create-account" to CompanionScreen.CreateAccount, "password-reset" to CompanionScreen.PasswordReset,
+            "paywall" to CompanionScreen.Paywall, "account-plan" to CompanionScreen.ManagePlan,
+            "manage-subscription" to CompanionScreen.StoreManage, "future-features" to CompanionScreen.FutureFeatures)
+        account.forEach { (id, route) -> assertEquals(route, CompanionScreen.fromBoard(id)) }
+        assertEquals(CompanionScreen.Email, CompanionScreen.fromBoard("next-email"))
+        assertEquals(CompanionScreen.CheckEmail, CompanionScreen.fromBoard("next-check-email"))
+    }
+    @Test fun unavailableCatAccountAndStoreRequestsPreserveEveryJournalAndDraft()=store {repo,_,p->
+        val cat=repo.addDog("Miso",DogDetails(companion=DogContext.catDefaults()))
+        val second=repo.addDog("Beans",DogDetails(companion=DogContext.catDefaults()))
+        val event=repo.createEvent(cat.id,UUID.randomUUID().toString(),CareEventInput(CareEventType.Note,p.nowMillis(),"Window watch",CareDetails.Note()))
+        val other=repo.createEvent(second.id,UUID.randomUUID().toString(),CareEventInput(CareEventType.Litter,p.nowMillis(),"Recorded observation",CareDetails.Litter(LitterObservation.Urine,1)))
+        val draft=LocalDraft("{\"title\":\"Keep this draft\"}")
+        repo.saveDraft(cat.id,"account-proof",draft)
+        val auth=NativeAuthentication(UnavailableAuthEngine);auth.initialize()
+        val billing=NativePurchases(UnavailablePurchasesEngine);billing.initialize()
+        val c=CompanionController(repo,repo,repo,p,immediate,Dispatchers.Unconfined,auth,billing);c.load(cat)
+        val cats=repo.observeDogs().first();val secret=UUID.randomUUID().toString()
+        assertFalse(c.signIn("Apple"));assertFalse(c.signIn("Google"))
+        assertFalse(c.signInEmail("caregiver@example.invalid",secret))
+        assertFalse(c.signInEmail("caregiver@example.invalid",secret,true))
+        assertFalse(c.resetPassword("caregiver@example.invalid"))
+        assertFalse(c.purchasePremium(PremiumPlan.Yearly));assertFalse(c.restorePremium());assertFalse(c.managePremium())
+        assertFalse(c.state.value.session.signedIn);assertFalse(c.hasPremium);assertFalse(c.state.value.premiumCustomer.entitled)
+        assertEquals(cats,repo.observeDogs().first())
+        assertEquals(listOf(event),repo.observeEvents(cat.id).first());assertEquals(listOf(other),repo.observeEvents(second.id).first())
+        assertEquals(draft,repo.loadDraft(cat.id,"account-proof"))
+        assertFalse(repo.readDocument("companion-session").orEmpty().contains(secret))
+        assertFalse(repo.readDocument("companion-setup").orEmpty().contains(secret))
+        c.close();billing.close();auth.close()
+    }
+    @Test fun catAccountNavigationDirectionDoesNotDependOnLegacyEnumOrder()=store {repo,_,p->
+        val cat=repo.addDog("Miso");val c=controller(repo,p);c.load(cat)
+        val moves=mutableListOf<com.dracoarts.shared.presentation.navigation.BoardNavigationMove>()
+        c.navigationHandler={move,action->moves+=move;action()}
+        c.go(CompanionScreen.ManagePlan)
+        moves.clear()
+        c.go(CompanionScreen.Paywall,com.dracoarts.shared.presentation.navigation.BoardNavigationMove.Push)
+        c.go(CompanionScreen.ManagePlan,com.dracoarts.shared.presentation.navigation.BoardNavigationMove.Back)
+        assertEquals(listOf(com.dracoarts.shared.presentation.navigation.BoardNavigationMove.Push,com.dracoarts.shared.presentation.navigation.BoardNavigationMove.Back),moves)
+        assertEquals(CompanionScreen.ManagePlan,c.state.value.route)
+        assertEquals(listOf(cat),repo.observeDogs().first());c.close()
     }
     @Test fun legacyHomeAndReportReviewKeepCompanionWhileOldFirstRunRemainsReviewable() {
         for (screen in listOf(null, "Home", "home", "report-preview", "export-progress", "memory-share")) {

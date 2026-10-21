@@ -69,6 +69,7 @@ fun SoftPawsYouScreen(context: FeatureContext) {
         val state by companion.state.collectAsState()
         SoftPawsRow("Your account", if (state.session.signedIn) state.session.email.ifBlank { state.session.provider } else "Optional for the local journal", "user-round") { companion.go(if (state.session.signedIn) CompanionScreen.AccountSettings else CompanionScreen.Login) }
         SoftPawsRow("Soft Paws Premium", "Your plan and access", "gem") { companion.go(CompanionScreen.ManagePlan) }
+        SoftPawsRow("A little further ahead", "Future ideas · not available", "sparkles") { companion.go(CompanionScreen.FutureFeatures) }
     }
     SoftPawsRow("Settings & accessibility", "Make the app comfortable", "sliders-horizontal") { context.open(Feature.Settings) }
     SoftPawsRow("Your local data", "Export and manage records", "archive") { context.open(Feature.Export) }

@@ -93,7 +93,7 @@ fun SoftPawsList(content: @Composable ColumnScope.() -> Unit) {
 
 @Composable
 fun SoftPawsCard(title: String, tone: String? = null, content: @Composable ColumnScope.() -> Unit) {
-    Surface(shape = RoundedCornerShape(24.dp), color = boardColor(tone ?: "panel"), border = BorderStroke(1.dp, boardColor(tone?.let { "$it-line" } ?: "hair"))) {
+    Surface(shape = RoundedCornerShape(24.dp), color = boardColor(tone ?: "panel"), contentColor = if (tone == "accent-soft") boardColor("ink") else contentColorFor(boardColor(tone ?: "panel")), border = BorderStroke(1.dp, boardColor(when (tone) { null -> "hair"; "accent-soft" -> "accent-line"; else -> "$tone-line" }))) {
         Column(Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(title, style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp, lineHeight = 25.3.sp, letterSpacing = (-.5).sp))
             content()

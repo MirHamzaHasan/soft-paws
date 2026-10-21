@@ -6,6 +6,19 @@ import kotlinx.coroutines.*
 import kotlin.test.*
 
 class AuthenticationTest {
+    @Test fun disabledNativeConfigurationRejectsCredentialsBeforeExecution()=runBlocking {
+        var executions=0
+        val engine=object:NativeAuthEngine {
+            override fun isConfigured()=false
+            override fun observe(listener:(AuthSnapshot)->Unit) { listener(AuthSnapshot()) }
+            override fun execute(action:String,provider:String,email:String,password:String,completion:(NativeAuthResult)->Unit) { executions++;completion(NativeAuthResult()) }
+            override fun cancel()=Unit
+            override fun close()=Unit
+        }
+        val auth=NativeAuthentication(engine);auth.initialize();assertFalse(auth.configured)
+        assertFailsWith<AuthenticationException> { auth.perform("createEmailAccount","Email","caregiver@example.invalid",java.util.UUID.randomUUID().toString()) }
+        assertEquals(0,executions);assertNull(auth.snapshot.value.user);auth.close()
+    }
     private class Engine : NativeAuthEngine {
         var listener: ((AuthSnapshot) -> Unit)? = null
         var completion: ((NativeAuthResult) -> Unit)? = null

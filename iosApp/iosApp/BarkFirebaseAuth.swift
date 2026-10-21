@@ -18,6 +18,8 @@ final class BarkFirebaseAuth: NSObject, NativeAuthEngine, ASAuthorizationControl
     private var appleController: ASAuthorizationController?
     private var appleContinuation: CheckedContinuation<ASAuthorizationAppleIDCredential, Error>?
 
+    func isConfigured() -> Bool { FirebaseApp.app() != nil }
+
     func idToken(forceRefresh: Bool, completion: @escaping (NativeIdToken) -> Void) {
         Task { @MainActor in
             guard FirebaseApp.app() != nil, let user = Auth.auth().currentUser else {
