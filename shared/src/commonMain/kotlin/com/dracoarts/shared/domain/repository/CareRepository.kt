@@ -15,6 +15,8 @@ interface CareRepository {
     suspend fun deleteItem(item: CareItem)
     /** Session/completion/administration and the factual Timeline record commit together. */
     suspend fun recordActivity(dogId: String, id: String, occurredAt: Long, data: CareItemData): CareItem
+    /** Remove only this occurrence and its captured Journal revision in one transaction. */
+    suspend fun undoTaskCompletion(item: CareItem, expectedEventRevision: Long?)
     suspend fun updateDog(dog: Dog, name: String, details: DogDetails, draftSlot: String? = null): Dog
     suspend fun deleteDog(dogId: String)
     suspend fun deleteAll()

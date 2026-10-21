@@ -110,10 +110,10 @@ private fun MedicationPlanEditor(selected: CareItem?, page: FeaturePage, context
     SoftPawsHeading("Keep the prescribed details.", "Copy from the label or your vet’s plan.", "prescribed details.")
     HealthInput(form, "name", "Medication name", !context.saving, max = 120)
     HealthInput(form, "directions", "Prescribed instructions", !context.saving, multiline = true, max = 500)
-    HealthInput(form, "date", "Start date · YYYY-MM-DD", !context.saving, max = 10)
+    CareDateTimeField(form, "date", "Start date · YYYY-MM-DD", context)
     HealthCheck("Remind me at a time I choose", form["remind"] == "true", !context.saving) { form["remind"] = it.toString() }
     if (form["remind"] == "true") SoftPawsCard("Your chosen reminder") {
-        HealthInput(form, "reminderTime", "Reminder time · HH:mm", !context.saving, max = 5)
+        CareDateTimeField(form, "reminderTime", "Reminder time · HH:mm", context, time = true)
         ChoiceField("Repeat this reminder", form["reminderRepeat"], Repeat.entries.map { it.name to healthRepeat(it) }, !context.saving) { form["reminderRepeat"] = it }
         CaptionText("Time zone · ${form["reminderZone"]}")
         SupportingText("This is a notification you choose, not instructions for giving medication. Permission is separate from saving the plan.")
@@ -122,7 +122,7 @@ private fun MedicationPlanEditor(selected: CareItem?, page: FeaturePage, context
     if (more) SoftPawsCard("Details from your plan") {
         HealthInput(form, "amount", "Amount and unit · optional", !context.saving, max = 60)
         HealthInput(form, "frequency", "Written frequency · optional", !context.saving, max = 100)
-        HealthInput(form, "time", "Recorded schedule time · HH:mm · optional", !context.saving, max = 5)
+        CareDateTimeField(form, "time", "Recorded schedule time · HH:mm · optional", context, time = true)
         CaptionText("Existing facts stay as entered. The app does not turn this text into a reminder schedule.")
     }
     CaptionText("No dose calculations or treatment recommendations.")
@@ -138,7 +138,7 @@ private fun MedicationPlanEditor(selected: CareItem?, page: FeaturePage, context
             val saved = context.care.save(context.dog.id, selected?.id ?: form.requestId, selected?.occurredAt ?: form.createdAt, data, form.expectedRevision, draftSlot = form.slot)
             if (saved != null) {
                 form.completed = true
-                context.navigation.replace(Feature.MedicationDetail, saved.id)
+                context.showSavedFeature(Feature.MedicationDetail, saved.id)
             }
         } } }, enabled = !context.saving)
     }
@@ -245,9 +245,9 @@ private fun VaccinationRecordEditor(selected: CareItem?, page: FeaturePage, cont
     }
     SoftPawsHeading("A vaccination, recorded.", "Use the details from your clinic.", "recorded.")
     HealthInput(form, "name", "Name on the record", !context.saving, max = 120)
-    HealthInput(form, "date", "Date given · YYYY-MM-DD", !context.saving, max = 10)
+    CareDateTimeField(form, "date", "Date given · YYYY-MM-DD", context)
     HealthInput(form, "provider", "Clinic or vet · optional", !context.saving, max = 160)
-    HealthInput(form, "due", "Next date, if your vet provided one · optional", !context.saving, max = 10)
+    CareDateTimeField(form, "due", "Next date, if your vet provided one · optional", context)
     BarkTextAction(if (picking) "Opening native picker…" else if (form["document"].isBlank()) "Attach document" else "Change document", {
         scope.launch {
             picking = true
@@ -303,7 +303,7 @@ private fun VaccinationDocument(id: String, context: FeatureContext) {
 }
 
 @Composable
-private fun HealthCheck(label: String, checked: Boolean, enabled: Boolean, changed: (Boolean) -> Unit) {
+internal fun HealthCheck(label: String, checked: Boolean, enabled: Boolean, changed: (Boolean) -> Unit) {
     Row(Modifier.fillMaxWidth().heightIn(min = 48.dp).toggleable(checked, enabled = enabled, role = Role.Checkbox, onValueChange = changed),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(label, Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)

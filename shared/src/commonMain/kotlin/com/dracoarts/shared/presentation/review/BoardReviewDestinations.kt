@@ -6,6 +6,9 @@ import com.dracoarts.shared.domain.model.ReportContent
 
 /** Board IDs resolve to real screens; state-specific evidence remains individually tracked. */
 val boardReviewFeatures = mapOf(
+    "calendar" to Feature.Calendar,
+    "task-detail" to Feature.TaskDetail,
+    "task-form" to Feature.TaskForm,
     "medications" to Feature.Medications,
     "med-form" to Feature.MedicationForm,
     "med-detail" to Feature.MedicationDetail,

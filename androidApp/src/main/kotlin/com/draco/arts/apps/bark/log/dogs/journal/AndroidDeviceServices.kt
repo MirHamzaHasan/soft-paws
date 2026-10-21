@@ -65,6 +65,7 @@ class AndroidDeviceServices(private val activity: ComponentActivity) : DeviceSer
         catch (_: Exception) { DeviceResult.Failed("Couldn't find your area. Enter a city instead.") }
     }
     override fun updateAppearance(dark: Boolean, followSystem: Boolean) {
+        carePickers.dark = dark
         androidx.core.view.WindowCompat.getInsetsController(activity.window, activity.window.decorView).apply {
             isAppearanceLightStatusBars = !dark
             isAppearanceLightNavigationBars = !dark
@@ -87,7 +88,10 @@ class AndroidDeviceServices(private val activity: ComponentActivity) : DeviceSer
     override val foreground = active.asStateFlow()
     private val lifecycleObserver = LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_START) active.value = true else if (event == Lifecycle.Event.ON_STOP) active.value = false }
     init { activity.lifecycle.addObserver(lifecycleObserver) }
-    override fun close() { activity.lifecycle.removeObserver(lifecycleObserver); picked?.cancel(); permission?.cancel(); picker.unregister(); permissionRequest.unregister(); cameraRequest.unregister(); captured?.cancel() }
+    private val carePickers = AndroidCarePickers(activity)
+    override suspend fun pickDate(value: String, title: String) = carePickers.date(value, title)
+    override suspend fun pickTime(value: String, title: String) = carePickers.time(value, title)
+    override fun close() { carePickers.close(); activity.lifecycle.removeObserver(lifecycleObserver); picked?.cancel(); permission?.cancel(); picker.unregister(); permissionRequest.unregister(); cameraRequest.unregister(); captured?.cancel() }
     private val targets = MutableStateFlow<ReminderTarget?>(null)
     override val reminderOpens = targets.asStateFlow()
     override fun consumedReminder() { targets.value = null }

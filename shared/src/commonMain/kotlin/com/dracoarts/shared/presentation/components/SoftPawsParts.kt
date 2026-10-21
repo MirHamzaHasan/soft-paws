@@ -62,9 +62,10 @@ fun SoftPawsSection(title: String, action: String? = null, onAction: () -> Unit 
 }
 
 @Composable
-fun SoftPawsRow(title: String, subtitle: String = "", icon: String, onClick: () -> Unit) {
+fun SoftPawsRow(title: String, subtitle: String = "", icon: String, accessibilityLabel: String? = null, onClick: () -> Unit) {
     val tone = SoftPawsDesignTokens.iconTones[icon] ?: "mint"
-    Surface(onClick = soundAction(onClick), modifier = Modifier.fillMaxWidth().heightIn(min = 62.dp), color = Color.Transparent) {
+    Surface(onClick = soundAction(onClick), modifier = Modifier.fillMaxWidth().heightIn(min = 62.dp).then(
+        if (accessibilityLabel != null) Modifier.semantics { contentDescription = accessibilityLabel } else Modifier), color = Color.Transparent) {
         Row(Modifier.padding(vertical = 13.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Surface(shape = RoundedCornerShape(14.dp), color = boardColor(tone), border = BorderStroke(1.dp, boardColor("$tone-line"))) {
                 Box(Modifier.size(42.dp), contentAlignment = Alignment.Center) { BarkIcon(icon, Modifier.size(20.dp), boardColor("$tone-ink")) }

@@ -1,0 +1,58 @@
+{
+  "ios-planning-large-functional": {
+    "acceptedCases": [
+      {
+        "name": "testHealthDatePickerCancellationPreservesEnteredDates()",
+        "result": "Passed",
+        "seconds": 26.900117993354797
+      },
+      {
+        "name": "testNativeTaskPickersCancelCommitAndKeepDraft()",
+        "result": "Passed",
+        "seconds": 87.69957494735718
+      },
+      {
+        "name": "testTaskCompletionUndoEditAndRemovalKeepOtherOccurrences()",
+        "result": "Passed",
+        "seconds": 267.14645409584045
+      }
+    ],
+    "originalRun": {
+      "passed": 3,
+      "failed": 1,
+      "result": "Failed"
+    },
+    "captureHelperFailure": "Resting-screen lookup included a changing combined accessibility label. Corrected stable-prefix lookup is separately verified in ios-planning-large-rest."
+  },
+  "ios-planning-third": {
+    "passed": 4,
+    "failed": 0,
+    "result": "Passed"
+  },
+  "ios-planning-large-rest": {
+    "passed": 1,
+    "failed": 0,
+    "result": "Passed"
+  },
+  "ios-planning-rest": {
+    "passed": 1,
+    "failed": 0,
+    "result": "Passed"
+  },
+  "android-standard": {
+    "passed": 1,
+    "seconds": 135.615
+  },
+  "android-large": {
+    "passed": 1,
+    "seconds": 135.116
+  },
+  "android-health-regression": {
+    "passed": 1,
+    "seconds": 119.715
+  },
+  "jvm": {
+    "tests": 164,
+    "failures": 0
+  }
+}

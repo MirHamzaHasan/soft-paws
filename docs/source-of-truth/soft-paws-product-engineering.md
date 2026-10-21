@@ -91,10 +91,13 @@ The native port now includes separate Soft Paws identities, safe unconfigured
 services, preserving cat observation contracts/SQLite v5, shared cat setup,
 Home, five-tab navigation, care hubs, dated Journal/record editing and scoped
 deletion, prescribed plans/Given history, explicit medication reminders and
-vaccination image/PDF records, plus the original native Rive cat. Android native
-journeys and 159 JVM tests pass. Health document and larger-text journeys pass on
-both platforms, with current Debug/Release builds and paired screen evidence.
-The inventory is 35 implemented-unverified / 54 pending; individual native visual
+vaccination image/PDF records, the real dated care agenda and task form/detail,
+plus the original native Rive cat. Native date/time controls retain manual entry
+and cancellation semantics. Occurrence-specific completion/undo commits with
+revision-guarded Journal history; removing a plan preserves recorded care.
+Android native journeys and 164 JVM tests pass. Health/document and planning
+journeys cover both platforms and larger text, with current Debug/Release builds
+and paired screen evidence. The inventory is 38 implemented-unverified / 51 pending; individual native visual
 approval remains open. The initial iOS
 host compiled; its accessibility crash was corrected with the official iOS
 renderer update and the repeated-navigation/save/relaunch tests now pass.

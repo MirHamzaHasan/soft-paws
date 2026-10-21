@@ -330,7 +330,8 @@
       "section": "health",
       "status": "implemented-unverified",
       "nativeSources": [
-        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HealthFeatureScreens.kt"
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HealthFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/CareDateTimeField.kt"
       ],
       "androidEvidence": [
         "docs/design/evidence/soft-paws-health/android-light-med-form.png",
@@ -340,7 +341,7 @@
         "docs/design/evidence/soft-paws-health/ios-light-med-form.png",
         "docs/design/evidence/soft-paws-health/ios-dark-med-form.png"
       ],
-      "verificationNote": "Real SQLite/native journeys and paired light/dark/larger-text captures pass. Individual native visual approval remains open; native date/time picker refinement is task005."
+      "verificationNote": "Task004 health/document journeys and paired evidence pass; task005 adds real native date/time controls and verifies cancellation plus the medication/vaccination regression. Individual native visual approval remains open."
     },
     {
       "id": "med-detail",
@@ -398,7 +399,8 @@
       "section": "health",
       "status": "implemented-unverified",
       "nativeSources": [
-        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HealthFeatureScreens.kt"
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HealthFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/CareDateTimeField.kt"
       ],
       "androidEvidence": [
         "docs/design/evidence/soft-paws-health/android-light-vaccine-form.png",
@@ -408,31 +410,61 @@
         "docs/design/evidence/soft-paws-health/ios-light-vaccine-form.png",
         "docs/design/evidence/soft-paws-health/ios-dark-vaccine-form.png"
       ],
-      "verificationNote": "Real SQLite/native journeys and paired light/dark/larger-text captures pass. Individual native visual approval remains open; native date/time picker refinement is task005."
+      "verificationNote": "Task004 health/document journeys and paired evidence pass; task005 adds real native date/time controls and verifies cancellation plus the medication/vaccination regression. Individual native visual approval remains open."
     },
     {
       "id": "calendar",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/CalendarFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/CareDateTimeField.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-planning/android-light-calendar.png",
+        "docs/design/evidence/soft-paws-planning/android-dark-calendar.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-planning/ios-light-calendar.png",
+        "docs/design/evidence/soft-paws-planning/ios-dark-calendar.png"
+      ],
+      "verificationNote": "Real SQLite, native normal/larger-text journeys and paired light/dark evidence pass in task005. Individual native visual approval remains open."
     },
     {
       "id": "task-detail",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/CalendarFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/CareDateTimeField.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-planning/android-light-task-detail.png",
+        "docs/design/evidence/soft-paws-planning/android-dark-task-detail.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-planning/ios-light-task-detail.png",
+        "docs/design/evidence/soft-paws-planning/ios-dark-task-detail.png"
+      ],
+      "verificationNote": "Real SQLite, native normal/larger-text journeys and paired light/dark evidence pass in task005. Individual native visual approval remains open."
     },
     {
       "id": "task-form",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/CalendarFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/CareDateTimeField.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-planning/android-light-task-form.png",
+        "docs/design/evidence/soft-paws-planning/android-dark-task-form.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-planning/ios-light-task-form.png",
+        "docs/design/evidence/soft-paws-planning/ios-dark-task-form.png"
+      ],
+      "verificationNote": "Real SQLite, native normal/larger-text journeys and paired light/dark evidence pass in task005. Individual native visual approval remains open."
     },
     {
       "id": "insights",

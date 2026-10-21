@@ -128,7 +128,11 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
             when {
                 route != null -> state.show(route)
                 feature != null -> {
-                    val argument = if (reviewStart == "med-detail") {
+                    val argument = if (reviewStart == "task-detail") {
+                        care.items(journal.selectedDogId!!).firstOrNull { it.data is CareItemData.Task }?.let { item ->
+                            "${item.id}@${(item.data as CareItemData.Task).date}"
+                        }.orEmpty()
+                    } else if (reviewStart == "med-detail") {
                         // Cat review routes resolve an actual record in the selected journal.
                         // Historical BarkLog fixture IDs never stand in for a cat's plan.
                         care.items(journal.selectedDogId!!).firstOrNull { it.data is CareItemData.Medication }?.id.orEmpty()
@@ -151,7 +155,8 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
     }
     val context = journal.selectedDog?.let { dog ->
         val scopedCare = careState.takeIf { it.dogId == dog.id } ?: CareState(dogId = dog.id)
-        FeatureContext(journal, controller, care, scopedCare, settings, state, platform, repository, now, zone, if (reviewEnabled) reviewStart else null, reviewFaults, highlights, companion)
+        FeatureContext(journal, controller, care, scopedCare, settings, state, platform, repository, now, zone, if (reviewEnabled) reviewStart else null, reviewFaults, highlights, companion,
+            resetFeatureView = { destination -> savedScreens.removeState(featureViewKey(dog.id, destination)) })
     }
     val useCompanion = com.dracoarts.shared.presentation.companion.companionAvailable(reviewEnabled, reviewStart, journal.selectedDog != null)
     val companionState by companion.state.collectAsState()
@@ -208,7 +213,7 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                         TimelineScreen(journal, timeline, now, zone, Modifier.weight(1f), photos = context.items, reviewScreen = context.reviewScreen, onPhoto = { context.open(Feature.PhotoDetail, it.id) }, onSwitchDog = { context.open(Feature.DogSwitcher) }, onSelectDog = { scope.launch { controller.selectDog(it) } }, onSettings = { context.open(Feature.Settings) }, onAdd = { context.open(Feature.Chooser) }, onDetail = { state.detail(it.dogId, it.id) })
                     }
                 } else {
-                    val screenKey = if (context == null || onboardingInProgress || reviewOnboarding) "setup" else if (page != null) "event-${page.kind}-${page.sessionId}" else if (feature != null) "feature-${context.dog.id}-${feature.feature}-${feature.id}" else "tab-${context.dog.id}-${state.route}"
+                    val screenKey = if (context == null || onboardingInProgress || reviewOnboarding) "setup" else if (page != null) "event-${page.kind}-${page.sessionId}" else if (feature != null) featureViewKey(context.dog.id, feature) else "tab-${context.dog.id}-${state.route}"
                     savedScreens.SaveableStateProvider(screenKey) {
                         val scroll = rememberScrollState()
                         Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(scroll).padding(horizontal = AppSpacing.page, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
@@ -238,7 +243,7 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                     }
                 }
                 footer?.let { action ->
-                    val healthFooter = state.featurePage?.feature?.let { it in healthRecordScreens } == true
+                    val healthFooter = state.featurePage?.feature?.let { it in healthRecordScreens || it in carePlanningScreens } == true
                     Surface(Modifier.fillMaxWidth(), color = boardColor("ground"), border = if (healthFooter) null else androidx.compose.foundation.BorderStroke(1.dp, boardColor("hair"))) {
                         Column {
                             if (healthFooter) HorizontalDivider(color = boardColor("hair"), thickness = 1.dp)
@@ -301,3 +306,5 @@ internal fun JournalTabBar(state: AppState, platform: AppPlatform, onNavigate: (
         }
     }
 }
+
+private fun featureViewKey(catId: String, page: FeaturePage) = "feature-$catId-${page.feature}-${page.id}"

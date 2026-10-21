@@ -1793,3 +1793,230 @@ final class SoftPawsHealthJourneys: XCTestCase {
         app.terminate()
     }
 }
+
+final class SoftPawsPlanningJourneys: XCTestCase {
+    private let app = XCUIApplication(bundleIdentifier: "com.draco.apps.soft.paws")
+    private let fixturePreference = "-barklog_preference_v1_board_review_softpawsday_v1_"
+    private func launch(_ screen: String, _ theme: String = "Light") {
+        app.terminate()
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "soft-paws-day-v1", "-DesignReviewScreen", screen,
+            fixturePreference + "theme", theme, fixturePreference + "reduce_motion", "true"]
+        app.launch()
+        let headings = ["calendar": "The care you planned.", "task-form": "Make room for a little care.",
+            "task-detail": "Your plan", "med-form": "Keep the prescribed details.", "vaccine-form": "A vaccination, recorded."]
+        if let heading = headings[screen] { XCTAssertTrue(item(heading).waitForExistence(timeout: 25)) }
+        Thread.sleep(forTimeInterval: 0.5)
+    }
+    private func item(_ label: String) -> XCUIElement {
+        app.descendants(matching: .any).matching(NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")).firstMatch
+    }
+    private func reveal(_ label: String) -> XCUIElement {
+        for _ in 0..<18 {
+            let value = item(label)
+            let confirmation = item("Remove this task?").exists || item("Mark this occurrence incomplete?").exists || item("Keep this draft?").exists
+            let footers = confirmation ? [] : ["Keep task", "Plan a task", "Mark complete", "Mark incomplete", "Remove task", "Keep plan", "Keep record"].map { app.buttons[$0] }.filter { $0.exists && $0.isHittable && $0.frame.minY > 200 }
+            let bottom = footers.map { $0.frame.minY - 14 }.min() ?? app.frame.maxY - 22
+            if value.exists && value.isHittable && value.frame.minY > 30 && (footers.contains(where: { $0.label == label }) || value.frame.maxY < bottom) {
+                Thread.sleep(forTimeInterval: 0.4); return item(label)
+            }
+            let x = app.frame.width - 9
+            let back = app.buttons["Back"]
+            let headerAbove = ["Dates", "Today", "Choose agenda date"].contains(label) && back.exists && back.frame.maxY < 40
+            let upwards = label == "Back" || headerAbove || (value.exists && value.frame.maxY < 40)
+            let start = upwards ? CGFloat(150) : max(220, bottom - 25)
+            let end = upwards ? min(bottom - 24, CGFloat(420)) : max(90, start - 240)
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: start)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: end)),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        capture("ios-planning-missing"); XCTFail("Missing control \(label): \(app.debugDescription)"); return item(label)
+    }
+    private func press(_ label: String) {
+        let value = reveal(label)
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        Thread.sleep(forTimeInterval: 0.6)
+    }
+    private func fill(_ label: String, _ text: String) {
+        let value = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let input = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.2, dy: 0.3)).tap()
+        if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { input.tap() }
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 4))
+        if let old = input.value as? String, old != "Empty", !old.isEmpty {
+            input.press(forDuration: 1.1)
+            let all = app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "Select All")).firstMatch
+            XCTAssertTrue(all.waitForExistence(timeout: 4), "Select the full saved value before replacing it")
+            all.tap(); input.typeText(XCUIKeyboardKey.delete.rawValue)
+            let empty = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@ OR value == %@", "", "Empty"), object: input)
+            XCTAssertEqual(XCTWaiter.wait(for: [empty], timeout: 3), .completed)
+        }
+        input.typeText(text)
+        let entered = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", text), object: input)
+        XCTAssertEqual(XCTWaiter.wait(for: [entered], timeout: 3), .completed)
+        let done = app.keyboards.buttons["Done"]
+        if done.exists { done.tap() }
+        else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.12)).tap() }
+        Thread.sleep(forTimeInterval: 1)
+    }
+    private func capture(_ name: String) {
+        let image = XCTAttachment(screenshot: app.screenshot()); image.name = name; image.lifetime = .keepAlways; add(image)
+    }
+    private func value(_ label: String) -> String {
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let field = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        XCTAssertTrue(field.exists, app.debugDescription)
+        return field.value as? String ?? ""
+    }
+    private func chooseOctober21() {
+        let calendar = app.descendants(matching: .any).matching(NSPredicate(format: "label == %@ OR label CONTAINS %@ OR label CONTAINS %@", "21", "October 21", "21 October")).firstMatch
+        XCTAssertTrue(calendar.waitForExistence(timeout: 5), app.debugDescription)
+        calendar.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+    }
+    private func nativeDone(_ label: String) {
+        let button = app.buttons[label]
+        XCTAssertTrue(button.waitForExistence(timeout: 5), app.debugDescription)
+        button.tap(); Thread.sleep(forTimeInterval: 0.7)
+    }
+
+    func testNativeTaskPickersCancelCommitAndKeepDraft() throws {
+        continueAfterFailure = false
+        let name = "Native picker QA \(Int(Date().timeIntervalSince1970))"
+        launch("task-form")
+        fill("Task", name); fill("Date · YYYY-MM-DD", "2026-10-20"); fill("Time · HH:mm", "18:00")
+        press("Choose date for Date · YYYY-MM-DD")
+        XCTAssertTrue(app.buttons["Cancel"].waitForExistence(timeout: 5), app.debugDescription)
+        capture("ios-native-date-picker")
+        print("NATIVE_CALENDAR_LABELS", app.buttons.allElementsBoundByIndex.map { $0.label })
+        chooseOctober21(); nativeDone("Cancel")
+        XCTAssertEqual(value("Date · YYYY-MM-DD"), "2026-10-20")
+        press("Choose date for Date · YYYY-MM-DD"); chooseOctober21(); nativeDone("Done")
+        XCTAssertEqual(value("Date · YYYY-MM-DD"), "2026-10-21")
+        press("Choose time for Time · HH:mm")
+        XCTAssertTrue(app.pickerWheels.firstMatch.waitForExistence(timeout: 5), app.debugDescription)
+        capture("ios-native-time-picker")
+        print("NATIVE_TIME_WHEELS", app.pickerWheels.allElementsBoundByIndex.map { $0.value as? String ?? "" })
+        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "15")
+        nativeDone("Cancel"); XCTAssertEqual(value("Time · HH:mm"), "18:00")
+        press("Choose time for Time · HH:mm")
+        XCTAssertTrue(app.pickerWheels.firstMatch.waitForExistence(timeout: 5))
+        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "15")
+        nativeDone("Done"); XCTAssertEqual(value("Time · HH:mm"), "18:15")
+        press("Back"); press("Keep draft"); launch("task-form")
+        XCTAssertEqual(value("Date · YYYY-MM-DD"), "2026-10-21")
+        XCTAssertEqual(value("Time · HH:mm"), "18:15")
+        capture("ios-task-retained-picker-values")
+        press("Keep task"); XCTAssertTrue(item("Your plan").waitForExistence(timeout: 15), app.debugDescription)
+        capture("ios-picker-task-committed")
+    }
+
+    private func agendaDate(_ date: String) {
+        if !item("Enter a date").exists && !item("Agenda date · YYYY-MM-DD").exists { press("Dates") }
+        if !item("Agenda date · YYYY-MM-DD").exists { press("Enter a date") }
+        fill("Agenda date · YYYY-MM-DD", date); press("Show this date")
+        if item("Hide date entry").exists { press("Dates") }
+    }
+
+    private func requestChosenReminder() {
+        for _ in 0..<16 {
+            let bottom = app.buttons["Mark incomplete"].exists ? app.buttons["Mark incomplete"].frame.minY - 14 : app.frame.maxY - 24
+            for title in ["Enable notifications", "Refresh chosen reminder"] {
+                let action = item(title)
+                if action.exists && action.isHittable && action.frame.minY > 35 && action.frame.maxY < bottom { press(title); return }
+            }
+            let x = app.frame.width - 9
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: bottom - 25)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: max(90, bottom - 265))),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        XCTFail("No visible reminder action: \(app.debugDescription)")
+    }
+
+    func testTaskCompletionUndoEditAndRemovalKeepOtherOccurrences() throws {
+        continueAfterFailure = false
+        let stamp = Int(Date().timeIntervalSince1970)
+        let name = "Native care task QA \(stamp)"
+        let revised = "Revised native task QA \(stamp)"
+        print("PLANNING_TASK_NAME", name)
+        launch("calendar"); press("Plan a task")
+        fill("Task", name); fill("Date · YYYY-MM-DD", "2026-10-21"); fill("Time · HH:mm", "18:00")
+        press("Every day"); press("Keep task")
+        XCTAssertTrue(item("Your plan").waitForExistence(timeout: 15), app.debugDescription)
+        press("Mark complete")
+        XCTAssertTrue(item("The care you planned.").waitForExistence(timeout: 15))
+        press("View task for " + name); press("Mark incomplete"); press("Keep completion")
+        XCTAssertTrue(item("Recorded as complete").exists)
+        press("Mark incomplete"); press("Undo completion")
+        XCTAssertTrue(item("The care you planned.").waitForExistence(timeout: 15))
+        press("View task for " + name)
+        XCTAssertFalse(item("Recorded as complete").exists)
+        press("Mark complete")
+        agendaDate("2026-10-22"); press("View task for " + name); press("Mark complete")
+        press("View task for " + name); press("Reschedule or edit")
+        fill("Task", revised); fill("Time · HH:mm", "19:00")
+        if !item("Your note · optional").exists { press("Category and notes · optional") }
+        fill("Your note · optional", "A caregiver planning note")
+        press("Remind me for this task"); press("Keep task")
+        XCTAssertTrue(item("Your plan").waitForExistence(timeout: 15))
+        let when = app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", "22 October 2026")).firstMatch
+        XCTAssertTrue(when.waitForExistence(timeout: 5), app.debugDescription)
+        requestChosenReminder()
+        let alert = app.alerts.firstMatch
+        if alert.waitForExistence(timeout: 2) {
+            let deny = alert.buttons.matching(NSPredicate(format: "label CONTAINS[c] %@ AND label !=[c] %@", "Allow", "Allow")).firstMatch
+            XCTAssertTrue(deny.exists, app.debugDescription); deny.tap()
+        }
+        capture("ios-task-reminder-after-commit")
+        press("Turn reminder off")
+        press("Remove task"); press("Keep task")
+        press("Remove task"); capture("ios-remove-planned-task-confirmation"); press("Remove planned task")
+        XCTAssertTrue(item("The care you planned.").waitForExistence(timeout: 15))
+        XCTAssertFalse(item("View task for " + revised).exists)
+        press("Plan a task")
+        fill("Task", "Retained native task QA \(stamp)"); fill("Date · YYYY-MM-DD", "2026-10-20"); fill("Time · HH:mm", "18:00")
+        press("Does not repeat"); press("Keep task")
+        XCTAssertTrue(item("Your plan").waitForExistence(timeout: 15))
+        capture("ios-retained-independent-task")
+    }
+
+    func testHealthDatePickerCancellationPreservesEnteredDates() throws {
+        continueAfterFailure = false
+        launch("med-form")
+        _ = reveal("Choose date for Start date · YYYY-MM-DD")
+        let start = value("Start date · YYYY-MM-DD")
+        press("Choose date for Start date · YYYY-MM-DD"); capture("ios-medication-native-date-picker"); nativeDone("Cancel")
+        XCTAssertEqual(value("Start date · YYYY-MM-DD"), start)
+        launch("vaccine-form")
+        let label = "Next date, if your vet provided one · optional"
+        _ = reveal("Choose date for " + label)
+        let next = value(label)
+        print("OPTIONAL_NEXT_DATE_BEFORE_PICKER", next)
+        press("Choose date for " + label); capture("ios-optional-vaccination-native-date-picker"); nativeDone("Cancel")
+        XCTAssertEqual(value(label), next)
+    }
+
+    func testRestingCalendarScreensInBothThemes() throws {
+        continueAfterFailure = false
+        for theme in ["Light", "Dark"] {
+            for screen in ["calendar", "task-form", "task-detail"] {
+                if screen == "task-detail" {
+                    launch("calendar", theme)
+                    let retained = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "View task for Retained native task QA")).firstMatch
+                    if retained.exists {
+                        press(retained.label.components(separatedBy: ",").first ?? retained.label)
+                        XCTAssertTrue(item("Your plan").waitForExistence(timeout: 15))
+                    } else { launch(screen, theme) }
+                } else { launch(screen, theme) }
+                capture("ios-rest-" + theme.lowercased() + "-" + screen)
+            }
+        }
+        launch("task-form", "Dark"); press("Choose date for Date · YYYY-MM-DD")
+        capture("ios-dark-native-date-picker"); nativeDone("Cancel")
+        press("Choose time for Time · HH:mm")
+        capture("ios-dark-native-time-picker"); nativeDone("Cancel")
+    }
+}

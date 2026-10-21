@@ -126,5 +126,30 @@ bundle checks pass. All six paired light/dark destinations and larger-text sheet
 were inspected: [health evidence](../docs/design/evidence/soft-paws-health/README.md).
 The inventory is **35 implemented-unverified / 54 pending**. Individual native
 visual approval, physical/assistive coverage and downstream ports stay open.
-[Task005](soft-paws-task005-care-planning.md) next covers the approved care agenda
-and native date/time picker refinement; it is planned, not implemented.
+The later task005 slice below adds the care agenda and native date/time controls.
+
+## 21 October · care planning and native date/time controls
+
+The approved calendar, task form and task detail now use the selected cat/day's
+real records, retained week/occurrence navigation and independent drafts. Monthly
+repeats, notes, categories, time zones and revisions remain compatible. Completion
+and undo use atomic, revision-guarded Journal history; removing a plan preserves
+past care. Explicit reminders survive denial/failure without losing the plan.
+Android suppresses stale/early alarms after schedule edits.
+
+Tasks, medication and vaccination fields share real Android calendar/time dialogs
+and cancellable UIKit calendar/wheel sheets, retaining manual entry and optional
+blank dates. Larger-text review also corrected saved-summary scroll restoration.
+See [task005](soft-paws-task005-care-planning.md).
+
+Android Debug/Release/lint/migrations, **164 JVM tests**, both Android text-size
+planning journeys and the medication/document regression pass. iOS passes all
+four normal-text cases, three larger-text functional cases and corrected resting
+captures separately at both sizes. Current iOS Debug/Release hosts and bundle
+checks pass. All three paired destinations, larger-text sheets and native pickers
+were inspected: [planning evidence](../docs/design/evidence/soft-paws-planning/README.md).
+
+The inventory is now **38 implemented-unverified / 51 pending**. Individual native
+visual approval, physical notification delivery, assistive review and downstream
+ports remain open. Both owned apps finish on Home with normal motion; fresh
+cat-only pixel comparisons confirm the continuous Rive idle remains live.

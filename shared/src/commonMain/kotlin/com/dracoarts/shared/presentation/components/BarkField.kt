@@ -34,7 +34,7 @@ import com.dracoarts.shared.presentation.theme.boardColor
 fun BarkField(label: String, value: String, onChange: (String) -> Unit, modifier: Modifier = Modifier,
     enabled: Boolean = true, placeholder: String? = null, multiline: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default, keyboardActions: KeyboardActions = KeyboardActions.Default, trailingText: String? = null, secure: Boolean = false,
-    softPaws: Boolean = false) {
+    softPaws: Boolean = false, trailingAction: (@Composable () -> Unit)? = null) {
     val interaction = remember { MutableInteractionSource() }
     val focused by interaction.collectIsFocusedAsState()
     val focus = LocalFocusManager.current
@@ -62,9 +62,12 @@ fun BarkField(label: String, value: String, onChange: (String) -> Unit, modifier
                 Surface(shape = RoundedCornerShape(16.dp), color = if (softPaws) boardColor("panel") else MaterialTheme.colorScheme.surface,
                     border = BorderStroke(if (focused) 2.dp else if (softPaws) 1.dp else 1.5.dp,
                         if (softPaws) boardColor(if (focused) "accent" else "hair-2") else if (focused) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.outlineVariant)) {
-                    Row(Modifier.fillMaxWidth().heightIn(min = minimum).padding(horizontal = if (softPaws) 16.dp else 14.dp, vertical = if (softPaws) 14.dp else 13.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = if (multiline) androidx.compose.ui.Alignment.Top else androidx.compose.ui.Alignment.CenterVertically) {
+                    Box(Modifier.fillMaxWidth().heightIn(min = minimum)) {
+                    Row(Modifier.fillMaxWidth().heightIn(min = minimum).padding(start = if (softPaws) 16.dp else 14.dp, end = if (trailingAction != null) 58.dp else if (softPaws) 16.dp else 14.dp, top = if (softPaws) 14.dp else 13.dp, bottom = if (softPaws) 14.dp else 13.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = if (multiline) androidx.compose.ui.Alignment.Top else androidx.compose.ui.Alignment.CenterVertically) {
                         Box(Modifier.weight(1f)) { if (value.isEmpty() && placeholder != null) Text(placeholder, style = inputStyle, color = MaterialTheme.colorScheme.onSurfaceVariant); input() }
                         trailingText?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+                    }
+                    if (trailingAction != null) Box(Modifier.align(androidx.compose.ui.Alignment.CenterEnd).padding(end = 3.dp)) { trailingAction() }
                     }
                 }
             })

@@ -24,7 +24,7 @@ sealed interface CareItemData {
         val title: String, val date: String, val time: String, val zoneId: String,
         val category: String = "Custom", val repeat: Repeat = Repeat.None, val notes: String = "", val remind: Boolean = false,
     ) : CareItemData
-    @Serializable @SerialName("completion") data class Completion(val taskId: String, val title: String, val dueDate: String) : CareItemData
+    @Serializable @SerialName("completion") data class Completion(val taskId: String, val title: String, val dueDate: String, val taskRevision: Long? = null) : CareItemData
     @Serializable @SerialName("enrollment") data class Enrollment(val programId: String) : CareItemData
     @Serializable @SerialName("session") data class Session(
         val programId: String, val step: Int, val seconds: Int, val rating: String, val mood: String, val notes: String = "", val responses: Int = 0,
@@ -74,7 +74,7 @@ object CareItemRules {
             }
             is CareItemData.Vaccination -> { text(data.name, 120, true); date(data.date); text(data.provider, 160); text(data.notes); if (data.dueDate.isNotBlank()) date(data.dueDate); data.documentId?.let { require(LocalAttachmentRules.receipt.matches(it)) { "Invalid local vaccination document." } } }
             is CareItemData.Task -> { text(data.title, 160, true); date(data.date); LocalTime.parse(data.time); TimeZone.of(data.zoneId); text(data.category, 60, true); text(data.notes) }
-            is CareItemData.Completion -> { text(data.taskId, 80, true); text(data.title, 160, true); date(data.dueDate) }
+            is CareItemData.Completion -> { text(data.taskId, 80, true); text(data.title, 160, true); date(data.dueDate); require(data.taskRevision == null || data.taskRevision > 0) }
             is CareItemData.Enrollment -> require(data.programId in TrainingCatalog.programs.map { it.id }) { "Program not found." }
             is CareItemData.Session -> { require(data.programId in TrainingCatalog.programs.map { it.id }); require(data.step >= 0 && data.step < TrainingCatalog.programs.first { it.id == data.programId }.steps.size); require(data.seconds in 1..7200 && data.responses in 0..10000); require(data.rating in listOf("Easy", "Getting there", "Try again")); text(data.mood, 60, true); text(data.notes) }
             is CareItemData.Photo -> { file(data.fileId); text(data.title, 240, true); date(data.date); text(data.category, 60, true); text(data.bodyArea, 120); text(data.notes) }

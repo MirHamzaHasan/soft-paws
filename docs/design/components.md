@@ -25,9 +25,20 @@ the repository commits. Permission is a separate action. Given history snapshots
 instructions/revision atomically and never implies a notification was fulfilled.
 Vaccination documents use native image/PDF selection, retained draft references,
 reference-aware replacement/removal and a disabled handoff when the local file
-is missing. Date/time inputs remain labelled manual entry until the reusable
-picker work in [Soft Paws task005](../../tasks/soft-paws-task005-care-planning.md).
+is missing. `CareDateTimeField` adds a labelled 48 dp native-picker action while
+retaining manual ISO/24-hour entry. Task, medication and vaccination fields share
+real Android dialogs and cancellable UIKit calendar/wheel sheets. Cancel keeps
+the old value; opening an optional date never fills it.
 See [health evidence](evidence/soft-paws-health/README.md) for verification limits.
+
+The approved cat agenda and task form/detail now use `SoftPawsWeek`, real selected
+cat/day records and retained navigation state. Repeat choices include legacy
+Monthly. Completion and Journal writes commit atomically; undo checks the captured
+Journal revision and only removes that occurrence. Explicit reminder actions are
+separate from saving. A committed task/medication edit clears only the destination
+view state so its updated summary starts at the top. See
+[planning evidence](evidence/soft-paws-planning/README.md) and
+[task005](../../tasks/soft-paws-task005-care-planning.md).
 
 
 20 October task047: the owner approved the new notebook-puppy Rive and the three

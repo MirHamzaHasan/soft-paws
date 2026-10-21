@@ -35,6 +35,9 @@ interface DeviceServices {
     fun updateAppearance(dark: Boolean, followSystem: Boolean) = Unit
     val reminderOpens: StateFlow<ReminderTarget?>
     fun consumedReminder()
+    /** Canonical calendar date / wall-clock time; cancellation never supplies a value. */
+    suspend fun pickDate(value: String, title: String): DeviceResult<String> = DeviceResult.Failed("The date picker isn't available. You can enter the date.")
+    suspend fun pickTime(value: String, title: String): DeviceResult<String> = DeviceResult.Failed("The time picker isn't available. You can enter the time.")
     suspend fun notificationAccess(request: Boolean = false): DeviceResult<Unit> = DeviceResult.Failed("Notification access isn't available in this host.")
     suspend fun takePhoto(): DeviceResult<String> = DeviceResult.Failed("Camera capture isn't available in this host. Choose a photo instead.")
     suspend fun pickPhoto(): DeviceResult<String>

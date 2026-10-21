@@ -273,6 +273,7 @@ class SqlDelightJournalRepository(
         }
         if (old != null) photoFiles(old.data).filter { it !in photoFiles(data) }.forEach { q.queueCleanup("photo", it) }
         if (data is CareItemData.Medication && (data.archived || data.reminder == null && (old?.data as? CareItemData.Medication)?.reminder != null)) q.queueCleanup("reminder", id)
+        if (data is CareItemData.Task && !data.remind && (old?.data as? CareItemData.Task)?.remind == true) q.queueCleanup("reminder", id)
         if (data is CareItemData.Memory) {
             val unchanged = (old?.data as? CareItemData.Memory)?.sourceIds == data.sourceIds
             require(unchanged || data.sourceIds.all { source -> q.eventById(dogId, source).executeAsOneOrNull() != null || (q.itemById(dogId, source).executeAsOneOrNull()?.let(::toItem)?.data is CareItemData.Photo) }) { "A selected source record changed. Choose the highlights again." }
@@ -302,7 +303,9 @@ class SqlDelightJournalRepository(
                     CareDetails.Training(data.programId, data.step, data.seconds, data.rating, data.mood)
                 }
                 is CareItemData.Completion -> {
-                    val task = q.itemById(dogId, data.taskId).executeAsOneOrNull()?.let(::toItem)?.data as? CareItemData.Task ?: throw RecordNotFoundException()
+                    val savedTask = q.itemById(dogId, data.taskId).executeAsOneOrNull()?.let(::toItem) ?: throw RecordNotFoundException()
+                    val task = savedTask.data as? CareItemData.Task ?: throw RecordNotFoundException()
+                    if (data.taskRevision != null && data.taskRevision != savedTask.revision) throw RecordConflictException()
                     require(task.title == data.title) { "This task changed. Open it again before completing." }
                     require(com.dracoarts.shared.domain.model.CareSchedule.occurs(task, kotlinx.datetime.LocalDate.parse(data.dueDate))) { "This date isn't an occurrence of this task." }
                     require(q.itemsForDog(dogId).executeAsList().map(::toItem).none { (it.data as? CareItemData.Completion)?.let { c -> c.taskId == data.taskId && c.dueDate == data.dueDate } == true }) { "This occurrence is already completed." }
@@ -325,6 +328,23 @@ class SqlDelightJournalRepository(
             q.deleteItem(item.dogId, item.id, item.revision)
             if (q.changedRows().executeAsOne() != 1L) throw RecordConflictException()
             queueItemCleanup(q, old)
+        }
+    }
+
+    override suspend fun undoTaskCompletion(item: CareItem, expectedEventRevision: Long?) {
+        require(item.data is CareItemData.Completion)
+        mutate { q ->
+            val saved = q.itemById(item.dogId, item.id).executeAsOneOrNull()?.let(::toItem) ?: throw RecordNotFoundException()
+            if (saved.revision != item.revision || saved.data !is CareItemData.Completion) throw RecordConflictException()
+            val event = q.eventById(item.dogId, item.id).executeAsOneOrNull()?.let(::toEvent)
+            if (event?.revision != expectedEventRevision) throw RecordConflictException()
+            if (event != null) {
+                q.deleteEvent(item.dogId, item.id, event.revision)
+                if (q.changedRows().executeAsOne() != 1L) throw RecordConflictException()
+                event.context.photoId?.let { q.queueCleanup("photo", it) }
+            }
+            q.deleteItem(item.dogId, item.id, item.revision)
+            if (q.changedRows().executeAsOne() != 1L) throw RecordConflictException()
         }
     }
 

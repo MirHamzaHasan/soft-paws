@@ -138,6 +138,11 @@ window.BOARD = {
     ],
     health: [
       {
+        title: "Amie · selected day and chronological agenda",
+        took: "Keep the selected date visible and the agenda in time order. Care tasks show their saved time and recorded completion; they do not imply measured durations or outcomes.",
+        url: "https://mobbin.com/screens/e198fa03-f4d9-4a6c-8f5c-854478fd40a2",
+      },
+      {
         title: "Mindvalley · explicit reminder choice",
         took: "Show whether reminders are on, keep time and repeat choices explicit, then show the saved schedule. We keep the cat kit and omit wellness frequency suggestions.",
         url: "https://mobbin.com/flows/5fa563c5-ee26-4563-a70a-6bd98e484b7c",

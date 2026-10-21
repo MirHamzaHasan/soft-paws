@@ -41,7 +41,7 @@ class CareController(private val repository: CareRepository, private val haptics
     suspend fun discardDraft(dogId: String, slot: String) = repository.discardDraft(dogId, slot)
     suspend fun processCleanup() {
         val native = device ?: return
-        if (!cleaning.tryLock()) return
+        cleaning.lock()
         try {
             repository.pendingCleanup().forEach { job ->
                 try {
@@ -58,6 +58,11 @@ class CareController(private val repository: CareRepository, private val haptics
     suspend fun save(dogId: String, id: String, time: Long, data: CareItemData, revision: Long? = null, draftSlot: String? = null): CareItem? = write { repository.saveItem(dogId, id, time, data, revision, draftSlot) }
     suspend fun activity(dogId: String, id: String, time: Long, data: CareItemData): CareItem? = write { repository.recordActivity(dogId, id, time, data) }
     suspend fun delete(item: CareItem): Boolean = write { repository.deleteItem(item); _state.update { it.copy(items = it.items.filterNot { record -> record.id == item.id }) }; true } == true
+    suspend fun undoTaskCompletion(item: CareItem, expectedEventRevision: Long?): Boolean = write {
+        repository.undoTaskCompletion(item, expectedEventRevision)
+        _state.update { state -> if (state.dogId == item.dogId) state.copy(items = state.items.filterNot { it.id == item.id }) else state }
+        true
+    } == true
     suspend fun updateDog(dog: Dog, name: String, details: DogDetails, draftSlot: String? = null): Dog? = write { repository.updateDog(dog, name, details, draftSlot) }
     suspend fun deleteDog(id: String): Boolean = write { repository.deleteDog(id); true } == true
     suspend fun deleteAll(): Boolean = write { repository.deleteAll(); true } == true

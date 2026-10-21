@@ -31,11 +31,17 @@ data class FeatureContext(
     val reviewFaults: com.dracoarts.shared.presentation.review.BoardReviewFaults? = null,
     val highlights: com.dracoarts.shared.presentation.highlights.HighlightController? = null,
     val companion: com.dracoarts.shared.presentation.companion.CompanionController? = null,
+    val resetFeatureView: (FeaturePage) -> Unit,
 ) {
     val dog get() = journal.selectedDog!!
     val items get() = if (careState.dogId == dog.id) careState.items else emptyList()
     val saving get() = careState.saving || journal.saving
     fun open(feature: Feature, id: String = "") = navigation.open(feature, id)
+    fun showSavedFeature(feature: Feature, id: String) {
+        // Clear retained view state only; the committed record and draft live in SQLite.
+        resetFeatureView(FeaturePage(feature, id))
+        navigation.replace(feature, id)
+    }
     suspend fun activityLogged(item: CareItem) {
         try { repository.observeEvent(item.dogId, item.id).first()?.let(journalController::recordSaved) }
         catch (cancelled: CancellationException) { throw cancelled }

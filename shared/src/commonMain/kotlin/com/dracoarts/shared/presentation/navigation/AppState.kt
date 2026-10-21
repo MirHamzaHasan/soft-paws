@@ -70,7 +70,8 @@ class AppState(initialRoute: Route = Route.Home) {
         change(BoardNavigationMove.Push) {
             page = null; route = Route.Care
             val root = if (feature == Feature.MedicationDetail) Feature.Medications else Feature.Calendar
-            featureStack = listOf(FeaturePage(root)) + if (feature == root) emptyList() else listOf(FeaturePage(feature, id))
+            val rootId = if (feature == Feature.TaskDetail) id.substringAfter('@', "").substringBefore('@') else ""
+            featureStack = listOf(FeaturePage(root, rootId)) + if (feature == root) emptyList() else listOf(FeaturePage(feature, id))
         }
     }
     fun newLog(dogId: String, type: CareEventType, requestId: String) { require(type in CareEventRules.detailedTypes); change(BoardNavigationMove.Carry) { page = JournalPage(JournalPage.Kind.New, dogId, requestId, type.key) } }
@@ -89,6 +90,14 @@ class AppState(initialRoute: Route = Route.Home) {
         page = null
         val index = featureStack.indexOfLast { it.feature == feature && it.id == id }
         featureStack = if (index >= 0) featureStack.take(index + 1) else featureStack.dropLast(1) + FeaturePage(feature, id)
+    }
+    /** Keep the agenda's selected day beneath editors/details and in saved navigation. */
+    fun rememberCalendarDay(date: String, weekEnd: String = date) {
+        kotlinx.datetime.LocalDate.parse(date)
+        kotlinx.datetime.LocalDate.parse(weekEnd)
+        val argument = if (date == weekEnd) date else "$date@$weekEnd"
+        val index = featureStack.indexOfLast { it.feature == Feature.Calendar }
+        if (index >= 0) featureStack = featureStack.mapIndexed { i, item -> if (i == index) item.copy(id = argument) else item }
     }
     fun back() {
         if (backGuard?.invoke() == true) return

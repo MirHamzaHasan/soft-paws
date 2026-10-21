@@ -86,7 +86,10 @@ class IosDeviceServices : DeviceServices {
     override val foreground = active.asStateFlow()
     private val foregroundObserver = NSNotificationCenter.defaultCenter.addObserverForName(UIApplicationDidBecomeActiveNotification, null, NSOperationQueue.mainQueue) { active.value = true }
     private val backgroundObserver = NSNotificationCenter.defaultCenter.addObserverForName(UIApplicationDidEnterBackgroundNotification, null, NSOperationQueue.mainQueue) { active.value = false }
-    override fun close() { NSNotificationCenter.defaultCenter.removeObserver(foregroundObserver); NSNotificationCenter.defaultCenter.removeObserver(backgroundObserver); notifications.delegate = null }
+    private val carePickers = IosCarePickers(::presenter)
+    override suspend fun pickDate(value: String, title: String) = sheetLock.withLock { carePickers.choose(value, title, false) }
+    override suspend fun pickTime(value: String, title: String) = sheetLock.withLock { carePickers.choose(value, title, true) }
+    override fun close() { carePickers.close(); NSNotificationCenter.defaultCenter.removeObserver(foregroundObserver); NSNotificationCenter.defaultCenter.removeObserver(backgroundObserver); notifications.delegate = null }
     private val targets = MutableStateFlow<ReminderTarget?>(null)
     override val reminderOpens = targets.asStateFlow()
     override fun consumedReminder() { targets.value = null }

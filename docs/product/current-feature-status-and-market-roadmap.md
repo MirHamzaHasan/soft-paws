@@ -1,8 +1,9 @@
 # Current KMP feature status
 
 **Soft Paws · 21 October 2026:** This repository is now the separate cat app.
-Its current port has 35 implemented-unverified / 54 pending surfaces, including
-the native cat/Rive idle, Journal and prescribed-care/document chapter. All 159
+Its current port has 38 implemented-unverified / 51 pending surfaces, including
+the native cat/Rive idle, Journal, prescribed-care/documents and care planning
+with real native date/time controls. All 164
 JVM tests, Android/iOS builds and scoped native journeys pass. Individual visual
 approval and physical/assistive coverage remain open. See the
 [Soft Paws source of truth](../source-of-truth/soft-paws-product-engineering.md)

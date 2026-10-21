@@ -19,13 +19,13 @@ import java.util.UUID
 
 object AndroidReminders {
     private const val CHANNEL = "barklog_care"
-    private fun pending(context: Context, id: String, dogId: String = ""): PendingIntent = PendingIntent.getBroadcast(context, 0,
-        Intent(context, CareReminderReceiver::class.java).setData(Uri.parse("barklog-reminder:$id")).putExtra("task", id).putExtra("dog", dogId), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    private fun pending(context: Context, id: String, dogId: String = "", atMillis: Long = 0): PendingIntent = PendingIntent.getBroadcast(context, 0,
+        Intent(context, CareReminderReceiver::class.java).setData(Uri.parse("barklog-reminder:$id")).putExtra("task", id).putExtra("dog", dogId).putExtra("scheduled_at", atMillis), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     fun schedule(context: Context, request: ReminderRequest) {
         require(request.atMillis > System.currentTimeMillis()) { "Choose a future reminder time." }
         if (Build.VERSION.SDK_INT >= 26) context.getSystemService(NotificationManager::class.java).createNotificationChannel(NotificationChannel(CHANNEL, "Care reminders", NotificationManager.IMPORTANCE_DEFAULT).apply { description = "Reminders you explicitly enabled for local care tasks" })
         // Approximate timing avoids special exact-alarm access. Task saving never depends on this.
-        context.getSystemService(AlarmManager::class.java).setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, request.atMillis, pending(context, request.id, request.dogId))
+        context.getSystemService(AlarmManager::class.java).setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, request.atMillis, pending(context, request.id, request.dogId, request.atMillis))
     }
     fun cancel(context: Context, id: String) {
         val intent = pending(context, id); context.getSystemService(AlarmManager::class.java).cancel(intent); intent.cancel()
@@ -59,7 +59,8 @@ class CareReminderReceiver : BroadcastReceiver() {
                             if (requested == item.id) {
                                 val zone = kotlinx.datetime.TimeZone.of(task.zoneId)
                                 val date = com.dracoarts.shared.presentation.state.JournalDates.day(now, zone)
-                                if (CareSchedule.occurs(task, date) && date.toString() !in completed) AndroidReminders.notify(context, item.id, dog.id)
+                                val scheduled = intent.getLongExtra("scheduled_at", 0).takeIf { it > 0 }
+                                if (CareReminderSchedule.shouldDeliver(task, now, scheduled) && date.toString() !in completed) AndroidReminders.notify(context, item.id, dog.id)
                             }
                             if (requested == null || requested == item.id) CareSchedule.next(task, now, completed)?.let { (_, time) -> AndroidReminders.schedule(context, ReminderRequest(item.id, dog.id, time, task.repeat, task.zoneId)) }
                         }

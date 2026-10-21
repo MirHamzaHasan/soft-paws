@@ -175,7 +175,7 @@ private fun SoftPawsFilterStrip(typeKey: String, onPick: (String) -> Unit) {
 }
 
 @Composable
-private fun SoftPawsWeek(dates: List<LocalDate>, selectedDay: String?, onSelect: (LocalDate) -> Unit) {
+internal fun SoftPawsWeek(dates: List<LocalDate>, selectedDay: String?, onSelect: (LocalDate) -> Unit) {
     val scroll = rememberScrollState()
     val density = LocalDensity.current
     BoxWithConstraints(Modifier.fillMaxWidth()) {
