@@ -136,6 +136,8 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                         // Cat review routes resolve an actual record in the selected journal.
                         // Historical BarkLog fixture IDs never stand in for a cat's plan.
                         care.items(journal.selectedDogId!!).firstOrNull { it.data is CareItemData.Medication }?.id.orEmpty()
+                    } else if (reviewStart in setOf("expense-detail", "expense-delete")) {
+                        care.items(journal.selectedDogId!!).firstOrNull { it.data is CareItemData.Expense }?.id.orEmpty() + if (reviewStart == "expense-delete") "@delete" else ""
                     } else if (reviewStart in setOf("report", "export-options", "export-progress", "cat-export-failure") && reviewStart in boardReviewFeatures) {
                         val reportScope = CareReportScope(journal.selectedDogId!!, "2026-10-14", "2026-10-20").argument()
                         reportScope + if (feature == Feature.Export) "@CSV" else ""
@@ -246,7 +248,7 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                     }
                 }
                 footer?.let { action ->
-                    val healthFooter = state.featurePage?.feature?.let { it in healthRecordScreens || it in carePlanningScreens || it in catSafetyScreens || it in catReportScreens } == true
+                    val healthFooter = state.featurePage?.feature?.let { it in healthRecordScreens || it in carePlanningScreens || it in catSafetyScreens || it in catReportScreens || it in catExpenseScreens } == true
                     Surface(Modifier.fillMaxWidth(), color = boardColor("ground"), border = if (healthFooter) null else androidx.compose.foundation.BorderStroke(1.dp, boardColor("hair"))) {
                         Column {
                             if (healthFooter) HorizontalDivider(color = boardColor("hair"), thickness = 1.dp)

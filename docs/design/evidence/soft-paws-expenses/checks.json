@@ -1,0 +1,38 @@
+{
+  "productionSourceUnchanged": true,
+  "jvmTests": 173,
+  "jvmFailures": 0,
+  "toolingTests": 30,
+  "android": {
+    "debugReleaseLintMigrations": "passed",
+    "normalJourneySeconds": 143.779,
+    "largeJourneySeconds": 141.345,
+    "fontScaleRestored": "1.0",
+    "coldStartFontQaOnly": true,
+    "actualNativePdfPickerAndShare": true,
+    "missingReceiptMetadataPreserved": true,
+    "denialUsesDebugAdapterFault": true
+  },
+  "ios": {
+    "normalCases": 3,
+    "largerTextCases": 2,
+    "fullNoteInputMinHeight": 90,
+    "textSizeRestored": "large",
+    "debugHostBundle": "passed",
+    "optimizedReleaseFrameworkHost": "passed",
+    "optimizedFrameworkElapsed": "8m 56s",
+    "releaseHostBundle": "passed"
+  },
+  "limitations": [
+    "Individual native visual approval remains open",
+    "Physical/assistive and minimum-OS behavior remain open",
+    "Android live font-change behavior remains unverified"
+  ],
+  "artifactHashes": {
+    ".verify-build/androidApp/outputs/apk/debug/androidApp-debug.apk": "fb7acd3d65e28f60c20f9796427736a0a0f0b2d6f3e8c9435f25a9ad1749033d",
+    ".verify-build/androidApp/outputs/apk/release/androidApp-release-unsigned.apk": "bbc260885c442f004343c68b29277405bda6d957591d7e380d4241271b6fdfdd",
+    ".verify-build/shared/bin/iosSimulatorArm64/debugFramework/Shared.framework/Shared": "6106ede45ab88d5d826b5495c8f52f11eeefe01f38c7fa69dbb8e4937240d4b4",
+    ".verify-build/shared/bin/iosSimulatorArm64/releaseFramework/Shared.framework/Shared": "706db3299c73f2e861b690ac50c8c5011328126e31cfb5ef02b6a32953e41ae6",
+    ".verify-build/soft-paws-xcode/Build/Products/Release-iphonesimulator/iosApp.app/iosApp": "2fd670e7aaabe144f4a08452cd27568f33e828bc9ffb1bdb4ecf9730b2ef203e"
+  }
+}

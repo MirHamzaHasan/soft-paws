@@ -14,8 +14,12 @@ suspend fun readCareReport(repository: JournalRepository, loadItems: suspend (St
     val end = through.plus(1, DateTimeUnit.DAY).atStartOfDayIn(zone).toEpochMilliseconds()
     val records = repository.observeTimeline(TimelineFilter(cat.id, fromMillis = start, untilMillis = end), Int.MAX_VALUE).first().events
     val items = loadItems(cat.id).filter { item ->
-        (item.data is CareItemData.Medication || item.data is CareItemData.Vaccination || item.data is CareItemData.Expense || item.data is CareItemData.Photo) &&
-            ((item.data as? CareItemData.Medication)?.archived == false || item.occurredAt in start until end)
+        item.dogId == cat.id && when (val data = item.data) {
+            is CareItemData.Expense -> LocalDate.parse(data.date) in from..through
+            is CareItemData.Medication -> !data.archived || item.occurredAt in start until end
+            is CareItemData.Vaccination, is CareItemData.Photo -> item.occurredAt in start until end
+            else -> false
+        }
     }
     return ReportSnapshot(cat, from, through, zone, records, items, preparedAt, request.questions).including(ReportContent.decode(request.content))
 }

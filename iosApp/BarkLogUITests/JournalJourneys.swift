@@ -2330,3 +2330,168 @@ final class SoftPawsReportsJourneys: XCTestCase {
         XCTAssertTrue(app.buttons["Say hello to Miso"].waitForExistence(timeout: 25))
     }
 }
+
+final class SoftPawsExpensesJourneys: XCTestCase {
+    private let app = XCUIApplication(bundleIdentifier: "com.draco.apps.soft.paws")
+    private let fixturePreference = "-barklog_preference_v1_board_review_softpawsday_v1_"
+    private func launch(_ screen: String, _ theme: String = "Light") {
+        app.terminate()
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "soft-paws-day-v1", "-DesignReviewScreen", screen,
+            fixturePreference + "theme", theme, fixturePreference + "reduce_motion", "true"]
+        app.launch()
+        let headings = ["cat-receipt-denied": "A cost, with context.", "expenses": "The costs of a little life.", "expense-form": "A cost, with context.", "expense-detail": "Expense details", "insights": "Their week, in view.", "weight-history": "Measured, not guessed.",
+            "report": "Before the visit, the facts.", "export-options": "Take the facts with you.", "export-progress": "Ready when you are."]
+        if let heading = headings[screen] { XCTAssertTrue(item(heading).waitForExistence(timeout: 25)) }
+        Thread.sleep(forTimeInterval: 0.5)
+    }
+    private func item(_ label: String) -> XCUIElement {
+        app.descendants(matching: .any).matching(NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")).firstMatch
+    }
+    private func reveal(_ label: String) -> XCUIElement {
+        for _ in 0..<18 {
+            let value = item(label)
+            let confirmation = item("Delete this expense?").exists || item("Keep this draft?").exists
+            let footers = confirmation ? [] : ["Keep expense", "Add an expense", "Edit expense", "Back to expenses"].map { app.buttons[$0] }.filter { $0.exists && $0.isHittable && $0.frame.minY > 200 }
+            let bottom = footers.map { $0.frame.minY - 14 }.min() ?? app.frame.maxY - 22
+            if value.exists && value.isHittable && value.frame.minY > 30 && (footers.contains(where: { $0.label == label }) || value.frame.maxY < bottom) {
+                Thread.sleep(forTimeInterval: 0.4); return item(label)
+            }
+            let x = app.frame.width - 9
+            let back = app.buttons["Back"]
+            let headerAbove = ["What was it for?", "Amount (PKR)", "Amount (USD)", "Attach receipt", "Change receipt"].contains(label) && back.exists && back.frame.maxY < 40
+            let upwards = label == "Back" || headerAbove || (value.exists && value.frame.maxY < 40)
+            let start = upwards ? CGFloat(150) : max(220, bottom - 25)
+            let end = upwards ? min(bottom - 24, CGFloat(420)) : max(90, start - 240)
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: start)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: end)),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        capture("ios-expenses-missing"); XCTFail("Missing control \(label): \(app.debugDescription)"); return item(label)
+    }
+    private func press(_ label: String) {
+        let value = reveal(label)
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        Thread.sleep(forTimeInterval: 0.6)
+    }
+    private func fill(_ label: String, _ text: String) {
+        let value = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let input = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.2, dy: 0.3)).tap()
+        if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { input.tap() }
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 4))
+        if let old = input.value as? String, old != "Empty", !old.isEmpty {
+            input.press(forDuration: 1.1)
+            let all = app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "Select All")).firstMatch
+            XCTAssertTrue(all.waitForExistence(timeout: 4), "Select the full saved value before replacing it")
+            all.tap(); input.typeText(XCUIKeyboardKey.delete.rawValue)
+            let empty = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@ OR value == %@", "", "Empty"), object: input)
+            XCTAssertEqual(XCTWaiter.wait(for: [empty], timeout: 3), .completed)
+        }
+        input.typeText(text)
+        let entered = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", text), object: input)
+        XCTAssertEqual(XCTWaiter.wait(for: [entered], timeout: 3), .completed)
+        let done = app.keyboards.buttons["Done"]
+        if done.exists { done.tap() }
+        else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.12)).tap() }
+        Thread.sleep(forTimeInterval: 1)
+    }
+    private func capture(_ name: String) {
+        let image = XCTAttachment(screenshot: app.screenshot()); image.name = name; image.lifetime = .keepAlways; add(image)
+    }
+    private func value(_ label: String) -> String {
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let field = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        XCTAssertTrue(field.exists, app.debugDescription)
+        return field.value as? String ?? ""
+    }
+    private func ownedReceipt() {
+        let fixture = XCUIApplication(bundleIdentifier: "com.draco.qa.softpaws.files")
+        fixture.launch(); XCTAssertTrue(fixture.staticTexts["Sample files ready"].waitForExistence(timeout: 15)); fixture.terminate()
+    }
+    private func chooseReceipt() {
+        func candidate() -> XCUIElement { app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", "soft-paws-vaccination-qa")).firstMatch }
+        if !candidate().waitForExistence(timeout: 5) {
+            if app.buttons["Browse"].exists { app.buttons["Browse"].tap() }
+            if !item("SoftPaws QA Files").waitForExistence(timeout: 3), item("On My iPhone").waitForExistence(timeout: 3) { item("On My iPhone").tap() }
+            if item("SoftPaws QA Files").waitForExistence(timeout: 5) { item("SoftPaws QA Files").tap() }
+        }
+        XCTAssertTrue(candidate().waitForExistence(timeout: 12), app.debugDescription)
+        capture("ios-native-receipt-file"); candidate().tap()
+        XCTAssertTrue(reveal("Open or share receipt").exists)
+    }
+    func testAReceiptDraftSaveEditReopenAndDeleteCancellation() {
+        continueAfterFailure = false
+        ownedReceipt()
+        let title = "Litter QA \(Int(Date().timeIntervalSince1970))"
+        launch("expense-form")
+        if !["", "Empty"].contains(value("What was it for?")) { press("Back"); press("Discard draft"); launch("expense-form") }
+        fill("What was it for?", title); fill("Amount (PKR)", "15.3500"); press("Keep expense")
+        let validation = item("Enter a positive amount with at most 2 decimal places.")
+        XCTAssertTrue(validation.waitForExistence(timeout: 5) && validation.isHittable)
+        XCTAssertLessThan(validation.frame.maxY, app.buttons["Keep expense"].frame.minY)
+        capture("ios-expense-validation-error")
+        fill("Amount (PKR)", "15.35"); press("Litter")
+        press("Attach receipt")
+        let cancel = app.buttons["Cancel"].firstMatch
+        XCTAssertTrue(cancel.waitForExistence(timeout: 10)); capture("ios-native-receipt-picker"); cancel.tap()
+        XCTAssertTrue(reveal("No attachment added. Your draft is still here.").exists)
+        press("Attach receipt"); chooseReceipt()
+        press("Currency, PKR"); press("USD")
+        fill("Date · YYYY-MM-DD", "2026-10-14")
+        press("Back"); press("Keep draft"); launch("expense-form")
+        XCTAssertEqual(value("What was it for?"), title); capture("ios-retained-receipt-draft")
+        press("Keep expense"); XCTAssertTrue(item("Expense details").waitForExistence(timeout: 15))
+        XCTAssertTrue(reveal("PDF receipt on this device").exists); capture("ios-local-receipt-saved")
+        press("Open or share receipt")
+        XCTAssertTrue(app.cells["Copy"].waitForExistence(timeout: 8) || app.cells["Save to Files"].exists, app.debugDescription)
+        capture("ios-native-receipt-share")
+        let close = app.buttons["Close"].firstMatch; XCTAssertTrue(close.waitForExistence(timeout: 5)); close.tap()
+        press("Edit expense"); fill("Your note · optional", "Edited receipt note"); press("Keep expense")
+        XCTAssertTrue(reveal("Edited receipt note").exists)
+        launch("expenses"); press(title); XCTAssertTrue(reveal("Edited receipt note").exists)
+        press("Delete expense"); capture("ios-delete-expense-confirmation"); press("Keep expense")
+        XCTAssertTrue(reveal("Expense details").exists)
+        press("Back to expenses"); press("Prepare monthly expense report")
+        XCTAssertTrue(item("Before the visit, the facts.").waitForExistence(timeout: 15)); capture("ios-expense-report-scope")
+    }
+    func testCReceiptAccessFailureRetainsTheDraft() {
+        continueAfterFailure = false
+        launch("cat-receipt-denied")
+        if !["", "Empty"].contains(value("What was it for?")) { press("Back"); press("Discard draft"); launch("cat-receipt-denied") }
+        fill("What was it for?", "Denied receipt QA"); fill("Amount (PKR)", "1.00")
+        press("Attach receipt"); XCTAssertTrue(reveal("This file wasn't accessible. Your draft is still here.").exists)
+        capture("ios-receipt-access-denied")
+        press("Back"); press("Keep draft"); launch("expense-form")
+        XCTAssertEqual(value("What was it for?"), "Denied receipt QA")
+        press("Back"); press("Discard draft")
+    }
+    func testBCatExpenseScreensInBothThemes() {
+        continueAfterFailure = false
+        for theme in ["Light", "Dark"] {
+            for screen in ["expenses", "expense-form", "expense-detail"] {
+                launch(screen, theme); capture("ios-" + theme.lowercased() + "-" + screen)
+                if screen == "expense-form" {
+                    _ = reveal("Your note · optional")
+                    let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", "Your note · optional", "Your note · optional, ")
+                    let note = app.textViews.matching(predicate).firstMatch
+                    XCTAssertTrue(note.exists, app.debugDescription)
+                    for _ in 0..<6 {
+                        let bottom = app.buttons["Keep expense"].frame.minY - 12
+                        if note.isHittable && note.frame.height >= 90 && note.frame.maxY < bottom { break }
+                        let x = app.frame.width - 9
+                        app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: bottom - 20)).press(forDuration: 0.03,
+                            thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: 110)),
+                            withVelocity: .slow, thenHoldForDuration: 0.3)
+                        Thread.sleep(forTimeInterval: 0.5)
+                    }
+                    XCTAssertTrue(note.isHittable && note.frame.height >= 90 && note.frame.maxY < app.buttons["Keep expense"].frame.minY - 8, "The whole note input must remain reachable above the fixed action")
+                    capture("ios-" + theme.lowercased() + "-expense-form-more")
+                }
+            }
+        }
+    }
+}

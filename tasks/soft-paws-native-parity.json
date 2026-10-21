@@ -775,26 +775,56 @@
     {
       "id": "expenses",
       "section": "memories",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/ExpenseFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/domain/model/RecordedExpenses.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-expenses/android-light-expenses.png",
+        "docs/design/evidence/soft-paws-expenses/android-dark-expenses.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-expenses/ios-light-expenses.png",
+        "docs/design/evidence/soft-paws-expenses/ios-dark-expenses.png"
+      ],
+      "verificationNote": "Real SQLite costs, exact currencies/entered dates, retained drafts and native PDF receipts; normal/larger-text journeys and both platform Debug/Release checks pass. Paired evidence inspected; individual native visual, physical/assistive and Android live font-change review remain open."
     },
     {
       "id": "expense-form",
       "section": "memories",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/ExpenseFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/domain/model/RecordedExpenses.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-expenses/android-light-expense-form.png",
+        "docs/design/evidence/soft-paws-expenses/android-dark-expense-form.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-expenses/ios-light-expense-form.png",
+        "docs/design/evidence/soft-paws-expenses/ios-dark-expense-form.png"
+      ],
+      "verificationNote": "Real SQLite costs, exact currencies/entered dates, retained drafts and native PDF receipts; normal/larger-text journeys and both platform Debug/Release checks pass. Paired evidence inspected; individual native visual, physical/assistive and Android live font-change review remain open."
     },
     {
       "id": "expense-detail",
       "section": "memories",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/ExpenseFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/domain/model/RecordedExpenses.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-expenses/android-light-expense-detail.png",
+        "docs/design/evidence/soft-paws-expenses/android-dark-expense-detail.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-expenses/ios-light-expense-detail.png",
+        "docs/design/evidence/soft-paws-expenses/ios-dark-expense-detail.png"
+      ],
+      "verificationNote": "Real SQLite costs, exact currencies/entered dates, retained drafts and native PDF receipts; normal/larger-text journeys and both platform Debug/Release checks pass. Paired evidence inspected; individual native visual, physical/assistive and Android live font-change review remain open."
     },
     {
       "id": "ai-entry",

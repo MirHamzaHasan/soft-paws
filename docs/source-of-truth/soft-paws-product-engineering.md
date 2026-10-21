@@ -98,13 +98,17 @@ revision-guarded Journal history; removing a plan preserves recorded care.
 Cat Insights, saved-unit weight history and reports now use recorded observations,
 retained vet questions, explicit selected scope and real local CSV/native sharing.
 PDF/print uses current entitlement guards.
+The three expense screens now retain exact currencies, entered dates, historical
+categories, local image/PDF receipts and drafts. Monthly report inclusion follows
+the entered date across time-zone changes. Validation stays beside Save, and
+confirmed removal captures the displayed revision.
 The nine Safety screens now preserve both contact slots and independent notes,
 carry caregiver selections into a free call summary and keep region/manual-place
 fallbacks available without AI. Safety prompts use cat wording and retain the
-unconfigured-service/consent guards. Android native journeys and 171 JVM tests
+unconfigured-service/consent guards. Android native journeys and 173 JVM tests
 pass. Health/document, planning and Safety journeys cover both platforms and
 larger text, including actual native location denial. Current Debug/Release builds
-and paired screen evidence pass. The inventory is 52 implemented-unverified / 37 pending; individual native visual
+and paired screen evidence pass. The inventory is 55 implemented-unverified / 34 pending; individual native visual
 approval remains open. The initial iOS
 host compiled; its accessibility crash was corrected with the official iOS
 renderer update and the repeated-navigation/save/relaunch tests now pass.

@@ -32,7 +32,7 @@ fun featureFolio(feature: Feature): BoardFolio? = when (feature) {
     Feature.Report, Feature.ReportPreview, Feature.ReportFormat, Feature.Export -> BoardFolio("BRING THE FACTS", "file-text", "photo")
     Feature.Training, Feature.Program, Feature.TrainingProgress, Feature.Session, Feature.TrainingSummary -> BoardFolio("SMALL PRACTICE, OFTEN", "graduation-cap", "training")
     Feature.Photos, Feature.PhotoForm, Feature.PhotoDetail, Feature.Baselines -> BoardFolio("MOMENTS TO KEEP", "image", "photo")
-    Feature.Expenses, Feature.ExpenseForm, Feature.ExpenseDetail -> BoardFolio("THE COST OF CARE", "receipt", "training")
+    Feature.Expenses, Feature.ExpenseForm, Feature.ExpenseDetail -> null
     Feature.Memory, Feature.MemoryCollection, Feature.MemoryHighlight, Feature.MemoryCaption, Feature.MemoryShare -> BoardFolio("THE GOOD LITTLE THINGS", "heart", "mood")
     Feature.Chooser, Feature.CareTools, Feature.Sounds, Feature.VideoHighlight, Feature.VideoHighlightGate -> null
 }
@@ -41,7 +41,7 @@ fun featureFolio(feature: Feature): BoardFolio? = when (feature) {
 private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
     LaunchedEffect(page) { context.care.clearError() }
     if (page.feature == Feature.Chooser) Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { FeatureBack(context); BoardDogChip(context.dog.name, { context.open(Feature.DogSwitcher) }) }
-    else if (page.feature in catReportScreens || page.feature == Feature.Monthly) SoftPawsFeatureBack(context)
+    else if (page.feature in catReportScreens || page.feature in catExpenseScreens || page.feature == Feature.Monthly) SoftPawsFeatureBack(context)
     else if (page.feature in healthRecordScreens || page.feature in carePlanningScreens || page.feature in catSafetyScreens) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Surface(onClick = soundAction(context.navigation::back), enabled = !context.saving,
@@ -60,7 +60,7 @@ private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
         BarkButton("Try again", context.care::retry, icon = "refresh-cw")
         if (page.feature !in setOf(Feature.Sounds, Feature.Settings, Feature.DogEdit, Feature.Safety, Feature.Emergency, Feature.EmergencyEdit, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog)) return
     }
-    if (!context.careState.readFailed) context.careState.error?.let { ErrorCard(it) }
+    if (!context.careState.readFailed && page.feature != Feature.ExpenseForm) context.careState.error?.let { ErrorCard(it) }
     context.careState.feedback?.let { FeatureNotice("On this device", it, "circle-check") }
     when (page.feature) {
         Feature.Sounds -> SoundSettingsScreen(context)

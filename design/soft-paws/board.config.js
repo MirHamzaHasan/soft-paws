@@ -124,6 +124,11 @@ window.BOARD = {
     ],
     memories: [
       {
+        title: "Google Photos · a photo beside its saved details",
+        took: "Keep the entered date and editable caption close to the image. Separate saved metadata from whether the local file is available. Soft Paws keeps private local copies and makes no backup promise.",
+        url: "https://mobbin.com/screens/50fa71b5-390d-4890-952f-a5bfb4dc3854",
+      },
+      {
         title: "Brex · dated costs with explicit currency",
         took: "Keep currency beside each recorded amount and group costs by their entered date. Soft Paws retains separate currency totals and its own cat-care categories; there are no company or household claims.",
         url: "https://mobbin.com/screens/1bec3e82-7d91-4969-afcf-5cbfb8402845",

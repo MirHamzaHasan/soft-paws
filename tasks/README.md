@@ -17,7 +17,9 @@
 - [soft-paws-task007 · observations, measured weight and reports](soft-paws-task007-insights-and-reports.md)
   — implemented; 171 JVM tests, native journeys at both launch text sizes, real CSV/share, preserved report scope and both platform builds pass; live Android font-change and visual/physical review remain open.
 - [soft-paws-task008 · recorded cat-care expenses](soft-paws-task008-cat-expenses.md)
-  — research/board review prepared; three native expense ports remain pending.
+  — implemented; 173 JVM tests, normal/larger-text expense/draft/receipt journeys, paired screens and both platform builds pass; individual visual/physical review remains open.
+- [soft-paws-task009 · private cat photos and Memory Book](soft-paws-task009-cat-photos-and-memory-book.md)
+  — Mobbin research and both-theme board review prepared; three native ports remain pending.
 
 The BarkLog tasks below are inherited foundation history, not Soft Paws approvals.
 

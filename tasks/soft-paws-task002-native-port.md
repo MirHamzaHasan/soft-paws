@@ -198,7 +198,28 @@ inspected: [report evidence](../docs/design/evidence/soft-paws-reports/README.md
 Android live font-change behavior remains unverified after a blank startup/bridge
 stall; the accepted protocol sets/restores size while the app is stopped.
 
-The inventory is **52 implemented-unverified / 37 pending**. Individual native
-visual approval and physical/assistive coverage remain open. Expense research
-and the approved three-screen board review are prepared for task008; native
-expense implementation has not started.
+This chapter left **52 implemented-unverified / 37 pending**. Individual native
+visual approval and physical/assistive coverage remain open. The expense chapter
+below supersedes that implementation count.
+
+## 21 October · recorded cat-care expenses
+
+The list, form and detail now use the approved cat kit with retained currencies,
+entered dates, exact legacy/custom categories, notes and native image/PDF receipts.
+Saved drafts and attachment ownership remain intact. Explicit monthly report
+entry selects Expenses for this cat; report inclusion now uses entered dates so
+time-zone changes cannot move a cost out of its listed month. Validation/write
+errors stay beside Save, and removal captures the displayed revision.
+
+All **173 JVM tests**, Android Debug/Release/lint/migrations and 30 tooling checks
+pass. Full native expense/receipt/draft/failure journeys pass at Android font
+1.0 and cold-start 1.3. iOS passes three normal and two larger-text cases, with
+the entire note input's visible bounds checked, plus current Debug/Release hosts
+and bundle checks. The optimized Release framework completed in 8m 56s.
+All paired light/dark and larger-text captures were inspected:
+[expense evidence](../docs/design/evidence/soft-paws-expenses/README.md).
+
+The inventory is now **55 implemented-unverified / 34 pending**. Individual native
+visual approval, physical/assistive and Android live font-change review remain
+open. Task009's photo/Memory Book research and both-theme board review are
+prepared; its native implementation has not started. The full cat port stays active.
