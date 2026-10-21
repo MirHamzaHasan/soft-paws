@@ -70,11 +70,12 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
             journal.dogs.forEach { dog ->
                 try {
                     val items = care.items(dog.id)
-                    items.filter { (it.data as? CareItemData.Task)?.remind == true }.forEach { item ->
-                        val task = item.data as CareItemData.Task
-                        val completed = items.mapNotNull { (it.data as? CareItemData.Completion)?.takeIf { it.taskId == item.id }?.dueDate }.toSet()
-                        CareSchedule.next(task, platform.nowMillis(), completed)?.let { (_, time) -> platform.device.scheduleReminder(ReminderRequest(item.id, dog.id, time, task.repeat, task.zoneId, CareSchedule.upcoming(task, platform.nowMillis(), completed))) }
-                            ?: platform.device.cancelReminder(item.id)
+                    items.filter { it.data is CareItemData.Task || it.data is CareItemData.Medication }.forEach { item ->
+                        val task = CareReminderSchedule.task(item.data)
+                        val completed = CareReminderSchedule.completed(item, items)
+                        val next = task?.let { CareSchedule.next(it, platform.nowMillis(), completed) }
+                        if (task != null && next != null) platform.device.scheduleReminder(ReminderRequest(item.id, dog.id, next.second, task.repeat, task.zoneId, CareSchedule.upcoming(task, platform.nowMillis(), completed)))
+                        else platform.device.cancelReminder(item.id)
                     }
                 } catch (cancelled: CancellationException) { throw cancelled }
                 catch (_: Exception) { /* Reconcile on the next foreground; local logging remains available. */ }
@@ -90,9 +91,13 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
             try {
                 if (controller.state.value.dogs.any { it.id == target.dogId }) {
                     controller.selectDog(target.dogId)
-                    val task = care.items(target.dogId).firstOrNull { it.id == target.taskId }?.data as? CareItemData.Task
-                    state.show(Route.Profile); state.open(Feature.Calendar)
-                    if (task != null) state.open(Feature.TaskDetail, target.taskId + "@" + JournalDates.day(target.occurredAtMillis ?: platform.nowMillis(), TimeZone.of(task.zoneId)))
+                    val data = care.items(target.dogId).firstOrNull { it.id == target.taskId }?.data
+                    if (data is CareItemData.Medication) {
+                        state.openReminder(Feature.MedicationDetail, target.taskId)
+                    } else {
+                        if (data is CareItemData.Task) state.openReminder(Feature.TaskDetail, target.taskId + "@" + JournalDates.day(target.occurredAtMillis ?: platform.nowMillis(), TimeZone.of(data.zoneId)))
+                        else state.openReminder(Feature.Calendar)
+                    }
                 }
             } catch (cancelled: CancellationException) { throw cancelled }
             catch (_: Exception) {
@@ -122,7 +127,14 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
             val type = if (reviewStart == "log-groom") CareEventType.Grooming else CareEventRules.detailedTypes.firstOrNull { it.name.equals(reviewStart?.removePrefix("form-")?.removePrefix("log-"), true) }
             when {
                 route != null -> state.show(route)
-                feature != null -> state.open(feature, if (reviewStart in boardReviewFeatures) boardReviewArgument(reviewStart, feature, platform::newId) else "")
+                feature != null -> {
+                    val argument = if (reviewStart == "med-detail") {
+                        // Cat review routes resolve an actual record in the selected journal.
+                        // Historical BarkLog fixture IDs never stand in for a cat's plan.
+                        care.items(journal.selectedDogId!!).firstOrNull { it.data is CareItemData.Medication }?.id.orEmpty()
+                    } else if (reviewStart in boardReviewFeatures) boardReviewArgument(reviewStart, feature, platform::newId) else ""
+                    state.open(feature, argument)
+                }
                 type != null -> state.newLog(journal.selectedDogId!!, type, platform.newId())
                 reviewStart in setOf("record", "record-edit", "delete-record") -> {
                     repository.observeTimeline(TimelineFilter(journal.selectedDogId!!), 1).first().events.firstOrNull()?.let { event ->
@@ -225,7 +237,16 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                         }
                     }
                 }
-                footer?.let { action -> Surface(Modifier.fillMaxWidth(), color = boardColor("ground"), border = androidx.compose.foundation.BorderStroke(1.dp, boardColor("hair"))) { Column(Modifier.padding(horizontal = 20.dp, vertical = 10.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { action() } } }
+                footer?.let { action ->
+                    val healthFooter = state.featurePage?.feature?.let { it in healthRecordScreens } == true
+                    Surface(Modifier.fillMaxWidth(), color = boardColor("ground"), border = if (healthFooter) null else androidx.compose.foundation.BorderStroke(1.dp, boardColor("hair"))) {
+                        Column {
+                            if (healthFooter) HorizontalDivider(color = boardColor("hair"), thickness = 1.dp)
+                            Column(Modifier.padding(horizontal = if (healthFooter) 24.dp else 20.dp, vertical = if (healthFooter) 12.dp else 10.dp),
+                                verticalArrangement = Arrangement.spacedBy(if (healthFooter) 4.dp else 8.dp)) { action() }
+                        }
+                    }
+                }
                 if (showTabs && !floatingTabs) {
                     if (homeCompanion) com.dracoarts.shared.presentation.companion.CompanionHomeEntry(companion, journal.selectedDog?.name ?: "your dog", Modifier.padding(horizontal = 20.dp, vertical = 8.dp))
                     JournalTabBar(state, platform, if (useCompanion) ({ route -> companion.navigateTab(state, route) }) else null)

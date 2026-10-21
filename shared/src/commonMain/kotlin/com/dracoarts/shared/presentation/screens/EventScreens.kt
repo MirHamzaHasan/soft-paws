@@ -311,7 +311,7 @@ fun detailLines(details: CareDetails?): List<String> = when (details) {
     is CareDetails.Behavior -> listOf("Observed: ${details.observation}")
     is CareDetails.Grooming -> listOfNotNull("Activity: ${details.activity.label}", details.durationMinutes?.let { "$it minutes observed" })
     is CareDetails.Weight -> listOf("Measured weight: ${details.amount} ${details.unit.label}")
-    is CareDetails.Medication -> listOf("Medication: ${details.name}", "Amount recorded: ${details.amount}", "Recorded as given by caregiver")
+    is CareDetails.Medication -> listOfNotNull("Medication: ${details.name}", details.amount.takeIf(String::isNotBlank)?.let { "Amount recorded: $it" }, details.instructions.takeIf(String::isNotBlank)?.let { "Instructions recorded: $it" }, "Recorded as given by caregiver")
     is CareDetails.Training -> listOf("Program: ${TrainingCatalog.programs.firstOrNull { it.id == details.programId }?.title ?: details.programId}", "Step: ${details.step + 1}", "Duration: ${details.seconds} seconds", "Observed: ${details.rating} · ${details.mood}")
     is CareDetails.Task -> listOf("Task: ${details.title}", "Occurrence: ${details.dueDate}", "Completed by caregiver")
     is CareDetails.Water, is CareDetails.Litter, is CareDetails.Play, is CareDetails.Sleep, is CareDetails.Note -> listOf(JournalReport.details(details))

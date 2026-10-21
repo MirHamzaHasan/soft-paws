@@ -1560,3 +1560,236 @@ final class SoftPawsCoreJourneys: XCTestCase {
         press("Delete record"); capture("ios-dark-delete"); press("Keep record")
     }
 }
+
+final class SoftPawsHealthJourneys: XCTestCase {
+    private let app = XCUIApplication(bundleIdentifier: "com.draco.apps.soft.paws")
+    private let fixturePreference = "-barklog_preference_v1_board_review_softpawsday_v1_"
+    private func launch(_ screen: String, _ theme: String = "Light") {
+        app.terminate()
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "soft-paws-day-v1", "-DesignReviewScreen", screen,
+            fixturePreference + "theme", theme, fixturePreference + "reduce_motion", "true"]
+        app.launch()
+        let headings = ["medications": "Your vet’s plan, remembered.", "med-form": "Keep the prescribed details.",
+            "med-detail": "Your saved instructions", "med-history": "Care history, kept.",
+            "vaccinations": "Dates worth keeping close.", "vaccine-form": "A vaccination, recorded."]
+        if let heading = headings[screen] { XCTAssertTrue(item(heading).waitForExistence(timeout: 25)) }
+        Thread.sleep(forTimeInterval: 0.5)
+    }
+    private func item(_ label: String) -> XCUIElement {
+        app.descendants(matching: .any).matching(NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")).firstMatch
+    }
+    private func reveal(_ label: String) -> XCUIElement {
+        for _ in 0..<18 {
+            let value = item(label)
+            let footers = ["Keep plan", "Keep record", "Record as given", "Add a prescribed plan", "Add a record", "Keep plan active", "Archive plan"].map { app.buttons[$0] }.filter { $0.exists && $0.isHittable && $0.frame.minY > 200 }
+            let bottom = footers.map { $0.frame.minY - 14 }.min() ?? app.frame.maxY - 22
+            if value.exists && value.isHittable && value.frame.minY > 30 && (footers.contains(where: { $0.label == label }) || value.frame.maxY < bottom) {
+                Thread.sleep(forTimeInterval: 0.4); return item(label)
+            }
+            let x = app.frame.width - 9
+            let upwards = label == "Back" || (value.exists && value.frame.maxY < 40)
+            let start = upwards ? CGFloat(150) : max(220, bottom - 25)
+            let end = upwards ? min(bottom - 24, CGFloat(420)) : max(90, start - 240)
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: start)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: end)),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        capture("ios-health-missing"); XCTFail("Missing control \(label): \(app.debugDescription)"); return item(label)
+    }
+    private func press(_ label: String) {
+        let value = reveal(label)
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        Thread.sleep(forTimeInterval: 0.6)
+    }
+    private func fill(_ label: String, _ text: String) {
+        let value = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let input = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.2, dy: 0.3)).tap()
+        if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { input.tap() }
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 4))
+        if let old = input.value as? String, old != "Empty", !old.isEmpty {
+            input.press(forDuration: 1.1)
+            let all = app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "Select All")).firstMatch
+            XCTAssertTrue(all.waitForExistence(timeout: 4), "Select the full saved value before replacing it")
+            all.tap(); input.typeText(XCUIKeyboardKey.delete.rawValue)
+            let empty = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@ OR value == %@", "", "Empty"), object: input)
+            XCTAssertEqual(XCTWaiter.wait(for: [empty], timeout: 3), .completed)
+        }
+        input.typeText(text)
+        let entered = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", text), object: input)
+        XCTAssertEqual(XCTWaiter.wait(for: [entered], timeout: 3), .completed)
+        let done = app.keyboards.buttons["Done"]
+        if done.exists { done.tap() }
+        else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.12)).tap() }
+        Thread.sleep(forTimeInterval: 1)
+    }
+    private func capture(_ name: String) {
+        let image = XCTAttachment(screenshot: app.screenshot()); image.name = name; image.lifetime = .keepAlways; add(image)
+    }
+    private func openDocumentPicker() {
+        for _ in 0..<16 {
+            let bottom = app.buttons["Keep record"].exists ? app.buttons["Keep record"].frame.minY - 14 : app.frame.maxY - 25
+            for label in ["Change document", "Attach document"] {
+                let action = item(label)
+                if action.exists && action.isHittable && action.frame.minY > 35 && action.frame.maxY < bottom { press(label); return }
+            }
+            let x = app.frame.width - 9
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: bottom - 25)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: max(90, bottom - 265))),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        XCTFail("No visible document picker action: \(app.debugDescription)")
+    }
+    func testPrescribedCareAndVaccinationUseTheLocalJournal() throws {
+        continueAfterFailure = false
+        let stamp = String(Int(Date().timeIntervalSince1970))
+        let name = "Clinic plan QA " + stamp
+        let instructions = "Copy of the clinic instructions for QA."
+        let vaccine = "Clinic record QA " + stamp
+        launch("medications")
+        XCTAssertTrue(item("Your vet’s plan, remembered.").waitForExistence(timeout: 20)); capture("ios-light-medications")
+        press("Add a prescribed plan"); XCTAssertTrue(item("Keep the prescribed details.").waitForExistence(timeout: 10)); capture("ios-light-med-form")
+        fill("Medication name", name); fill("Prescribed instructions", instructions)
+        press("Back"); press("Keep draft")
+        launch("med-form"); XCTAssertTrue(item("Medication name").waitForExistence(timeout: 10))
+        let medicationInput = app.textViews.matching(NSPredicate(format: "label BEGINSWITH %@", "Medication name")).firstMatch
+        XCTAssertTrue(medicationInput.value.debugDescription.contains(name))
+        press("Keep plan"); XCTAssertTrue(item("Your saved instructions").waitForExistence(timeout: 12)); capture("ios-light-med-detail")
+        XCTAssertTrue(item(instructions).exists)
+        press("Record as given"); XCTAssertTrue(item("Recorded as given.").waitForExistence(timeout: 12)); capture("ios-health-given")
+        press("Back to plan"); press("Archive this plan"); press("Keep plan active")
+        XCTAssertTrue(item("Your saved instructions").waitForExistence(timeout: 10))
+        press("Archive this plan"); press("Archive plan")
+        XCTAssertTrue(item("Care history, kept.").waitForExistence(timeout: 12)); capture("ios-light-med-history")
+        launch("med-history"); press(name); XCTAssertTrue(reveal("Archived · reminders off").exists)
+        launch("vaccinations"); XCTAssertTrue(item("Dates worth keeping close.").waitForExistence(timeout: 12)); capture("ios-light-vaccinations")
+        press("Add a record"); XCTAssertTrue(item("A vaccination, recorded.").waitForExistence(timeout: 12)); capture("ios-light-vaccine-form")
+        fill("Name on the record", vaccine); fill("Clinic or vet · optional", "Owned QA clinic")
+        press("Attach document")
+        let cancel = app.buttons["Cancel"].firstMatch
+        XCTAssertTrue(cancel.waitForExistence(timeout: 12)); capture("ios-health-native-document-picker"); cancel.tap()
+        XCTAssertTrue(reveal("No document added. Your entries are still here.").exists)
+        press("Keep record"); XCTAssertTrue(item("Dates worth keeping close.").waitForExistence(timeout: 12))
+        launch("vaccinations"); press(vaccine)
+        XCTAssertTrue(item("A vaccination, recorded.").waitForExistence(timeout: 10)); capture("ios-health-record-reopened")
+        for screen in ["medications", "med-form", "med-detail", "med-history", "vaccinations", "vaccine-form"] {
+            launch(screen, "Dark"); Thread.sleep(forTimeInterval: 1); capture("ios-dark-" + screen)
+        }
+        app.terminate()
+    }
+
+    func testCareScreensAtRestBothThemes() {
+        continueAfterFailure = false
+        for theme in ["Light", "Dark"] {
+            for screen in ["medications", "med-form", "med-detail", "med-history", "vaccinations", "vaccine-form"] {
+                launch(screen, theme); capture("ios-rest-" + theme.lowercased() + "-" + screen)
+            }
+        }
+        app.terminate()
+    }
+    func testChosenReminderSavesBeforeNotificationPermission() {
+        continueAfterFailure = false
+        launch("med-form")
+        fill("Medication name", "Chosen reminder QA " + String(Int(Date().timeIntervalSince1970)))
+        fill("Prescribed instructions", "Copy of the clinic instructions for QA.")
+        fill("Start date · YYYY-MM-DD", "2026-11-01"); press("Remind me at a time I choose")
+        fill("Reminder time · HH:mm", "23:59"); press("Keep plan")
+        XCTAssertTrue(item("Your saved instructions").waitForExistence(timeout: 12))
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        XCTAssertFalse(springboard.alerts.firstMatch.exists, "Saving the plan must not request permission.")
+        if item("Enable notifications").exists {
+            press("Enable notifications")
+            let deny = springboard.buttons.matching(NSPredicate(format: "label == %@ OR label == %@", "Don’t Allow", "Don't Allow")).firstMatch
+            if deny.waitForExistence(timeout: 3) { deny.tap() }
+        }
+        capture("ios-reminder-after-commit")
+        press("Archive this plan"); press("Archive plan")
+        XCTAssertTrue(item("Care history, kept.").waitForExistence(timeout: 12))
+        app.terminate()
+    }
+
+    // A separate native input app supplies files through the system Files UI.
+    // No product file, picker result or care repository is injected.
+    private func prepareOwnedFiles() {
+        let fixture = XCUIApplication(bundleIdentifier: "com.draco.qa.softpaws.files")
+        fixture.launch()
+        XCTAssertTrue(fixture.staticTexts["Sample files ready"].waitForExistence(timeout: 15))
+        fixture.terminate()
+    }
+    private func chooseNativeFile(_ prefix: String) {
+        func candidate() -> XCUIElement { app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", prefix)).firstMatch }
+        if !candidate().waitForExistence(timeout: 5) {
+            let browse = app.buttons["Browse"].firstMatch
+            if browse.exists { browse.tap() }
+            if !item("SoftPaws QA Files").waitForExistence(timeout: 3) {
+                let local = item("On My iPhone")
+                if local.waitForExistence(timeout: 3) { local.tap() }
+            }
+            let folder = item("SoftPaws QA Files")
+            if folder.waitForExistence(timeout: 5) { folder.tap() }
+        }
+        let file = candidate()
+        XCTAssertTrue(file.waitForExistence(timeout: 12), app.debugDescription)
+        capture("ios-native-file-choice"); file.tap()
+        XCTAssertTrue(reveal("Open or share document").exists)
+    }
+    func testVaccinationPdfImportDraftAndNativeHandoff() {
+        continueAfterFailure = false
+        prepareOwnedFiles()
+        let name = "Native document QA 20261021"
+        launch("vaccinations")
+        let editing = item(name).exists
+        if editing { press(name) } else { press("Add a record"); fill("Name on the record", name) }
+        openDocumentPicker()
+        chooseNativeFile("soft-paws-vaccination-qa")
+        press("Back"); press("Keep draft")
+        launch(editing ? "vaccinations" : "vaccine-form")
+        if editing { press(name) }
+        XCTAssertTrue(reveal("Open or share document").exists)
+        capture("ios-pdf-retained-draft"); press("Keep record")
+        XCTAssertTrue(item("Dates worth keeping close.").waitForExistence(timeout: 12))
+        launch("vaccinations"); press(name)
+        XCTAssertTrue(reveal("Open or share document").exists); capture("ios-pdf-record-reopened")
+        press("Open or share document")
+        XCTAssertTrue(app.otherElements["ActivityListView"].waitForExistence(timeout: 8), app.debugDescription)
+        XCTAssertTrue(app.cells["Copy"].exists || app.cells["Save to Files"].exists, app.debugDescription)
+        capture("ios-pdf-native-handoff")
+        let close = app.buttons["Close"].firstMatch
+        if close.exists { close.tap() }
+        else {
+            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.4)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.95)), withVelocity: .slow, thenHoldForDuration: 0.3)
+        }
+        XCTAssertTrue(reveal("Open or share document").isEnabled)
+        app.terminate()
+    }
+    func testVaccinationImageReplacesPdfThroughNativeFiles() {
+        continueAfterFailure = false
+        prepareOwnedFiles()
+        launch("vaccinations"); press("Native document QA 20261021")
+        press("Change document"); chooseNativeFile("soft-paws-vaccination-image-qa")
+        capture("ios-image-document-draft"); press("Keep record")
+        XCTAssertTrue(item("Dates worth keeping close.").waitForExistence(timeout: 12))
+        launch("vaccinations"); press("Native document QA 20261021")
+        XCTAssertTrue(reveal("Open or share document").exists); capture("ios-image-record-reopened")
+        app.terminate()
+    }
+    // Host setup temporarily moves only this test record's owned private image.
+    func testMissingVaccinationDocumentKeepsDetailsReadable() {
+        continueAfterFailure = false
+        launch("vaccinations"); press("Native document QA 20261021")
+        XCTAssertTrue(reveal("The document file is missing. The vaccination details stay saved.").exists)
+        XCTAssertFalse(item("Open or share document").isEnabled)
+        capture("ios-missing-document-record")
+        press("Remove document"); press("Keep record")
+        XCTAssertTrue(item("Dates worth keeping close.").waitForExistence(timeout: 12))
+        launch("vaccinations"); press("Native document QA 20261021")
+        XCTAssertFalse(item("Open or share document").exists)
+        capture("ios-document-reference-removed")
+        app.terminate()
+    }
+}

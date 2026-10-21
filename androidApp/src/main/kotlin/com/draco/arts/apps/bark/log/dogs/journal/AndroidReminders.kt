@@ -37,7 +37,7 @@ object AndroidReminders {
             .putExtra("reminder_dog", dogId).putExtra("reminder_task", taskId).putExtra("reminder_time", System.currentTimeMillis()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val builder = if (Build.VERSION.SDK_INT >= 26) Notification.Builder(context, CHANNEL) else Notification.Builder(context)
         context.getSystemService(NotificationManager::class.java).notify(taskId, 1, builder.setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("Care reminder").setContentText("A task is due. Open BarkLog to view it.").setContentIntent(tap).setAutoCancel(true).setVisibility(Notification.VISIBILITY_PRIVATE).build())
+            .setContentTitle("Care reminder").setContentText("Planned care is due. Open Soft Paws to view it.").setContentIntent(tap).setAutoCancel(true).setVisibility(Notification.VISIBILITY_PRIVATE).build())
     }
 }
 
@@ -53,15 +53,15 @@ class CareReminderReceiver : BroadcastReceiver() {
                     val requested = intent.getStringExtra("task")
                     repository.observeDogs().first().forEach { dog ->
                         val items = repository.observeItems(dog.id).first()
-                        items.filter { it.data is CareItemData.Task }.forEach { item ->
-                            val task = item.data as CareItemData.Task
-                            val completed = items.mapNotNull { (it.data as? CareItemData.Completion)?.takeIf { it.taskId == item.id }?.dueDate }.toSet()
-                            if (requested == item.id && task.remind) {
+                        items.forEach { item ->
+                            val task = CareReminderSchedule.task(item.data) ?: return@forEach
+                            val completed = CareReminderSchedule.completed(item, items)
+                            if (requested == item.id) {
                                 val zone = kotlinx.datetime.TimeZone.of(task.zoneId)
                                 val date = com.dracoarts.shared.presentation.state.JournalDates.day(now, zone)
                                 if (CareSchedule.occurs(task, date) && date.toString() !in completed) AndroidReminders.notify(context, item.id, dog.id)
                             }
-                            if (task.remind && (requested == null || requested == item.id)) CareSchedule.next(task, now, completed)?.let { (_, time) -> AndroidReminders.schedule(context, ReminderRequest(item.id, dog.id, time, task.repeat, task.zoneId)) }
+                            if (requested == null || requested == item.id) CareSchedule.next(task, now, completed)?.let { (_, time) -> AndroidReminders.schedule(context, ReminderRequest(item.id, dog.id, time, task.repeat, task.zoneId)) }
                         }
                     }
                 }

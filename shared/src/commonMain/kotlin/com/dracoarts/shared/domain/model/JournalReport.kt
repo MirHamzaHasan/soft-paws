@@ -17,7 +17,7 @@ object JournalReport {
         is CareDetails.Mood -> listOfNotNull(value.observedMood.label, value.context).joinToString(" · ")
         is CareDetails.Grooming -> listOfNotNull(value.activity.label, value.durationMinutes?.let { "$it minutes observed" }).joinToString(" · ")
         is CareDetails.Weight -> "${value.amount} ${value.unit.label}"
-        is CareDetails.Medication -> "${value.name} · ${value.amount} · recorded as given"
+        is CareDetails.Medication -> listOf(value.name, value.amount, value.instructions, "recorded as given").filter(String::isNotBlank).joinToString(" · ")
         is CareDetails.Training -> "${TrainingCatalog.programs.firstOrNull { it.id == value.programId }?.title ?: value.programId} · ${value.seconds} seconds · ${value.rating} · ${value.mood}"
         is CareDetails.Task -> "${value.title} · completed for ${value.dueDate}"
         is CareDetails.Water -> listOfNotNull(value.observation.label, value.measuredMillilitres?.let { "$it ml measured" }).joinToString(" · ")
@@ -44,13 +44,13 @@ object JournalReport {
                 is CareItemData.Expense -> listOf(data.description, data.category, data.date).filter(String::isNotBlank).joinToString(" · ")
                 is CareItemData.Vaccination -> "${data.name} · ${data.date} · ${data.provider}${if (data.dueDate.isNotBlank()) " · due date noted ${data.dueDate}" else ""}"
                 is CareItemData.Photo -> "${data.title} · ${data.date} · ${data.category} · ${data.bodyArea} · local photo reference"
-                is CareItemData.Medication -> "${data.name} · ${data.amount} · ${data.frequency} · ${data.time} · starts ${data.startDate} · ${data.directions}"
+                is CareItemData.Medication -> listOf(data.name, data.amount, data.frequency, data.time, "starts ${data.startDate}", data.directions, if (data.archived) "archived" else "active recorded plan", data.reminder?.let { "Reminder chosen: ${it.time} · ${it.zoneId} · ${it.repeat.name}" }.orEmpty()).filter(String::isNotBlank).joinToString(" · ")
                 else -> null
             }
             if (fact != null) rows += row(listOf(item.id, report.dog.id, report.dog.name, if (data is CareItemData.Medication) "current_medication_plan" else data.kind,
                 Instant.fromEpochMilliseconds(item.occurredAt).toString(), Instant.fromEpochMilliseconds(item.occurredAt).toLocalDateTime(report.zone).toString(), report.zone.id, fact,
                 when (data) { is CareItemData.Expense -> data.notes; is CareItemData.Photo -> data.notes; is CareItemData.Vaccination -> data.notes; else -> "" },
-                (data as? CareItemData.Expense)?.let { Money.format(it.minorUnits, it.currency) }.orEmpty(), (data as? CareItemData.Expense)?.currency.orEmpty(), "", "", "", if (data is CareItemData.Photo || (data is CareItemData.Expense && data.receiptId != null)) "Local photo reference recorded" else ""))
+                (data as? CareItemData.Expense)?.let { Money.format(it.minorUnits, it.currency) }.orEmpty(), (data as? CareItemData.Expense)?.currency.orEmpty(), "", "", "", if (data is CareItemData.Photo || (data is CareItemData.Expense && data.receiptId != null) || (data is CareItemData.Vaccination && data.documentId != null)) "Local attachment reference recorded" else ""))
         }
         return rows.joinToString("\r\n", postfix = "\r\n")
     }
@@ -73,8 +73,8 @@ object JournalReport {
             add("")
         }
         report.items.forEach { item -> when (val data = item.data) {
-            is CareItemData.Medication -> add("Current recorded plan: ${data.name} · ${data.amount} · ${data.frequency} · ${data.time} · starts ${data.startDate}. ${data.directions}")
-            is CareItemData.Vaccination -> { add("Vaccination: ${data.name} · ${data.date} · ${data.provider}"); if (data.dueDate.isNotBlank()) add("Caregiver-entered due date: ${data.dueDate}"); if (data.notes.isNotBlank()) add(data.notes) }
+            is CareItemData.Medication -> { add("${if (data.archived) "Archived" else "Current"} recorded plan: ${data.name} · ${data.amount} · ${data.frequency} · ${data.time} · starts ${data.startDate}. ${data.directions}"); data.reminder?.let { add("Caregiver-chosen reminder: ${it.time} · ${it.zoneId} · ${it.repeat.name}; ${if (data.archived) "off while archived" else "delivery follows device settings"}.") } }
+            is CareItemData.Vaccination -> { add("Vaccination: ${data.name} · ${data.date} · ${data.provider}"); if (data.dueDate.isNotBlank()) add("Caregiver-entered due date: ${data.dueDate}"); if (data.notes.isNotBlank()) add(data.notes); if (data.documentId != null) add("Local vaccination document recorded.") }
             is CareItemData.Expense -> { add("Expense: ${data.description} · ${data.currency} ${Money.format(data.minorUnits, data.currency)} · ${data.date} · ${data.category}"); if (data.notes.isNotBlank()) add(data.notes); if (data.receiptId != null) add("Local receipt attachment recorded.") }
             is CareItemData.Photo -> { add("Photo reference: ${data.title} · ${data.date} · ${data.category}"); if (data.notes.isNotBlank()) add(data.notes) }
             else -> Unit

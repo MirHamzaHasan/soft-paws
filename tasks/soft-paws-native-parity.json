@@ -311,50 +311,104 @@
     {
       "id": "medications",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HealthFeatureScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-health/android-light-medications.png",
+        "docs/design/evidence/soft-paws-health/android-dark-medications.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-health/ios-light-medications.png",
+        "docs/design/evidence/soft-paws-health/ios-dark-medications.png"
+      ],
+      "verificationNote": "Real SQLite/native journeys and paired light/dark/larger-text captures pass. Individual native visual approval remains open; native date/time picker refinement is task005."
     },
     {
       "id": "med-form",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HealthFeatureScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-health/android-light-med-form.png",
+        "docs/design/evidence/soft-paws-health/android-dark-med-form.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-health/ios-light-med-form.png",
+        "docs/design/evidence/soft-paws-health/ios-dark-med-form.png"
+      ],
+      "verificationNote": "Real SQLite/native journeys and paired light/dark/larger-text captures pass. Individual native visual approval remains open; native date/time picker refinement is task005."
     },
     {
       "id": "med-detail",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HealthFeatureScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-health/android-light-med-detail.png",
+        "docs/design/evidence/soft-paws-health/android-dark-med-detail.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-health/ios-light-med-detail.png",
+        "docs/design/evidence/soft-paws-health/ios-dark-med-detail.png"
+      ],
+      "verificationNote": "Real SQLite/native journeys and paired light/dark/larger-text captures pass. Individual native visual approval remains open; native date/time picker refinement is task005."
     },
     {
       "id": "med-history",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HealthFeatureScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-health/android-light-med-history.png",
+        "docs/design/evidence/soft-paws-health/android-dark-med-history.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-health/ios-light-med-history.png",
+        "docs/design/evidence/soft-paws-health/ios-dark-med-history.png"
+      ],
+      "verificationNote": "Real SQLite/native journeys and paired light/dark/larger-text captures pass. Individual native visual approval remains open; native date/time picker refinement is task005."
     },
     {
       "id": "vaccinations",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HealthFeatureScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-health/android-light-vaccinations.png",
+        "docs/design/evidence/soft-paws-health/android-dark-vaccinations.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-health/ios-light-vaccinations.png",
+        "docs/design/evidence/soft-paws-health/ios-dark-vaccinations.png"
+      ],
+      "verificationNote": "Real SQLite/native journeys and paired light/dark/larger-text captures pass. Individual native visual approval remains open; native date/time picker refinement is task005."
     },
     {
       "id": "vaccine-form",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HealthFeatureScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-health/android-light-vaccine-form.png",
+        "docs/design/evidence/soft-paws-health/android-dark-vaccine-form.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-health/ios-light-vaccine-form.png",
+        "docs/design/evidence/soft-paws-health/ios-dark-vaccine-form.png"
+      ],
+      "verificationNote": "Real SQLite/native journeys and paired light/dark/larger-text captures pass. Individual native visual approval remains open; native date/time picker refinement is task005."
     },
     {
       "id": "calendar",
@@ -810,5 +864,5 @@
     }
   ],
   "colourEvidence": "docs/design/evidence/soft-paws-color/README.md",
-  "scopeNote": "25 cat surfaces implemented but not approved for full paired visual parity; 64 downstream ports remain pending. Colour/core-journey evidence is separate."
+  "scopeNote": "35 cat surfaces implemented but not approved for full paired visual parity; 54 downstream ports remain pending. Health, Journal, colour/core-journey and motion evidence are separate."
 }

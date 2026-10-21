@@ -6,6 +6,10 @@
   — in progress; cat storage and identity checks pass; screen parity remains unverified.
 - [soft-paws-task003 · ongoing cat motion](soft-paws-task003-cat-motion.md)
   — complete; native motion/settings checks and both platform Debug/Release builds pass.
+- [soft-paws-task004 · prescribed care and vaccination records](soft-paws-task004-prescribed-care.md)
+  — implemented; 159 JVM tests, native care/document journeys and both platform builds pass; visual/physical approval remains open.
+- [soft-paws-task005 · care planning and native date/time controls](soft-paws-task005-care-planning.md)
+  — planned; Mobbin reminder-flow research inspected; implementation has not started.
 
 The BarkLog tasks below are inherited foundation history, not Soft Paws approvals.
 

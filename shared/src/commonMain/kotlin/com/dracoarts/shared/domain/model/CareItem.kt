@@ -12,10 +12,13 @@ sealed interface CareItemData {
     @Serializable @SerialName("medication") data class Medication(
         val name: String, val amount: String, val directions: String = "", val frequency: String = "As directed",
         val startDate: String, val time: String = "20:00", val archived: Boolean = false,
+        val reminder: MedicationReminder? = null,
     ) : CareItemData
-    @Serializable @SerialName("administration") data class Administration(val planId: String, val name: String, val amount: String) : CareItemData
+    @Serializable @SerialName("administration") data class Administration(val planId: String, val name: String, val amount: String,
+        val instructions: String = "", val planRevision: Long? = null) : CareItemData
     @Serializable @SerialName("vaccination") data class Vaccination(
         val name: String, val date: String, val provider: String = "", val notes: String = "", val dueDate: String = "",
+        val documentId: String? = null,
     ) : CareItemData
     @Serializable @SerialName("task") data class Task(
         val title: String, val date: String, val time: String, val zoneId: String,
@@ -37,6 +40,9 @@ sealed interface CareItemData {
 
 @Serializable enum class Repeat { None, Daily, Weekly, Monthly }
 
+/** A caregiver-chosen notification schedule, never derived from medication text. */
+@Serializable data class MedicationReminder(val time: String, val zoneId: String, val repeat: Repeat = Repeat.Daily)
+
 data class CareItem(val id: String, val dogId: String, val occurredAt: Long, val createdAt: Long, val updatedAt: Long, val revision: Long, val data: CareItemData)
 
 val CareItemData.kind: String get() = when (this) {
@@ -55,9 +61,18 @@ object CareItemRules {
         fun date(value: String) { require(Regex("\\d{4}-\\d{2}-\\d{2}").matches(value)); LocalDate.parse(value) }
         fun file(value: String) { require(Regex("[a-zA-Z0-9-]+\\.(jpg|png|jpeg)").matches(value)) { "Invalid local photo." } }
         when (data) {
-            is CareItemData.Medication -> { text(data.name, 120, true); text(data.amount, 60, true); text(data.directions, 500); text(data.frequency, 100, true); date(data.startDate); LocalTime.parse(data.time) }
-            is CareItemData.Administration -> { text(data.planId, 80, true); text(data.name, 120, true); text(data.amount, 60, true) }
-            is CareItemData.Vaccination -> { text(data.name, 120, true); date(data.date); text(data.provider, 160); text(data.notes); if (data.dueDate.isNotBlank()) date(data.dueDate) }
+            is CareItemData.Medication -> {
+                text(data.name, 120, true); text(data.amount, 60); text(data.directions, 500)
+                require(data.amount.isNotBlank() || data.directions.isNotBlank()) { "Add the prescribed instructions." }
+                text(data.frequency, 100, true); date(data.startDate); if (data.time.isNotBlank()) LocalTime.parse(data.time)
+                data.reminder?.let { LocalTime.parse(it.time); TimeZone.of(it.zoneId) }
+            }
+            is CareItemData.Administration -> {
+                text(data.planId, 80, true); text(data.name, 120, true); text(data.amount, 60); text(data.instructions, 500)
+                require(data.amount.isNotBlank() || data.instructions.isNotBlank()) { "Recorded instructions are missing." }
+                require(data.planRevision == null || data.planRevision > 0)
+            }
+            is CareItemData.Vaccination -> { text(data.name, 120, true); date(data.date); text(data.provider, 160); text(data.notes); if (data.dueDate.isNotBlank()) date(data.dueDate); data.documentId?.let { require(LocalAttachmentRules.receipt.matches(it)) { "Invalid local vaccination document." } } }
             is CareItemData.Task -> { text(data.title, 160, true); date(data.date); LocalTime.parse(data.time); TimeZone.of(data.zoneId); text(data.category, 60, true); text(data.notes) }
             is CareItemData.Completion -> { text(data.taskId, 80, true); text(data.title, 160, true); date(data.dueDate) }
             is CareItemData.Enrollment -> require(data.programId in TrainingCatalog.programs.map { it.id }) { "Program not found." }

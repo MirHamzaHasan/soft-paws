@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.graphics.graphicsLayer
 import com.dracoarts.shared.presentation.components.*
 import com.dracoarts.shared.presentation.navigation.*
@@ -23,7 +25,7 @@ fun FeatureScreens(page: FeaturePage, context: FeatureContext) {
 
 fun featureFolio(feature: Feature): BoardFolio? = when (feature) {
     Feature.DogSwitcher, Feature.DogAdd, Feature.DogEdit, Feature.Settings, Feature.DeleteDog, Feature.DeleteAll -> BoardFolio("YOUR DOG, ALL TOGETHER", "user-round", "walk")
-    Feature.Health, Feature.Medications, Feature.MedicationForm, Feature.MedicationDetail, Feature.MedicationGiven, Feature.MedicationArchive, Feature.Vaccinations, Feature.VaccinationForm -> BoardFolio("THE CARE RECORD", "pill", "medication")
+    Feature.Health, Feature.Medications, Feature.MedicationForm, Feature.MedicationDetail, Feature.MedicationGiven, Feature.MedicationArchive, Feature.MedicationHistory, Feature.Vaccinations, Feature.VaccinationForm -> BoardFolio("THE CARE RECORD", "pill", "medication")
     Feature.Calendar, Feature.TaskForm, Feature.TaskDetail, Feature.ReminderOptIn -> BoardFolio("A LITTLE PLANNING", "calendar", "training")
     Feature.Monthly -> BoardFolio("FROM YOUR RECORDS", "chart-no-axes-column-increasing", "photo")
     Feature.Safety, Feature.Emergency, Feature.EmergencyEdit, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog -> BoardFolio("READY WHEN IT MATTERS", "shield", "symptom")
@@ -39,9 +41,18 @@ fun featureFolio(feature: Feature): BoardFolio? = when (feature) {
 private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
     LaunchedEffect(page) { context.care.clearError() }
     if (page.feature == Feature.Chooser) Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { FeatureBack(context); BoardDogChip(context.dog.name, { context.open(Feature.DogSwitcher) }) }
-    else FeatureBack(context)
+    else if (page.feature in healthRecordScreens) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+            Surface(onClick = soundAction(context.navigation::back), enabled = !context.saving,
+                modifier = Modifier.size(48.dp).semantics { contentDescription = "Back" }, shape = RoundedCornerShape(50),
+                color = boardColor("panel"), border = BorderStroke(1.dp, boardColor("hair"))) {
+                Box(contentAlignment = Alignment.Center) { BarkIcon("chevron-left", Modifier.size(20.dp)) }
+            }
+            SoftPawsKicker("CAT CARE")
+        }
+    } else FeatureBack(context)
     if (context.careState.loading && page.feature !in setOf(Feature.Sounds, Feature.Settings, Feature.DogAdd, Feature.DogEdit, Feature.Safety, Feature.Emergency, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog)) {
-        FeatureNotice("Reading saved records", "Your journal is on this device.", "refresh-cw"); return
+        SoftPawsCard("Opening saved records") { repeat(3) { SkeletonLine(180.dp); SkeletonLine(120.dp) } }; return
     }
     if (context.careState.readFailed) {
         ErrorCard(context.careState.error ?: "Couldn't read these local records.")
@@ -54,7 +65,7 @@ private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
         Feature.Sounds -> SoundSettingsScreen(context)
         Feature.CareTools -> ProfileHub(context)
         Feature.DogSwitcher, Feature.DogAdd, Feature.DogEdit, Feature.Settings, Feature.DeleteDog, Feature.DeleteAll, Feature.EmergencyEdit -> ProfileFeatureScreen(page, context)
-        Feature.Health, Feature.Medications, Feature.MedicationForm, Feature.MedicationDetail, Feature.MedicationGiven, Feature.MedicationArchive, Feature.Vaccinations, Feature.VaccinationForm -> HealthFeatureScreen(page, context)
+        Feature.Health, Feature.Medications, Feature.MedicationForm, Feature.MedicationDetail, Feature.MedicationGiven, Feature.MedicationArchive, Feature.MedicationHistory, Feature.Vaccinations, Feature.VaccinationForm -> HealthFeatureScreen(page, context)
         Feature.Calendar, Feature.TaskForm, Feature.TaskDetail, Feature.ReminderOptIn -> CalendarFeatureScreen(page, context)
         Feature.Training, Feature.Program, Feature.TrainingProgress, Feature.Session, Feature.TrainingSummary -> TrainingFeatureScreen(page, context)
         Feature.Photos, Feature.PhotoForm, Feature.PhotoDetail, Feature.Baselines -> PhotoFeatureScreen(page, context)

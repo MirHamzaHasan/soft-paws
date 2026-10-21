@@ -15,7 +15,7 @@ sealed interface CareDetails {
     @Serializable @SerialName("behavior") data class Behavior(val observation: String) : CareDetails
     @Serializable @SerialName("grooming") data class Grooming(val activity: GroomingActivity, val durationMinutes: Int? = null) : CareDetails
     @Serializable @SerialName("weight") data class Weight(val amount: Double, val unit: WeightUnit) : CareDetails
-    @Serializable @SerialName("medication") data class Medication(val planId: String, val name: String, val amount: String) : CareDetails
+    @Serializable @SerialName("medication") data class Medication(val planId: String, val name: String, val amount: String, val instructions: String = "") : CareDetails
     @Serializable @SerialName("training") data class Training(val programId: String, val step: Int, val seconds: Int, val rating: String, val mood: String) : CareDetails
     @Serializable @SerialName("task") data class Task(val taskId: String, val title: String, val dueDate: String) : CareDetails
     @Serializable @SerialName("water") data class Water(val observation: WaterObservation, val measuredMillilitres: Double? = null) : CareDetails
@@ -74,7 +74,7 @@ object CareEventRules {
             is CareDetails.Behavior -> { requiredText(details.observation, "Observation"); CareEventType.Behavior }
             is CareDetails.Grooming -> { observedMinutes(details.durationMinutes); CareEventType.Grooming }
             is CareDetails.Weight -> { require(details.amount.isFinite() && details.amount > 0 && details.amount <= 1000) { "Enter a weight greater than 0 and at most 1000, with its unit." }; CareEventType.Weight }
-            is CareDetails.Medication -> { requiredText(details.planId, "Plan"); requiredText(details.name, "Medication"); requiredText(details.amount, "Amount"); CareEventType.Medication }
+            is CareDetails.Medication -> { requiredText(details.planId, "Plan"); requiredText(details.name, "Medication"); if (details.amount.isNotBlank()) requiredText(details.amount, "Amount"); if (details.instructions.isNotBlank()) { requiredText(details.instructions, "Instructions"); require(details.instructions.length <= 500) }; require(details.amount.isNotBlank() || details.instructions.isNotBlank()); CareEventType.Medication }
             is CareDetails.Training -> { require(details.seconds in 1..7200 && details.step >= 0); requiredText(details.programId, "Program"); CareEventType.Training }
             is CareDetails.Task -> { requiredText(details.taskId, "Task"); requiredText(details.title, "Title"); kotlinx.datetime.LocalDate.parse(details.dueDate); CareEventType.Task }
             is CareDetails.Water -> {

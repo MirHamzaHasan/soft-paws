@@ -6,6 +6,12 @@ import com.dracoarts.shared.domain.model.ReportContent
 
 /** Board IDs resolve to real screens; state-specific evidence remains individually tracked. */
 val boardReviewFeatures = mapOf(
+    "medications" to Feature.Medications,
+    "med-form" to Feature.MedicationForm,
+    "med-detail" to Feature.MedicationDetail,
+    "med-history" to Feature.MedicationHistory,
+    "vaccinations" to Feature.Vaccinations,
+    "vaccine-form" to Feature.VaccinationForm,
     "next-highlight-editor" to Feature.VideoHighlight,
     "next-highlight-empty" to Feature.VideoHighlight,
     "next-highlight-gate" to Feature.VideoHighlightGate,

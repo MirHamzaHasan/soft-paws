@@ -143,9 +143,9 @@ class AndroidDeviceServices(private val activity: ComponentActivity) : DeviceSer
                     val id = UUID.randomUUID().toString() + ".pdf"; val file = File(photos, id)
                     try {
                         resolver.openInputStream(uri).use { input ->
-                            requireNotNull(input) { "Couldn't open this receipt." }
+                            requireNotNull(input) { "Couldn't open this document." }
                             file.outputStream().use { output -> val buffer = ByteArray(8192); var total = 0
-                                while (true) { currentCoroutineContext().ensureActive(); val count = input.read(buffer); if (count < 0) break; total += count; require(total <= 20_000_000) { "Choose a receipt smaller than 20 MB." }; output.write(buffer, 0, count) }
+                                while (true) { currentCoroutineContext().ensureActive(); val count = input.read(buffer); if (count < 0) break; total += count; require(total <= 20_000_000) { "Choose a document smaller than 20 MB." }; output.write(buffer, 0, count) }
                             }
                         }
                         val header = ByteArray(5)
@@ -179,7 +179,7 @@ class AndroidDeviceServices(private val activity: ComponentActivity) : DeviceSer
         } catch (cancelled: CancellationException) { throw cancelled }
         catch (_: SecurityException) { DeviceResult.Denied }
         catch (cause: IllegalArgumentException) { DeviceResult.Failed(cause.message ?: "Choose another attachment.") }
-        catch (_: Exception) { DeviceResult.Failed("Couldn't retain this ${if (receipt) "receipt" else "photo"}. Your draft is still here. Try again.") }
+        catch (_: Exception) { DeviceResult.Failed("Couldn't retain this ${if (receipt) "document" else "photo"}. Your draft is still here. Try again.") }
     }
     private fun photo(fileId: String): File { require(com.dracoarts.shared.domain.model.LocalAttachmentRules.receipt.matches(fileId)); return File(photos, fileId) }
     override suspend fun photoBytes(fileId: String): ByteArray? = withContext(Dispatchers.IO) { runCatching { photo(fileId).takeIf { it.isFile && it.length() <= 20_000_000 }?.readBytes() }.getOrNull() }
@@ -187,10 +187,10 @@ class AndroidDeviceServices(private val activity: ComponentActivity) : DeviceSer
 
     override suspend fun shareAttachment(fileId: String): DeviceResult<Unit> = try {
         val file = withContext(Dispatchers.IO) { val source = photo(fileId); require(source.isFile && source.length() in 1..20_000_000); val directory = File(activity.cacheDir, "barklog_exports").also { it.mkdirs() }; source.copyTo(File(directory, "receipt-$fileId"), overwrite = true) }
-        withContext(Dispatchers.Main) { val uri = FileProvider.getUriForFile(activity, activity.packageName + ".files", file); val type = if (fileId.endsWith(".pdf")) "application/pdf" else "image/jpeg"; activity.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType(type).putExtra(Intent.EXTRA_STREAM, uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION), "Open or share receipt")) }
+        withContext(Dispatchers.Main) { val uri = FileProvider.getUriForFile(activity, activity.packageName + ".files", file); val type = if (fileId.endsWith(".pdf")) "application/pdf" else "image/jpeg"; activity.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType(type).putExtra(Intent.EXTRA_STREAM, uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION), "Open or share document")) }
         DeviceResult.Success(Unit)
     } catch (cancelled: CancellationException) { throw cancelled }
-    catch (_: Exception) { DeviceResult.Failed("Couldn't open this receipt. Its expense details stay saved.") }
+    catch (_: Exception) { DeviceResult.Failed("Couldn't open this document. Your saved record stays on this device.") }
 
     override fun openSettings(): Boolean = runCatching { activity.startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${activity.packageName}"))); true }.getOrDefault(false)
 

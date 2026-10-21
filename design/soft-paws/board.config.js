@@ -138,6 +138,16 @@ window.BOARD = {
     ],
     health: [
       {
+        title: "Mindvalley · explicit reminder choice",
+        took: "Show whether reminders are on, keep time and repeat choices explicit, then show the saved schedule. We keep the cat kit and omit wellness frequency suggestions.",
+        url: "https://mobbin.com/flows/5fa563c5-ee26-4563-a70a-6bd98e484b7c",
+      },
+      {
+        title: "Apple Health · prescribed details and chosen schedule",
+        took: "Keep the entered instructions separate from a chosen reminder and review the saved facts. Soft Paws does not copy medication search, interaction claims, clinical options or artwork.",
+        url: "https://mobbin.com/flows/61a17fd3-3918-40b6-bfcb-6b12927d5244",
+      },
+      {
         title: "Fitbit · missing data stays missing",
         took: "Label an unrecorded measurement as absent rather than scoring the person.",
         url: "https://mobbin.com/screens/e5fe7258-9cb6-44d8-b602-1af9d2f536f0",

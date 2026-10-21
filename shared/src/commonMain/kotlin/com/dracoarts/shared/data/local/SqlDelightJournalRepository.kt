@@ -272,6 +272,7 @@ class SqlDelightJournalRepository(
             if (q.changedRows().executeAsOne() != 1L) throw RecordConflictException()
         }
         if (old != null) photoFiles(old.data).filter { it !in photoFiles(data) }.forEach { q.queueCleanup("photo", it) }
+        if (data is CareItemData.Medication && (data.archived || data.reminder == null && (old?.data as? CareItemData.Medication)?.reminder != null)) q.queueCleanup("reminder", id)
         if (data is CareItemData.Memory) {
             val unchanged = (old?.data as? CareItemData.Memory)?.sourceIds == data.sourceIds
             require(unchanged || data.sourceIds.all { source -> q.eventById(dogId, source).executeAsOneOrNull() != null || (q.itemById(dogId, source).executeAsOneOrNull()?.let(::toItem)?.data is CareItemData.Photo) }) { "A selected source record changed. Choose the highlights again." }
@@ -290,9 +291,11 @@ class SqlDelightJournalRepository(
             }
             val details: CareDetails = when (data) {
                 is CareItemData.Administration -> {
-                    val plan = q.itemById(dogId, data.planId).executeAsOneOrNull()?.let(::toItem)?.data as? CareItemData.Medication ?: throw RecordNotFoundException()
-                    if (plan.archived || plan.name != data.name || plan.amount != data.amount) throw RecordConflictException()
-                    CareDetails.Medication(data.planId, data.name, data.amount)
+                    val savedPlan = q.itemById(dogId, data.planId).executeAsOneOrNull()?.let(::toItem) ?: throw RecordNotFoundException()
+                    val plan = savedPlan.data as? CareItemData.Medication ?: throw RecordNotFoundException()
+                    if (plan.archived || plan.name != data.name || plan.amount != data.amount ||
+                        (data.planRevision != null && (data.planRevision != savedPlan.revision || data.instructions != plan.directions))) throw RecordConflictException()
+                    CareDetails.Medication(data.planId, data.name, data.amount, data.instructions)
                 }
                 is CareItemData.Session -> {
                     require(q.itemsForDog(dogId).executeAsList().map(::toItem).any { (it.data as? CareItemData.Enrollment)?.programId == data.programId }) { "Enroll before starting a session." }
@@ -354,10 +357,10 @@ class SqlDelightJournalRepository(
         q.documentsForDog(dogId).executeAsList().flatMap { documentPhotoIds(it.value_json) }.forEach { q.queueCleanup("photo", it) }
         q.deleteDogDocuments(dogId); q.deleteDogDrafts(dogId); q.deleteDogEvents(dogId); q.deleteDogItems(dogId); q.deleteDog(dogId)
     }
-    private fun photoFiles(data: CareItemData): List<String> = when (data) { is CareItemData.Photo -> listOf(data.fileId); is CareItemData.Expense -> listOfNotNull(data.receiptId); else -> emptyList() }
+    private fun photoFiles(data: CareItemData): List<String> = when (data) { is CareItemData.Photo -> listOf(data.fileId); is CareItemData.Expense -> listOfNotNull(data.receiptId); is CareItemData.Vaccination -> listOfNotNull(data.documentId); else -> emptyList() }
     private fun queueItemCleanup(q: JournalQueries, item: CareItem) {
         photoFiles(item.data).forEach { q.queueCleanup("photo", it) }
-        if (item.data is CareItemData.Task) q.queueCleanup("reminder", item.id)
+        if (item.data is CareItemData.Task || item.data is CareItemData.Medication) q.queueCleanup("reminder", item.id)
     }
 
     override suspend fun readDocument(id: String): String? = read { it.document(id).executeAsOneOrNull() }

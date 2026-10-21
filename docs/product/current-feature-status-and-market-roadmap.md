@@ -1,5 +1,14 @@
 # Current KMP feature status
 
+**Soft Paws · 21 October 2026:** This repository is now the separate cat app.
+Its current port has 35 implemented-unverified / 54 pending surfaces, including
+the native cat/Rive idle, Journal and prescribed-care/document chapter. All 159
+JVM tests, Android/iOS builds and scoped native journeys pass. Individual visual
+approval and physical/assistive coverage remain open. See the
+[Soft Paws source of truth](../source-of-truth/soft-paws-product-engineering.md)
+and [native port](../../tasks/soft-paws-task002-native-port.md). The BarkLog status
+below is inherited history, not evidence that all cat screens/services are ready.
+
 **Latest · 20 October 2026 · task046:** Additional dogs and AI/Safety explanations
 are Premium; first-dog care, existing journals and emergency calls stay available.
 The three USD plans and native RevenueCat boundary are implemented, inactive until

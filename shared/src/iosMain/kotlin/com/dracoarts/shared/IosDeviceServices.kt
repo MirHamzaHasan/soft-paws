@@ -200,7 +200,7 @@ class IosDeviceServices : DeviceServices {
                 val scoped = url.startAccessingSecurityScopedResource()
                 try {
                     val length = url.path?.let { NSFileManager.defaultManager.attributesOfItemAtPath(it, null)?.get(NSFileSize) as? NSNumber }?.longLongValue
-                    require(length != null && length in 1..20_000_000) { "Choose a receipt smaller than 20 MB." }
+                    require(length != null && length in 1..20_000_000) { "Choose a document smaller than 20 MB." }
                     val data = checkNotNull(NSData.dataWithContentsOfURL(url))
                     require(data.length in 1uL..20_000_000uL)
                     val pdf = data.length >= 5uL && data.bytes?.reinterpret<ByteVar>()?.readBytes(5)?.decodeToString() == "%PDF-"
@@ -210,8 +210,8 @@ class IosDeviceServices : DeviceServices {
                 } finally { if (scoped) url.stopAccessingSecurityScopedResource() }
             }
         } catch (cancelled: CancellationException) { throw cancelled }
-        catch (cause: IllegalArgumentException) { DeviceResult.Failed(cause.message ?: "Choose another receipt.") }
-        catch (_: Exception) { DeviceResult.Failed("Couldn't retain this receipt. Your draft is still here.") }
+        catch (cause: IllegalArgumentException) { DeviceResult.Failed(cause.message ?: "Choose another document.") }
+        catch (_: Exception) { DeviceResult.Failed("Couldn't retain this document. Your draft is still here.") }
     }
 
     override suspend fun shareAttachment(fileId: String): DeviceResult<Unit> = sheetLock.withLock {
@@ -222,12 +222,12 @@ class IosDeviceServices : DeviceServices {
                 val host = checkNotNull(presenter()); val result = CompletableDeferred<DeviceResult<Unit>>()
                 val sheet = UIActivityViewController(listOf(url), null)
                 sheet.popoverPresentationController?.apply { sourceView = host.view; sourceRect = CGRectMake(0.0, 0.0, 1.0, 1.0); permittedArrowDirections = 0u }
-                sheet.completionWithItemsHandler = { _, done, _, error -> result.complete(if (error != null) DeviceResult.Failed("Couldn't open this receipt.") else if (done) DeviceResult.Success(Unit) else DeviceResult.Cancelled) }
+                sheet.completionWithItemsHandler = { _, done, _, error -> result.complete(if (error != null) DeviceResult.Failed("Couldn't open this document.") else if (done) DeviceResult.Success(Unit) else DeviceResult.Cancelled) }
                 host.presentViewController(sheet, true, null)
                 try { result.await() } finally { sheet.dismissViewControllerAnimated(false, null) }
             }
         } catch (cancelled: CancellationException) { throw cancelled }
-        catch (_: Exception) { DeviceResult.Failed("Couldn't open this receipt. Its expense details stay saved.") }
+        catch (_: Exception) { DeviceResult.Failed("Couldn't open this document. Your saved record stays on this device.") }
     }
 
     override fun openSettings(): Boolean = runCatching { val url = checkNotNull(NSURL.URLWithString(UIApplicationOpenSettingsURLString)); if (!UIApplication.sharedApplication.canOpenURL(url)) false else { UIApplication.sharedApplication.openURL(url, emptyMap<Any?, Any>(), null); true } }.getOrDefault(false)
@@ -393,7 +393,7 @@ class IosDeviceServices : DeviceServices {
                 val date = calendar.components(units, NSDate.dateWithTimeIntervalSince1970(time / 1000.0))
                 date.timeZone = calendar.timeZone
                 val content = UNMutableNotificationContent().apply {
-                    setTitle("Care reminder"); setBody("A task is due. Open BarkLog to view it."); setSound(UNNotificationSound.defaultSound)
+                    setTitle("Care reminder"); setBody("Planned care is due. Open Soft Paws to view it."); setSound(UNNotificationSound.defaultSound)
                     setUserInfo(mapOf<Any?, Any>("dog" to request.dogId, "task" to request.id))
                 }
                 val result = CompletableDeferred<NSError?>()

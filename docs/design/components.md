@@ -12,6 +12,23 @@ still go through the real repository before feedback. See
 [the native cat port](../../tasks/soft-paws-task002-native-port.md).
 Individual native visual approval and the remaining cat screen ports stay open.
 
+The cat health chapter reuses `SoftPawsHeading`, factual cards and rows with a
+48 dp circular Back control, CAT CARE label and a flat, top-divided action area.
+`BarkField(softPaws = true)` supplies the board's labelled outlined fields only
+on these screens; other product forms retain their current appearance. Health
+checkbox rows expose a Checkbox role and at least a 48 dp target. The list,
+instructions-first editor, detail, archived history and vaccination document
+editor all use real loading/empty/failure states rather than sample records.
+
+`MedicationReminders` schedules only a caregiver's explicit time/repeat after
+the repository commits. Permission is a separate action. Given history snapshots
+instructions/revision atomically and never implies a notification was fulfilled.
+Vaccination documents use native image/PDF selection, retained draft references,
+reference-aware replacement/removal and a disabled handoff when the local file
+is missing. Date/time inputs remain labelled manual entry until the reusable
+picker work in [Soft Paws task005](../../tasks/soft-paws-task005-care-planning.md).
+See [health evidence](evidence/soft-paws-health/README.md) for verification limits.
+
 
 20 October task047: the owner approved the new notebook-puppy Rive and the three
 reviewed plan/paywall/membership screens for mobile. Shared Compose implementation, Android/iOS builds and scoped native

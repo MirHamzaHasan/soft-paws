@@ -22,7 +22,7 @@ enum class Route(val label: String, val symbol: String) {
 
 enum class Feature {
     CareTools, DogSwitcher, DogAdd, DogEdit, Settings, Sounds, DeleteDog, DeleteAll, Chooser, Health,
-    Medications, MedicationForm, MedicationDetail, MedicationGiven, MedicationArchive, Vaccinations, VaccinationForm,
+    Medications, MedicationForm, MedicationDetail, MedicationGiven, MedicationArchive, MedicationHistory, Vaccinations, VaccinationForm,
     Calendar, TaskForm, TaskDetail, ReminderOptIn, Safety, Emergency, EmergencyEdit, Toxicity, FirstAid, Triage, NearestVet, TrainDog,
     Report, ReportPreview, ReportFormat, Export, Training, Program, TrainingProgress, Session, TrainingSummary,
     Photos, PhotoForm, PhotoDetail, Baselines, Expenses, ExpenseForm, ExpenseDetail,
@@ -63,6 +63,15 @@ class AppState(initialRoute: Route = Route.Home) {
     fun replace(feature: Feature, id: String = "") {
         require(!id.contains('|') && !id.contains('~') && !id.contains(':'))
         change(BoardNavigationMove.Carry) { page = null; featureStack = featureStack.dropLast(1) + FeaturePage(feature, id) }
+    }
+    fun openReminder(feature: Feature, id: String = "") {
+        require(feature in setOf(Feature.Calendar, Feature.TaskDetail, Feature.MedicationDetail))
+        require(!id.contains('|') && !id.contains('~') && !id.contains(':'))
+        change(BoardNavigationMove.Push) {
+            page = null; route = Route.Care
+            val root = if (feature == Feature.MedicationDetail) Feature.Medications else Feature.Calendar
+            featureStack = listOf(FeaturePage(root)) + if (feature == root) emptyList() else listOf(FeaturePage(feature, id))
+        }
     }
     fun newLog(dogId: String, type: CareEventType, requestId: String) { require(type in CareEventRules.detailedTypes); change(BoardNavigationMove.Carry) { page = JournalPage(JournalPage.Kind.New, dogId, requestId, type.key) } }
     fun detail(dogId: String, eventId: String) = change(if (page?.kind == JournalPage.Kind.New) BoardNavigationMove.Carry else BoardNavigationMove.Push) {

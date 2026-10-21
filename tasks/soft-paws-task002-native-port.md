@@ -108,3 +108,23 @@ inspected: [Journal evidence](../docs/design/evidence/soft-paws-journal/README.m
 Four further surfaces bring the inventory to **29 implemented-unverified / 60
 pending**. Individual native visual approval, physical/assistive coverage and the
 remaining downstream ports stay open.
+
+
+## 21 October · prescribed care and vaccination documents
+
+The approved medication list/form/detail/history and vaccination list/form now
+use shared cat Compose screens and real SQLite. Given entries atomically preserve
+the supplied instructions and plan revision; archive/edit never rewrites past
+care. Explicit reminder choices save before permission. Documents use real
+native image/PDF selection, retained drafts, reference-aware replacement/removal,
+missing-file recovery and native handoff. Legacy data and all journals remain
+preserved. See [task004](soft-paws-task004-prescribed-care.md).
+
+Android Debug/Release/lint/migrations, **159 JVM tests**, both Android text-size
+journeys, seven iOS XCTest cases across five runs and current iOS Debug/Release
+bundle checks pass. All six paired light/dark destinations and larger-text sheets
+were inspected: [health evidence](../docs/design/evidence/soft-paws-health/README.md).
+The inventory is **35 implemented-unverified / 54 pending**. Individual native
+visual approval, physical/assistive coverage and downstream ports stay open.
+[Task005](soft-paws-task005-care-planning.md) next covers the approved care agenda
+and native date/time picker refinement; it is planned, not implemented.

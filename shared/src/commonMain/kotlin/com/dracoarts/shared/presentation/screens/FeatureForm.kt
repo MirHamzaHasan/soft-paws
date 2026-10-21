@@ -31,8 +31,8 @@ class FeatureForm(id: String, initial: Map<String, String>) {
     val lock = Mutex()
     val dirty get() = values.filterKeys { !it.startsWith('_') } != baseline.filterKeys { !it.startsWith('_') }
     fun encode() = Json.encodeToString(SavedForm.serializer(), SavedForm(requestId, values, baseline, completed))
-    fun restore(value: String) { val saved = Json.decodeFromString(SavedForm.serializer(), value); requestId = saved.requestId; values = saved.values; baseline = saved.baseline; completed = saved.completed }
-    fun files() = listOf("file", "receipt", "photo").mapNotNull { values[it]?.takeIf { value -> value.isNotBlank() } }.distinct()
+    fun restore(value: String) { val saved = Json.decodeFromString(SavedForm.serializer(), value); requestId = saved.requestId; values = values + saved.values; baseline = baseline + saved.baseline; completed = saved.completed }
+    fun files() = listOf("file", "receipt", "photo", "document").mapNotNull { values[it]?.takeIf { value -> value.isNotBlank() } }.distinct()
     operator fun get(key: String) = values[key].orEmpty()
     val expectedRevision get() = values["_revision"]?.toLongOrNull()
     val createdAt get() = values.getValue("_createdAt").toLong()

@@ -90,8 +90,12 @@ real services. Reviewer Picks/Notes alone may persist in the ignored review stor
 The native port now includes separate Soft Paws identities, safe unconfigured
 services, preserving cat observation contracts/SQLite v5, shared cat setup,
 Home, five-tab navigation, care hubs, dated Journal/record editing and scoped
-deletion, plus the original native Rive cat. Android offline native journeys and
-153 JVM tests pass. The initial iOS
+deletion, prescribed plans/Given history, explicit medication reminders and
+vaccination image/PDF records, plus the original native Rive cat. Android native
+journeys and 159 JVM tests pass. Health document and larger-text journeys pass on
+both platforms, with current Debug/Release builds and paired screen evidence.
+The inventory is 35 implemented-unverified / 54 pending; individual native visual
+approval remains open. The initial iOS
 host compiled; its accessibility crash was corrected with the official iOS
 renderer update and the repeated-navigation/save/relaunch tests now pass.
 Full downstream native cat adaptation, paired screen parity, store preparation

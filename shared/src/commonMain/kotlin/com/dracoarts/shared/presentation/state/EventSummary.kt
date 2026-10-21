@@ -29,7 +29,7 @@ fun observationSummary(event: CareEvent): String {
         is CareDetails.Behavior -> value.observation
         is CareDetails.Mood, is CareDetails.Grooming -> com.dracoarts.shared.domain.model.JournalReport.details(value)
         is CareDetails.Weight -> "${value.amount} ${value.unit.label}"
-        is CareDetails.Medication -> "${value.name} · ${value.amount} · recorded as given"
+        is CareDetails.Medication -> listOf(value.name, value.amount, "recorded as given").filter(String::isNotBlank).joinToString(" · ")
         is CareDetails.Training -> "${TrainingTitle(value.programId)} · ${value.seconds / 60} min · ${value.rating}"
         is CareDetails.Task -> "${value.title} · completed for ${value.dueDate}"
         is CareDetails.Water, is CareDetails.Litter, is CareDetails.Play, is CareDetails.Sleep, is CareDetails.Note -> com.dracoarts.shared.domain.model.JournalReport.details(value)

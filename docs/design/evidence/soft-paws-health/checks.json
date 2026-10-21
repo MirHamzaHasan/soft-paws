@@ -1,0 +1,39 @@
+{
+  "ios-pdf-delivered": {
+    "passed": 1,
+    "failed": 0,
+    "result": "Passed"
+  },
+  "ios-image-delivered": {
+    "passed": 1,
+    "failed": 0,
+    "result": "Passed"
+  },
+  "ios-missing-document": {
+    "passed": 1,
+    "failed": 0,
+    "result": "Passed"
+  },
+  "ios-health-rest": {
+    "passed": 1,
+    "failed": 0,
+    "result": "Passed"
+  },
+  "ios-health-large": {
+    "passed": 3,
+    "failed": 0,
+    "result": "Passed"
+  },
+  "android-standard": {
+    "passed": 1,
+    "seconds": 108.322
+  },
+  "android-large": {
+    "passed": 1,
+    "seconds": 112.21
+  },
+  "jvm": {
+    "tests": 159,
+    "failures": 0
+  }
+}
