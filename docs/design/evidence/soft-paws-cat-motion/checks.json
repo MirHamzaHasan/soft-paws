@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-21",
+  "scope": "Rive idle continues after bounded reactions; live review motion enabled",
+  "appId": "com.draco.apps.soft.paws",
+  "android": {
+    "jvmTests": 153,
+    "debugReleaseLintMigrations": "passed",
+    "motionJourney": {
+      "result": "passed",
+      "seconds": 40.607
+    },
+    "pixelChecks": "android-pixel-checks.json"
+  },
+  "ios": {
+    "debug": "passed",
+    "simulator": "iPhone SE (3rd generation), iOS 18.5",
+    "renderedMotion": {
+      "passed": 1,
+      "failed": 0
+    },
+    "savedSettingAfterRelaunch": {
+      "passed": 1,
+      "failed": 0
+    },
+    "reviewReducedMotionPreference": "false",
+    "release": "passed",
+    "bundleChecks": {
+      "Debug": "passed",
+      "Release": "passed"
+    }
+  },
+  "board": {
+    "journeys": 16,
+    "result": "passed",
+    "changedPixels": [
+      10572,
+      4803
+    ]
+  },
+  "sourceSha256": {
+    "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/components/AnimatedCat.kt": "a8777b60e2e3c9bb1ff7af00d936353910fc92df1f062bac5efbd9224d651f8e",
+    "design/soft-paws/js/soft-paws.js": "e6a71a8b3b8eee479ff7de0b8252b20bb18449de17bb16a3e262579621a069c4",
+    "androidApp/src/androidTest/kotlin/com/draco/arts/apps/bark/log/dogs/journal/SoftPawsCatMotionTest.kt": "1039679da8118cb0e9e5f4875c7842f9695e6c4e42c384bd2eddc094f9e2bb5e",
+    "iosApp/BarkLogUITests/JournalJourneys.swift": "d4b810f69879877ae8833cb43eea3d5896385117cf49fbaab811f3366498f6d0"
+  },
+  "limits": [
+    "Physical-device and assistive-technology behavior unverified",
+    "No frame-rate claim",
+    "Full native port incomplete"
+  ],
+  "tooling": {
+    "metadata": "passed",
+    "metadataTests": 30,
+    "generatedTokens": "match",
+    "diffCheck": "passed"
+  }
+}

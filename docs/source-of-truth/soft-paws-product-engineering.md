@@ -76,7 +76,10 @@ Original Rive file 2667919 is separate from the inherited spaniels/notebook pupp
 The SVG, motion source, exported runtime, editable backup and hashes are under
 `design/soft-paws/assets/cat/`. Idle breathing/blinks, bounded Hello/Curious/Saved
 reactions, transparent interaction and the same-art fallback are reviewable.
-Native save reactions must follow a committed write.
+Native save reactions must follow a committed write. The owner's 21 October
+correction requires the gentle Idle loop to continue after bounded reactions
+while the cat is visible and foregrounded. Reduced motion still uses a still;
+restore normal motion in the owned review preview after screenshot QA.
 
 ## Actual implementation status
 

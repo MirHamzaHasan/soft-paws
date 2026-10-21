@@ -58,6 +58,16 @@ The following BarkLog guide is historical base context. Soft Paws direction abov
 and later explicit owner instructions take precedence over its product identity,
 dog wording, references and previous screen approvals.
 
+## 21 October · live cat motion
+
+The owner reported a static application cat. After bounded hello/curious/save
+reactions, keep the original seven-second Rive Idle running while visible and
+foregrounded; do not freeze it with the rest trigger. Respect system/app Reduce
+Motion and same-art failure/snapshot fallbacks. Screenshot fixtures can use
+reduced motion, but restore normal motion in the owned review preview for the
+handoff. Do not change OS accessibility preferences. See
+[Soft Paws task003](tasks/soft-paws-task003-cat-motion.md).
+
 ---
 
 # BarkLog KMP Agent Guide

@@ -74,19 +74,21 @@ fun AnimatedCat(
         consumed(id)
     }
     DisposableEffect(reactionId) { onDispose { reactionId?.let { consumed(it) } } }
-    // Match the board's bounded greeting, then rest. Idle art is never a reward cue.
+    // A bounded greeting returns to the authored gentle idle, never a reward cue.
     LaunchedEffect(idle, running, ready, motion.replay) {
         if (idle && running && ready && pendingReaction == null && !restoring) {
             delay(80)
             play(CatAction.Hello)
         }
     }
-    LaunchedEffect(cue?.serial, running) {
+    LaunchedEffect(cue?.serial, running, idle) {
         val action = cue?.action ?: return@LaunchedEffect
         if (!running) return@LaunchedEffect
         if (action == CatAction.Rest) {
             delay(action.durationMs.toLong())
-            playing = false
+            // Rest transitions back to the seven-second breathing/blink/tail loop.
+            // Pausing here froze that loop in the application after every greeting.
+            playing = idle
         } else {
             delay(action.durationMs.toLong() + 100)
             play(CatAction.Rest)

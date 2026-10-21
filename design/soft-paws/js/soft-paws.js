@@ -395,7 +395,15 @@
       timer = setTimeout(
         () => {
           p?.viewModelInstance?.trigger("rest")?.trigger();
-          launch = setTimeout(rest, 230);
+          launch = setTimeout(() => {
+            if (!allowed()) {
+              rest();
+              return;
+            }
+            p?.play();
+            e.dataset.playing = "true";
+            e.dataset.action = "idle";
+          }, 230);
         },
         name === "curious" ? 2900 : 2500,
       );

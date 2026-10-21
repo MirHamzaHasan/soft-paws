@@ -1,4 +1,5 @@
 import XCTest
+import CoreGraphics
 
 /// Compose's sticky editor action sits above the keyboard and outside the scroll body.
 private func journalScrollBottom(_ app: XCUIApplication) -> CGFloat {
@@ -1395,6 +1396,108 @@ final class SoftPawsCoreJourneys: XCTestCase {
         press("Care")
         XCTAssertTrue(item("Care, in one place.").waitForExistence(timeout: 12))
         capture("ios-dark-care")
+    }
+    func testCatKeepsItsIdleAfterGreetingAndTapAndHonoursReducedMotion() throws {
+        launch(reduced: false)
+        let cat = app.buttons["Say hello to Miso"]
+        XCTAssertTrue(cat.waitForExistence(timeout: 15))
+        let bounds = cat.frame
+        XCTAssertGreaterThan(bounds.width, 80)
+        XCTAssertLessThan(bounds.width, app.frame.width)
+        func pixels(_ name: String) throws -> [UInt8] {
+            let shot = app.screenshot()
+            let attachment = XCTAttachment(screenshot: shot)
+            attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
+            let image = shot.image
+            let source = try XCTUnwrap(image.cgImage)
+            let rect = bounds.offsetBy(dx: -app.frame.minX, dy: -app.frame.minY).applying(
+                CGAffineTransform(scaleX: CGFloat(source.width) / app.frame.width,
+                    y: CGFloat(source.height) / app.frame.height))
+            let crop = try XCTUnwrap(source.cropping(to: rect))
+            // Normalize the crop: a cropped CGImage may retain its full-frame provider.
+            var bytes = [UInt8](repeating: 0, count: crop.width * crop.height * 4)
+            try bytes.withUnsafeMutableBytes { buffer in
+                let context = try XCTUnwrap(CGContext(data: buffer.baseAddress,
+                    width: crop.width, height: crop.height, bitsPerComponent: 8,
+                    bytesPerRow: crop.width * 4, space: CGColorSpaceCreateDeviceRGB(),
+                    bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue))
+                context.draw(crop, in: CGRect(x: 0, y: 0, width: CGFloat(crop.width), height: CGFloat(crop.height)))
+            }
+            return bytes
+        }
+        func changes(_ first: [UInt8], _ second: [UInt8]) -> Int {
+            XCTAssertEqual(first.count, second.count)
+            return zip(first, second).filter { abs(Int($0.0) - Int($0.1)) > 8 }.count
+        }
+        Thread.sleep(forTimeInterval: 4.5)
+        let first = try pixels("ios-idle-4500")
+        Thread.sleep(forTimeInterval: 2.1)
+        let second = try pixels("ios-idle-6600")
+        Thread.sleep(forTimeInterval: 3.1)
+        let third = try pixels("ios-idle-9700")
+        XCTAssertGreaterThan(changes(first, second), 30, "Cat froze after greeting")
+        XCTAssertGreaterThan(changes(second, third), 30, "Cat stopped its ongoing idle")
+        cat.tap(); Thread.sleep(forTimeInterval: 0.9)
+        XCTAssertGreaterThan(changes(third, try pixels("ios-hello-900")), 30)
+        Thread.sleep(forTimeInterval: 3.6)
+        let resumed = try pixels("ios-after-tap-4500")
+        Thread.sleep(forTimeInterval: 2.2)
+        XCTAssertGreaterThan(changes(resumed, try pixels("ios-after-tap-6700")), 30, "Idle did not resume after tap")
+        launch(theme: "Dark", reduced: false); Thread.sleep(forTimeInterval: 4.5)
+        let dark = try pixels("ios-dark-idle-4500")
+        Thread.sleep(forTimeInterval: 2.1)
+        XCTAssertGreaterThan(changes(dark, try pixels("ios-dark-idle-6600")), 30, "Dark-theme idle froze")
+        launch(reduced: true); Thread.sleep(forTimeInterval: 1.6)
+        XCTAssertFalse(app.buttons["Say hello to Miso"].exists)
+        let still = try pixels("ios-reduced-1600")
+        Thread.sleep(forTimeInterval: 2.2)
+        XCTAssertEqual(changes(still, try pixels("ios-reduced-3800")), 0)
+        launch(reduced: false)
+    }
+    func testSavedCatMotionSettingKeepsTheReviewAnimated() throws {
+        func savedMotionHome() {
+            app.terminate()
+            app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "soft-paws-day-v1",
+                "-DesignReviewScreen", "home", fixturePreference + "theme", "Light"]
+            app.launch()
+            XCTAssertTrue(item("A quick check-in").waitForExistence(timeout: 25))
+        }
+        var settingRound = 0
+        func toggleSavedMotion() {
+            settingRound += 1
+            press("Settings")
+            let reduce = app.switches["Reduce motion"]
+            XCTAssertTrue(reduce.waitForExistence(timeout: 10))
+            for _ in 0..<8 {
+                let frame = reduce.frame
+                if reduce.isHittable && frame.minY > 80 && frame.maxY < app.frame.maxY - 80 {
+                    Thread.sleep(forTimeInterval: 0.5)
+                    if abs(reduce.frame.midY - frame.midY) < 1 { break }
+                }
+                let origin = app.coordinate(withNormalizedOffset: .zero)
+                let x = app.frame.width * 0.98
+                origin.withOffset(CGVector(dx: x, dy: app.frame.height - 100)).press(
+                    forDuration: 0.02,
+                    thenDragTo: origin.withOffset(CGVector(dx: x, dy: app.frame.height * 0.35)),
+                    withVelocity: .slow, thenHoldForDuration: 0.3)
+                Thread.sleep(forTimeInterval: 0.5)
+            }
+            capture("ios-motion-setting-\(settingRound)-before")
+            // Compose exposes switch state through traits, not UIKit's numeric value.
+            // Let scrolling settle, then tap the observed track in screen coordinates.
+            let frame = reduce.frame
+            XCTAssertTrue(reduce.isHittable && frame.minY > 80 && frame.maxY < app.frame.maxY - 80)
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: frame.midX, dy: frame.midY)).tap()
+            Thread.sleep(forTimeInterval: 0.6)
+            capture("ios-motion-setting-\(settingRound)-after")
+        }
+        launch(reduced: false)
+        toggleSavedMotion(); savedMotionHome()
+        Thread.sleep(forTimeInterval: 0.8)
+        XCTAssertFalse(app.buttons["Say hello to Miso"].exists)
+        toggleSavedMotion(); savedMotionHome()
+        // No launch-argument motion override: this proves the saved setting and handoff.
+        XCTAssertTrue(app.buttons["Say hello to Miso"].waitForExistence(timeout: 15))
     }
     func testDatedJournalEditCancelDeleteAndReopen() throws {
         func title(_ value: String) {

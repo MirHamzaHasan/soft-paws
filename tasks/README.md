@@ -4,6 +4,8 @@
   — design approved on 20 October 2026; repository/design scope complete.
 - [soft-paws-task002 · approved Android/iOS native port](soft-paws-task002-native-port.md)
   — in progress; cat storage and identity checks pass; screen parity remains unverified.
+- [soft-paws-task003 · ongoing cat motion](soft-paws-task003-cat-motion.md)
+  — complete; native motion/settings checks and both platform Debug/Release builds pass.
 
 The BarkLog tasks below are inherited foundation history, not Soft Paws approvals.
 

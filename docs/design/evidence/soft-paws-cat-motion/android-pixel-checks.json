@@ -1,0 +1,16 @@
+{
+  "catBounds": [
+    510,
+    421,
+    1122,
+    1093
+  ],
+  "changedPixels": {
+    "idle-4500 to idle-6600": 10323,
+    "idle-6600 to idle-9700": 5395,
+    "idle-9700 to hello-900": 58820,
+    "after-tap-4500 to after-tap-6700": 10552,
+    "dark-idle-4500 to dark-idle-6600": 6263,
+    "reduced-1600 to reduced-3800": 0
+  }
+}

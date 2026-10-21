@@ -107,10 +107,18 @@
       "section": "home",
       "status": "implemented-unverified",
       "nativeSources": [
-        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HomeScreen.kt"
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HomeScreen.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/components/AnimatedCat.kt"
       ],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-cat-motion/android-idle-6600.png",
+        "docs/design/evidence/soft-paws-cat-motion/android-dark-idle-6600.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-cat-motion/ios-idle-6600.png",
+        "docs/design/evidence/soft-paws-cat-motion/ios-dark-idle-6600.png"
+      ],
+      "verificationNote": "Paired Home light/dark captures and real idle/tap/reduced-motion pixel checks; individual visual approval remains open."
     },
     {
       "id": "log-chooser",
