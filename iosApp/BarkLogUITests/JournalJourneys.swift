@@ -1328,13 +1328,24 @@ final class SoftPawsCoreJourneys: XCTestCase {
         app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", label)).firstMatch
     }
     private func press(_ label: String) {
-        let target = item(label)
-        XCTAssertTrue(target.waitForExistence(timeout: 15), "Missing \(label): \(app.debugDescription)")
-        for _ in 0..<6 {
-            if target.isHittable { target.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap(); return }
-            app.swipeUp()
+        let fixed = ["Today", "Journal", "Care", "Memories", "You", "Close", "Settings", "Keep this check-in", "Keep this note", "Save changes", "Edit record", "Delete record", "Keep record", "Delete permanently", "Back to today", "View record"]
+        for attempt in 0..<15 {
+            // Resolve afresh: radio labels and newly materialised LazyColumn rows
+            // are not necessarily Buttons in the iOS accessibility tree.
+            let exact = item(label)
+            let button = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", label)).firstMatch
+            let target = exact.exists ? exact : button
+            let footer = ["Save changes", "Keep this note", "Keep this check-in", "Keep record", "Edit record", "Today"].map { app.buttons[$0] }.filter { $0.exists && $0.isHittable }.map { $0.frame.minY }.min() ?? app.frame.maxY
+            let bottom = min(app.frame.maxY - 14, footer - 12)
+            if target.exists && target.isHittable && (fixed.contains(label) || target.frame.midY < bottom) {
+                target.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap(); return
+            }
+            if attempt < 3 { Thread.sleep(forTimeInterval: 0.2); continue }
+            let start = app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: app.frame.maxX - 8, dy: max(170, bottom - 24)))
+            let end = app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: app.frame.maxX - 8, dy: max(70, bottom - 250)))
+            start.press(forDuration: 0.02, thenDragTo: end)
         }
-        XCTFail("Control not reachable: \(label)")
+        XCTFail("Control not reachable: \(label): \(app.debugDescription)")
     }
     private func capture(_ name: String) {
         let image = XCTAttachment(screenshot: app.screenshot())
@@ -1354,7 +1365,7 @@ final class SoftPawsCoreJourneys: XCTestCase {
         app.terminate(); app.launch()
         XCTAssertTrue(item("A quick check-in").waitForExistence(timeout: 20))
         capture("ios-light-reopened")
-        for (tab, heading) in [("Journal", "Timeline"), ("Care", "Care, in one place."), ("Memories", "Ordinary, lovely days."), ("You", "A place for both of you.")] {
+        for (tab, heading) in [("Journal", "The little things, in order."), ("Care", "Care, in one place."), ("Memories", "Ordinary, lovely days."), ("You", "A place for both of you.")] {
             press(tab)
             XCTAssertTrue(item(heading).waitForExistence(timeout: 12))
             XCTAssertTrue(app.buttons[tab].isSelected)
@@ -1371,7 +1382,7 @@ final class SoftPawsCoreJourneys: XCTestCase {
         Thread.sleep(forTimeInterval: 0.7); capture("ios-cat-motion-900")
         Thread.sleep(forTimeInterval: 0.9); capture("ios-cat-motion-1800")
         for _ in 0..<2 {
-            for (tab, heading) in [("Journal", "Timeline"), ("Care", "Care, in one place."), ("Memories", "Ordinary, lovely days."), ("You", "A place for both of you.")] {
+            for (tab, heading) in [("Journal", "The little things, in order."), ("Care", "Care, in one place."), ("Memories", "Ordinary, lovely days."), ("You", "A place for both of you.")] {
                 press(tab)
                 XCTAssertTrue(item(heading).waitForExistence(timeout: 12))
                 XCTAssertGreaterThan(app.buttons.count, 0)
@@ -1384,5 +1395,65 @@ final class SoftPawsCoreJourneys: XCTestCase {
         press("Care")
         XCTAssertTrue(item("Care, in one place.").waitForExistence(timeout: 12))
         capture("ios-dark-care")
+    }
+    func testDatedJournalEditCancelDeleteAndReopen() throws {
+        func title(_ value: String) {
+            let editable = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", "Title", "Title, ")
+            let label = app.textFields.matching(editable).firstMatch.exists || app.textViews.matching(editable).firstMatch.exists ? "Title" : "Title · optional"
+            let query = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+            let single = app.textFields.matching(query).firstMatch
+            let input = single.exists ? single : app.textViews.matching(query).firstMatch
+            XCTAssertTrue(input.waitForExistence(timeout: 12))
+            input.tap()
+            XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+            let old = input.value as? String ?? ""
+            if old != "Empty" && !old.isEmpty {
+                input.press(forDuration: 1.1)
+                let menu = app.menuItems["Select All"]
+                let all = menu.exists ? menu : app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "Select All")).firstMatch
+                XCTAssertTrue(all.waitForExistence(timeout: 4), "Select the full title before replacing it")
+                all.tap()
+                input.typeText(XCUIKeyboardKey.delete.rawValue)
+                let empty = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@ OR value == %@", "", "Empty"), object: input)
+                XCTAssertEqual(XCTWaiter.wait(for: [empty], timeout: 3), .completed)
+            }
+            input.typeText(value)
+            let done = app.keyboards.buttons["Done"]
+            if done.exists { done.tap() } else { input.typeText("\n") }
+        }
+        let note = "Window watching QA \(Int(Date().timeIntervalSince1970))"
+        let revised = note + " edited"
+        launch()
+        press("Note")
+        XCTAssertTrue(item("One thing to remember.").waitForExistence(timeout: 12))
+        title(note); press("Everyday note"); press("Keep this note")
+        XCTAssertTrue(item("A small thing, kept.").waitForExistence(timeout: 12))
+        press("View record")
+        XCTAssertTrue(item("What you recorded").waitForExistence(timeout: 12)); capture("ios-light-record")
+        press("Edit record")
+        XCTAssertTrue(item("Keep the context right.").waitForExistence(timeout: 12)); capture("ios-light-edit")
+        title(revised); press("Save changes")
+        XCTAssertTrue(item(revised).waitForExistence(timeout: 12))
+        press("Delete record")
+        XCTAssertTrue(item("Delete this record?").waitForExistence(timeout: 12)); capture("ios-light-delete")
+        press("Keep record")
+        XCTAssertTrue(item("What you recorded").waitForExistence(timeout: 12))
+        launch(); press("Journal")
+        XCTAssertTrue(item("The little things, in order.").waitForExistence(timeout: 12)); capture("ios-light-journal")
+        press("Notes")
+        let nineteenth = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "19 October 2026")).firstMatch
+        XCTAssertTrue(nineteenth.exists); nineteenth.tap()
+        XCTAssertTrue(item("No matching check-ins yet").waitForExistence(timeout: 12)); capture("ios-light-empty-day")
+        let twentieth = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "20 October 2026")).firstMatch
+        XCTAssertTrue(twentieth.exists); twentieth.tap()
+        press(revised); press("Delete record"); press("Delete permanently")
+        XCTAssertTrue(item("The little things, in order.").waitForExistence(timeout: 12))
+        XCTAssertFalse(item(revised).exists)
+        launch(theme: "Dark"); press("Journal"); capture("ios-dark-journal")
+        press("Meals"); press("A meal, mostly eaten.")
+        XCTAssertTrue(item("What you recorded").waitForExistence(timeout: 12)); capture("ios-dark-record")
+        press("Edit record"); capture("ios-dark-edit"); press("Close")
+        XCTAssertTrue(item("What you recorded").waitForExistence(timeout: 12))
+        press("Delete record"); capture("ios-dark-delete"); press("Keep record")
     }
 }

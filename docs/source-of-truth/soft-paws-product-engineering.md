@@ -86,8 +86,9 @@ real services. Reviewer Picks/Notes alone may persist in the ignored review stor
 
 The native port now includes separate Soft Paws identities, safe unconfigured
 services, preserving cat observation contracts/SQLite v5, shared cat setup,
-Home, five-tab navigation, care hubs and the original native Rive cat. The
-Android offline save/reopen/tab journey and 152 JVM tests pass. The initial iOS
+Home, five-tab navigation, care hubs, dated Journal/record editing and scoped
+deletion, plus the original native Rive cat. Android offline native journeys and
+153 JVM tests pass. The initial iOS
 host compiled; its accessibility crash was corrected with the official iOS
 renderer update and the repeated-navigation/save/relaunch tests now pass.
 Full downstream native cat adaptation, paired screen parity, store preparation

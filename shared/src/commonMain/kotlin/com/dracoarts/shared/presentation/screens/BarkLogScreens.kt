@@ -124,6 +124,11 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                 route != null -> state.show(route)
                 feature != null -> state.open(feature, if (reviewStart in boardReviewFeatures) boardReviewArgument(reviewStart, feature, platform::newId) else "")
                 type != null -> state.newLog(journal.selectedDogId!!, type, platform.newId())
+                reviewStart in setOf("record", "record-edit", "delete-record") -> {
+                    repository.observeTimeline(TimelineFilter(journal.selectedDogId!!), 1).first().events.firstOrNull()?.let { event ->
+                        if (reviewStart == "record-edit") state.edit(event.dogId, event.id, platform.newId()) else state.detail(event.dogId, event.id)
+                    }
+                }
                 reviewStart in setOf("record-detail", "delete-confirmation") -> state.detail(journal.selectedDogId!!, BoardReviewFixture.itemId(100))
                 reviewStart in setOf("record-edit", "stale-record") -> state.edit(journal.selectedDogId!!, BoardReviewFixture.itemId(100), platform.newId())
                 reviewStart == "form-notes-example" -> state.newLog(journal.selectedDogId!!, CareEventType.Walk, platform.newId())
@@ -188,7 +193,7 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                     }
                 } else if (context != null && !reviewOnboarding && !onboardingInProgress && state.route == Route.Timeline && page == null && feature == null) {
                     savedScreens.SaveableStateProvider("timeline-${context.dog.id}") {
-                        TimelineScreen(journal, timeline, now, zone, Modifier.weight(1f), photos = context.items, reviewScreen = context.reviewScreen, onPhoto = { context.open(Feature.PhotoDetail, it.id) }, onSwitchDog = { context.open(Feature.DogSwitcher) }, onSelectDog = { scope.launch { controller.selectDog(it) } }, onDetail = { state.detail(it.dogId, it.id) })
+                        TimelineScreen(journal, timeline, now, zone, Modifier.weight(1f), photos = context.items, reviewScreen = context.reviewScreen, onPhoto = { context.open(Feature.PhotoDetail, it.id) }, onSwitchDog = { context.open(Feature.DogSwitcher) }, onSelectDog = { scope.launch { controller.selectDog(it) } }, onSettings = { context.open(Feature.Settings) }, onAdd = { context.open(Feature.Chooser) }, onDetail = { state.detail(it.dogId, it.id) })
                     }
                 } else {
                     val screenKey = if (context == null || onboardingInProgress || reviewOnboarding) "setup" else if (page != null) "event-${page.kind}-${page.sessionId}" else if (feature != null) "feature-${context.dog.id}-${feature.feature}-${feature.id}" else "tab-${context.dog.id}-${state.route}"

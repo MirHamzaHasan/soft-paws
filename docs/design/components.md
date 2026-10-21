@@ -1,5 +1,18 @@
 # BarkLog Compose component registry
 
+## Soft Paws · 21 October 2026
+
+Soft Paws uses the separate cat board and generated joyful tokens, with five tabs.
+The BarkLog entries below are inherited component history. The approved cat
+Journal is now native: dated week strip, filters, coloured rows, record facts,
+compact title/note editing and scoped revision-guarded deletion. Selected dates
+and filters reveal themselves fully on smaller phones and at larger text sizes.
+Structured measurements, timestamps and attachments remain editable, and saves
+still go through the real repository before feedback. See
+[the native cat port](../../tasks/soft-paws-task002-native-port.md).
+Individual native visual approval and the remaining cat screen ports stay open.
+
+
 20 October task047: the owner approved the new notebook-puppy Rive and the three
 reviewed plan/paywall/membership screens for mobile. Shared Compose implementation, Android/iOS builds and scoped native
 journeys are verified. Physical/assistive review remains open. Home retains its spaniel; RevenueCat

@@ -7,7 +7,8 @@ The native implementation below is inherited BarkLog status; the new cat board
 was approved for the native port on 20 October 2026. Task002 is implementing
 the cat app with separate app identities. The colourful palette refinement is
 in the board and generated native theme. Cat SQLite contracts, core screens and
-the Android offline save/reopen journey are implemented. The iOS accessibility
+the dated Journal/record/edit/delete flow and Android offline native journeys are implemented.
+The current JVM suite has 153 passing tests; native scope is tracked in task002. The iOS accessibility
 crash reproducer now passes with the updated renderer; full native parity
 remains in progress. Own service
 registrations remain deferred.

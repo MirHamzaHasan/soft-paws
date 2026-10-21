@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-21",
+  "scope": [
+    "timeline",
+    "record",
+    "record-edit",
+    "delete-record"
+  ],
+  "appId": "com.draco.apps.soft.paws",
+  "android": {
+    "jvmTests": 153,
+    "debugReleaseLintMigrations": "passed",
+    "network": "Airplane mode enabled",
+    "journeys": [
+      {
+        "fontScale": 1.0,
+        "seconds": 29.727,
+        "result": "passed"
+      },
+      {
+        "fontScale": 1.3,
+        "seconds": 29.289,
+        "result": "passed"
+      }
+    ]
+  },
+  "ios": {
+    "simulator": "iPhone SE (3rd generation), iOS18.5",
+    "journeys": [
+      {
+        "textSize": "large",
+        "passed": 3,
+        "failed": 0,
+        "deviceId": "21204A18-9CDD-4B75-9A27-8C4BAE455214"
+      },
+      {
+        "textSize": "extra-extra-extra-large",
+        "passed": 1,
+        "failed": 0,
+        "deviceId": "21204A18-9CDD-4B75-9A27-8C4BAE455214"
+      }
+    ],
+    "release": "passed",
+    "bundleChecks": {
+      "Debug": "passed",
+      "Release": "passed"
+    },
+    "debug": "passed"
+  },
+  "sourceSha256": {
+    "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/TimelineScreen.kt": "b745870b8243454cc90b379873c0fc8edc13bf6fb6186d8443f521566c39b2c0",
+    "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsRecordDetail.kt": "6aa3cf6949688f8d48ae7b7042d1f7defc1f612ddd0f767e2f2463c33d01b8ce",
+    "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt": "94eb0a0210675a7dcb3d82df5bf21fa64c893ee279e91ca65dec1baa234f3330",
+    "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/state/JournalController.kt": "88a7625c7aad0605cb9ba71ef94f76cb1909acc46c41f28e25a151e15529c21c",
+    "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/state/TimelineController.kt": "9d4de563df2d297d2f8dea9ebd21fb9229b08bb34892b4e5965f722ea521ac82"
+  },
+  "unverified": [
+    "Individual native visual approval",
+    "Physical device and assistive-technology session",
+    "Minimum-OS device coverage",
+    "The remaining 60 native product surfaces"
+  ],
+  "services": "No real authentication, AI, payment, photo upload, call or location request.",
+  "tooling": {
+    "metadataTests": 30,
+    "metadata": "passed",
+    "generatedTokens": "match",
+    "diffCheck": "passed"
+  }
+}

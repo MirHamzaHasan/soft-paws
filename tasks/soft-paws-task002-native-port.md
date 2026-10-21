@@ -48,7 +48,7 @@ registrations or accept their service policy. Firebase/RevenueCat configuration,
 real purchases, live AI rechecks, journal/photo uploads and signing/store release
 remain deferred. Separate app IDs preserve BarkLog installations.
 
-## Actual checks to date
+## Previous verified baseline · 20 October
 
 - 152 JVM tests pass, including new cat validation, real SQLite reopen/edit,
   retained failure/retry, and v1/v2/v3/v4 → v5 preservation checks.
@@ -74,3 +74,37 @@ remain open. Android Debug/Release/lint/migrations/152 JVM checks and iOS
 Debug/Release simulator hosts plus bundle checks pass with the final colour
 changes. Do not mark delivery complete based on the inherited
 BarkLog checker or the web prototype.
+
+## 21 October · dated Journal and record flow
+
+The approved Journal week strip, category chips and coloured observation rows now
+read the selected cat's real dated SQLite query. Advanced filters retain all
+legacy event types, arbitrary dates and photos; older results remain paged.
+Query identity prevents a previous cat/date from flashing while a new read starts.
+
+Record detail now uses the cat board's factual rows, full note and attachment.
+Editing puts title and note first; the existing structured measurements, time,
+place and attachment controls remain under Observation details. An optional
+caregiver title uses the existing validated observation context, preserving IDs,
+revision, details and timestamps. The delete screen names its exact record and
+cat, keeps the safe choice first, and retains its captured revision until commit.
+Cancel and failed/stale writes do not remove the record.
+
+The selected day and category reveal themselves fully on narrow phones and with
+larger text. An existing strict test also exposed a profile-selection race: a
+delayed list could replace a newly confirmed cat. The controller now reads the
+current committed profile snapshot before fallback and recovers when a selected
+profile is deleted, preserving the other cat's history.
+
+Android Debug/Release/lint/migrations and all **153 JVM tests pass**. The real
+save/edit/keep/relaunch/filter/delete journey passes offline at font scales 1.0
+and 1.3, including SQLite revision/count assertions. Current-source iOS core
+XCTest passes all three cases; a further Journal journey at
+extra-extra-extra-large text passes. The final optimized iOS Release build and
+both Debug/Release bundle identity, runtime plist and font checks pass.
+
+Paired board/Android/iOS light/dark screens and larger-text captures were
+inspected: [Journal evidence](../docs/design/evidence/soft-paws-journal/README.md).
+Four further surfaces bring the inventory to **29 implemented-unverified / 60
+pending**. Individual native visual approval, physical/assistive coverage and the
+remaining downstream ports stay open.

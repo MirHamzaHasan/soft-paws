@@ -7,6 +7,7 @@ import com.dracoarts.shared.data.local.*
 import com.dracoarts.shared.domain.model.*
 import com.dracoarts.shared.domain.repository.LocalDraft
 import com.dracoarts.shared.presentation.state.EventDraft
+import com.dracoarts.shared.presentation.state.JournalDates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -165,6 +166,45 @@ class CatJournalTest {
             assertTrue(com.dracoarts.shared.presentation.companion.ChatHealth.urgent(question), question)
         }
         assertFalse(com.dracoarts.shared.presentation.companion.ChatHealth.urgent("How can I remember meals?"))
+    }
+
+    @Test fun datedCatJournalFiltersPagesAndScopedDeletionPreserveOtherRecordsAndDrafts() = runBlocking {
+        val retainedFields = ObservationContext.fields.filter { it != "Title" }.take(8).associateWith { "Saved detail" }
+        ObservationContext(observations = retainedFields + ("Title" to "a".repeat(200))).validate()
+        assertFailsWith<IllegalArgumentException> { ObservationContext(observations = retainedFields + ("Title" to "a".repeat(201))).validate() }
+        val repo = repository(driver()); repo.initialize()
+        try {
+            val cat = repo.addDog("Miso"); val other = repo.addDog("Juniper")
+            // DST ends on this day: a calendar day is 25 hours, not a fixed 24-hour interval.
+            val (start, end) = JournalDates.dayBounds(kotlinx.datetime.LocalDate.parse("2026-11-01"), TimeZone.of("America/New_York"))
+            assertEquals(25 * 60 * 60 * 1000L, end - start)
+            val older = repo.createEvent(cat.id, id(), CareEventInput(CareEventType.Litter, start - 1, details = CareDetails.Litter(LitterObservation.Stool)))
+            val saved = (0..54).map { n -> repo.createEvent(cat.id, id(), CareEventInput(CareEventType.Note, start + n, "Note $n", CareDetails.Note("Window $n"))) }
+            val litter = repo.createEvent(cat.id, id(), CareEventInput(CareEventType.Litter, end - 1, details = CareDetails.Litter(LitterObservation.Urine)))
+            val nextDay = repo.createEvent(cat.id, id(), CareEventInput(CareEventType.Litter, end, details = CareDetails.Litter(LitterObservation.Nothing)))
+            val isolated = repo.createEvent(other.id, id(), CareEventInput(CareEventType.Litter, start + 2, details = CareDetails.Litter(LitterObservation.Both)))
+            val filter = TimelineFilter(cat.id, fromMillis = start, untilMillis = end)
+            val page = repo.observeTimeline(filter, 50).first()
+            assertEquals(56L, page.totalCount); assertEquals(50, page.events.size)
+            assertEquals(listOf(litter) + saved.reversed(), repo.observeTimeline(filter, 100).first().events)
+            assertEquals(listOf(litter), repo.observeTimeline(filter.copy(type = CareEventType.Litter), 50).first().events)
+            assertEquals(listOf(isolated), repo.observeTimeline(filter.copy(dogId = other.id), 50).first().events)
+            assertTrue(repo.observeTimeline(filter.copy(type = CareEventType.Poop), 50).first().events.isEmpty())
+            val retained = LocalDraft("{\"note\":\"unfinished cat note\"}", emptyList())
+            repo.saveDraft(cat.id, "event-new-note", retained)
+            val edit = EventDraft.edit(litter, TimeZone.of("America/New_York")).copy(note = "Checked twice", observations = mapOf("Title" to "The afternoon litter check"))
+            val changed = repo.updateEvent(cat.id, litter.id, litter.revision, edit.input())
+            assertEquals("The afternoon litter check", com.dracoarts.shared.presentation.state.journalRecordTitle(changed))
+            assertEquals(litter.details, changed.details); assertEquals(litter.occurredAtMillis, changed.occurredAtMillis)
+            assertFailsWith<RecordConflictException> { repo.deleteEvent(cat.id, litter.id, litter.revision) }
+            assertEquals(changed, repo.observeEvent(cat.id, litter.id).first())
+            repo.deleteEvent(cat.id, changed.id, changed.revision)
+            assertEquals(saved.reversed(), repo.observeTimeline(filter, 100).first().events)
+            assertEquals(retained, repo.loadDraft(cat.id, "event-new-note"))
+            assertEquals(older, repo.observeEvent(cat.id, older.id).first())
+            assertEquals(nextDay, repo.observeEvent(cat.id, nextDay.id).first())
+            assertEquals(listOf(isolated), repo.observeEvents(other.id).first())
+        } finally { repo.close() }
     }
 
     private fun scalar(driver: SqlDriver, sql: String): String? = driver.executeQuery(null, sql, { cursor -> QueryResult.Value(if (cursor.next().value) cursor.getString(0) else null) }, 0).value

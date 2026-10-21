@@ -12,6 +12,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
@@ -57,14 +58,21 @@ class JournalController(
         _state.update { it.copy(loading = true, error = null, readFailed = false) }
         try {
             val preferred = withContext(Dispatchers.Default) { runCatching { preferences.getString(SELECTED_DOG_KEY) }.getOrNull() }
-            repository.observeDogs().combine(selection) { dogs, requested -> dogs to requested }.collectLatest { (dogs, requested) ->
+            repository.observeDogs().combine(selection) { dogs, requested -> dogs to requested }.collectLatest { (observedDogs, requested) ->
+                // Selection can beat a delayed list emission. Read the current committed
+                // profile snapshot before falling back, including genuine deletions.
+                val dogs = if (requested != null && observedDogs.none { it.id == requested }) repository.observeDogs().first() else observedDogs
                 val selected = dogs.firstOrNull { it.id == requested }
                     ?: dogs.firstOrNull { it.id == _state.value.selectedDogId }
                     ?: dogs.firstOrNull { it.id == preferred } ?: dogs.firstOrNull()
                 _state.update { it.copy(dogs = dogs, selectedDogId = selected?.id, events = emptyList(), dayEvents = emptyList(), dailyCounts = emptyMap(), totalCount = 0, loading = selected != null,
                     lastSaved = it.lastSaved?.takeIf { saved -> saved.dogId == selected?.id }, quickUndo = it.quickUndo?.takeIf { saved -> saved.dogId == selected?.id }) }
                 if (selected != null) {
-                    repository.observeSummary(selected.id, fromMillis, untilMillis).collect { summary ->
+                    repository.observeSummary(selected.id, fromMillis, untilMillis).catch { cause ->
+                        // A deletion can invalidate this read before the profile-list
+                        // collector switches. Keep that collector alive for its next list.
+                        if (cause is CancellationException || repository.observeDogs().first().any { it.id == selected.id }) throw cause
+                    }.collect { summary ->
                         _state.update { if (it.selectedDogId == selected.id) it.copy(events = summary.recent, dailyCounts = summary.dailyCounts, totalCount = summary.totalCount, dayEvents = summary.dayEvents, loading = false) else it }
                     }
                 }

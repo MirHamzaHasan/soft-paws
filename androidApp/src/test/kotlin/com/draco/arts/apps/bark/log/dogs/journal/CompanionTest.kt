@@ -335,6 +335,10 @@ class CompanionTest {
                 assertEquals(0,journal.state.value.totalCount)
                 assertEquals(listOf(oldWalk),repo.observeEvents(first.id).first())
                 assertEquals(added.id,p.storage.getString(com.dracoarts.shared.presentation.state.JournalController.SELECTED_DOG_KEY))
+                repo.deleteDog(added.id)
+                withTimeout(3000) {journal.state.first {!it.loading&&it.dogs.none {dog->dog.id==added.id}}}
+                assertEquals(first,journal.state.value.selectedDog)
+                assertEquals(listOf(oldWalk),repo.observeEvents(first.id).first())
             } finally {release.complete(Unit);observer.cancelAndJoin();c.close()}
         }
     }

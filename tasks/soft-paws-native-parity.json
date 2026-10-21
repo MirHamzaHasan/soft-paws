@@ -225,34 +225,70 @@
     {
       "id": "timeline",
       "section": "journal",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/TimelineScreen.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-journal/android-timeline-light.png",
+        "docs/design/evidence/soft-paws-journal/android-timeline-dark.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-journal/ios-timeline-light.png",
+        "docs/design/evidence/soft-paws-journal/ios-timeline-dark.png"
+      ],
+      "verificationNote": "Real native journeys and paired/larger-text captures; individual visual approval remains open."
     },
     {
       "id": "record",
       "section": "journal",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsRecordDetail.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-journal/android-record-light.png",
+        "docs/design/evidence/soft-paws-journal/android-record-dark.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-journal/ios-record-light.png",
+        "docs/design/evidence/soft-paws-journal/ios-record-dark.png"
+      ],
+      "verificationNote": "Real native journeys and paired/larger-text captures; individual visual approval remains open."
     },
     {
       "id": "record-edit",
       "section": "journal",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-journal/android-record-edit-light.png",
+        "docs/design/evidence/soft-paws-journal/android-record-edit-dark.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-journal/ios-record-edit-light.png",
+        "docs/design/evidence/soft-paws-journal/ios-record-edit-dark.png"
+      ],
+      "verificationNote": "Real native journeys and paired/larger-text captures; individual visual approval remains open."
     },
     {
       "id": "delete-record",
       "section": "journal",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsRecordDetail.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-journal/android-delete-record-light.png",
+        "docs/design/evidence/soft-paws-journal/android-delete-record-dark.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-journal/ios-delete-record-light.png",
+        "docs/design/evidence/soft-paws-journal/ios-delete-record-dark.png"
+      ],
+      "verificationNote": "Real native journeys and paired/larger-text captures; individual visual approval remains open."
     },
     {
       "id": "health",

@@ -1,5 +1,17 @@
 # Soft Paws · native adaptation audit
 
+**21 October implementation update:** the preserving cat contracts, independent
+identities, kit/core and dated Journal/record/edit/delete flow are implemented.
+The profile observer now retains a freshly confirmed selection while its list is
+delayed and recovers when the selected profile disappears. Final Android
+Debug/Release/lint/migrations/153 JVM checks and native standard/130% journeys pass.
+The current-source iOS core and larger-text Journal journeys, Debug/Release
+simulator builds and both bundle checks also pass. Paired
+light/dark and larger-text captures are in
+[the Journal evidence](design/evidence/soft-paws-journal/README.md).
+Task002 and the cat parity inventory separate implementation, runtime evidence and
+individual visual approval; the original read-only audit below remains history.
+
 20 October 2026. Read-only inspection of the inherited native source after the
 cat board was authored. This is an implementation map, not native delivery or
 design approval. The owner subsequently approved the full native port on
@@ -9,7 +21,7 @@ The full target remains the cat app with the existing function range, both nativ
 hosts, the new shared screens and original Rive companion. The board's 89 product
 surfaces cannot be ported by replacing the product name and mascot alone.
 
-## Verified gaps and required changes
+## Historical gaps and required changes · 20 October audit
 
 All Kotlin paths below are relative to
 `shared/src/commonMain/kotlin/com/dracoarts/shared/` unless stated otherwise.

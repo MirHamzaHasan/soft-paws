@@ -61,15 +61,15 @@ fun EventPageScreen(page: JournalPage, dogName: String, controller: EventControl
         }
         status.readError -> { BarkTextAction("Back", navigation::back, icon = "arrow-left", leading = true); ScreenHeading("Couldn't read this record"); ErrorText(status.error ?: "Couldn't read this record."); BarkButton("Try again", { retry++ }, icon = "refresh-cw") }
         status.record == null -> { ScreenHeading("Record unavailable", "This record is no longer available for $dogName."); BarkButton("Back to journal", navigation::closePage, secondary = true) }
-        page.kind == JournalPage.Kind.Edit -> EventEditor(page.sessionId, EventDraft.edit(status.record!!, zone), true, controller, navigation, context)
+        page.kind == JournalPage.Kind.Edit -> EventEditor(page.sessionId, EventDraft.edit(status.record!!, zone), true, controller, navigation, context, journalRecordTitle(status.record!!))
         page.kind == JournalPage.Kind.Saved -> SoftPawsSavedRecord(status.record!!, context)
-        else -> EventDetail(status.record!!, dogName, controller, navigation, newId, zone, context)
+        else -> SoftPawsRecordDetail(status.record!!, dogName, controller, navigation, newId, zone, context)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean, controller: EventController, navigation: AppState, context: FeatureContext) {
+private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean, controller: EventController, navigation: AppState, context: FeatureContext, initialTitle: String = "") {
     var draft by rememberSaveable(sessionId, stateSaver = EventDraft.Saver) { mutableStateOf(initial) }
     var validationError by rememberSaveable { mutableStateOf<String?>(null) }
     val status by controller.state.collectAsState()
@@ -131,9 +131,18 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
     }
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { BarkTextAction("Close", { keyboard?.hide(); navigation.back() }, enabled = !status.saving, icon = "x", leading = true); CaptionText("${context.dog.name} · local journal") }
     SoftPawsKicker(context.dog.name.uppercase())
-    SoftPawsHeading(if (editing) "Edit this ${draft.type.label.lowercase()}." else catLogTitle(draft.type), logSubtitle(draft.type))
+    SoftPawsHeading(if (editing) "Keep the context right." else catLogTitle(draft.type), if (editing) "Changes belong to this record." else logSubtitle(draft.type), accent = if (editing) "context right." else null)
     if (restored) Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) { BarkIcon("notebook-pen", Modifier.size(16.dp)); CaptionText("Draft restored · your notes and choices are here.") }
+    var editingDetails by rememberSaveable(sessionId) { mutableStateOf(false) }
     Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
+        if (editing) {
+            FormField("Title", if (draft.type == CareEventType.Note) draft.first else draft.observations["Title"] ?: initialTitle, !status.saving, {
+                draft = if (draft.type == CareEventType.Note) draft.copy(first = it) else draft.copy(observations = draft.observations + ("Title" to it))
+            }, maximum = 200)
+            FormField("Your note", draft.note, !status.saving, { draft = draft.copy(note = it) }, maximum = 2000, multiline = true)
+            BarkTextAction(if (editingDetails) "Hide observation details" else "Observation details", { editingDetails = !editingDetails }, icon = "sliders-horizontal", leading = true)
+        }
+        if (!editing || editingDetails) {
         BoardSection("01", logPrompt(draft.type), draft.type.key) {
         when (draft.type) {
             CareEventType.Poop -> ChoiceChips("Consistency · optional", draft.choice, StoolConsistency.entries.map { it.name to it.label }, !status.saving, stoolArt = true) { draft = draft.copy(choice = it) }
@@ -190,7 +199,7 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
                 ChoiceChips("Record an observed rest", draft.choice, SleepObservation.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(choice = it) }
             }
             CareEventType.Note -> {
-                FormField("Title · optional", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 200)
+                if (!editing) FormField("Title · optional", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 200)
                 ChoiceChips("Kind of note", draft.choice, NoteCategory.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(choice = it) }
             }
             else -> Unit
@@ -224,7 +233,7 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
             else FormField("$field · optional", draft.observations[field].orEmpty(), !status.saving, { draft = draft.copy(observations = draft.observations + (field to it)) }, maximum = 200)
         }
         }
-        BoardSection("02", "A note for later", draft.type.key) {
+        if (!editing) BoardSection("02", "A note for later", draft.type.key) {
             FormField("Notes (optional)", draft.note, !status.saving, { draft = draft.copy(note = it) }, maximum = 2000, multiline = true, placeholder = when (draft.type) { CareEventType.Walk -> "The route, a new place, a small moment…"; CareEventType.Meal -> "Appetite, a new food, anything different…"; CareEventType.Poop -> "Where it happened or anything else you noticed…"; CareEventType.Symptom -> "When it began, what changed, what happened next…"; CareEventType.Behavior -> "How you responded and what happened afterwards…"; else -> "What would you like to remember?" })
             var help by remember { mutableStateOf(false) }
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { BarkTextAction("What could I add?", { help = true }, icon = "info"); CaptionText("${draft.note.length} / 2,000") }
@@ -247,6 +256,7 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
             if (draft.caregiver.isNotBlank()) FormField("Recorded by · optional", draft.caregiver, !status.saving, { draft = draft.copy(caregiver = it) }, maximum = 100)
             AttachmentPicker(context, draft.photoId, { draft = draft.copy(photoId = it) }, "Attach a photo · optional")
             if (draft.photoId != null) BarkTextAction("Remove attachment", { draft = draft.copy(photoId = null) }, enabled = !status.saving, icon = "x")
+        }
         }
         }
         if (editing && initial.expectedRevision != draft.expectedRevision) {
@@ -289,48 +299,6 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
             catch (cancelled: CancellationException) { throw cancelled }
             catch (_: Exception) { validationError = "Couldn't discard the draft. Your entries stay here." }
         } } })
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun EventDetail(record: CareEvent, dogName: String, controller: EventController, navigation: AppState, newId: () -> String, zone: TimeZone, context: FeatureContext) {
-    var confirmingDelete by rememberSaveable(record.id) { mutableStateOf(false) }
-    var deletionRevision by rememberSaveable(record.id) { mutableLongStateOf(record.revision) }
-    val status by controller.state.collectAsState()
-    val scope = rememberCoroutineScope()
-    var dayEvents by remember(record.id) { mutableStateOf<List<CareEvent>?>(null) }
-    var dayError by remember(record.id) { mutableStateOf(false) }
-    var retryDay by remember { mutableIntStateOf(0) }
-    LaunchedEffect(record.dogId, record.occurredAtMillis, retryDay) {
-        dayError = false
-        val (from, until) = JournalDates.dayBounds(JournalDates.day(record.occurredAtMillis, zone), zone)
-        context.repository.observeSummary(record.dogId, maxOf(0, from), until).catch { dayError = true }.collect { dayEvents = it.dayEvents }
-    }
-    BoardBackButton(navigation::back, !status.saving)
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-        EventMark(record.type, 64.dp, boardSharedElement("care-${record.type.key}", boardColor("ground")))
-        Column(Modifier.weight(1f)) { ScreenHeading(record.type.label, "$dogName · ${JournalDates.dateLabel(JournalDates.day(record.occurredAtMillis, zone))} · ${JournalDates.inputTime(record.occurredAtMillis, zone)}") }
-    }
-    val lines = detailLines(record.details) + record.context.observations.map { (label, value) -> "$label: $value" } + listOfNotNull(record.context.location.takeIf(String::isNotBlank)?.let { "Place: $it" }, record.context.caregiver.takeIf(String::isNotBlank)?.let { "Recorded by: $it" })
-    val family = record.type.key.takeIf { "$it-bg" in com.dracoarts.shared.presentation.theme.LocalBoardColors.current } ?: "note"
-    if (lines.isNotEmpty()) FlowRow(horizontalArrangement = Arrangement.spacedBy(7.dp), verticalArrangement = Arrangement.spacedBy(7.dp)) { lines.forEach { line -> Surface(shape = RoundedCornerShape(10.dp), color = boardColor("$family-bg"), contentColor = boardColor("$family-ink"), border = BorderStroke(1.dp, boardColor("$family-line"))) { Text(line, Modifier.padding(horizontal = 10.dp, vertical = 7.dp), style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp)) } } }
-    JournalCard {
-        CaptionText("A NOTE FOR LATER")
-        Text(record.note ?: "No notes recorded.", style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp, lineHeight = 28.sp))
-    }
-    JournalCard {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { SectionTitle("On the day"); dayEvents?.let { CaptionText("${it.size} records") } }
-        when { dayError -> { CaptionText("Couldn't read the day's other records."); BarkTextAction("Try again", { retryDay++ }, icon = "refresh-cw") }; dayEvents == null -> SkeletonLine(220.dp, 84.dp); else -> DayLine(dayEvents!!, context.now, zone, Modifier.fillMaxWidth(), highlightId = record.id, reveal = true) }
-    }
-    JournalCard {
-        Column { listOf("Details" to lines.joinToString(" · ").ifBlank { "No additional details recorded." }, "Recorded" to "${JournalDates.dateLabel(JournalDates.day(record.occurredAtMillis, zone))} · ${JournalDates.inputTime(record.occurredAtMillis, zone)}", "Saved" to "On this device · ${if (record.revision > 1) "edited record · revision ${record.revision}" else "original record"}").forEachIndexed { index, (label, value) -> if (index > 0) HorizontalDivider(color = boardColor("hair")); Row(Modifier.fillMaxWidth().padding(vertical = 13.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) { CaptionText(label, Modifier.width(96.dp)); Text(value, Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium) } } }
-    }
-    record.context.photoId?.let { LocalPhoto(it, "Photo attached to this ${record.type.label.lowercase()} record", context.platform.device) }
-    status.error?.let { ErrorText(it) }
-    if (record.type in CareEventRules.detailedTypes) BarkButton("Edit record", { navigation.edit(record.dogId, record.id, newId()) }, enabled = !status.saving, icon = "pencil")
-    else CaptionText("These activity facts are retained as recorded. Manage the plan or program from Profile.")
-    BarkTextAction("Delete record", { deletionRevision = record.revision; confirmingDelete = true }, enabled = !status.saving, icon = "trash", danger = true)
-    if (confirmingDelete) BoardConfirmDialog("Delete this ${record.type.label.lowercase()} record?", "Removes this record for $dogName at ${JournalDates.inputTime(record.occurredAtMillis, zone)} on ${JournalDates.dateLabel(JournalDates.day(record.occurredAtMillis, zone))}. Other records stay saved. This cannot be undone.", "Delete permanently", status.saving, { confirmingDelete = false }, keepLabel = "Keep record") { scope.launch { if (controller.delete(record.copy(revision = deletionRevision))) { confirmingDelete = false; navigation.closePage() } else confirmingDelete = false } }
 }
 
 fun detailLines(details: CareDetails?): List<String> = when (details) {

@@ -62,7 +62,7 @@ class SoftPawsCoreJourneyTest {
             node("Back to today").click()
             launch(); assertEquals(before + 1, litterCount())
             capture("android-light-reopened")
-            for ((tab, heading) in listOf("Journal" to "Timeline", "Care" to "Care, in one place.", "Memories" to "Ordinary, lovely days.", "You" to "A place for both of you.")) {
+            for ((tab, heading) in listOf("Journal" to "The little things, in order.", "Care" to "Care, in one place.", "Memories" to "Ordinary, lovely days.", "You" to "A place for both of you.")) {
                 node(tab).click(); assertTrue(device.wait(Until.hasObject(By.text(heading)), 10000))
                 assertTrue(node(tab).isSelected); capture("android-light-${tab.lowercase()}")
             }

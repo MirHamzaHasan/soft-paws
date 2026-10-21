@@ -9,8 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dracoarts.shared.presentation.theme.*
@@ -21,7 +25,7 @@ fun SoftPawsTop(kicker: String = "CAT CARE", onSettings: () -> Unit) {
     Row(Modifier.fillMaxWidth().heightIn(min = 52.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         Text("Soft Paws", Modifier.weight(1f), style = MaterialTheme.typography.titleLarge.copy(fontFamily = LocalDisplayFont.current, fontSize = 23.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = (-1).sp))
         SoftPawsKicker(kicker)
-        Surface(onClick = soundAction(onSettings), shape = RoundedCornerShape(50), color = boardColor("panel"), border = BorderStroke(1.dp, boardColor("hair"))) {
+        Surface(onClick = soundAction(onSettings), modifier = Modifier.semantics { contentDescription = "Settings" }, shape = RoundedCornerShape(50), color = boardColor("panel"), border = BorderStroke(1.dp, boardColor("hair"))) {
             Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) { BarkIcon("sliders-horizontal", Modifier.size(20.dp)) }
         }
     }
@@ -33,9 +37,18 @@ fun SoftPawsKicker(text: String) {
 }
 
 @Composable
-fun SoftPawsHeading(title: String, subtitle: String = "") {
+fun SoftPawsHeading(title: String, subtitle: String = "", accent: String? = null) {
+    val accentColor = boardColor("accent")
+    val emphasis = accent?.let(title::indexOf) ?: -1
+    val heading = buildAnnotatedString {
+        if (emphasis < 0) append(title) else {
+            append(title.substring(0, emphasis))
+            withStyle(SpanStyle(color = accentColor)) { append(accent!!) }
+            append(title.substring(emphasis + accent!!.length))
+        }
+    }
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(title, style = MaterialTheme.typography.displaySmall.copy(lineHeight = 35.7.sp, letterSpacing = (-1.3).sp), color = boardColor("ink-strong"), modifier = Modifier.semantics { heading() })
+        Text(heading, style = MaterialTheme.typography.displaySmall.copy(lineHeight = 35.7.sp, letterSpacing = (-1.3).sp), color = boardColor("ink-strong"), modifier = Modifier.semantics { heading() })
         if (subtitle.isNotBlank()) Text(subtitle, style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 21.7.sp), color = boardColor("ink-muted"))
     }
 }
