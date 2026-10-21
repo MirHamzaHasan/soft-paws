@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
 import com.dracoarts.shared.services.DeviceServices
 import com.dracoarts.shared.services.decodeLocalPhoto
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -25,17 +26,20 @@ private sealed interface PhotoFrame {
 }
 
 @Composable
-fun LocalPhoto(fileId: String, description: String, device: DeviceServices, modifier: Modifier = Modifier, onUnavailable: () -> Unit = {}) {
+fun LocalPhoto(fileId: String, description: String, device: DeviceServices, modifier: Modifier = Modifier, onUnavailable: () -> Unit = {}, height: androidx.compose.ui.unit.Dp = 158.dp) {
     var frame by remember(fileId) { mutableStateOf<PhotoFrame>(PhotoFrame.Loading) }
     var visible by remember(fileId) { mutableStateOf(false) }
     val windowHeight = LocalWindowInfo.current.containerSize.height
     LaunchedEffect(fileId, visible) {
         frame = PhotoFrame.Loading
-        if (visible) frame = withContext(Dispatchers.Default) { device.photoBytes(fileId)?.let(::decodeLocalPhoto)?.let(PhotoFrame::Ready) ?: PhotoFrame.Missing }
+        if (visible) frame = try {
+            withContext(Dispatchers.Default) { device.photoBytes(fileId)?.let(::decodeLocalPhoto)?.let(PhotoFrame::Ready) ?: PhotoFrame.Missing }
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (_: Exception) { PhotoFrame.Missing }
     }
     val bitmap = (frame as? PhotoFrame.Ready)?.bitmap
     LaunchedEffect(fileId, frame, visible) { if (visible && frame == PhotoFrame.Missing) onUnavailable() }
-    Box(modifier.fillMaxWidth().then(if (frame == PhotoFrame.Missing) Modifier.heightIn(min = 158.dp) else Modifier.height(158.dp)).onGloballyPositioned { coordinates ->
+    Box(modifier.fillMaxWidth().then(if (frame == PhotoFrame.Missing) Modifier.heightIn(min = height) else Modifier.height(height)).onGloballyPositioned { coordinates ->
         val top = coordinates.positionInWindow().y
         visible = top + coordinates.size.height >= -220 && top <= windowHeight + 220
     }) {

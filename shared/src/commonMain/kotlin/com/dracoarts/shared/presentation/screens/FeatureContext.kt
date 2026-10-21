@@ -36,7 +36,11 @@ data class FeatureContext(
     val dog get() = journal.selectedDog!!
     val items get() = if (careState.dogId == dog.id) careState.items else emptyList()
     val saving get() = careState.saving || journal.saving
-    fun open(feature: Feature, id: String = "") = navigation.open(feature, id)
+    fun open(feature: Feature, id: String = "") {
+        // SQLite owns the photo draft; a completed picker's old request/file must not be reused.
+        if (feature == Feature.PhotoForm && id == "picker") resetFeatureView(FeaturePage(feature, id))
+        navigation.open(feature, id)
+    }
     fun showSavedFeature(feature: Feature, id: String) {
         // Clear retained view state only; the committed record and draft live in SQLite.
         resetFeatureView(FeaturePage(feature, id))

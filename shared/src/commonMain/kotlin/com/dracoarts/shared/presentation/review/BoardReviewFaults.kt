@@ -55,6 +55,11 @@ class BoardReviewFaults(val screen: String?) {
             if (screen == "medication-save-error" && data is CareItemData.Administration && once("administration-write")) error("Owned QA administration fault")
             return care.recordActivity(dogId, id, occurredAt, data)
         }
+        override suspend fun savePhotoAndMemory(dogId: String, id: String, occurredAt: Long, data: CareItemData.Photo,
+            expectedRevision: Long?, selection: PhotoMemorySelection, included: Boolean, collectionId: String, draftSlot: String?): PhotoMemoryResult {
+            if (screen == "cat-photo-save-error" && once("photo-memory-write")) error("Owned QA photo write fault")
+            return care.savePhotoAndMemory(dogId, id, occurredAt, data, expectedRevision, selection, included, collectionId, draftSlot)
+        }
     }
 
     suspend fun trainingPrograms(): List<TrainingProgram> {

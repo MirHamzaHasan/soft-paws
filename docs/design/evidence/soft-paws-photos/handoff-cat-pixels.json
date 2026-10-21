@@ -1,0 +1,30 @@
+{
+  "android": {
+    "imageSize": [
+      1170,
+      2532
+    ],
+    "catCrop": [
+      640,
+      600,
+      1050,
+      1100
+    ],
+    "changedPixels": 9371,
+    "foregroundHome": true
+  },
+  "ios": {
+    "imageSize": [
+      750,
+      1334
+    ],
+    "catCrop": [
+      405,
+      315,
+      680,
+      640
+    ],
+    "changedPixels": 7614,
+    "foregroundHome": true
+  }
+}

@@ -56,6 +56,13 @@ class CareController(private val repository: CareRepository, private val haptics
         } finally { cleaning.unlock() }
     }
     suspend fun save(dogId: String, id: String, time: Long, data: CareItemData, revision: Long? = null, draftSlot: String? = null): CareItem? = write { repository.saveItem(dogId, id, time, data, revision, draftSlot) }
+    suspend fun savePhotoAndMemory(dogId: String, id: String, time: Long, data: CareItemData.Photo, revision: Long?, selection: PhotoMemorySelection,
+        included: Boolean, collectionId: String, draftSlot: String): PhotoMemoryResult? = write {
+        repository.savePhotoAndMemory(dogId, id, time, data, revision, selection, included, collectionId, draftSlot).also { result ->
+            val changed = listOf(result.photo) + result.collections
+            _state.update { if (it.dogId == dogId) it.copy(items = (it.items.filterNot { old -> changed.any { saved -> saved.id == old.id } } + changed).sortedByDescending { item -> item.occurredAt }) else it }
+        }
+    }
     suspend fun activity(dogId: String, id: String, time: Long, data: CareItemData): CareItem? = write { repository.recordActivity(dogId, id, time, data) }
     suspend fun delete(item: CareItem): Boolean = write { repository.deleteItem(item); _state.update { it.copy(items = it.items.filterNot { record -> record.id == item.id }) }; true } == true
     suspend fun undoTaskCompletion(item: CareItem, expectedEventRevision: Long?): Boolean = write {

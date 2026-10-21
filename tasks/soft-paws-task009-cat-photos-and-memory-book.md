@@ -1,6 +1,6 @@
 # Soft Paws task009 · private cat photos and Memory Book
 
-21 October 2026. Status: research prepared; native implementation pending.
+21 October 2026. Status: implemented; native simulator and build checks pass. Individual visual/physical approval remains open.
 
 Approved destinations are `photo-picker`, `photo-detail` and `memory-book`.
 Keep the real local image picker/private copy, original library file, dated photo
@@ -49,5 +49,29 @@ timestamp while eligible photos use entered dates; cover month/time-zone behavio
 before changing this. Retain the current collection, highlight, caption and share
 subflows, photo baselines and older-photo access within the cat composition.
 
-This preparation does not change any inventory status. task008's final platform
-and evidence checks remain the active delivery slice.
+Implementation, transactional storage tests and both-platform native journeys pass.
+The three destinations are now implemented-unverified; this is not individual
+owner visual approval.
+See [the implementation contract](../docs/product/soft-paws-photos-and-memory-book.md).
+
+## Storage verification · 21 October
+
+177 JVM tests pass, including four new actual SQLite tests for transactional
+photo/collection rollback, stale revision rejection, retained drafts/files and
+independent captions, disk reopen, cat isolation, legacy decoding and explicit
+month behavior after travel. Archival entered dates before 1970 stay in photo
+reports without inventing care events. All 30 tooling checks, Android
+Debug/Release/lint/migrations and current iOS Debug/Release hosts/bundles pass.
+The final optimized iOS Release framework completed in 11m 3s.
+
+Android passes the full journey at normal text (263.702s) and cold-start 130%
+(277.057s). iOS passes five normal, two larger-text and one actual missing-file
+case. Native PDF contents and selected sources are verified; both native share
+and print sheets open and are dismissed without delivery. The second import
+in the same session starts a fresh editor; confirmed deletion preserves the first
+photo and source library file. Paired light/dark and larger-text evidence was
+inspected. See [the recorded evidence](../docs/design/evidence/soft-paws-photos/README.md).
+
+The global inventory is 58 implemented-unverified / 31 pending. Physical-device,
+assistive-technology, minimum-OS and individual native visual review remain open.
+The full approved cat port remains active.

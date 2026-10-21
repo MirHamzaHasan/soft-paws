@@ -105,10 +105,14 @@ confirmed removal captures the displayed revision.
 The nine Safety screens now preserve both contact slots and independent notes,
 carry caregiver selections into a free call summary and keep region/manual-place
 fallbacks available without AI. Safety prompts use cat wording and retain the
-unconfigured-service/consent guards. Android native journeys and 173 JVM tests
+unconfigured-service/consent guards. Native photo selection, private files,
+retained drafts and month-specific Memory Book selections now use the cat kit.
+Atomic photo/membership saves retain separate captions, collection IDs and legacy
+links; missing files preserve metadata. Actual PDF/share/print uses the existing
+entitlement guard. Android native journeys and 177 JVM tests
 pass. Health/document, planning and Safety journeys cover both platforms and
 larger text, including actual native location denial. Current Debug/Release builds
-and paired screen evidence pass. The inventory is 55 implemented-unverified / 34 pending; individual native visual
+and paired screen evidence pass. The inventory is 58 implemented-unverified / 31 pending; individual native visual
 approval remains open. The initial iOS
 host compiled; its accessibility crash was corrected with the official iOS
 renderer update and the repeated-navigation/save/relaunch tests now pass.

@@ -1,0 +1,8 @@
+{
+  "cat" : true,
+  "collectionCaption" : true,
+  "noUnselectedSecondPhoto" : true,
+  "pages" : 8,
+  "photoCaption" : true,
+  "productTitle" : true
+}

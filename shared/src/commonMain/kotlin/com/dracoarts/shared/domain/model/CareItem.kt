@@ -35,7 +35,7 @@ sealed interface CareItemData {
     @Serializable @SerialName("expense") data class Expense(
         val minorUnits: Long, val currency: String, val category: String, val date: String, val notes: String = "", val receiptId: String? = null, val description: String = "",
     ) : CareItemData
-    @Serializable @SerialName("memory") data class Memory(val sourceIds: List<String>, val caption: String = "") : CareItemData
+    @Serializable @SerialName("memory") data class Memory(val sourceIds: List<String>, val caption: String = "", val month: String = "") : CareItemData
 }
 
 @Serializable enum class Repeat { None, Daily, Weekly, Monthly }
@@ -79,7 +79,12 @@ object CareItemRules {
             is CareItemData.Session -> { require(data.programId in TrainingCatalog.programs.map { it.id }); require(data.step >= 0 && data.step < TrainingCatalog.programs.first { it.id == data.programId }.steps.size); require(data.seconds in 1..7200 && data.responses in 0..10000); require(data.rating in listOf("Easy", "Getting there", "Try again")); text(data.mood, 60, true); text(data.notes) }
             is CareItemData.Photo -> { file(data.fileId); text(data.title, 240, true); date(data.date); text(data.category, 60, true); text(data.bodyArea, 120); text(data.notes) }
             is CareItemData.Expense -> { require(data.minorUnits in 1..999_999_999_999L); require(data.currency in Money.currencies); text(data.category, 60, true); date(data.date); text(data.notes); text(data.description, 160); data.receiptId?.let { require(LocalAttachmentRules.receipt.matches(it)) { "Invalid local receipt." } } }
-            is CareItemData.Memory -> { require(data.sourceIds.size in 1..100 && data.sourceIds.distinct().size == data.sourceIds.size); data.sourceIds.forEach { text(it, 80, true) }; text(data.caption, 500) }
+            is CareItemData.Memory -> {
+                require(data.sourceIds.size <= 100 && data.sourceIds.distinct().size == data.sourceIds.size)
+                require(data.sourceIds.isNotEmpty() || data.month.isNotBlank()) { "Choose a saved moment." }
+                if (data.month.isNotBlank()) { require(Regex("\\d{4}-\\d{2}").matches(data.month)); date("${data.month}-01") }
+                data.sourceIds.forEach { text(it, 80, true) }; text(data.caption, 500)
+            }
         }
     }
 }

@@ -221,5 +221,30 @@ All paired light/dark and larger-text captures were inspected:
 
 The inventory is now **55 implemented-unverified / 34 pending**. Individual native
 visual approval, physical/assistive and Android live font-change review remain
-open. Task009's photo/Memory Book research and both-theme board review are
-prepared; its native implementation has not started. The full cat port stays active.
+open. The photo/Memory Book chapter below supersedes this implementation count.
+
+
+## 21 October · private cat photos and Memory Book
+
+The three approved photo-picker, photo-detail and memory-book surfaces now use
+the cat kit and actual local images/records. Native selection, private copies,
+retained drafts, title/date/category metadata, replacement and confirmed removal
+remain functional. Photo captions and collection captions stay independent. A
+revision-guarded SQL transaction commits the photo, month-specific membership
+and draft consumption together; failure retains the previous records and draft.
+Removing the last source retains the collection ID/caption. Legacy missing links
+and original dates remain intact. PDF/print/share retain current entitlement
+guards and explicit native handoff; mobile reading stays free.
+
+All **177 JVM tests**, **30 tooling checks**, Android Debug/Release/lint/migrations
+and iOS Debug/Release hosts/bundles pass. Android's full journey passes at normal
+and cold-start 130% text. iOS passes five normal, two larger-text and one actual
+missing-file case. Both platforms verify a second native import without relaunch,
+confirmed deletion, retained captions, rollback/retry and native share/print.
+Actual PDF text verifies the chosen sources and separate captions. Paired
+light/dark and larger-text captures were inspected; see
+[photo/Memory Book evidence](../docs/design/evidence/soft-paws-photos/README.md).
+
+The inventory is now **58 implemented-unverified / 31 pending**. Individual native
+visual, physical/assistive, minimum-OS and live Android font-change review remain
+open. The full cat port stays active.

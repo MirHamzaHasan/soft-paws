@@ -136,6 +136,10 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                         // Cat review routes resolve an actual record in the selected journal.
                         // Historical BarkLog fixture IDs never stand in for a cat's plan.
                         care.items(journal.selectedDogId!!).firstOrNull { it.data is CareItemData.Medication }?.id.orEmpty()
+                    } else if (reviewStart in setOf("photo-detail", "photo-missing", "photo-form")) {
+                        care.items(journal.selectedDogId!!).firstOrNull { it.data is CareItemData.Photo }?.id.orEmpty()
+                    } else if (reviewStart in setOf("memory-highlight", "memory-caption", "memory-photo-missing")) {
+                        care.items(journal.selectedDogId!!).firstOrNull { it.data is CareItemData.Memory }?.id.orEmpty()
                     } else if (reviewStart in setOf("expense-detail", "expense-delete")) {
                         care.items(journal.selectedDogId!!).firstOrNull { it.data is CareItemData.Expense }?.id.orEmpty() + if (reviewStart == "expense-delete") "@delete" else ""
                     } else if (reviewStart in setOf("report", "export-options", "export-progress", "cat-export-failure") && reviewStart in boardReviewFeatures) {
@@ -248,7 +252,7 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                     }
                 }
                 footer?.let { action ->
-                    val healthFooter = state.featurePage?.feature?.let { it in healthRecordScreens || it in carePlanningScreens || it in catSafetyScreens || it in catReportScreens || it in catExpenseScreens } == true
+                    val healthFooter = state.featurePage?.feature?.let { it in healthRecordScreens || it in carePlanningScreens || it in catSafetyScreens || it in catReportScreens || it in catExpenseScreens || it in catPhotoScreens || it in catMemoryScreens } == true
                     Surface(Modifier.fillMaxWidth(), color = boardColor("ground"), border = if (healthFooter) null else androidx.compose.foundation.BorderStroke(1.dp, boardColor("hair"))) {
                         Column {
                             if (healthFooter) HorizontalDivider(color = boardColor("hair"), thickness = 1.dp)

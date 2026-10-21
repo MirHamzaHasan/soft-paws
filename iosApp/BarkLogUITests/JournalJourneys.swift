@@ -2495,3 +2495,234 @@ final class SoftPawsExpensesJourneys: XCTestCase {
         }
     }
 }
+
+final class SoftPawsPhotoMemoryJourneys: XCTestCase {
+    private let app = XCUIApplication(bundleIdentifier: "com.draco.apps.soft.paws")
+    private let fixturePreference = "-barklog_preference_v1_board_review_softpawsday_v1_"
+    private func launch(_ screen: String, _ theme: String = "Light") {
+        app.terminate()
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "soft-paws-day-v1", "-DesignReviewScreen", screen,
+            fixturePreference + "theme", theme, fixturePreference + "reduce_motion", "true"]
+        app.launch()
+        let headings = ["photo-picker": "One moment at a time.", "cat-photo-save-error": "One moment at a time.", "photo-journal": "Ordinary, lovely days.", "memory-book": "October, in small moments."]
+        if let heading = headings[screen] { XCTAssertTrue(item(heading).waitForExistence(timeout: 25)) }
+        Thread.sleep(forTimeInterval: 0.5)
+    }
+    private func item(_ label: String) -> XCUIElement {
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+        for query in [app.buttons.matching(predicate), app.textFields.matching(predicate), app.textViews.matching(predicate)] {
+            if query.firstMatch.exists { return query.firstMatch }
+        }
+        return app.descendants(matching: .any).matching(predicate).firstMatch
+    }
+    private func reveal(_ label: String) -> XCUIElement {
+        for _ in 0..<64 {
+            let value = item(label)
+            let confirmation = item("Delete this photo reference?").exists || item("Keep this draft?").exists
+            let footers = confirmation ? [] : ["Keep photo", "Keep caption", "Continue photo draft", "Choose a photo", "Back to photos", "Keep collection caption", "Edit collection caption", "PDF, print & sharing", "Choose highlights", "Prepare PDF", "Share PDF", "Print PDF", "Back to Memory Book", "Continue with free journal", "Add a photo"].map { app.buttons[$0] }.filter { $0.exists && $0.isHittable && $0.frame.minY > 200 }
+            let bottom = footers.map { $0.frame.minY - 14 }.min() ?? app.frame.maxY - 22
+            if value.exists && value.isHittable && (value.elementType != .button || value.frame.height >= 44) && value.frame.minY > 30 && (footers.contains(where: { $0.label == label }) || value.frame.maxY < bottom) {
+                Thread.sleep(forTimeInterval: 0.4); return item(label)
+            }
+            let x = app.frame.width - 9
+            let back = app.buttons["Back"]
+            let headerAbove = ["Name this moment", "Your caption", "Choose replacement", "Collection caption"].contains(label) && back.exists && back.frame.maxY < 40
+            let upwards = label == "Back" || headerAbove || (value.exists && value.frame.maxY < 40)
+            let start = upwards ? CGFloat(150) : min(app.frame.height * 0.5, max(220, bottom - 25))
+            let end = upwards ? min(bottom - 24, CGFloat(420)) : max(90, start - 240)
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: start)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: end)),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        capture("ios-photos-missing"); XCTFail("Missing control \(label): \(app.debugDescription)"); return item(label)
+    }
+    private func press(_ label: String) {
+        var value = reveal(label)
+        for _ in 0..<5 {
+            let frame = value.frame; Thread.sleep(forTimeInterval: 0.3); value = item(label)
+            if abs(value.frame.midY - frame.midY) < 1 { break }
+        }
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        Thread.sleep(forTimeInterval: 0.6)
+    }
+    private func fill(_ label: String, _ text: String) {
+        let value = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let input = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.2, dy: 0.3)).tap()
+        if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { input.tap() }
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 4))
+        if let old = input.value as? String, old != "Empty", !old.isEmpty {
+            // Tap after the final line, then clear through the native keyboard.
+            input.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.85)).tap()
+            input.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: old.count + 2))
+            let empty = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@ OR value == %@", "", "Empty"), object: input)
+            XCTAssertEqual(XCTWaiter.wait(for: [empty], timeout: 3), .completed)
+        }
+        input.typeText(text)
+        let entered = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", text), object: input)
+        XCTAssertEqual(XCTWaiter.wait(for: [entered], timeout: 3), .completed)
+        let done = app.keyboards.buttons["Done"]
+        if done.exists { done.tap() }
+        else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.12)).tap() }
+        Thread.sleep(forTimeInterval: 1)
+    }
+    private func capture(_ name: String) {
+        let image = XCTAttachment(screenshot: app.screenshot()); image.name = name; image.lifetime = .keepAlways; add(image)
+    }
+    private func value(_ label: String) -> String {
+        _ = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let field = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        XCTAssertTrue(field.exists, app.debugDescription)
+        return field.value as? String ?? ""
+    }
+
+    private func chooseImage() {
+        let photo = app.images.matching(NSPredicate(format: "identifier == %@ AND label BEGINSWITH %@", "PXGGridLayout-Info", "Photo,")).firstMatch
+        XCTAssertTrue(photo.waitForExistence(timeout: 10), app.debugDescription)
+        capture("ios-native-photo-choice"); photo.tap()
+        XCTAssertTrue(item("One moment, kept.").waitForExistence(timeout: 15), app.debugDescription)
+    }
+    private func openOwnCollection(_ title: String) { press("Open collection: " + title) }
+    func testAPrivatePhotoDraftAndIndependentCollectionCaptions() {
+        continueAfterFailure = false
+        let title = "Window watch QA \(Int(Date().timeIntervalSince1970))"
+        launch("next-manage-plan")
+        if item("Debug Premium preview").waitForExistence(timeout: 3) { press("End Debug preview") }
+        launch("cat-photo-save-error")
+        if item("Continue photo draft").waitForExistence(timeout: 2) { press("Continue photo draft"); press("Back"); press("Discard draft"); launch("cat-photo-save-error"); XCTAssertFalse(item("Continue photo draft").exists) }
+        press("Choose a photo")
+        let cancel = app.buttons["Cancel"].firstMatch
+        XCTAssertTrue(cancel.waitForExistence(timeout: 10)); capture("ios-native-photo-picker"); cancel.tap()
+        XCTAssertTrue(item("Selection cancelled. Your draft is still here.").waitForExistence(timeout: 6))
+        press("Choose a photo"); chooseImage()
+        fill("Name this moment", title); fill("Your caption", "Photo words stay separate")
+        press("Include in October’s Memory Book")
+        press("Back"); press("Keep draft")
+        launch("cat-photo-save-error"); press("Continue photo draft")
+        XCTAssertEqual(value("Name this moment"), title); XCTAssertEqual(value("Your caption"), "Photo words stay separate")
+        capture("ios-retained-photo-draft"); press("Keep photo")
+        let failure = item("Couldn't save this change. Your draft is still here. Please try again.")
+        XCTAssertTrue(failure.waitForExistence(timeout: 8)); XCTAssertEqual(value("Name this moment"), title)
+        capture("ios-photo-save-failed"); press("Keep photo")
+        XCTAssertTrue(item("Your caption").waitForExistence(timeout: 10))
+        capture("ios-light-photo-detail")
+        press("Back to photos"); press("Add a photo")
+        XCTAssertFalse(item("Continue photo draft").exists)
+        press("Choose a photo"); chooseImage(); XCTAssertTrue(["", "Empty"].contains(value("Name this moment")))
+        fill("Name this moment", "Second " + title); fill("Your caption", "Independent second moment"); press("Keep photo")
+        XCTAssertTrue(item("Your caption").waitForExistence(timeout: 10)); capture("ios-second-photo-same-session")
+        press("Delete photo reference"); press("Delete reference")
+        XCTAssertTrue(item("Ordinary, lovely days.").waitForExistence(timeout: 10))
+        press(title)
+        fill("Your caption", "Photo caption edited on phone"); press("Keep caption")
+        launch("photo-journal"); press(title); XCTAssertEqual(value("Your caption"), "Photo caption edited on phone")
+        launch("memory-book"); capture("ios-light-memory-book"); openOwnCollection(title)
+        press("Edit collection caption"); fill("Collection caption", "Collection words remain independent"); press("Keep collection caption")
+        XCTAssertTrue(item("Collection words remain independent").waitForExistence(timeout: 10)); capture("ios-collection-caption")
+        press("PDF, print & sharing"); XCTAssertTrue(item("Your preview stays free").waitForExistence(timeout: 8)); capture("ios-memory-premium-boundary")
+        launch("photo-journal"); press(title); XCTAssertEqual(value("Your caption"), "Photo caption edited on phone")
+        press("Include in October’s Memory Book"); press("Keep caption")
+        launch("memory-book"); XCTAssertTrue(reveal("Collection words remain independent").exists); capture("ios-caption-retained-without-sources")
+        launch("photo-journal"); press(title); press("Include in October’s Memory Book"); press("Keep caption")
+        press("Edit photo details or replace image"); XCTAssertEqual(value("Name this moment"), title)
+        capture("ios-photo-full-editor"); press("Choose replacement")
+        XCTAssertTrue(cancel.waitForExistence(timeout: 10)); cancel.tap()
+        XCTAssertTrue(item("Selection cancelled. Your draft is still here.").waitForExistence(timeout: 6))
+        press("Back"); press("Delete photo reference"); press("Keep photo")
+        XCTAssertEqual(value("Your caption"), "Photo caption edited on phone")
+    }
+    func testBCatPhotoAndMemoryScreensInBothThemes() {
+        continueAfterFailure = false
+        for theme in ["Light", "Dark"] {
+            for screen in ["photo-picker", "photo-detail", "memory-book"] {
+                launch(screen, theme)
+                if screen == "photo-detail" { XCTAssertTrue(item("Your caption").waitForExistence(timeout: 12)) }
+                capture("ios-" + theme.lowercased() + "-" + screen)
+                if screen == "photo-detail" {
+                    let input = reveal("Your caption")
+                    XCTAssertGreaterThan(input.frame.height, 85)
+                    _ = reveal("Include in October’s Memory Book"); capture("ios-" + theme.lowercased() + "-photo-detail-more")
+                }
+            }
+        }
+        launch("memory-empty"); XCTAssertTrue(item("Your chosen highlights").waitForExistence(timeout: 12)); capture("ios-memory-empty")
+    }
+    func testCPhotoAccessDenialKeepsThePickerUsable() {
+        continueAfterFailure = false
+        launch("photo-permission-denied"); press("Choose a photo")
+        XCTAssertTrue(item("This photo wasn't accessible. Your entries stay here.").waitForExistence(timeout: 6))
+        capture("ios-photo-access-denied")
+        press("Choose a photo"); let cancel = app.buttons["Cancel"].firstMatch
+        XCTAssertTrue(cancel.waitForExistence(timeout: 10)); cancel.tap()
+    }
+    func testDPreparedMemoryPdfUsesExplicitNativeShareAndPrint() {
+        continueAfterFailure = false
+        launch("next-paywall"); press("Try Debug Premium preview")
+        XCTAssertTrue(item("Let’s talk about your cat.").waitForExistence(timeout: 15))
+        defer {
+            launch("next-manage-plan")
+            press("End Debug preview")
+        }
+        launch("memory-share"); press("Prepare PDF")
+        XCTAssertTrue(item("Your PDF is ready").waitForExistence(timeout: 15)); capture("ios-memory-pdf-ready")
+        press("Share PDF")
+        XCTAssertTrue(app.cells["Copy"].waitForExistence(timeout: 8) || app.cells["Save to Files"].exists, app.debugDescription)
+        capture("ios-native-memory-share")
+        let close = app.buttons["Close"].firstMatch; XCTAssertTrue(close.waitForExistence(timeout: 5)); close.tap()
+        press("Print PDF")
+        let cancel = app.buttons["Cancel"].firstMatch; XCTAssertTrue(cancel.waitForExistence(timeout: 8), app.debugDescription)
+        capture("ios-native-memory-print"); cancel.tap()
+    }
+
+    func testEPhotoPreviewOpensItsSavedDetails() {
+        continueAfterFailure = false
+        launch("photo-journal")
+        let images = app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", "Window watch QA")).allElementsBoundByIndex
+            .filter { $0.frame.height > 120 && $0.frame.minY > 40 && $0.frame.maxY < 560 }
+        XCTAssertFalse(images.isEmpty, app.debugDescription)
+        let image = images[0]; let label = image.label
+        capture("ios-photo-preview-action"); image.tap()
+        XCTAssertTrue(item("Keep caption").waitForExistence(timeout: 10))
+        XCTAssertTrue(item(label).exists)
+        capture("ios-photo-preview-opened-detail")
+    }
+
+}
+
+/// Run only while the host harness temporarily holds the selected owned QA image.
+final class SoftPawsMissingPhotoJourney: XCTestCase {
+    func testMissingFileKeepsCaptionAndReplacementAvailable() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication(bundleIdentifier: "com.draco.apps.soft.paws")
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "soft-paws-day-v1", "-DesignReviewScreen", "photo-detail",
+            "-barklog_preference_v1_board_review_softpawsday_v1_theme", "Light", "-barklog_preference_v1_board_review_softpawsday_v1_reduce_motion", "true"]
+        app.launch()
+        guard app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "Photo unavailable")).firstMatch.waitForExistence(timeout: 20) else { throw XCTSkip("Requires the owned missing-file harness; no caregiver file is removed by this test.") }
+        func capture(_ name: String) { let a = XCTAttachment(screenshot: app.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a) }
+        capture("ios-photo-missing-file")
+        let input = app.textViews.matching(NSPredicate(format: "label == %@ OR label BEGINSWITH %@", "Your caption", "Your caption, ")).firstMatch
+        for _ in 0..<12 {
+            if input.exists && input.isHittable && input.frame.minY > 50 && input.frame.maxY < 525 { break }
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: 366, dy: 330)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: 366, dy: 140)),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+        }
+        XCTAssertTrue(input.exists && input.isHittable)
+        XCTAssertGreaterThan(input.frame.height, 85)
+        XCTAssertFalse(["", "Empty"].contains(input.value as? String ?? ""))
+        capture("ios-photo-missing-caption-retained")
+        let edit = app.buttons.matching(NSPredicate(format: "label == %@ OR label BEGINSWITH %@", "Edit photo details or replace image", "Edit photo details or replace image, ")).firstMatch
+        for _ in 0..<8 {
+            if edit.exists && edit.isHittable && edit.frame.maxY < 525 { break }
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: 366, dy: 330)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: 366, dy: 140)),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+        }
+        XCTAssertTrue(edit.exists && edit.isEnabled); capture("ios-photo-replacement-still-available")
+    }
+}

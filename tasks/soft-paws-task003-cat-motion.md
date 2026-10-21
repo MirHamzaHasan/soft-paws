@@ -36,3 +36,9 @@ transparent interaction, return to idle and visibility pause/resume.
 
 The full native port remains **29 implemented-unverified / 60 pending**. This
 motion correction does not imply approval or implementation of other surfaces.
+
+21 October recheck after task009: the current-build cat-motion case passes again
+on Android (37.901s) and iOS (one case), covering ongoing Idle, tap, dark theme
+and reduced motion. Both owned apps return to Home for review. See the
+[current-build evidence](../docs/design/evidence/soft-paws-photos/README.md).
+Task009 supersedes the historical inventory count above.

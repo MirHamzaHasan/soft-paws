@@ -1,0 +1,54 @@
+{
+  "productionSourceUnchanged": true,
+  "productionSourceFiles": 254,
+  "jvmTests": 177,
+  "jvmFailures": 0,
+  "toolingTests": 30,
+  "android": {
+    "debugReleaseLintMigrations": "passed",
+    "normalJourneySeconds": 263.702,
+    "largeJourneySeconds": 277.057,
+    "fontScaleRestored": "1.0",
+    "coldStartFontQaOnly": true,
+    "nativePhotoPickerAndPdfSharePrint": true,
+    "realSqliteRollback": true,
+    "sameSessionSecondImportAndConfirmedDelete": true,
+    "missingFileMetadataPreserved": true,
+    "denialUsesDebugAdapterFault": true,
+    "finalCatMotionSeconds": 37.901,
+    "finalCatMotionCases": 1
+  },
+  "ios": {
+    "normalCases": 5,
+    "largerTextCases": 2,
+    "actualMissingFileCases": 1,
+    "fullCaptionInputMinHeight": 85,
+    "textSizeRestored": "large",
+    "sameSessionSecondImportAndConfirmedDelete": true,
+    "debugHostBundle": "passed",
+    "optimizedReleaseFrameworkHost": "passed",
+    "optimizedFrameworkElapsed": "11m 3s",
+    "releaseHostBundle": "passed",
+    "finalCatMotionCases": 1
+  },
+  "pdf": {
+    "androidPages": 10,
+    "iosPages": 8,
+    "actualContentsAndSourceSelection": "passed",
+    "externalDeliveryPerformed": false,
+    "access": "explicit Debug preview; real entitlement and Release guards retained"
+  },
+  "limitations": [
+    "Individual native visual approval remains open",
+    "Physical/assistive and minimum-OS behavior remain open",
+    "Android live font-change behavior remains unverified",
+    "OS access denial is simulated by a labelled Debug adapter fault"
+  ],
+  "artifactHashes": {
+    ".verify-build/androidApp/outputs/apk/debug/androidApp-debug.apk": "006f505540c565f3ea7799b55198c06432d64e1ff7d9621f99a1b67e18ea7a2c",
+    ".verify-build/androidApp/outputs/apk/release/androidApp-release-unsigned.apk": "e28e40275c8c54ce0d48c5d8422edea72caf8466d284052ff533b44cd4158842",
+    ".verify-build/shared/bin/iosSimulatorArm64/debugFramework/Shared.framework/Shared": "274e24bb893036f386f9aac43531c9a8440c15eaaac6584d8a6330269e72567b",
+    ".verify-build/shared/bin/iosSimulatorArm64/releaseFramework/Shared.framework/Shared": "0ca5e070da2730b7f756e164d188785fa731a009f23ae9ed2f885a5ae76c500f",
+    ".verify-build/soft-paws-release-xcode/Build/Products/Release-iphonesimulator/iosApp.app/iosApp": "68fbcaa5b473ba582546714a0cad19a6e124349332da2b080c046b542710923a"
+  }
+}

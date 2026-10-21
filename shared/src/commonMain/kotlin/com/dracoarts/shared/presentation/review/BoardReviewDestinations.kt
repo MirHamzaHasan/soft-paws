@@ -99,6 +99,7 @@ val boardReviewFeatures = mapOf(
     "photo-missing" to Feature.PhotoDetail,
     "photo-unavailable" to Feature.PhotoForm,
     "photo-permission-denied" to Feature.PhotoForm,
+    "cat-photo-save-error" to Feature.PhotoForm,
     "expenses" to Feature.Expenses,
     "expenses-list" to Feature.Expenses,
     "expense-form" to Feature.ExpenseForm,

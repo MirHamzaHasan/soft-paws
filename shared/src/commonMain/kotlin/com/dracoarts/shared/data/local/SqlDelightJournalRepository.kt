@@ -1,5 +1,8 @@
 package com.dracoarts.shared.data.local
 
+import com.dracoarts.shared.domain.model.PhotoMemorySelection
+import com.dracoarts.shared.domain.model.PhotoMemoryResult
+
 import app.cash.sqldelight.db.QueryResult
 import app.cash.sqldelight.db.SqlDriver
 import com.dracoarts.shared.domain.model.CareEvent
@@ -275,10 +278,38 @@ class SqlDelightJournalRepository(
         if (data is CareItemData.Medication && (data.archived || data.reminder == null && (old?.data as? CareItemData.Medication)?.reminder != null)) q.queueCleanup("reminder", id)
         if (data is CareItemData.Task && !data.remind && (old?.data as? CareItemData.Task)?.remind == true) q.queueCleanup("reminder", id)
         if (data is CareItemData.Memory) {
-            val unchanged = (old?.data as? CareItemData.Memory)?.sourceIds == data.sourceIds
-            require(unchanged || data.sourceIds.all { source -> q.eventById(dogId, source).executeAsOneOrNull() != null || (q.itemById(dogId, source).executeAsOneOrNull()?.let(::toItem)?.data is CareItemData.Photo) }) { "A selected source record changed. Choose the highlights again." }
+            val previous = (old?.data as? CareItemData.Memory)?.sourceIds.orEmpty()
+            require(data.sourceIds.all { source -> source in previous || q.eventById(dogId, source).executeAsOneOrNull() != null || (q.itemById(dogId, source).executeAsOneOrNull()?.let(::toItem)?.data is CareItemData.Photo) }) { "A selected source record changed. Choose the highlights again." }
         }
         return CareItem(id, dogId, occurredAt, old?.createdAt ?: now, now, (old?.revision ?: 0) + 1, data)
+    }
+
+    override suspend fun savePhotoAndMemory(dogId: String, id: String, occurredAt: Long, data: CareItemData.Photo,
+        expectedRevision: Long?, selection: PhotoMemorySelection, included: Boolean, collectionId: String, draftSlot: String?): PhotoMemoryResult {
+        CareItemRules.validate(data); validId(id); validId(collectionId); validTimestamp(occurredAt)
+        require(collectionId != id && selection.month == data.date.take(7)) { "Review this photo's Memory Book month." }
+        val zone = kotlinx.datetime.TimeZone.of(selection.zoneId)
+        return mutate { q ->
+            requireDog(q, dogId)
+            val all = q.itemsForDog(dogId).executeAsList().map(::toItem)
+            val linked = PhotoMemorySelection.linked(dogId, id, selection.month, zone, all)
+            if (linked.associate { it.id to it.revision } != selection.revisions) throw RecordConflictException()
+            val photo = saveItem(q, dogId, id, occurredAt, data, expectedRevision)
+            val changed = mutableListOf<CareItem>()
+            if (included && linked.isEmpty()) {
+                val book = CareItemData.Memory(listOf(id), month = selection.month)
+                CareItemRules.validate(book)
+                changed += saveItem(q, dogId, collectionId, occurredAt, book, null)
+            } else if (!included) linked.forEach { item ->
+                val old = item.data as CareItemData.Memory
+                // Keep the collection ID, caption and other sources, including missing legacy sources.
+                val book = old.copy(sourceIds = old.sourceIds.filterNot { it == id }, month = old.month.ifBlank { selection.month })
+                CareItemRules.validate(book)
+                changed += saveItem(q, dogId, item.id, item.occurredAt, book, item.revision)
+            }
+            draftSlot?.let { consumeDraft(q, dogId, it) }
+            PhotoMemoryResult(photo, changed)
+        }
     }
 
     override suspend fun recordActivity(dogId: String, id: String, occurredAt: Long, data: CareItemData): CareItem {

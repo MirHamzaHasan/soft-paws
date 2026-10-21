@@ -12,6 +12,9 @@ interface CareRepository {
     suspend fun acknowledgeCleanup(job: DeviceCleanup)
     fun observeItems(dogId: String): Flow<List<CareItem>>
     suspend fun saveItem(dogId: String, id: String, occurredAt: Long, data: CareItemData, expectedRevision: Long? = null, draftSlot: String? = null): CareItem
+    /** Photo/caption and its explicitly chosen monthly membership commit together. */
+    suspend fun savePhotoAndMemory(dogId: String, id: String, occurredAt: Long, data: CareItemData.Photo,
+        expectedRevision: Long?, selection: PhotoMemorySelection, included: Boolean, collectionId: String, draftSlot: String?): PhotoMemoryResult
     suspend fun deleteItem(item: CareItem)
     /** Session/completion/administration and the factual Timeline record commit together. */
     suspend fun recordActivity(dogId: String, id: String, occurredAt: Long, data: CareItemData): CareItem

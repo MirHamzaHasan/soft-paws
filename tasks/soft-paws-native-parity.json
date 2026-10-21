@@ -735,26 +735,56 @@
     {
       "id": "photo-picker",
       "section": "memories",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/PhotoFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/domain/model/PhotoMemorySelection.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-photos/android-light-photo-picker.png",
+        "docs/design/evidence/soft-paws-photos/android-dark-photo-picker.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-photos/ios-light-photo-picker.png",
+        "docs/design/evidence/soft-paws-photos/ios-dark-photo-picker.png"
+      ],
+      "verificationNote": "Real native picker/private files, retained drafts and independent photo/collection captions; atomic revision-guarded selection, missing-file metadata, same-session imports and guarded native PDF/share/print. Normal/larger-text journeys and both platform builds pass. Paired evidence inspected; individual native visual, physical/assistive and Android live font-change review remain open."
     },
     {
       "id": "photo-detail",
       "section": "memories",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/PhotoFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/domain/model/PhotoMemorySelection.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-photos/android-light-photo-detail.png",
+        "docs/design/evidence/soft-paws-photos/android-dark-photo-detail.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-photos/ios-light-photo-detail.png",
+        "docs/design/evidence/soft-paws-photos/ios-dark-photo-detail.png"
+      ],
+      "verificationNote": "Real native picker/private files, retained drafts and independent photo/collection captions; atomic revision-guarded selection, missing-file metadata, same-session imports and guarded native PDF/share/print. Normal/larger-text journeys and both platform builds pass. Paired evidence inspected; individual native visual, physical/assistive and Android live font-change review remain open."
     },
     {
       "id": "memory-book",
       "section": "memories",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/MemoryFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/domain/model/PhotoMemorySelection.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-photos/android-light-memory-book.png",
+        "docs/design/evidence/soft-paws-photos/android-dark-memory-book.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-photos/ios-light-memory-book.png",
+        "docs/design/evidence/soft-paws-photos/ios-dark-memory-book.png"
+      ],
+      "verificationNote": "Real native picker/private files, retained drafts and independent photo/collection captions; atomic revision-guarded selection, missing-file metadata, same-session imports and guarded native PDF/share/print. Normal/larger-text journeys and both platform builds pass. Paired evidence inspected; individual native visual, physical/assistive and Android live font-change review remain open."
     },
     {
       "id": "video-editor",

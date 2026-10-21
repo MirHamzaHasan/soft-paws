@@ -12,12 +12,13 @@ suspend fun readCareReport(repository: JournalRepository, loadItems: suspend (St
     val from = LocalDate.parse(request.from); val through = LocalDate.parse(request.through)
     val start = from.atStartOfDayIn(zone).toEpochMilliseconds().coerceAtLeast(0)
     val end = through.plus(1, DateTimeUnit.DAY).atStartOfDayIn(zone).toEpochMilliseconds()
-    val records = repository.observeTimeline(TimelineFilter(cat.id, fromMillis = start, untilMillis = end), Int.MAX_VALUE).first().events
+    val records = if (end > start) repository.observeTimeline(TimelineFilter(cat.id, fromMillis = start, untilMillis = end), Int.MAX_VALUE).first().events else emptyList()
     val items = loadItems(cat.id).filter { item ->
         item.dogId == cat.id && when (val data = item.data) {
             is CareItemData.Expense -> LocalDate.parse(data.date) in from..through
             is CareItemData.Medication -> !data.archived || item.occurredAt in start until end
-            is CareItemData.Vaccination, is CareItemData.Photo -> item.occurredAt in start until end
+            is CareItemData.Photo -> LocalDate.parse(data.date) in from..through
+            is CareItemData.Vaccination -> item.occurredAt in start until end
             else -> false
         }
     }
