@@ -2726,3 +2726,165 @@ final class SoftPawsMissingPhotoJourney: XCTestCase {
         XCTAssertTrue(edit.exists && edit.isEnabled); capture("ios-photo-replacement-still-available")
     }
 }
+
+final class SoftPawsVideoJourneys: XCTestCase {
+    private let app = XCUIApplication(bundleIdentifier: "com.draco.apps.soft.paws")
+    private let fixturePreference = "-barklog_preference_v1_board_review_softpawsvideo_v1_"
+    private func launch(_ screen: String, _ theme: String = "Light", reduced: Bool = true) {
+        app.terminate()
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "soft-paws-video-v1", "-DesignReviewScreen", screen,
+            fixturePreference + "theme", theme, fixturePreference + "reduce_motion", reduced ? "true" : "false"]
+        app.launch()
+        let headings = ["video-editor": "A few moments, together.", "cat-video-denied": "A few moments, together."]
+        if let heading = headings[screen] { XCTAssertTrue(item(heading).waitForExistence(timeout: 25)) }
+        Thread.sleep(forTimeInterval: 0.5)
+    }
+    private func item(_ label: String) -> XCUIElement {
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@ OR label == %@ OR label BEGINSWITH %@", label, label + ", ", "✓ " + label, "✓ " + label + ", ")
+        for query in [app.buttons.matching(predicate), app.textFields.matching(predicate), app.textViews.matching(predicate)] {
+            if query.firstMatch.exists { return query.firstMatch }
+        }
+        return app.descendants(matching: .any).matching(predicate).firstMatch
+    }
+    private func reveal(_ label: String) -> XCUIElement {
+        for attempt in 0..<32 {
+            let value = item(label)
+            let confirmation = item("Choose your cat’s photos").exists || item("This edit hasn’t saved yet.").exists
+            let labels = ["See Premium", "Back to my preview", "Export MP4 · Premium", "Back to edit", "Save or share MP4", "Continue with free journal"] + (app.buttons["Back to edit"].exists ? [] : ["Play preview"])
+            let footers = confirmation ? [] : labels.map { app.buttons[$0] }.filter { $0.exists && $0.isHittable && $0.frame.minY > 200 }
+            let bottom = footers.map { $0.frame.minY - 14 }.min() ?? app.frame.maxY - 22
+            if value.exists && value.isHittable && (value.elementType != .button || value.frame.height >= 44) && value.frame.minY > 30 && (footers.contains(where: { $0.label == label }) || value.frame.maxY < bottom) {
+                Thread.sleep(forTimeInterval: 0.4); return item(label)
+            }
+            let x = app.frame.width - 9
+            let back = app.buttons["Back"]
+            let headerAbove = ["Name this moment", "Your caption", "Choose replacement", "Collection caption"].contains(label) && back.exists && back.frame.maxY < 40
+            let upwards = label == "Back" || headerAbove || (value.exists && value.frame.maxY < 40) || (!value.exists && attempt >= 16)
+            let start = upwards ? CGFloat(150) : min(app.frame.height * 0.5, max(220, bottom - 25))
+            let end = upwards ? min(bottom - 24, CGFloat(420)) : max(90, start - 240)
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: start)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: end)),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        capture("ios-video-missing-control"); XCTFail("Missing control \(label): \(app.debugDescription)"); return item(label)
+    }
+    private func press(_ label: String) {
+        var value = reveal(label)
+        for _ in 0..<5 {
+            let frame = value.frame; Thread.sleep(forTimeInterval: 0.3); value = item(label)
+            if abs(value.frame.midY - frame.midY) < 1 { break }
+        }
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        Thread.sleep(forTimeInterval: 0.6)
+    }
+    private func fill(_ label: String, _ text: String) {
+        let value = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@ OR label == %@ OR label BEGINSWITH %@", label, label + ", ", "✓ " + label, "✓ " + label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let input = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.2, dy: 0.3)).tap()
+        if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { input.tap() }
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 4))
+        if let old = input.value as? String, old != "Empty", !old.isEmpty {
+            // Tap after the final line, then clear through the native keyboard.
+            input.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.85)).tap()
+            input.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: old.count + 2))
+            let empty = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@ OR value == %@", "", "Empty"), object: input)
+            XCTAssertEqual(XCTWaiter.wait(for: [empty], timeout: 3), .completed)
+        }
+        input.typeText(text)
+        let entered = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", text), object: input)
+        XCTAssertEqual(XCTWaiter.wait(for: [entered], timeout: 3), .completed)
+        let done = app.keyboards.buttons["Done"]
+        if done.exists { done.tap() }
+        else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.12)).tap() }
+        Thread.sleep(forTimeInterval: 1)
+    }
+    private func capture(_ name: String) {
+        let image = XCTAttachment(screenshot: app.screenshot()); image.name = name; image.lifetime = .keepAlways; add(image)
+    }
+    private func value(_ label: String) -> String {
+        _ = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@ OR label == %@ OR label BEGINSWITH %@", label, label + ", ", "✓ " + label, "✓ " + label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let field = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        XCTAssertTrue(field.exists, app.debugDescription)
+        return field.value as? String ?? ""
+    }
+
+
+    func testACatFilmEditsPickerAndActualNativeExport() {
+        continueAfterFailure = false
+        launch("next-manage-plan")
+        if item("Debug Premium preview").waitForExistence(timeout: 3) { press("End Debug preview") }
+        defer { launch("next-manage-plan"); if item("Debug Premium preview").waitForExistence(timeout: 3) { press("End Debug preview") } }
+        launch("video-editor")
+        fill("Film title", "Miso’s window film QA")
+        fill("Caption for this photo", "Watching birds from the window")
+        press("Move later"); press("Move earlier")
+        press("Square · 1:1")
+        press("Preview photo 3"); press("Remove from film")
+        press("Choose photos"); press("Afternoon nap QA"); press("Preview photo 1")
+        press("Choose photos"); press("From my phone")
+        let cancel = app.buttons["Cancel"].firstMatch
+        XCTAssertTrue(cancel.waitForExistence(timeout: 10)); capture("ios-native-video-picker"); cancel.tap()
+        launch("video-editor")
+        XCTAssertEqual(value("Film title"), "Miso’s window film QA")
+        XCTAssertEqual(value("Caption for this photo"), "Watching birds from the window")
+        press("Play preview")
+        XCTAssertTrue(item("Miso’s window film QA").waitForExistence(timeout: 10))
+        press("Play preview"); Thread.sleep(forTimeInterval: 3.2)
+        XCTAssertTrue(item("Photo 1 of 3").exists)
+        press("Next photo"); XCTAssertTrue(item("Photo 2 of 3").exists)
+        press("Previous photo"); XCTAssertTrue(item("Photo 1 of 3").exists)
+        press("Back to edit")
+        press("Export MP4 · Premium")
+        XCTAssertTrue(item("Keep their moments moving.").waitForExistence(timeout: 10)); capture("ios-video-premium-boundary")
+        press("Back to my preview")
+        launch("next-paywall"); press("Try Debug Premium preview")
+        launch("video-editor"); press("Export MP4 · Premium")
+        XCTAssertTrue(item("Your film is ready.").waitForExistence(timeout: 90)); capture("ios-video-ready")
+        press("Save or share MP4")
+        let close = app.buttons["Close"].firstMatch
+        XCTAssertTrue(close.waitForExistence(timeout: 10)); capture("ios-native-video-share"); close.tap()
+        launch("video-editor"); XCTAssertEqual(value("Film title"), "Miso’s window film QA")
+    }
+    func testBCatVideoScreensInBothThemes() {
+        continueAfterFailure = false
+        for theme in ["Light", "Dark"] {
+            launch("video-editor", theme)
+            capture("ios-" + theme.lowercased() + "-video-editor")
+            _ = reveal("Caption for this photo")
+            let caption = app.textViews.matching(NSPredicate(format: "label BEGINSWITH %@", "Caption for this photo")).firstMatch
+            XCTAssertTrue(caption.exists); XCTAssertGreaterThan(caption.frame.height, 85)
+            capture("ios-" + theme.lowercased() + "-video-editor-more")
+            press("Play preview"); XCTAssertTrue(item("Back to edit").exists)
+            capture("ios-" + theme.lowercased() + "-video-preview")
+        }
+    }
+    func testCVideoAccessDenialKeepsDraft() {
+        continueAfterFailure = false
+        launch("cat-video-denied")
+        let title = value("Film title")
+        press("Choose photos"); press("From my phone")
+        XCTAssertTrue(item("Photo access wasn't available. Choose a photo again when you're ready.").waitForExistence(timeout: 10))
+        capture("ios-video-access-denied")
+        XCTAssertEqual(value("Film title"), title)
+    }
+    func testDPreviewPlaysAndPauses() {
+        continueAfterFailure = false
+        launch("video-preview", reduced: false)
+        press("Play preview")
+        XCTAssertTrue(app.buttons["Pause preview"].waitForExistence(timeout: 3))
+        capture("ios-video-preview-playing")
+        press("Pause preview")
+        XCTAssertTrue(app.buttons["Play preview"].waitForExistence(timeout: 3))
+        capture("ios-video-preview-paused")
+        press("Play preview"); XCTAssertTrue(app.buttons["Pause preview"].waitForExistence(timeout: 3))
+        XCUIDevice.shared.press(.home)
+        app.activate(); XCTAssertTrue(app.buttons["Play preview"].waitForExistence(timeout: 5))
+    }
+
+
+}

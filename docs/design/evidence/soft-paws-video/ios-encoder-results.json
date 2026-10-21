@@ -1,0 +1,67 @@
+[
+  {
+    "aspect" : "Portrait",
+    "captionBackground" : true,
+    "changedFrameComponents" : 129005,
+    "duration" : 8.4000000000000004,
+    "filename" : "SoftPaws-film-E5917D01-FA0C-4178-BEF8-3790B98ADC09.mp4",
+    "height" : 1280,
+    "motion" : true,
+    "passed" : true,
+    "photoColorOrder" : [
+      0,
+      1,
+      2
+    ],
+    "progressUpdates" : 42,
+    "width" : 720
+  },
+  {
+    "aspect" : "Square",
+    "captionBackground" : true,
+    "changedFrameComponents" : 86878,
+    "duration" : 8.4000000000000004,
+    "filename" : "SoftPaws-film-E4F31086-F51F-40C3-98B6-FE663985152F.mp4",
+    "height" : 720,
+    "motion" : true,
+    "passed" : true,
+    "photoColorOrder" : [
+      0,
+      1,
+      2
+    ],
+    "progressUpdates" : 42,
+    "width" : 720
+  },
+  {
+    "aspect" : "Square",
+    "captionBackground" : true,
+    "changedFrameComponents" : 7,
+    "duration" : 8.4000000000000004,
+    "filename" : "SoftPaws-film-337DDDB1-50F1-488F-80D1-C802C23ED614.mp4",
+    "height" : 720,
+    "motion" : false,
+    "passed" : true,
+    "photoColorOrder" : [
+      0,
+      1,
+      2
+    ],
+    "progressUpdates" : 42,
+    "width" : 720
+  },
+  {
+    "case" : "cancel",
+    "passed" : true,
+    "remainingAddedFiles" : [
+
+    ]
+  },
+  {
+    "case" : "missing-input",
+    "passed" : true,
+    "remainingAddedFiles" : [
+
+    ]
+  }
+]

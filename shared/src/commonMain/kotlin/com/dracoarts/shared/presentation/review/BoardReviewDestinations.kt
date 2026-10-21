@@ -28,6 +28,9 @@ val boardReviewFeatures = mapOf(
     "med-history" to Feature.MedicationHistory,
     "vaccinations" to Feature.Vaccinations,
     "vaccine-form" to Feature.VaccinationForm,
+    "video-editor" to Feature.VideoHighlight,
+    "video-preview" to Feature.VideoHighlight,
+    "cat-video-denied" to Feature.VideoHighlight,
     "next-highlight-editor" to Feature.VideoHighlight,
     "next-highlight-empty" to Feature.VideoHighlight,
     "next-highlight-gate" to Feature.VideoHighlightGate,
@@ -167,6 +170,7 @@ fun boardReviewArgument(boardId: String?, feature: Feature, newId: () -> String)
         Feature.ExpenseDetail -> BoardReviewFixture.itemId(700) + if (boardId == "expense-delete") "@delete" else ""
         Feature.MemoryHighlight, Feature.MemoryCaption -> BoardReviewFixture.itemId(if (boardId == "memory-photo-missing") 802 else 800)
         Feature.Memory -> when (boardId) { "memory-sparse" -> "2026-09"; "memory-empty" -> "2026-08"; else -> "" }
+        Feature.VideoHighlight -> if (boardId == "video-preview") "preview" else ""
         Feature.MemoryCollection, Feature.MemoryShare -> "2026-10"
         else -> ""
     }

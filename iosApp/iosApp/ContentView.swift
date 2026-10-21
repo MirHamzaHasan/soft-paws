@@ -22,7 +22,7 @@ private struct SharedView: UIViewControllerRepresentable {
         let screen = screenIndex.flatMap { $0 + 1 < arguments.count ? arguments[$0 + 1] : nil }
         let fixtureIndex = arguments.firstIndex(of: "-DesignReviewFixture")
         let fixture = fixtureIndex.flatMap { $0 + 1 < arguments.count ? arguments[$0 + 1] : nil }
-        if review && fixture == "park-video-v1" { BarkVideoQA.preparePhotos() }
+        if review && ["park-video-v1", "soft-paws-video-v1"].contains(fixture ?? "") { BarkVideoQA.preparePhotos() }
         if review && arguments.contains("-VideoEncoderQA") { DispatchQueue.main.asyncAfter(deadline: .now() + 1) { BarkVideoQA.run() } }
         #else
         let review = false

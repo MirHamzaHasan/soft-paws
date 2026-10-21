@@ -29,7 +29,7 @@ final class BarkVideoEngine: NSObject, IosVideoEngine {
         let job = RenderJob()
         lock.lock(); current?.cancel(); current = job; lock.unlock()
         queue.async { [self] in
-            let output = exports.appendingPathComponent("BarkLog-film-\(UUID().uuidString).mp4")
+            let output = exports.appendingPathComponent("SoftPaws-film-\(UUID().uuidString).mp4")
             var succeeded = false
             defer {
                 if !succeeded { removePartial(output) }
@@ -136,7 +136,7 @@ final class BarkVideoEngine: NSObject, IosVideoEngine {
     func cancelShare() { DispatchQueue.main.async { [weak self] in self?.shareSheet?.dismiss(animated: false); self?.shareSheet = nil } }
     func share(filename: String, finished: @escaping (KotlinBoolean, String?) -> Void) {
         DispatchQueue.main.async { [self] in
-            guard filename.range(of: "^BarkLog-film-[a-zA-Z0-9-]+\\.mp4$", options: .regularExpression) != nil, files.fileExists(atPath: exports.appendingPathComponent(filename).path),
+            guard filename.range(of: "^(?:BarkLog|SoftPaws)-film-[a-zA-Z0-9-]+\\.mp4$", options: .regularExpression) != nil, files.fileExists(atPath: exports.appendingPathComponent(filename).path),
                 let window = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).flatMap({ $0.windows }).first(where: { $0.isKeyWindow }), var host = window.rootViewController else { finished(KotlinBoolean(value: false), "Export this MP4 again, then choose a destination."); return }
             while let presented = host.presentedViewController { host = presented }
             let sheet = UIActivityViewController(activityItems: [exports.appendingPathComponent(filename)], applicationActivities: nil)

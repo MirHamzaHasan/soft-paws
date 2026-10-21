@@ -41,7 +41,7 @@ fun featureFolio(feature: Feature): BoardFolio? = when (feature) {
 private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
     LaunchedEffect(page) { context.care.clearError() }
     if (page.feature == Feature.Chooser) Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { FeatureBack(context); BoardDogChip(context.dog.name, { context.open(Feature.DogSwitcher) }) }
-    else if (page.feature in catReportScreens || page.feature in catExpenseScreens || page.feature in catPhotoScreens || page.feature in catMemoryScreens || page.feature == Feature.Monthly) SoftPawsFeatureBack(context)
+    else if (page.feature in catReportScreens || page.feature in catExpenseScreens || page.feature in catPhotoScreens || page.feature in catMemoryScreens || page.feature in catVideoScreens || page.feature == Feature.Monthly) SoftPawsFeatureBack(context)
     else if (page.feature in healthRecordScreens || page.feature in carePlanningScreens || page.feature in catSafetyScreens) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Surface(onClick = soundAction(context.navigation::back), enabled = !context.saving,

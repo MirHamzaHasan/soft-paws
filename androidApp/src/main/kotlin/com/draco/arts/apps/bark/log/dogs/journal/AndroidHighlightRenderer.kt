@@ -33,7 +33,7 @@ class AndroidHighlightRenderer(private val activity: ComponentActivity) : Highli
             draft.validate(forExport = true)
             val inputs = withContext(Dispatchers.IO) {
                 val dir = directory
-                dir.listFiles()?.filter { it.name.startsWith("BarkLog-film-") && System.currentTimeMillis() - it.lastModified() > 86_400_000 }?.forEach { it.delete() }
+                dir.listFiles()?.filter { (it.name.startsWith("BarkLog-film-") || it.name.startsWith("SoftPaws-film-")) && System.currentTimeMillis() - it.lastModified() > 86_400_000 }?.forEach { it.delete() }
                 require(dir.usableSpace > 64_000_000) { "Free some space on this device, then try again." }
                 draft.clips.map { clip ->
                     File(File(activity.filesDir, "barklog_photos"), clip.photoId).also { source ->
@@ -44,7 +44,7 @@ class AndroidHighlightRenderer(private val activity: ComponentActivity) : Highli
                     }
                 }
             }
-            val target = withContext(Dispatchers.IO) { File(directory, "BarkLog-film-${UUID.randomUUID()}.mp4") }; file = target
+            val target = withContext(Dispatchers.IO) { File(directory, "SoftPaws-film-${UUID.randomUUID()}.mp4") }; file = target
             withContext(Dispatchers.Main) {
                 val items = inputs.mapIndexed { index, source ->
                     val effects = mutableListOf<androidx.media3.common.Effect>(Presentation.createForWidthAndHeight(draft.aspect.width, draft.aspect.height, Presentation.LAYOUT_SCALE_TO_FIT_WITH_CROP))
@@ -99,7 +99,7 @@ class AndroidHighlightRenderer(private val activity: ComponentActivity) : Highli
     }
     override suspend fun share(output: HighlightOutput): DeviceResult<Unit> = try {
         val file = withContext(Dispatchers.IO) {
-            require(Regex("BarkLog-film-[a-zA-Z0-9-]+\\.mp4").matches(output.filename))
+            require(Regex("(?:BarkLog|SoftPaws)-film-[a-zA-Z0-9-]+\\.mp4").matches(output.filename))
             File(directory, output.filename).also { require(it.isFile && it.length() > 0) }
         }
         withContext(Dispatchers.Main) {

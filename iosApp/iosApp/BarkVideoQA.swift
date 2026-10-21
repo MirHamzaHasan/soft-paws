@@ -31,11 +31,11 @@ enum BarkVideoQA {
             if index >= options.count {
                 let dir = FileManager.default.temporaryDirectory.appendingPathComponent("BarkLogFilms")
                 let before = Set((try? FileManager.default.contentsOfDirectory(atPath: dir.path)) ?? [])
-                engine.start(draft: HighlightDraft(dogId: "encoder-qa", clips: clips, aspect: .portrait, revision: 0), motion: true, progress: { _ in }) { filename, error in
+                engine.start(draft: HighlightDraft(dogId: "encoder-qa", clips: clips, aspect: .portrait, revision: 0, title: "QA film"), motion: true, progress: { _ in }) { filename, error in
                     let after = Set((try? FileManager.default.contentsOfDirectory(atPath: dir.path)) ?? [])
                     results.append(["case": "cancel", "passed": filename == nil && error != nil && before == after, "remainingAddedFiles": Array(after.subtracting(before))]); save()
                     let missing = [HighlightClip(photoId: "missing-photo.jpg", caption: "Missing"), clips[1], clips[2]]
-                    engine.start(draft: HighlightDraft(dogId: "encoder-qa", clips: missing, aspect: .square, revision: 0), motion: true, progress: { _ in }) { filename, error in
+                    engine.start(draft: HighlightDraft(dogId: "encoder-qa", clips: missing, aspect: .square, revision: 0, title: "QA film"), motion: true, progress: { _ in }) { filename, error in
                         let after = Set((try? FileManager.default.contentsOfDirectory(atPath: dir.path)) ?? [])
                         results.append(["case": "missing-input", "passed": filename == nil && error != nil && before == after, "remainingAddedFiles": Array(after.subtracting(before))]); save()
                     }
@@ -45,11 +45,12 @@ enum BarkVideoQA {
             }
             let (aspect, motion) = options[index]
             var progressCount = 0
-            engine.start(draft: HighlightDraft(dogId: "encoder-qa", clips: clips, aspect: aspect, revision: 0), motion: motion, progress: { _ in progressCount += 1 }) { filename, error in
+            engine.start(draft: HighlightDraft(dogId: "encoder-qa", clips: clips, aspect: aspect, revision: 0, title: "QA film"), motion: motion, progress: { _ in progressCount += 1 }) { filename, error in
                 var record: [String: Any] = ["aspect": aspect.name, "motion": motion, "progressUpdates": progressCount]
                 if let filename {
                     let url = FileManager.default.temporaryDirectory.appendingPathComponent("BarkLogFilms").appendingPathComponent(filename)
                     let asset = AVURLAsset(url: url), generator = AVAssetImageGenerator(asset: asset)
+                    generator.requestedTimeToleranceBefore = .zero; generator.requestedTimeToleranceAfter = .zero
                     var order: [Int] = []
                     var captions = true
                     for i in 0..<3 {
@@ -66,7 +67,16 @@ enum BarkVideoQA {
                     }
                     record["filename"] = filename; record["duration"] = CMTimeGetSeconds(asset.duration); record["photoColorOrder"] = order; record["captionBackground"] = captions
                     record["width"] = asset.tracks(withMediaType: .video).first?.naturalSize.width; record["height"] = asset.tracks(withMediaType: .video).first?.naturalSize.height
-                    record["passed"] = order == [0,1,2] && captions && abs(CMTimeGetSeconds(asset.duration) - 8.4) < 0.15
+                    func pixels(_ seconds: Double) -> [UInt8]? {
+                        guard let image = try? generator.copyCGImage(at: CMTime(seconds: seconds, preferredTimescale: 600), actualTime: nil) else { return nil }
+                        var bytes = [UInt8](repeating: 0, count: image.width * image.height * 4)
+                        guard let context = CGContext(data: &bytes, width: image.width, height: image.height, bitsPerComponent: 8, bytesPerRow: image.width * 4, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else { return nil }
+                        context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height)); return bytes
+                    }
+                    let early = pixels(0.2), late = pixels(2.3)
+                    let changed = early != nil && late != nil ? zip(early!, late!).filter { abs(Int($0.0) - Int($0.1)) > 8 }.count : -1
+                    record["changedFrameComponents"] = changed
+                    record["passed"] = filename.hasPrefix("SoftPaws-film-") && order == [0,1,2] && captions && abs(CMTimeGetSeconds(asset.duration) - 8.4) < 0.15 && (motion ? changed > 100 : changed >= 0 && changed < 30)
                 } else { record["error"] = error ?? "Unknown export failure"; record["passed"] = false }
                 results.append(record); save(); next(index + 1)
             }

@@ -789,18 +789,38 @@
     {
       "id": "video-editor",
       "section": "memories",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HighlightFeatureScreen.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/highlights/HighlightController.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-video/android-light-video-editor.png",
+        "docs/design/evidence/soft-paws-video/android-dark-video-editor.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-video/ios-light-video-editor.png",
+        "docs/design/evidence/soft-paws-video/ios-dark-video-editor.png"
+      ],
+      "verificationNote": "Preserving title/caption draft, real private photos, order/aspect, separate free preview and guarded actual MP4/share. Preview navigation crash corrected with real save/restore regression. Normal/larger-text native journeys, encoders and both platform builds pass. Paired evidence inspected; individual native visual, physical/assistive, minimum-OS, receiving-app playback and Android live font-change review remain open."
     },
     {
       "id": "video-preview",
       "section": "memories",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HighlightFeatureScreen.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/highlights/HighlightController.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-video/android-light-video-preview.png",
+        "docs/design/evidence/soft-paws-video/android-dark-video-preview.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-video/ios-light-video-preview.png",
+        "docs/design/evidence/soft-paws-video/ios-dark-video-preview.png"
+      ],
+      "verificationNote": "Preserving title/caption draft, real private photos, order/aspect, separate free preview and guarded actual MP4/share. Preview navigation crash corrected with real save/restore regression. Normal/larger-text native journeys, encoders and both platform builds pass. Paired evidence inspected; individual native visual, physical/assistive, minimum-OS, receiving-app playback and Android live font-change review remain open."
     },
     {
       "id": "expenses",

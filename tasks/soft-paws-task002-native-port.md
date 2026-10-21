@@ -248,3 +248,27 @@ light/dark and larger-text captures were inspected; see
 The inventory is now **58 implemented-unverified / 31 pending**. Individual native
 visual, physical/assistive, minimum-OS and live Android font-change review remain
 open. The full cat port stays active.
+
+
+## 21 October · cat photo films and reported iOS preview crash
+
+The two approved film destinations now use the cat kit with real selected private
+images, preserving title/caption drafts, order/removal, native/journal selection,
+portrait/square and a separate free preview. Native MP4 render/share retains current
+access guards, actual progress/cancellation and private files. Legacy draft fields,
+slots, directories and older exported names remain compatible. The new preview
+argument's reserved colon caused the reported iOS abort; a validated navigation
+helper and real save/restore/Back regression correct it.
+
+All **179 JVM tests**, **30 tooling checks**, Android Debug/Release/lint/migrations
+and iOS Debug/Release hosts/bundles pass. Both encoders verify actual frames,
+geometry/duration, order/captions, reduced motion, cancellation and missing inputs.
+Both platforms' normal/larger-text journeys verify real native picker/share
+cancellation and current free/Debug access boundaries. Android additionally
+forces a SQLite write failure, retries and verifies preserved journals. Paired
+light/dark, larger-text and failure/handoff evidence is inspected in
+[cat video evidence](../docs/design/evidence/soft-paws-video/README.md).
+
+The inventory is now **60 implemented-unverified / 29 pending**. Individual native
+visual, physical/assistive, minimum-OS, receiving-app playback and Android live
+font-change review remain open. The full cat port stays active.

@@ -27,7 +27,7 @@ class HighlightEncoderTest {
             Canvas(bitmap).apply { drawColor(colors[index]); drawRect(20f, 30f, 100f, 900f, Paint().apply { color = Color.WHITE }); drawCircle(480f, 170f, 75f, Paint().apply { color = Color.BLACK }) }
             File(photos, "video-qa-$name.jpg").outputStream().use { bitmap.compress(Bitmap.CompressFormat.JPEG, 90, it) }; bitmap.recycle()
         }
-        val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)!!.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("designReview", true).putExtra("designReviewScreen", "VideoHighlight").putExtra("designReviewFixture", "park-video-v1")
+        val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)!!.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("designReview", true).putExtra("designReviewScreen", "VideoHighlight").putExtra("designReviewFixture", "soft-paws-video-v1")
         val activity = instrumentation.startActivitySync(intent) as MainActivity
         val renderer = AndroidHighlightRenderer(activity)
         val draft = HighlightDraft("encoder-qa", names.mapIndexed { i, name -> HighlightClip("video-qa-$name.jpg", "QA moment ${i + 1}") })
@@ -37,6 +37,7 @@ class HighlightEncoderTest {
             val result = renderer.render(draft.copy(aspect = aspect), motion) { it?.let(progress::add) }
             assertTrue(result.toString(), result is DeviceResult.Success)
             val output = (result as DeviceResult.Success).value
+            assertTrue(output.filename.startsWith("SoftPaws-film-"))
             val file = File(context.cacheDir, "barklog_exports/${output.filename}")
             val metadata = MediaMetadataRetriever()
             try {
@@ -54,10 +55,24 @@ class HighlightEncoderTest {
                 }
                 val first = metadata.getFrameAtTime(200_000, MediaMetadataRetriever.OPTION_CLOSEST)!!
                 val later = metadata.getFrameAtTime(2_300_000, MediaMetadataRetriever.OPTION_CLOSEST)!!
-                val different = !first.sameAs(later)
-                if (motion) assertTrue("Pan/zoom must move pixels", different)
+                // H.264 can change a few decoded colour values in a still frame.
+                // Track the actual black QA shape instead of requiring byte equality.
+                fun anchor(bitmap: Bitmap): IntArray {
+                    var left = bitmap.width; var top = bitmap.height; var right = -1; var bottom = -1
+                    for (y in 0 until bitmap.height * 2 / 3) for (x in 0 until bitmap.width) {
+                        val pixel = bitmap.getPixel(x, y)
+                        if (Color.red(pixel) < 45 && Color.green(pixel) < 45 && Color.blue(pixel) < 45) {
+                            left = minOf(left, x); top = minOf(top, y); right = maxOf(right, x); bottom = maxOf(bottom, y)
+                        }
+                    }
+                    assertTrue("QA shape must be visible", right - left > 10 && bottom - top > 10)
+                    return intArrayOf(left, top, right, bottom)
+                }
+                val drift = anchor(first).zip(anchor(later)).maxOf { (a, b) -> kotlin.math.abs(a - b) }
+                if (motion) assertTrue("Pan/zoom must move the QA shape: $drift", drift > 2)
+                else assertTrue("Reduced-motion shape must remain still: $drift", drift <= 2)
                 first.recycle(); later.recycle()
-                results += "${aspect.name} motion=$motion ${output.width}x${output.height} ${output.durationMs}ms ${file.length()}bytes progress=${progress.size}"
+                results += "${aspect.name} motion=$motion ${output.width}x${output.height} ${output.durationMs}ms ${file.length()}bytes progress=${progress.size} shapeDrift=${drift}px"
             } finally { metadata.release() }
         }
         val before = File(context.cacheDir, "barklog_exports").listFiles()!!.map { it.name }.toSet()

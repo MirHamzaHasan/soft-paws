@@ -7,9 +7,11 @@ import com.dracoarts.shared.domain.repository.JournalRepository
 import com.dracoarts.shared.domain.repository.CareRepository
 import com.dracoarts.shared.managers.StorageBackend
 import kotlinx.datetime.*
+import kotlinx.coroutines.flow.first
 
 enum class BoardReviewDataSet(val key: String, val databaseName: String) {
     SoftPawsDay("soft-paws-day-v1", "soft_paws_review_day_v1.db"),
+    SoftPawsVideo("soft-paws-video-v1", "soft_paws_review_video_v1.db"),
     SoftPawsSetup("soft-paws-setup-v1", "soft_paws_review_setup_v1.db"),
     PremiumSafety("park-premium-safety-v1", "barklog_review_premium_safety_v1.db"),
     AddDog("park-add-dog-v1", "barklog_review_add_dog_v1.db"),
@@ -24,7 +26,7 @@ enum class BoardReviewDataSet(val key: String, val databaseName: String) {
     Paged("park-paged-v1", "barklog_review_park_paged_v1.db");
     val preferencePrefix get() = if (this == Day) "board_review_v1_" else "board_review_${name.lowercase()}_v1_"
     val nowMillis get() = when (this) {
-        SoftPawsDay, SoftPawsSetup -> LocalDateTime.parse("2026-10-20T09:41").toInstant(BoardReviewFixture.zone).toEpochMilliseconds()
+        SoftPawsDay, SoftPawsSetup, SoftPawsVideo -> LocalDateTime.parse("2026-10-20T09:41").toInstant(BoardReviewFixture.zone).toEpochMilliseconds()
         AiCards -> LocalDateTime.parse("2026-10-19T20:00").toInstant(BoardReviewFixture.zone).toEpochMilliseconds()
         else -> BoardReviewFixture.now
     }
@@ -44,6 +46,20 @@ object BoardReviewFixture {
 
     suspend fun seed(repository: JournalRepository, dataSet: BoardReviewDataSet = BoardReviewDataSet.Day) {
         if (dataSet == BoardReviewDataSet.SoftPawsSetup) return
+        if (dataSet == BoardReviewDataSet.SoftPawsVideo) {
+            val cat = repository.addDog("Miso", DogDetails(companion = DogContext.catDefaults().copy(stage = "Adult", lifestyle = "Indoor")), "50f70010-0001-4000-8000-000000000001")
+            val care = repository as CareRepository
+            val savedIds = care.observeItems(cat.id).first().map { it.id }.toSet()
+            listOf("red" to "Window watch QA", "green" to "A little play QA", "blue" to "Afternoon nap QA").forEachIndexed { i, (file, title) ->
+                val id = "50f70010-0001-4000-8000-${(i + 600).toString().padStart(12, '0')}"
+                if (id !in savedIds) care.saveItem(cat.id, id, dataSet.nowMillis, CareItemData.Photo("video-qa-$file.jpg", title, "2026-10-20"))
+            }
+            if (care.loadDraft(cat.id, HighlightDraft.SLOT) == null) {
+                val draft = HighlightDraft(cat.id, listOf("red", "green", "blue").mapIndexed { i, name -> HighlightClip("video-qa-$name.jpg", "QA moment ${i + 1}") }, title = "Miso’s October")
+                care.saveDraft(cat.id, HighlightDraft.SLOT, com.dracoarts.shared.domain.repository.LocalDraft(kotlinx.serialization.json.Json.encodeToString(HighlightDraft.serializer(), draft), draft.clips.map { it.photoId }))
+            }
+            return
+        }
         if (dataSet == BoardReviewDataSet.SoftPawsDay) {
             val cat = repository.addDog("Miso", DogDetails(companion = DogContext.catDefaults().copy(stage = "Adult", lifestyle = "Indoor")), "50f70002-0001-4000-8000-000000000001")
             listOf(

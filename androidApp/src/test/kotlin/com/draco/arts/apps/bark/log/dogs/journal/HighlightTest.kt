@@ -5,6 +5,7 @@ import com.dracoarts.shared.data.local.*
 import com.dracoarts.shared.domain.model.*
 import com.dracoarts.shared.domain.repository.*
 import com.dracoarts.shared.presentation.highlights.*
+import com.dracoarts.shared.presentation.navigation.*
 import com.dracoarts.shared.services.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
@@ -73,4 +74,45 @@ class HighlightTest {
         repo.saveDraft(dog.id, HighlightDraft.SLOT, LocalDraft("{\"clips\":\"corrupt\"}"))
         val c = HighlightController(repo, Renderer(), { true }, Dispatchers.Unconfined); c.open(dog.id); assertNull(c.state.value.draft); assertNotNull(c.state.value.error); c.close()
     }
+    @Test fun legacyFilmReopensAndTitleCommitFailureKeepsOriginalDraftAndReferences() = store { repo, driver ->
+        val cat = repo.addDog("Miso")
+        val legacy = """{"dogId":"${cat.id}","clips":[{"photoId":"photo-one.jpg","caption":"Window"},{"photoId":"photo-two.jpg"},{"photoId":"photo-three.jpg"}],"aspect":"Square","revision":9}"""
+        repo.saveDraft(cat.id, HighlightDraft.SLOT, LocalDraft(legacy, clips.map { it.photoId }))
+        val c = HighlightController(repo, Renderer(), { false }, Dispatchers.Unconfined)
+        c.open(cat.id)
+        assertEquals("", c.state.value.draft!!.title)
+        assertEquals(8400L, c.state.value.draft!!.durationMs)
+        driver.execute(null, "CREATE TRIGGER fail_film_title BEFORE INSERT ON care_drafts BEGIN SELECT RAISE(ABORT, 'Disk full'); END", 0)
+        assertFalse(c.edit(cat.id) { it.copy(title = "Miso’s October") })
+        assertEquals(legacy, repo.loadDraft(cat.id, HighlightDraft.SLOT)!!.value)
+        assertEquals("", c.state.value.draft!!.title)
+        assertTrue(repo.photoReferenced("photo-one.jpg"))
+        driver.execute(null, "DROP TRIGGER fail_film_title", 0)
+        assertTrue(c.edit(cat.id) { it.copy(title = "Miso’s October") })
+        assertFalse(c.edit(cat.id) { it.copy(title = "x".repeat(101)) })
+        c.close()
+        val reopened = HighlightController(repo, Renderer(), { false }, Dispatchers.Unconfined)
+        reopened.open(cat.id)
+        val saved = reopened.state.value.draft!!
+        assertEquals("Miso’s October", saved.title)
+        assertEquals("Window", saved.clips.first().caption)
+        assertEquals(clips.map { it.photoId }, saved.clips.map { it.photoId })
+        assertEquals(HighlightAspect.Square, saved.aspect)
+        assertEquals(10L, saved.revision)
+        reopened.close()
+    }
+
+    @Test fun realPreviewNavigationKeepsSelectedPhotoAcrossSavedStateAndReturnsToEditor() {
+        val navigation = AppState(Route.Memories)
+        navigation.open(Feature.VideoHighlight)
+        navigation.openHighlightPreview(2)
+        val restored = AppState.restoreValue(navigation.savedValue())
+        assertEquals(FeaturePage(Feature.VideoHighlight, "preview@2"), restored.featurePage)
+        assertEquals(Route.Memories, restored.route)
+        restored.back()
+        assertEquals(FeaturePage(Feature.VideoHighlight), restored.featurePage)
+        assertFailsWith<IllegalArgumentException> { navigation.openHighlightPreview(12) }
+        assertFailsWith<IllegalArgumentException> { navigation.open(Feature.VideoHighlight, "preview:2") }
+    }
+
 }

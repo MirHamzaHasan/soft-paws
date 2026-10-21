@@ -51,7 +51,7 @@ class HighlightController(
             _state.value = _state.value.copy(draft = next, saving = false, output = null)
             true
         } catch (cancelled: CancellationException) { _state.update { it.copy(saving = false) }; throw cancelled }
-        catch (cause: Exception) { _state.update { it.copy(saving = false, error = cause.message ?: "Couldn't save this edit. Your last saved film is still here.") }; false }
+        catch (cause: Exception) { _state.update { it.copy(saving = false, error = if (cause is IllegalArgumentException) cause.message else "Couldn't save this edit. Your last saved film is still here.") }; false }
     }
     fun change(dogId: String, change: (HighlightDraft) -> HighlightDraft) { scope.launch { edit(dogId, change) } }
     suspend fun importPhoto(dogId: String, device: DeviceServices) {
@@ -101,7 +101,7 @@ class HighlightController(
         _state.update { it.copy(sharing = true, error = null, message = null) }
         try {
             when (val result = renderer.share(output)) {
-                is DeviceResult.Success -> message("Video handed to your chosen destination.")
+                is DeviceResult.Success -> message("Sharing opened. Your MP4 is still ready on this device.")
                 DeviceResult.Cancelled -> message("Sharing cancelled. Your video is still ready.")
                 DeviceResult.Denied -> error("That destination wasn't available. Choose another.")
                 is DeviceResult.Failed -> error(result.message)

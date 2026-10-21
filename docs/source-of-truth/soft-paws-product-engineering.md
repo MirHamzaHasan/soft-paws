@@ -109,10 +109,14 @@ unconfigured-service/consent guards. Native photo selection, private files,
 retained drafts and month-specific Memory Book selections now use the cat kit.
 Atomic photo/membership saves retain separate captions, collection IDs and legacy
 links; missing files preserve metadata. Actual PDF/share/print uses the existing
-entitlement guard. Android native journeys and 177 JVM tests
+entitlement guard. Cat film editing and a separate free preview retain real private photos,
+order, captions, portrait/square and a backward-compatible saved title. Native
+MP4 render/share uses current access guards and real 2.8-second clips. The preview
+navigation crash is corrected; both native encoders and normal/larger-text video
+journeys pass. Android native journeys and 179 JVM tests
 pass. Health/document, planning and Safety journeys cover both platforms and
 larger text, including actual native location denial. Current Debug/Release builds
-and paired screen evidence pass. The inventory is 58 implemented-unverified / 31 pending; individual native visual
+and paired screen evidence pass. The inventory is 60 implemented-unverified / 29 pending; individual native visual
 approval remains open. The initial iOS
 host compiled; its accessibility crash was corrected with the official iOS
 renderer update and the repeated-navigation/save/relaunch tests now pass.

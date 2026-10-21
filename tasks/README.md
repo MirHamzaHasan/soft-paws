@@ -21,6 +21,9 @@
 - [soft-paws-task009 · private cat photos and Memory Book](soft-paws-task009-cat-photos-and-memory-book.md)
   — implemented; 177 JVM tests, native picker/draft/caption/selection/missing-file/PDF journeys at both text sizes and both platform builds pass; individual visual/physical review remains open.
 
+- [soft-paws-task010 · cat photo films](soft-paws-task010-cat-video-highlights.md)
+  — implemented; 179 JVM tests, normal/larger-text native video journeys, both encoders and Android/iOS Debug/Release checks pass; preview crash corrected, individual visual/physical review remains open.
+
 The BarkLog tasks below are inherited foundation history, not Soft Paws approvals.
 
 ---

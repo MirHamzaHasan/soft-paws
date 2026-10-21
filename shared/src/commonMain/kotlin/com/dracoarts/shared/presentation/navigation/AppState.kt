@@ -29,6 +29,12 @@ enum class Feature {
     Memory, MemoryCollection, MemoryHighlight, MemoryCaption, MemoryShare, Monthly, VideoHighlight, VideoHighlightGate, WeightHistory,
 }
 data class FeaturePage(val feature: Feature, val id: String = "")
+/** Uses the same safe argument format as the persisted feature stack. */
+fun AppState.openHighlightPreview(photoIndex: Int) {
+    require(photoIndex in 0..11)
+    open(Feature.VideoHighlight, "preview@$photoIndex")
+}
+
 enum class BoardNavigationMove { Cut, Tab, Push, Cover, Carry, Back }
 typealias BoardNavigationHandler = (BoardNavigationMove, () -> Unit) -> Unit
 

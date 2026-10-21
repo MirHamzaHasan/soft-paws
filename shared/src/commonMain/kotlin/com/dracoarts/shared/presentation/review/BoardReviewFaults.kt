@@ -85,6 +85,7 @@ class BoardReviewFaults(val screen: String?) {
                 return base.device.scheduleReminder(request, requestPermission)
             }
             override suspend fun pickPhoto(): DeviceResult<String> {
+                if (screen == "cat-video-denied" && once("video-photo-denial")) return DeviceResult.Denied
                 if (screen == "photo-permission-denied" && once("photo-denial")) return DeviceResult.Denied
                 if (screen == "photo-unavailable" && once("photo-cancel")) return DeviceResult.Cancelled
                 return base.device.pickPhoto()

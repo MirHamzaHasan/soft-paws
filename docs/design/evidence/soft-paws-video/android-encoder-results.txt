@@ -1,0 +1,4 @@
+Portrait motion=true 720x1280 8400ms 902267bytes progress=37 shapeDrift=42px
+Square motion=true 720x720 8400ms 720678bytes progress=18 shapeDrift=29px
+Square motion=false 720x720 8400ms 547802bytes progress=15 shapeDrift=1px
+Cancelled partial removed; missing input rejected; no network used.

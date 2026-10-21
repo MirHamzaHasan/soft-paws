@@ -124,6 +124,16 @@ window.BOARD = {
     ],
     memories: [
       {
+        title: "X · selected media above its sequence",
+        took: "Keep the selected photo close to its ordered sequence and the next action. Soft Paws uses its own cat kit, real local images and free preview; it does not copy posting or social tools.",
+        url: "https://mobbin.com/screens/d268f7ed-340c-4733-8258-602f6c0b5aeb",
+      },
+      {
+        title: "Once · title beside the film cover",
+        took: "Keep the editable film title beside its chosen cover. Soft Paws persists it in the existing local draft and keeps export separate from editing.",
+        url: "https://mobbin.com/screens/d4dcb2ca-977c-45d8-ae64-27ac1e3a7f33",
+      },
+      {
         title: "Google Photos · a photo beside its saved details",
         took: "Keep the entered date and editable caption close to the image. Separate saved metadata from whether the local file is available. Soft Paws keeps private local copies and makes no backup promise.",
         url: "https://mobbin.com/screens/50fa71b5-390d-4890-952f-a5bfb4dc3854",
