@@ -91,8 +91,8 @@ fun ProfileFeatureScreen(page: FeaturePage, context: FeatureContext) {
                 BarkButton("Retry cat setup", { failed = false; retry++ })
             } else CaptionText("Opening cat setup…")
         }
-        Feature.DogEdit, Feature.EmergencyEdit -> {
-            val contacts = page.feature == Feature.EmergencyEdit
+        Feature.DogEdit -> {
+            val contacts = false // The dedicated cat contact editor owns EmergencyEdit.
             val initial = mapOf("name" to dog.name, "breed" to dog.details.breed, "age" to dog.details.age, "sex" to dog.details.sex,
                 "vet" to dog.details.vetName, "phone" to dog.details.vetPhone, "emergency" to dog.details.emergencyPhone, "emergencyName" to dog.details.emergencyServiceName, "notes" to dog.details.notes, "photo" to dog.details.photoId.orEmpty())
             val form = rememberFeatureForm(context, "profile-${page.feature}-${dog.id}", initial)

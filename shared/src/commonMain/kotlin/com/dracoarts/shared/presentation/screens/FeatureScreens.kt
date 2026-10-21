@@ -41,7 +41,7 @@ fun featureFolio(feature: Feature): BoardFolio? = when (feature) {
 private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
     LaunchedEffect(page) { context.care.clearError() }
     if (page.feature == Feature.Chooser) Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { FeatureBack(context); BoardDogChip(context.dog.name, { context.open(Feature.DogSwitcher) }) }
-    else if (page.feature in healthRecordScreens || page.feature in carePlanningScreens) {
+    else if (page.feature in healthRecordScreens || page.feature in carePlanningScreens || page.feature in catSafetyScreens) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Surface(onClick = soundAction(context.navigation::back), enabled = !context.saving,
                 modifier = Modifier.size(48.dp).semantics { contentDescription = "Back" }, shape = RoundedCornerShape(50),
@@ -51,26 +51,26 @@ private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
             SoftPawsKicker("CAT CARE")
         }
     } else FeatureBack(context)
-    if (context.careState.loading && page.feature !in setOf(Feature.Sounds, Feature.Settings, Feature.DogAdd, Feature.DogEdit, Feature.Safety, Feature.Emergency, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog)) {
+    if (context.careState.loading && page.feature !in setOf(Feature.Sounds, Feature.Settings, Feature.DogAdd, Feature.DogEdit, Feature.Safety, Feature.Emergency, Feature.EmergencyEdit, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog)) {
         SoftPawsCard("Opening saved records") { repeat(3) { SkeletonLine(180.dp); SkeletonLine(120.dp) } }; return
     }
     if (context.careState.readFailed) {
         ErrorCard(context.careState.error ?: "Couldn't read these local records.")
         BarkButton("Try again", context.care::retry, icon = "refresh-cw")
-        if (page.feature !in setOf(Feature.Sounds, Feature.Settings, Feature.DogEdit, Feature.Safety, Feature.Emergency, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog)) return
+        if (page.feature !in setOf(Feature.Sounds, Feature.Settings, Feature.DogEdit, Feature.Safety, Feature.Emergency, Feature.EmergencyEdit, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog)) return
     }
     if (!context.careState.readFailed) context.careState.error?.let { ErrorCard(it) }
     context.careState.feedback?.let { FeatureNotice("On this device", it, "circle-check") }
     when (page.feature) {
         Feature.Sounds -> SoundSettingsScreen(context)
         Feature.CareTools -> ProfileHub(context)
-        Feature.DogSwitcher, Feature.DogAdd, Feature.DogEdit, Feature.Settings, Feature.DeleteDog, Feature.DeleteAll, Feature.EmergencyEdit -> ProfileFeatureScreen(page, context)
+        Feature.DogSwitcher, Feature.DogAdd, Feature.DogEdit, Feature.Settings, Feature.DeleteDog, Feature.DeleteAll -> ProfileFeatureScreen(page, context)
         Feature.Health, Feature.Medications, Feature.MedicationForm, Feature.MedicationDetail, Feature.MedicationGiven, Feature.MedicationArchive, Feature.MedicationHistory, Feature.Vaccinations, Feature.VaccinationForm -> HealthFeatureScreen(page, context)
         Feature.Calendar, Feature.TaskForm, Feature.TaskDetail, Feature.ReminderOptIn -> CalendarFeatureScreen(page, context)
         Feature.Training, Feature.Program, Feature.TrainingProgress, Feature.Session, Feature.TrainingSummary -> TrainingFeatureScreen(page, context)
         Feature.Photos, Feature.PhotoForm, Feature.PhotoDetail, Feature.Baselines -> PhotoFeatureScreen(page, context)
         Feature.Expenses, Feature.ExpenseForm, Feature.ExpenseDetail -> ExpenseFeatureScreen(page, context)
-        Feature.Safety, Feature.Emergency, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog -> SafetyFeatureScreen(page, context)
+        Feature.Safety, Feature.Emergency, Feature.EmergencyEdit, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog -> SafetyFeatureScreen(page, context)
         Feature.Report, Feature.ReportPreview, Feature.ReportFormat, Feature.Export -> ReportFeatureScreen(page, context)
         Feature.Memory, Feature.MemoryCollection, Feature.MemoryHighlight, Feature.MemoryCaption, Feature.MemoryShare -> MemoryFeatureScreen(page, context)
         Feature.VideoHighlight, Feature.VideoHighlightGate -> HighlightFeatureScreen(page, context)

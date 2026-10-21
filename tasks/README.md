@@ -11,6 +11,9 @@
 - [soft-paws-task005 · care planning and native date/time controls](soft-paws-task005-care-planning.md)
   — implemented; 164 JVM tests, native planning/picker journeys at both text sizes and both platform builds pass; visual/physical approval remains open.
 
+- [soft-paws-task006 · cat Safety and contacts](soft-paws-task006-cat-safety.md)
+  — implemented; nine cat Safety screens, 168 JVM tests, native normal/larger-text and permission-denial journeys, and both platform builds pass; visual/physical review stays open.
+
 The BarkLog tasks below are inherited foundation history, not Soft Paws approvals.
 
 ---

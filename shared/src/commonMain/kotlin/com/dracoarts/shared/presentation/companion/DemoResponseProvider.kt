@@ -17,7 +17,7 @@ class DemoResponseProvider : CompanionResponseProvider {
         val (question, profile, records) = request
         val q = question.lowercase()
         val text = when {
-            request.purpose != CompanionAiPurpose.Conversation -> "Preview answer for ${profile?.name ?: "your dog"}: keep the product label and your saved observations ready for a veterinarian. This is a design example, not a live AI response or an assessment of an exposure. For an actual concern, use the emergency contacts above."
+            request.purpose != CompanionAiPurpose.Conversation -> "Preview answer for ${profile?.name ?: "your cat"}: keep the product label and your saved observations ready for a veterinarian. This is a design example, not a live AI response or an assessment of an exposure. For an actual concern, use the emergency contacts above."
             ChatHealth.urgent(q) -> "Contact your veterinarian or an emergency veterinary clinic now. Keep any package and note what happened and when. I can organize observations, but cannot assess an emergency or recommend treatment."
             ChatHealth.treatment(q) || Regex("is .*healthy").containsMatchIn(q) -> "I can’t diagnose a dog or recommend medication or doses. A veterinarian needs to assess that. I can help organize your observations and questions for the appointment."
             ChatHealth.medication(q) -> ChatHealth.medicationEducation

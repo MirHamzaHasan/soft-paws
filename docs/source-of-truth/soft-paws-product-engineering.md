@@ -95,9 +95,13 @@ vaccination image/PDF records, the real dated care agenda and task form/detail,
 plus the original native Rive cat. Native date/time controls retain manual entry
 and cancellation semantics. Occurrence-specific completion/undo commits with
 revision-guarded Journal history; removing a plan preserves recorded care.
-Android native journeys and 164 JVM tests pass. Health/document and planning
-journeys cover both platforms and larger text, with current Debug/Release builds
-and paired screen evidence. The inventory is 38 implemented-unverified / 51 pending; individual native visual
+The nine Safety screens now preserve both contact slots and independent notes,
+carry caregiver selections into a free call summary and keep region/manual-place
+fallbacks available without AI. Safety prompts use cat wording and retain the
+unconfigured-service/consent guards. Android native journeys and 168 JVM tests
+pass. Health/document, planning and Safety journeys cover both platforms and
+larger text, including actual native location denial. Current Debug/Release builds
+and paired screen evidence pass. The inventory is 47 implemented-unverified / 42 pending; individual native visual
 approval remains open. The initial iOS
 host compiled; its accessibility crash was corrected with the official iOS
 renderer update and the repeated-navigation/save/relaunch tests now pass.

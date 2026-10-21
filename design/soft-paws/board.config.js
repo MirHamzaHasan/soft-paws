@@ -136,6 +136,13 @@ window.BOARD = {
         url: "https://mobbin.com/screens/b19ae89c-7af8-4485-b23a-2188aaf0522d",
       },
     ],
+    safety: [
+      {
+        title: "Grab Driver · saved emergency contacts",
+        took: "Show the saved name and number directly, with a separate add-contact action. Soft Paws keeps contacts local and does not copy its location sharing.",
+        url: "https://mobbin.com/screens/c2ad0973-1719-4ef4-a31f-bb2fed7ef6d1",
+      },
+    ],
     health: [
       {
         title: "Amie · selected day and chronological agenda",

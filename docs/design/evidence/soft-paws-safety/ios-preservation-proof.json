@@ -1,0 +1,20 @@
+{
+  "catId": "50f70002-0001-4000-8000-000000000001",
+  "savedVetName": "Native cat contact QA 1792572503",
+  "savedVetPhone": "+15550100123",
+  "savedVetNote": "Side entrance \u00b7 caregiver contact note 1792572503",
+  "preservedProfileFields": [
+    "breed",
+    "age",
+    "sex",
+    "companion",
+    "notes",
+    "photoId",
+    "emergencyPhone",
+    "emergencyServiceName",
+    "emergencyNote"
+  ],
+  "journalEventCountUnchanged": 20,
+  "beforeRevision": 1,
+  "currentRevision": 8
+}

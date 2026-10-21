@@ -5,7 +5,7 @@ data class ToxicityReference(val name: String, val aliases: Set<String>, val gui
 
 /** Species-specific, bounded contact guidance. Never a diagnosis, dose or safe-to-wait decision. */
 object SafetyReference {
-    const val version = "2026-10-20-cat-v1"
+    const val version = "2026-10-21-cat-v1"
     const val avma = "https://ebusiness.avma.org/files/productdownloads/mcm-client-brochures-pet-first-aid-2023.pdf"
     const val hazards = "https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/common-cat-hazards"
     const val poison = "https://www.aspca.org/news/it-ever-safe-induce-vomiting"

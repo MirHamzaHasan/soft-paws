@@ -1,0 +1,33 @@
+{
+  "ios-safety-final": {
+    "passed": 4,
+    "failed": 0,
+    "result": "Passed"
+  },
+  "ios-safety-large": {
+    "passed": 4,
+    "failed": 0,
+    "result": "Passed"
+  },
+  "ios-safety-location": {
+    "passed": 1,
+    "failed": 0,
+    "result": "Passed"
+  },
+  "android-standard": {
+    "passed": 1,
+    "seconds": 134.58
+  },
+  "android-large": {
+    "passed": 1,
+    "seconds": 119.946
+  },
+  "android-native-location": {
+    "passed": 1,
+    "seconds": 8.413
+  },
+  "jvm": {
+    "tests": 168,
+    "failures": 0
+  }
+}

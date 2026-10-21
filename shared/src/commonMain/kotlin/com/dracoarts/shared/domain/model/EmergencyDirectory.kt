@@ -6,7 +6,7 @@ import io.ktor.http.encodeURLParameter
 data class AnimalEmergencyContact(val country: String, val name: String, val displayNumber: String, val dialNumber: String, val scope: String, val source: String)
 data class EmergencyCountry(val code: String, val name: String)
 object EmergencyDirectory {
-    const val checked = "2026-10-20"
+    const val checked = "2026-10-21"
     val countries = listOf(EmergencyCountry("US", "United States"), EmergencyCountry("CA", "Canada"), EmergencyCountry("GB", "United Kingdom"), EmergencyCountry("AU", "Australia"), EmergencyCountry("NZ", "New Zealand"), EmergencyCountry("SG", "Singapore"))
     val contacts = listOf(
         AnimalEmergencyContact("US", "ASPCA Poison Control", "(888) 426-4435", "+18884264435", "Animal poisoning · 24/7 · consultation fees may apply", "https://www.aspca.org/pet-care/aspca-poison-control"),
@@ -18,6 +18,11 @@ object EmergencyDirectory {
     )
     fun forCountry(code: String) = contacts.filter { it.country == code.uppercase() }
     fun countryName(code: String) = countries.firstOrNull { it.code == code.uppercase() }?.name ?: "Another country"
+    fun resolveCountry(value: String): String? {
+        val clean = value.trim().lowercase()
+        return countries.firstOrNull { it.code.lowercase() == clean || it.name.lowercase() == clean }?.code
+            ?: when (clean) { "usa", "united states of america" -> "US"; "uk", "great britain" -> "GB"; else -> null }
+    }
 }
 
 object NearbyVets {

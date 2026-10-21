@@ -2020,3 +2020,163 @@ final class SoftPawsPlanningJourneys: XCTestCase {
         capture("ios-dark-native-time-picker"); nativeDone("Cancel")
     }
 }
+
+final class SoftPawsSafetyJourneys: XCTestCase {
+    private let app = XCUIApplication(bundleIdentifier: "com.draco.apps.soft.paws")
+    private let fixturePreference = "-barklog_preference_v1_board_review_softpawsday_v1_"
+    private func launch(_ screen: String, _ theme: String = "Light") {
+        app.terminate()
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "soft-paws-day-v1", "-DesignReviewScreen", screen,
+            fixturePreference + "theme", theme, fixturePreference + "reduce_motion", "true"]
+        app.launch()
+        let headings = ["safety": "Something feels different?", "symptoms": "What are you seeing?", "contacts": "Your people, close by.",
+            "contact-form": "Keep a number close.", "region": "Start with your region.", "nearby-vets": "A vet near your place.",
+            "location-denied": "Type a place instead.", "toxicity": "A possible exposure?", "safety-topics": "Read with Miso in mind."]
+        if let heading = headings[screen] { XCTAssertTrue(item(heading).waitForExistence(timeout: 25)) }
+        Thread.sleep(forTimeInterval: 0.5)
+    }
+    private func item(_ label: String) -> XCUIElement {
+        app.descendants(matching: .any).matching(NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")).firstMatch
+    }
+    private func reveal(_ label: String) -> XCUIElement {
+        for _ in 0..<18 {
+            let value = item(label)
+            let confirmation = item("Clear this saved contact?").exists || item("Keep this draft?").exists
+            let footers = confirmation ? [] : ["Save a contact", "Save contact", "Show saved contacts", "Back to saved contacts", "View Premium access", "Saved contacts · free", "Saved contacts"].map { app.buttons[$0] }.filter { $0.exists && $0.isHittable && $0.frame.minY > 200 }
+            let bottom = footers.map { $0.frame.minY - 14 }.min() ?? app.frame.maxY - 22
+            if value.exists && value.isHittable && value.frame.minY > 30 && (footers.contains(where: { $0.label == label }) || value.frame.maxY < bottom) {
+                Thread.sleep(forTimeInterval: 0.4); return item(label)
+            }
+            let x = app.frame.width - 9
+            let back = app.buttons["Back"]
+            let headerAbove = ["Country or region", "City, area or postcode", "Plant, product or substance", "Vet or clinic name"].contains(label) && back.exists && back.frame.maxY < 40
+            let upwards = label == "Back" || headerAbove || (value.exists && value.frame.maxY < 40)
+            let start = upwards ? CGFloat(150) : max(220, bottom - 25)
+            let end = upwards ? min(bottom - 24, CGFloat(420)) : max(90, start - 240)
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: start)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: end)),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        capture("ios-safety-missing"); XCTFail("Missing control \(label): \(app.debugDescription)"); return item(label)
+    }
+    private func press(_ label: String) {
+        let value = reveal(label)
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        Thread.sleep(forTimeInterval: 0.6)
+    }
+    private func fill(_ label: String, _ text: String) {
+        let value = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let input = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.2, dy: 0.3)).tap()
+        if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { input.tap() }
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 4))
+        if let old = input.value as? String, old != "Empty", !old.isEmpty {
+            input.press(forDuration: 1.1)
+            let all = app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "Select All")).firstMatch
+            XCTAssertTrue(all.waitForExistence(timeout: 4), "Select the full saved value before replacing it")
+            all.tap(); input.typeText(XCUIKeyboardKey.delete.rawValue)
+            let empty = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@ OR value == %@", "", "Empty"), object: input)
+            XCTAssertEqual(XCTWaiter.wait(for: [empty], timeout: 3), .completed)
+        }
+        input.typeText(text)
+        let entered = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", text), object: input)
+        XCTAssertEqual(XCTWaiter.wait(for: [entered], timeout: 3), .completed)
+        let done = app.keyboards.buttons["Done"]
+        if done.exists { done.tap() }
+        else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.12)).tap() }
+        Thread.sleep(forTimeInterval: 1)
+    }
+    private func capture(_ name: String) {
+        let image = XCTAttachment(screenshot: app.screenshot()); image.name = name; image.lifetime = .keepAlways; add(image)
+    }
+    private func value(_ label: String) -> String {
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let field = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        XCTAssertTrue(field.exists, app.debugDescription)
+        return field.value as? String ?? ""
+    }
+    func testContactDraftSaveRelaunchAndClearCancellation() throws {
+        continueAfterFailure = false
+        let stamp = Int(Date().timeIntervalSince1970)
+        let name = "Native cat contact QA \(stamp)"
+        let note = "Side entrance · caregiver contact note \(stamp)"
+        launch("contact-form")
+        fill("Vet or clinic name", name); fill("Phone number", "+15550100123"); fill("Address or note · optional", note)
+        press("Back"); press("Keep draft")
+        launch("contact-form")
+        XCTAssertEqual(value("Vet or clinic name"), name); XCTAssertEqual(value("Address or note · optional"), note)
+        press("Save contact")
+        XCTAssertTrue(item("Your people, close by.").waitForExistence(timeout: 15))
+        _ = reveal(name); capture("ios-contact-saved")
+        launch("contacts"); _ = reveal(name)
+        press("Edit regular veterinarian"); press("Clear this saved contact")
+        capture("ios-contact-clear-confirmation"); press("Keep contact")
+        XCTAssertEqual(value("Vet or clinic name"), name)
+        capture("ios-contact-kept-after-clear-cancellation")
+        press("Clear this saved contact"); press("Clear contact")
+        XCTAssertTrue(item("Your people, close by.").waitForExistence(timeout: 12)); capture("ios-one-contact-cleared")
+        press("Save a contact"); XCTAssertTrue(["", "Empty"].contains(value("Vet or clinic name")))
+        fill("Vet or clinic name", name); fill("Phone number", "+15550100123"); fill("Address or note · optional", note); press("Save contact")
+        XCTAssertTrue(item("Your people, close by.").waitForExistence(timeout: 12)); _ = reveal(name)
+    }
+
+    func testFreeCallSelectionsAndManualRegionAndPlace() throws {
+        continueAfterFailure = false
+        launch("symptoms")
+        press("Litter habits changed"); press("Possible poisoning or exposure"); press("Show saved contacts")
+        _ = reveal("For your call"); _ = reveal("Possible poisoning or exposure"); capture("ios-call-selections")
+        launch("region"); fill("Country or region", "Pakistan"); press("Use this region")
+        _ = reveal("No bundled number is verified for Pakistan. Use your saved veterinarian or add a verified local emergency clinic.")
+        capture("ios-unsupported-region")
+        fill("Country or region", "Canada"); press("Use this region"); _ = reveal("+1 917 722 5958")
+        capture("ios-verified-country-contact")
+        launch("nearby-vets")
+        let place = "São Paulo | west: ~城区@5"
+        fill("City, area or postcode", place); press("Type a place instead")
+        XCTAssertTrue(item("Type a place instead.").waitForExistence(timeout: 10))
+        XCTAssertEqual(value("City, area or postcode"), place); capture("ios-manual-place-preserved")
+        press("Saved contacts"); XCTAssertTrue(item("Your people, close by.").waitForExistence(timeout: 10))
+    }
+
+    func testExposureDetailsStayAvailableWithoutAnAIRequest() throws {
+        continueAfterFailure = false
+        launch("toxicity")
+        fill("Plant, product or substance", "A lily"); fill("What happened, and when?", "Caregiver's timing note")
+        press("Saved contacts · free"); XCTAssertTrue(item("Your people, close by.").waitForExistence(timeout: 10)); press("Back")
+        XCTAssertEqual(value("Plant, product or substance"), "A lily")
+        XCTAssertEqual(value("What happened, and when?"), "Caregiver's timing note")
+        capture("ios-exposure-details-retained")
+    }
+
+    func testLocationDenialKeepsTypedPlaceAndFreeContacts() throws {
+        continueAfterFailure = false
+        launch("nearby-vets")
+        fill("City, area or postcode", "Typed place QA")
+        press("Use my location")
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let deny = springboard.buttons.matching(NSPredicate(format: "label == %@ OR label == %@", "Don’t Allow", "Don't Allow")).firstMatch
+        if deny.waitForExistence(timeout: 5) {
+            let permission = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); permission.name = "ios-native-location-permission"; permission.lifetime = .keepAlways; add(permission)
+            deny.tap()
+        }
+        XCTAssertTrue(item("Type a place instead.").waitForExistence(timeout: 35), app.debugDescription)
+        XCTAssertTrue(item("Location access was not granted.").exists, app.debugDescription)
+        XCTAssertEqual(value("City, area or postcode"), "Typed place QA")
+        capture("ios-native-location-denied-with-place")
+        press("Saved contacts")
+        XCTAssertTrue(item("Your people, close by.").waitForExistence(timeout: 12))
+    }
+
+    func testRestingSafetyScreensInBothThemes() throws {
+        continueAfterFailure = false
+        for theme in ["Light", "Dark"] {
+            for screen in ["safety", "symptoms", "contacts", "contact-form", "region", "nearby-vets", "location-denied", "toxicity", "safety-topics"] {
+                launch(screen, theme); capture("ios-" + theme.lowercased() + "-" + screen)
+            }
+        }
+    }
+}

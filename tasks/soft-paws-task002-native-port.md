@@ -153,3 +153,28 @@ The inventory is now **38 implemented-unverified / 51 pending**. Individual nati
 visual approval, physical notification delivery, assistive review and downstream
 ports remain open. Both owned apps finish on Home with normal motion; fresh
 cat-only pixel comparisons confirm the continuous Rive idle remains live.
+
+## 21 October · cat Safety and saved contacts
+
+All nine approved Safety destinations now use the joyful shared cat kit and real
+profile/draft/device boundaries. The two contact slots gain independent optional
+address/notes without replacing general care notes or other profile facts.
+Confirmed clear affects one contact; drafts and captured revisions remain intact.
+Caregiver selections become a free call summary without creating Journal entries.
+
+Country listings use rechecked primary sources, explicit manual selection and no
+invented unsupported-country number. Punctuation/non-English place names survive
+manual fallback. Real native permission denial on both platforms preserves the
+typed place and free contacts. Maps remains Premium; AI keeps per-cat weekly
+consent, identity and unavailable-service guards. No live AI call was made.
+
+Android Debug/Release/lint/migrations, **168 JVM tests**, normal/larger-text full
+journeys and a separate native denial case pass. iOS passes four cases at both
+text sizes plus real native denial, with current Debug/Release hosts and bundle
+checks. All 18 paired destinations and larger-text sheets were inspected:
+[Safety evidence](../docs/design/evidence/soft-paws-safety/README.md).
+
+See [task006](soft-paws-task006-cat-safety.md) for scope and source checks. The
+inventory is now **47 implemented-unverified / 42 pending**. Individual native
+visual approval, physical/assistive/integration review and downstream ports remain
+open. Both apps finish on Home with normal text and continuous cat motion.

@@ -243,7 +243,7 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                     }
                 }
                 footer?.let { action ->
-                    val healthFooter = state.featurePage?.feature?.let { it in healthRecordScreens || it in carePlanningScreens } == true
+                    val healthFooter = state.featurePage?.feature?.let { it in healthRecordScreens || it in carePlanningScreens || it in catSafetyScreens } == true
                     Surface(Modifier.fillMaxWidth(), color = boardColor("ground"), border = if (healthFooter) null else androidx.compose.foundation.BorderStroke(1.dp, boardColor("hair"))) {
                         Column {
                             if (healthFooter) HorizontalDivider(color = boardColor("hair"), thickness = 1.dp)

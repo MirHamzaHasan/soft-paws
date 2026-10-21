@@ -63,19 +63,31 @@ fun SoftPawsSection(title: String, action: String? = null, onAction: () -> Unit 
 
 @Composable
 fun SoftPawsRow(title: String, subtitle: String = "", icon: String, accessibilityLabel: String? = null, onClick: () -> Unit) {
-    val tone = SoftPawsDesignTokens.iconTones[icon] ?: "mint"
     Surface(onClick = soundAction(onClick), modifier = Modifier.fillMaxWidth().heightIn(min = 62.dp).then(
         if (accessibilityLabel != null) Modifier.semantics { contentDescription = accessibilityLabel } else Modifier), color = Color.Transparent) {
         Row(Modifier.padding(vertical = 13.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Surface(shape = RoundedCornerShape(14.dp), color = boardColor(tone), border = BorderStroke(1.dp, boardColor("$tone-line"))) {
-                Box(Modifier.size(42.dp), contentAlignment = Alignment.Center) { BarkIcon(icon, Modifier.size(20.dp), boardColor("$tone-ink")) }
-            }
+            SoftPawsIconMark(icon)
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(title, style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium))
                 if (subtitle.isNotBlank()) Text(subtitle, style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp, lineHeight = 16.5.sp), color = boardColor("ink-muted"))
             }
             BarkIcon("chevron-right", Modifier.size(18.dp), boardColor("ink-muted"))
         }
+    }
+}
+
+@Composable
+fun SoftPawsIconMark(icon: String) {
+    val tone = SoftPawsDesignTokens.iconTones[icon] ?: "mint"
+    Surface(shape = RoundedCornerShape(14.dp), color = boardColor(tone), border = BorderStroke(1.dp, boardColor("$tone-line"))) {
+        Box(Modifier.size(42.dp), contentAlignment = Alignment.Center) { BarkIcon(icon, Modifier.size(20.dp), boardColor("$tone-ink")) }
+    }
+}
+
+@Composable
+fun SoftPawsList(content: @Composable ColumnScope.() -> Unit) {
+    Surface(shape = RoundedCornerShape(24.dp), color = boardColor("panel"), border = BorderStroke(1.dp, boardColor("hair"))) {
+        Column(Modifier.fillMaxWidth().padding(horizontal = 18.dp, vertical = 4.dp), content = content)
     }
 }
 

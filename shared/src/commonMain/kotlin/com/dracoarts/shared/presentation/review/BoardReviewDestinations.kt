@@ -6,6 +6,15 @@ import com.dracoarts.shared.domain.model.ReportContent
 
 /** Board IDs resolve to real screens; state-specific evidence remains individually tracked. */
 val boardReviewFeatures = mapOf(
+    "safety" to Feature.Safety,
+    "symptoms" to Feature.Triage,
+    "contacts" to Feature.Emergency,
+    "contact-form" to Feature.EmergencyEdit,
+    "region" to Feature.Emergency,
+    "nearby-vets" to Feature.NearestVet,
+    "location-denied" to Feature.NearestVet,
+    "toxicity" to Feature.Toxicity,
+    "safety-topics" to Feature.FirstAid,
     "calendar" to Feature.Calendar,
     "task-detail" to Feature.TaskDetail,
     "task-form" to Feature.TaskForm,
@@ -124,6 +133,8 @@ val boardReviewTabs = mapOf(
 fun boardReviewArgument(boardId: String?, feature: Feature, newId: () -> String): String {
     val scope = "2026-10-08@2026-10-14@${BoardReviewFixture.dogId}@${ReportContent.encode(ReportContent.defaults)}"
     return when (feature) {
+        Feature.Emergency -> if (boardId == "region") "region" else ""
+        Feature.NearestVet -> if (boardId == "location-denied") "manual-denied" else ""
         Feature.MedicationDetail, Feature.MedicationArchive -> BoardReviewFixture.itemId(200)
         Feature.MedicationGiven -> BoardReviewFixture.itemId(450)
         Feature.MedicationForm -> if (boardId == "medication-plan-edit") BoardReviewFixture.itemId(200) else ""

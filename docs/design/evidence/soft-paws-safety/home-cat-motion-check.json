@@ -1,0 +1,22 @@
+{
+  "android": {
+    "catOnlyCrop": [
+      510,
+      421,
+      1122,
+      1093
+    ],
+    "changedPixels": 12501,
+    "frames": "After greeting, with normal saved motion preference; not a frame-rate measurement."
+  },
+  "ios": {
+    "catOnlyCrop": [
+      400,
+      300,
+      680,
+      650
+    ],
+    "changedPixels": 489,
+    "frames": "After greeting, with normal saved motion preference; not a frame-rate measurement."
+  }
+}

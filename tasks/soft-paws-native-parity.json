@@ -509,74 +509,173 @@
     {
       "id": "safety",
       "section": "safety",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EmergencyServicesScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-safety/android-light-safety.png",
+        "docs/design/evidence/soft-paws-safety/android-dark-safety.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-safety/ios-light-safety.png",
+        "docs/design/evidence/soft-paws-safety/ios-dark-safety.png"
+      ],
+      "verificationNote": "Task006 real SQLite/native normal and larger-text journeys, native location denial and paired light/dark evidence pass. Individual native visual approval and physical/integration review remain open."
     },
     {
       "id": "symptoms",
       "section": "safety",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EmergencyServicesScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-safety/android-light-symptoms.png",
+        "docs/design/evidence/soft-paws-safety/android-dark-symptoms.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-safety/ios-light-symptoms.png",
+        "docs/design/evidence/soft-paws-safety/ios-dark-symptoms.png"
+      ],
+      "verificationNote": "Task006 real SQLite/native normal and larger-text journeys, native location denial and paired light/dark evidence pass. Individual native visual approval and physical/integration review remain open."
     },
     {
       "id": "contacts",
       "section": "safety",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EmergencyServicesScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-safety/android-light-contacts.png",
+        "docs/design/evidence/soft-paws-safety/android-dark-contacts.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-safety/ios-light-contacts.png",
+        "docs/design/evidence/soft-paws-safety/ios-dark-contacts.png"
+      ],
+      "verificationNote": "Task006 real SQLite/native normal and larger-text journeys, native location denial and paired light/dark evidence pass. Individual native visual approval and physical/integration review remain open."
     },
     {
       "id": "contact-form",
       "section": "safety",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EmergencyServicesScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-safety/android-light-contact-form.png",
+        "docs/design/evidence/soft-paws-safety/android-dark-contact-form.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-safety/ios-light-contact-form.png",
+        "docs/design/evidence/soft-paws-safety/ios-dark-contact-form.png"
+      ],
+      "verificationNote": "Task006 real SQLite/native normal and larger-text journeys, native location denial and paired light/dark evidence pass. Individual native visual approval and physical/integration review remain open."
     },
     {
       "id": "region",
       "section": "safety",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EmergencyServicesScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-safety/android-light-region.png",
+        "docs/design/evidence/soft-paws-safety/android-dark-region.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-safety/ios-light-region.png",
+        "docs/design/evidence/soft-paws-safety/ios-dark-region.png"
+      ],
+      "verificationNote": "Task006 real SQLite/native normal and larger-text journeys, native location denial and paired light/dark evidence pass. Individual native visual approval and physical/integration review remain open."
     },
     {
       "id": "nearby-vets",
       "section": "safety",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EmergencyServicesScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-safety/android-light-nearby-vets.png",
+        "docs/design/evidence/soft-paws-safety/android-dark-nearby-vets.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-safety/ios-light-nearby-vets.png",
+        "docs/design/evidence/soft-paws-safety/ios-dark-nearby-vets.png"
+      ],
+      "verificationNote": "Task006 real SQLite/native normal and larger-text journeys, native location denial and paired light/dark evidence pass. Individual native visual approval and physical/integration review remain open."
     },
     {
       "id": "location-denied",
       "section": "safety",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EmergencyServicesScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-safety/android-light-location-denied.png",
+        "docs/design/evidence/soft-paws-safety/android-dark-location-denied.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-safety/ios-light-location-denied.png",
+        "docs/design/evidence/soft-paws-safety/ios-dark-location-denied.png"
+      ],
+      "verificationNote": "Task006 real SQLite/native normal and larger-text journeys, native location denial and paired light/dark evidence pass. Individual native visual approval and physical/integration review remain open."
     },
     {
       "id": "toxicity",
       "section": "safety",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EmergencyServicesScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-safety/android-light-toxicity.png",
+        "docs/design/evidence/soft-paws-safety/android-dark-toxicity.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-safety/ios-light-toxicity.png",
+        "docs/design/evidence/soft-paws-safety/ios-dark-toxicity.png"
+      ],
+      "verificationNote": "Task006 real SQLite/native normal and larger-text journeys, native location denial and paired light/dark evidence pass. Individual native visual approval and physical/integration review remain open."
     },
     {
       "id": "safety-topics",
       "section": "safety",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyFeatureScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EmergencyServicesScreens.kt",
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SafetyAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-safety/android-light-safety-topics.png",
+        "docs/design/evidence/soft-paws-safety/android-dark-safety-topics.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-safety/ios-light-safety-topics.png",
+        "docs/design/evidence/soft-paws-safety/ios-dark-safety-topics.png"
+      ],
+      "verificationNote": "Task006 real SQLite/native normal and larger-text journeys, native location denial and paired light/dark evidence pass. Individual native visual approval and physical/integration review remain open."
     },
     {
       "id": "photos",

@@ -40,6 +40,16 @@ view state so its updated summary starts at the top. See
 [planning evidence](evidence/soft-paws-planning/README.md) and
 [task005](../../tasks/soft-paws-task005-care-planning.md).
 
+The cat Safety chapter uses the same heading and flat footer. `SoftPawsList`
+provides title-free grouped rows; `SoftPawsIconMark` preserves the board's category
+colours in both menu rows and selected-checkbox observations. Contacts retain two
+profile slots with separate notes, revision-guarded SQLite drafts and confirmed
+one-contact clearing. Region/manual-place screens use real service listings and
+optional native location, with free contacts after denial. Exposure/topic screens
+keep existing access/consent/service guards. See
+[task006](../../tasks/soft-paws-task006-cat-safety.md) and
+[Safety evidence](evidence/soft-paws-safety/README.md).
+
 
 20 October task047: the owner approved the new notebook-puppy Rive and the three
 reviewed plan/paywall/membership screens for mobile. Shared Compose implementation, Android/iOS builds and scoped native
