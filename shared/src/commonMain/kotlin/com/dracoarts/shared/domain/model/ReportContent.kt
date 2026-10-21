@@ -17,7 +17,7 @@ enum class ReportContent(val key: String, val label: String, val description: St
 
 fun ReportSnapshot.including(content: Set<ReportContent>): ReportSnapshot {
     require(content.isNotEmpty()) { "Choose at least one content type." }
-    return copy(events = events.filter { if (it.type == CareEventType.Medication) ReportContent.Medication in content else ReportContent.Care in content },
+    return copy(content = content, events = events.filter { if (it.type == CareEventType.Medication) ReportContent.Medication in content else ReportContent.Care in content },
         items = items.filter { item -> when (item.data) {
             is CareItemData.Medication, is CareItemData.Administration -> ReportContent.Medication in content
             is CareItemData.Vaccination -> ReportContent.Vaccinations in content

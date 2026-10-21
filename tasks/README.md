@@ -14,6 +14,11 @@
 - [soft-paws-task006 · cat Safety and contacts](soft-paws-task006-cat-safety.md)
   — implemented; nine cat Safety screens, 168 JVM tests, native normal/larger-text and permission-denial journeys, and both platform builds pass; visual/physical review stays open.
 
+- [soft-paws-task007 · observations, measured weight and reports](soft-paws-task007-insights-and-reports.md)
+  — implemented; 171 JVM tests, native journeys at both launch text sizes, real CSV/share, preserved report scope and both platform builds pass; live Android font-change and visual/physical review remain open.
+- [soft-paws-task008 · recorded cat-care expenses](soft-paws-task008-cat-expenses.md)
+  — research/board review prepared; three native expense ports remain pending.
+
 The BarkLog tasks below are inherited foundation history, not Soft Paws approvals.
 
 ---

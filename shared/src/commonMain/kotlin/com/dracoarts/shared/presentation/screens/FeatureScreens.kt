@@ -27,7 +27,7 @@ fun featureFolio(feature: Feature): BoardFolio? = when (feature) {
     Feature.DogSwitcher, Feature.DogAdd, Feature.DogEdit, Feature.Settings, Feature.DeleteDog, Feature.DeleteAll -> BoardFolio("YOUR DOG, ALL TOGETHER", "user-round", "walk")
     Feature.Health, Feature.Medications, Feature.MedicationForm, Feature.MedicationDetail, Feature.MedicationGiven, Feature.MedicationArchive, Feature.MedicationHistory, Feature.Vaccinations, Feature.VaccinationForm -> BoardFolio("THE CARE RECORD", "pill", "medication")
     Feature.Calendar, Feature.TaskForm, Feature.TaskDetail, Feature.ReminderOptIn -> BoardFolio("A LITTLE PLANNING", "calendar", "training")
-    Feature.Monthly -> BoardFolio("FROM YOUR RECORDS", "chart-no-axes-column-increasing", "photo")
+    Feature.Monthly, Feature.WeightHistory -> null
     Feature.Safety, Feature.Emergency, Feature.EmergencyEdit, Feature.Toxicity, Feature.FirstAid, Feature.Triage, Feature.NearestVet, Feature.TrainDog -> BoardFolio("READY WHEN IT MATTERS", "shield", "symptom")
     Feature.Report, Feature.ReportPreview, Feature.ReportFormat, Feature.Export -> BoardFolio("BRING THE FACTS", "file-text", "photo")
     Feature.Training, Feature.Program, Feature.TrainingProgress, Feature.Session, Feature.TrainingSummary -> BoardFolio("SMALL PRACTICE, OFTEN", "graduation-cap", "training")
@@ -41,6 +41,7 @@ fun featureFolio(feature: Feature): BoardFolio? = when (feature) {
 private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
     LaunchedEffect(page) { context.care.clearError() }
     if (page.feature == Feature.Chooser) Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { FeatureBack(context); BoardDogChip(context.dog.name, { context.open(Feature.DogSwitcher) }) }
+    else if (page.feature in catReportScreens || page.feature == Feature.Monthly) SoftPawsFeatureBack(context)
     else if (page.feature in healthRecordScreens || page.feature in carePlanningScreens || page.feature in catSafetyScreens) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Surface(onClick = soundAction(context.navigation::back), enabled = !context.saving,
@@ -75,6 +76,7 @@ private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
         Feature.Memory, Feature.MemoryCollection, Feature.MemoryHighlight, Feature.MemoryCaption, Feature.MemoryShare -> MemoryFeatureScreen(page, context)
         Feature.VideoHighlight, Feature.VideoHighlightGate -> HighlightFeatureScreen(page, context)
         Feature.Monthly -> InsightsScreen(context, monthly = true)
+        Feature.WeightHistory -> WeightHistoryScreen(context)
         Feature.Chooser -> {
             SoftPawsHeading("What did you notice?", "Keep one thing about ${context.dog.name}’s day.")
             CareEventType.catJournalTypes.forEach { type ->

@@ -12,6 +12,16 @@ still go through the real repository before feedback. See
 [the native cat port](../../tasks/soft-paws-task002-native-port.md).
 Individual native visual approval and the remaining cat screen ports stay open.
 
+The cat Insights/weight/report chapter adds observation-only meal bars, saved-unit
+measurement rows and report facts using `SoftPawsCard`/`SoftPawsList`. Explicit
+date/count controls keep older types and monthly ranges available. Report choices
+and vet questions use a separate retained draft; explicit entry applies its range
+after draft load and clears only stale view state. CSV preparation and native
+handoff are separate actions, with failure/retry/cancel and current Premium guards.
+See [report evidence](evidence/soft-paws-reports/README.md) and
+[the report contract](../product/soft-paws-reports.md). All five surfaces remain
+individually unapproved; larger-text proof uses controlled launch sizes.
+
 The cat health chapter reuses `SoftPawsHeading`, factual cards and rows with a
 48 dp circular Back control, CAT CARE label and a flat, top-divided action area.
 `BarkField(softPaws = true)` supplies the board's labelled outlined fields only

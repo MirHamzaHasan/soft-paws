@@ -26,7 +26,7 @@ enum class Feature {
     Calendar, TaskForm, TaskDetail, ReminderOptIn, Safety, Emergency, EmergencyEdit, Toxicity, FirstAid, Triage, NearestVet, TrainDog,
     Report, ReportPreview, ReportFormat, Export, Training, Program, TrainingProgress, Session, TrainingSummary,
     Photos, PhotoForm, PhotoDetail, Baselines, Expenses, ExpenseForm, ExpenseDetail,
-    Memory, MemoryCollection, MemoryHighlight, MemoryCaption, MemoryShare, Monthly, VideoHighlight, VideoHighlightGate,
+    Memory, MemoryCollection, MemoryHighlight, MemoryCaption, MemoryShare, Monthly, VideoHighlight, VideoHighlightGate, WeightHistory,
 }
 data class FeaturePage(val feature: Feature, val id: String = "")
 enum class BoardNavigationMove { Cut, Tab, Push, Cover, Carry, Back }
@@ -108,7 +108,7 @@ class AppState(initialRoute: Route = Route.Home) {
         if (current?.kind == JournalPage.Kind.Edit) page = JournalPage(JournalPage.Kind.Detail, current.dogId, current.eventId)
         else if (current != null) page = null
         else if (featureStack.isNotEmpty()) featureStack = featureStack.dropLast(1)
-        else route = Route.Home
+        else route = if (route == Route.Insights) Route.Care else Route.Home
     }
 
     fun savedValue(): String = listOf(route.name, page?.kind?.name.orEmpty(), page?.dogId.orEmpty(), page?.eventId.orEmpty(), page?.typeKey.orEmpty(), page?.sessionId.orEmpty(), featureStack.joinToString("~") { "${it.feature.name}:${it.id}" }).joinToString("|")

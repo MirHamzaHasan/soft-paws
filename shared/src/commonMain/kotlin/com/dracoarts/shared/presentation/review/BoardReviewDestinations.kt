@@ -6,6 +6,10 @@ import com.dracoarts.shared.domain.model.ReportContent
 
 /** Board IDs resolve to real screens; state-specific evidence remains individually tracked. */
 val boardReviewFeatures = mapOf(
+    "weight-history" to Feature.WeightHistory,
+    "report" to Feature.Report,
+    "export-options" to Feature.ReportFormat,
+    "cat-export-failure" to Feature.Export,
     "safety" to Feature.Safety,
     "symptoms" to Feature.Triage,
     "contacts" to Feature.Emergency,
@@ -114,6 +118,7 @@ val boardReviewFeatures = mapOf(
 )
 
 val boardReviewTabs = mapOf(
+    "insights" to Route.Insights,
     "home" to Route.Home,
     "timeline" to Route.Timeline,
     "timeline-filters" to Route.Timeline,

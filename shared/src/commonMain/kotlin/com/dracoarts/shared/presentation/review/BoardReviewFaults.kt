@@ -66,7 +66,7 @@ class BoardReviewFaults(val screen: String?) {
     fun platform(base: AppPlatform): AppPlatform = object : AppPlatform by base {
         override val device = object : DeviceServices by base.device {
             override suspend fun prepareExport(document: ExportDocument): DeviceResult<PreparedExport> {
-                if (screen == "export-failure" && once("export-write")) return DeviceResult.Failed("Couldn't prepare the file. Your records stay saved. Try again.")
+                if (screen in setOf("export-failure", "cat-export-failure") && once("export-write")) return DeviceResult.Failed("Couldn't prepare the file. Your records stay saved. Try again.")
                 if (screen == "export-progress" && once("export-delay")) delay(6_000)
                 return base.device.prepareExport(document)
             }

@@ -1,0 +1,22 @@
+{
+  "android": {
+    "catOnlyCrop": [
+      510,
+      421,
+      1122,
+      1093
+    ],
+    "changedPixels": 9692,
+    "notFpsMeasurement": true
+  },
+  "ios": {
+    "catOnlyCrop": [
+      400,
+      300,
+      680,
+      650
+    ],
+    "changedPixels": 2902,
+    "notFpsMeasurement": true
+  }
+}

@@ -2180,3 +2180,153 @@ final class SoftPawsSafetyJourneys: XCTestCase {
         }
     }
 }
+
+final class SoftPawsReportsJourneys: XCTestCase {
+    private let app = XCUIApplication(bundleIdentifier: "com.draco.apps.soft.paws")
+    private let fixturePreference = "-barklog_preference_v1_board_review_softpawsday_v1_"
+    private func launch(_ screen: String, _ theme: String = "Light") {
+        app.terminate()
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "soft-paws-day-v1", "-DesignReviewScreen", screen,
+            fixturePreference + "theme", theme, fixturePreference + "reduce_motion", "true"]
+        app.launch()
+        let headings = ["insights": "Their week, in view.", "weight-history": "Measured, not guessed.",
+            "report": "Before the visit, the facts.", "export-options": "Take the facts with you.", "export-progress": "Ready when you are."]
+        if let heading = headings[screen] { XCTAssertTrue(item(heading).waitForExistence(timeout: 25)) }
+        Thread.sleep(forTimeInterval: 0.5)
+    }
+    private func item(_ label: String) -> XCUIElement {
+        app.descendants(matching: .any).matching(NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")).firstMatch
+    }
+    private func reveal(_ label: String) -> XCUIElement {
+        for _ in 0..<18 {
+            let value = item(label)
+            let confirmation = item("Clear this saved contact?").exists || item("Keep this draft?").exists
+            let footers = confirmation ? [] : ["Export options", "Share CSV", "Back to report", "Cancel export", "Add a measurement", "Keep this check-in", "Save changes", "View record", "Back to today"].map { app.buttons[$0] }.filter { $0.exists && $0.isHittable && $0.frame.minY > 200 }
+            let bottom = footers.map { $0.frame.minY - 14 }.min() ?? app.frame.maxY - 22
+            if value.exists && value.isHittable && value.frame.minY > 30 && (footers.contains(where: { $0.label == label }) || value.frame.maxY < bottom) {
+                Thread.sleep(forTimeInterval: 0.4); return item(label)
+            }
+            let x = app.frame.width - 9
+            let back = app.buttons["Back"]
+            let headerAbove = ["Country or region", "City, area or postcode", "Plant, product or substance", "Vet or clinic name"].contains(label) && back.exists && back.frame.maxY < 40
+            let upwards = label == "Back" || headerAbove || (value.exists && value.frame.maxY < 40)
+            let start = upwards ? CGFloat(150) : max(220, bottom - 25)
+            let end = upwards ? min(bottom - 24, CGFloat(420)) : max(90, start - 240)
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: start)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: end)),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        capture("ios-reports-missing"); XCTFail("Missing control \(label): \(app.debugDescription)"); return item(label)
+    }
+    private func press(_ label: String) {
+        let value = reveal(label)
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        Thread.sleep(forTimeInterval: 0.6)
+    }
+    private func fill(_ label: String, _ text: String) {
+        let value = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let input = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.2, dy: 0.3)).tap()
+        if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { input.tap() }
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 4))
+        if let old = input.value as? String, old != "Empty", !old.isEmpty {
+            input.press(forDuration: 1.1)
+            let all = app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "Select All")).firstMatch
+            XCTAssertTrue(all.waitForExistence(timeout: 4), "Select the full saved value before replacing it")
+            all.tap(); input.typeText(XCUIKeyboardKey.delete.rawValue)
+            let empty = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@ OR value == %@", "", "Empty"), object: input)
+            XCTAssertEqual(XCTWaiter.wait(for: [empty], timeout: 3), .completed)
+        }
+        input.typeText(text)
+        let entered = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", text), object: input)
+        XCTAssertEqual(XCTWaiter.wait(for: [entered], timeout: 3), .completed)
+        let done = app.keyboards.buttons["Done"]
+        if done.exists { done.tap() }
+        else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.12)).tap() }
+        Thread.sleep(forTimeInterval: 1)
+    }
+    private func capture(_ name: String) {
+        let image = XCTAttachment(screenshot: app.screenshot()); image.name = name; image.lifetime = .keepAlways; add(image)
+    }
+    private func value(_ label: String) -> String {
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@", label, label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let field = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        XCTAssertTrue(field.exists, app.debugDescription)
+        return field.value as? String ?? ""
+    }
+    func testRetainedVetQuestionsActualCsvAndPdfBoundary() throws {
+        continueAfterFailure = false
+        let questions = "Discuss appetite | ~ : @ QA \(Int(Date().timeIntervalSince1970))"
+        launch("report")
+        // Start this case through the real draft-discard action. Text selection's
+        // system menu is a separate OS interaction and varies at larger text.
+        let retained = value("Questions for your vet")
+        if !retained.isEmpty && retained != "Empty" {
+            press("Back"); press("Discard draft"); launch("report")
+            XCTAssertTrue(value("Questions for your vet") == "Empty" || value("Questions for your vet").isEmpty)
+        }
+        fill("Questions for your vet", questions)
+        press("Export options"); press("Raw CSV")
+        XCTAssertTrue(item("Share CSV").waitForExistence(timeout: 15), app.debugDescription)
+        capture("ios-csv-ready")
+        press("Share CSV")
+        XCTAssertTrue(app.cells["Copy"].waitForExistence(timeout: 8) || app.cells["Save to Files"].exists, app.debugDescription)
+        capture("ios-native-csv-share")
+        let close = app.buttons["Close"].firstMatch
+        XCTAssertTrue(close.waitForExistence(timeout: 5)); close.tap()
+        XCTAssertTrue(item("Sharing cancelled. Your file and report choices stay here.").waitForExistence(timeout: 8))
+        capture("ios-csv-share-cancelled")
+        press("Back to report")
+        XCTAssertTrue(item("Before the visit, the facts.").waitForExistence(timeout: 10))
+        launch("report")
+        XCTAssertEqual(value("Questions for your vet"), questions)
+        press("Export options"); press("PDF report")
+        XCTAssertTrue(item("Your preview stays free").waitForExistence(timeout: 10))
+        XCTAssertFalse(app.buttons["Share PDF"].exists)
+        capture("ios-pdf-gated")
+    }
+    func testMeasuredWeightSavesAndReopensItsSource() throws {
+        continueAfterFailure = false
+        launch("weight-history"); press("Add a measurement")
+        fill("Measured weight", "4.2"); press("Keep this check-in")
+        XCTAssertTrue(item("A small thing, kept.").waitForExistence(timeout: 12))
+        press("View record"); capture("ios-measurement-source")
+        launch("weight-history")
+        XCTAssertTrue(item("4.2 kg").waitForExistence(timeout: 12)); capture("ios-measurement-reopened")
+    }
+    func testExportFailureCanRetryWithoutLosingTheReport() throws {
+        continueAfterFailure = false
+        launch("cat-export-failure")
+        XCTAssertTrue(item("Couldn't prepare the file. Your records stay saved. Try again.").waitForExistence(timeout: 15))
+        capture("ios-export-failed"); press("Try again")
+        XCTAssertTrue(item("Share CSV").waitForExistence(timeout: 15)); capture("ios-export-retried")
+    }
+    func testSelectedInsightsWeekWinsOverRetainedReportScope() throws {
+        continueAfterFailure = false
+        launch("report")
+        let questions = value("Questions for your vet")
+        launch("insights"); press("Change dates & view counts"); press("Previous"); press("Prepare a care report")
+        XCTAssertTrue(item("7–13 October 2026 · UTC").waitForExistence(timeout: 12))
+        XCTAssertEqual(value("Questions for your vet"), questions)
+        capture("ios-selected-report-week")
+    }
+    func testRestingReportScreensBothThemes() throws {
+        continueAfterFailure = false
+        for theme in ["Light", "Dark"] {
+            for screen in ["insights", "weight-history", "report", "export-options", "export-progress"] {
+                launch(screen, theme)
+                if screen == "export-progress" { XCTAssertTrue(item("Share CSV").waitForExistence(timeout: 15)) }
+                capture("ios-" + theme.lowercased() + "-" + screen)
+            }
+        }
+        app.terminate()
+        app.launchArguments = ["-DesignReview", "-DesignReviewFixture", "soft-paws-day-v1", "-DesignReviewScreen", "home",
+            fixturePreference + "theme", "Light", fixturePreference + "reduce_motion", "false"]
+        app.launch()
+        XCTAssertTrue(app.buttons["Say hello to Miso"].waitForExistence(timeout: 25))
+    }
+}

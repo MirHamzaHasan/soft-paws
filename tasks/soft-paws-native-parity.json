@@ -469,42 +469,87 @@
     {
       "id": "insights",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/InsightsScreen.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-reports/android-light-insights.png",
+        "docs/design/evidence/soft-paws-reports/android-dark-insights.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-reports/ios-light-insights.png",
+        "docs/design/evidence/soft-paws-reports/ios-dark-insights.png"
+      ],
+      "verificationNote": "Real cat observations/measurements, selected-scope report and actual CSV; paired light/dark and larger-text evidence. Native journeys pass at both launch text sizes; individual visual/physical/assistive approval and Android live font-change behavior remain open."
     },
     {
       "id": "weight-history",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/InsightsScreen.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-reports/android-light-weight-history.png",
+        "docs/design/evidence/soft-paws-reports/android-dark-weight-history.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-reports/ios-light-weight-history.png",
+        "docs/design/evidence/soft-paws-reports/ios-dark-weight-history.png"
+      ],
+      "verificationNote": "Real cat observations/measurements, selected-scope report and actual CSV; paired light/dark and larger-text evidence. Native journeys pass at both launch text sizes; individual visual/physical/assistive approval and Android live font-change behavior remain open."
     },
     {
       "id": "report",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/ReportFeatureScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-reports/android-light-report.png",
+        "docs/design/evidence/soft-paws-reports/android-dark-report.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-reports/ios-light-report.png",
+        "docs/design/evidence/soft-paws-reports/ios-dark-report.png"
+      ],
+      "verificationNote": "Real cat observations/measurements, selected-scope report and actual CSV; paired light/dark and larger-text evidence. Native journeys pass at both launch text sizes; individual visual/physical/assistive approval and Android live font-change behavior remain open."
     },
     {
       "id": "export-options",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/ReportFeatureScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-reports/android-light-export-options.png",
+        "docs/design/evidence/soft-paws-reports/android-dark-export-options.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-reports/ios-light-export-options.png",
+        "docs/design/evidence/soft-paws-reports/ios-dark-export-options.png"
+      ],
+      "verificationNote": "Real cat observations/measurements, selected-scope report and actual CSV; paired light/dark and larger-text evidence. Native journeys pass at both launch text sizes; individual visual/physical/assistive approval and Android live font-change behavior remain open."
     },
     {
       "id": "export-progress",
       "section": "health",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/ReportFeatureScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-reports/android-light-export-progress.png",
+        "docs/design/evidence/soft-paws-reports/android-dark-export-progress.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-reports/ios-light-export-progress.png",
+        "docs/design/evidence/soft-paws-reports/ios-dark-export-progress.png"
+      ],
+      "verificationNote": "Real cat observations/measurements, selected-scope report and actual CSV; paired light/dark and larger-text evidence. Native journeys pass at both launch text sizes; individual visual/physical/assistive approval and Android live font-change behavior remain open."
     },
     {
       "id": "safety",

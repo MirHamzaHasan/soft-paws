@@ -178,3 +178,27 @@ See [task006](soft-paws-task006-cat-safety.md) for scope and source checks. The
 inventory is now **47 implemented-unverified / 42 pending**. Individual native
 visual approval, physical/assistive/integration review and downstream ports remain
 open. Both apps finish on Home with normal text and continuous cat motion.
+
+## 21 October · observations, measured weight and selected reports
+
+Five approved cat destinations now use recorded meal counts, saved-unit weight
+history, retained vet questions and an explicit cat/date/content report scope.
+Selecting a week from Insights wins over an older report draft while preserving
+its questions; Back retains manual edits. Free CSV builds a real local file before
+a separate native share action. PDF/print rechecks current access and stays
+unavailable without configuration or explicit Debug preview. No Journal records
+are created for report preparation or exports. Legacy Memory Book scopes remain
+compatible. See [task007](soft-paws-task007-insights-and-reports.md).
+
+Android Debug/Release/lint/migrations and **171 JVM tests** pass. The full native
+journey passes at font 1.0 and cold-start font 1.3; the existing cat idle/tap/still
+regression also passes. iOS passes five cases at both text sizes and current
+Debug/Release host/bundle checks. Paired light/dark and larger-text evidence was
+inspected: [report evidence](../docs/design/evidence/soft-paws-reports/README.md).
+Android live font-change behavior remains unverified after a blank startup/bridge
+stall; the accepted protocol sets/restores size while the app is stopped.
+
+The inventory is **52 implemented-unverified / 37 pending**. Individual native
+visual approval and physical/assistive coverage remain open. Expense research
+and the approved three-screen board review are prepared for task008; native
+expense implementation has not started.

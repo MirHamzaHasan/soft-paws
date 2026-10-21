@@ -173,7 +173,7 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
             }
             CareEventType.Weight -> {
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    FormField("Measured weight", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 16, numeric = true, modifier = Modifier.weight(1f), placeholder = "14.6")
+                    FormField("Measured weight", draft.first, !status.saving, { draft = draft.copy(first = it) }, maximum = 16, numeric = true, modifier = Modifier.weight(1f), placeholder = "4.2")
                     Box(Modifier.weight(.7f)) { BoardSelect("Weight unit", draft.choice, WeightUnit.entries.map { it.name to it.label }, !status.saving) { draft = draft.copy(choice = it) } }
                 }
                 CaptionText("Use a known measurement. Soft Paws does not estimate weight.")

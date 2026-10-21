@@ -4,7 +4,7 @@ package com.dracoarts.shared.domain.model
 import kotlinx.datetime.*
 import kotlin.time.Instant
 
-data class ReportSnapshot(val dog: Dog, val from: LocalDate, val through: LocalDate, val zone: TimeZone, val events: List<CareEvent>, val items: List<CareItem>, val preparedAt: Long)
+data class ReportSnapshot(val dog: Dog, val from: LocalDate, val through: LocalDate, val zone: TimeZone, val events: List<CareEvent>, val items: List<CareItem>, val preparedAt: Long, val questions: String = "", val content: Set<ReportContent> = ReportContent.entries.toSet())
 
 object JournalReport {
     fun details(value: CareDetails?): String = when (value) {
@@ -52,6 +52,7 @@ object JournalReport {
                 when (data) { is CareItemData.Expense -> data.notes; is CareItemData.Photo -> data.notes; is CareItemData.Vaccination -> data.notes; else -> "" },
                 (data as? CareItemData.Expense)?.let { Money.format(it.minorUnits, it.currency) }.orEmpty(), (data as? CareItemData.Expense)?.currency.orEmpty(), "", "", "", if (data is CareItemData.Photo || (data is CareItemData.Expense && data.receiptId != null) || (data is CareItemData.Vaccination && data.documentId != null)) "Local attachment reference recorded" else ""))
         }
+        if (report.questions.isNotBlank()) rows += row(listOf("", report.dog.id, report.dog.name, "vet_questions", "", "", report.zone.id, "Caregiver questions for a veterinary visit", report.questions, "", "", "", "", "", ""))
         return rows.joinToString("\r\n", postfix = "\r\n")
     }
     fun lines(report: ReportSnapshot): List<String> = buildList {
@@ -59,6 +60,7 @@ object JournalReport {
         add("Care range: ${report.from} through ${report.through} · ${report.zone.id}")
         add("Prepared: ${Instant.fromEpochMilliseconds(report.preparedAt)}")
         add("Caregiver-entered observations, plus current recorded medication plans. This is not a diagnosis or treatment recommendation.")
+        if (report.questions.isNotBlank()) { add("Questions for your vet:"); add(report.questions); add("") }
         add("")
         add("${report.events.size} care records in this range")
         report.events.forEach { event ->

@@ -468,7 +468,7 @@
           c,
           "Share or print PDF",
           "Premium · native share sheet in the app",
-          "share",
+          "send",
           () => S.go(c, "paywall"),
         ),
       ),

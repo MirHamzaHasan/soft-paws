@@ -51,7 +51,7 @@ class FeatureForm(id: String, initial: Map<String, String>) {
 
 @Composable
 @OptIn(kotlinx.coroutines.FlowPreview::class)
-fun rememberFeatureForm(context: FeatureContext, slot: String, initial: Map<String, String> = emptyMap()): FeatureForm {
+fun rememberFeatureForm(context: FeatureContext, slot: String, initial: Map<String, String> = emptyMap(), onDraftLoaded: (FeatureForm) -> Unit = {}): FeatureForm {
     val item = context.items.firstOrNull { it.id == context.navigation.featurePage?.id?.substringBefore('@') }
     val defaults = initial + mapOf("_createdAt" to (item?.occurredAt ?: context.now).toString()) +
         ((item?.revision ?: if (slot.startsWith("profile-")) context.dog.revision else null)?.let { mapOf("_revision" to it.toString()) } ?: emptyMap())
@@ -62,7 +62,7 @@ fun rememberFeatureForm(context: FeatureContext, slot: String, initial: Map<Stri
     LaunchedEffect(form) {
         if (form.completed) { form.reset(context.platform.newId(), defaults); form.completed = false }
         else if (persistent && !form.restored && !form.dirty) {
-            try { context.care.loadDraft(context.dog.id, slot)?.let { form.restore(it.value) } }
+            try { context.care.loadDraft(context.dog.id, slot)?.let { form.restore(it.value) }; onDraftLoaded(form) }
             catch (cancelled: CancellationException) { throw cancelled }
             catch (_: Exception) { form.error = "Couldn't reopen a retained draft. Your current entries stay here." }
         }

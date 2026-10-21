@@ -1,0 +1,40 @@
+{
+  "ios-reports-final-source": {
+    "passed": 5,
+    "failed": 0,
+    "result": "Passed"
+  },
+  "android-standard": {
+    "passed": 1,
+    "seconds": 120.912
+  },
+  "jvm": {
+    "tests": 171,
+    "failures": 0,
+    "errors": 0
+  },
+  "ios-large": {
+    "passed": 5,
+    "failed": 0
+  },
+  "android-large": {
+    "passed": 1,
+    "seconds": 81.832
+  },
+  "sourceFiles": 226,
+  "android-cat-motion": {
+    "passed": 1,
+    "seconds": 38.405
+  },
+  "ios-debug-bundle.log": "Debug iOS bundle identity, runtime plist and Bricolage/Inter resources passed.",
+  "ios-release-bundle.log": "Release iOS bundle identity, runtime plist and Bricolage/Inter resources passed.",
+  "androidLiveFontChange": "Unverified: earlier live change left a blank startup/unresponsive bridge. Accepted large run stopped the app before changing size.",
+  "androidQaDevice": {
+    "avd": "SoftPawsApplicationQA_20261020",
+    "standardPort": 5564,
+    "largePort": 5566,
+    "privateAdbPort": 5038,
+    "readOnlyOverlays": true,
+    "defaultAdbServerUnchanged": true
+  }
+}

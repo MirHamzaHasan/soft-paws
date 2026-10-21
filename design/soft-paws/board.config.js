@@ -122,6 +122,13 @@ window.BOARD = {
         url: "https://mobbin.com/screens/c34c0cf4-7081-4d69-9d76-cbaef4baece4",
       },
     ],
+    memories: [
+      {
+        title: "Brex · dated costs with explicit currency",
+        took: "Keep currency beside each recorded amount and group costs by their entered date. Soft Paws retains separate currency totals and its own cat-care categories; there are no company or household claims.",
+        url: "https://mobbin.com/screens/1bec3e82-7d91-4969-afcf-5cbfb8402845",
+      },
+    ],
     ai: [
       {
         title: "Peerspace · compact conversation",
@@ -144,6 +151,11 @@ window.BOARD = {
       },
     ],
     health: [
+      {
+        title: "Visible · explicit ranges and separate measures",
+        took: "Keep the date range visible and each recorded measure distinct. Soft Paws uses its own cat kit and counts observations without inferring a health score.",
+        url: "https://mobbin.com/screens/dd1ad5e7-a166-48a0-a8b1-0c1efb859820",
+      },
       {
         title: "Amie · selected day and chronological agenda",
         took: "Keep the selected date visible and the agenda in time order. Care tasks show their saved time and recorded completion; they do not imply measured durations or outcomes.",

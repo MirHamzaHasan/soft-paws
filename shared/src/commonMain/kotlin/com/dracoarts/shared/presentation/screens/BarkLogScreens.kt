@@ -136,6 +136,9 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                         // Cat review routes resolve an actual record in the selected journal.
                         // Historical BarkLog fixture IDs never stand in for a cat's plan.
                         care.items(journal.selectedDogId!!).firstOrNull { it.data is CareItemData.Medication }?.id.orEmpty()
+                    } else if (reviewStart in setOf("report", "export-options", "export-progress", "cat-export-failure") && reviewStart in boardReviewFeatures) {
+                        val reportScope = CareReportScope(journal.selectedDogId!!, "2026-10-14", "2026-10-20").argument()
+                        reportScope + if (feature == Feature.Export) "@CSV" else ""
                     } else if (reviewStart in boardReviewFeatures) boardReviewArgument(reviewStart, feature, platform::newId) else ""
                     state.open(feature, argument)
                 }
@@ -184,7 +187,7 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
     val publishFooter = remember { { value: BoardFooterContent? -> footer = value } }
     var coach by remember { mutableStateOf<BoardCoachSpec?>(null) }
     val publishCoach = remember { { value: BoardCoachSpec? -> coach = value } }
-    val showTabs = accountTab || (context != null && !reviewOnboarding && !onboardingInProgress && state.page == null && state.featurePage == null)
+    val showTabs = accountTab || (context != null && !reviewOnboarding && !onboardingInProgress && state.page == null && state.featurePage == null && state.route != Route.Insights)
     var bottomDockHeight by remember { mutableStateOf(170.dp) }
     val aiDensity = androidx.compose.ui.platform.LocalDensity.current
     val homeCompanion = false // The approved Home AI/contact card is in the scroll content.
@@ -243,7 +246,7 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                     }
                 }
                 footer?.let { action ->
-                    val healthFooter = state.featurePage?.feature?.let { it in healthRecordScreens || it in carePlanningScreens || it in catSafetyScreens } == true
+                    val healthFooter = state.featurePage?.feature?.let { it in healthRecordScreens || it in carePlanningScreens || it in catSafetyScreens || it in catReportScreens } == true
                     Surface(Modifier.fillMaxWidth(), color = boardColor("ground"), border = if (healthFooter) null else androidx.compose.foundation.BorderStroke(1.dp, boardColor("hair"))) {
                         Column {
                             if (healthFooter) HorizontalDivider(color = boardColor("hair"), thickness = 1.dp)
