@@ -158,7 +158,7 @@ fun ProfileFeatureScreen(page: FeaturePage, context: FeatureContext) {
 }
 
 @Composable
-private fun HomeShortcutSettings(context: FeatureContext) {
+internal fun HomeShortcutSettings(context: FeatureContext) {
     val scope = rememberCoroutineScope()
     val dogId = context.dog.id
     var selected by remember(dogId) { mutableStateOf<Set<HomeShortcut>>(emptySet()) }

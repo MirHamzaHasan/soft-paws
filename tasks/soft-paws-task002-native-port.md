@@ -290,3 +290,20 @@ eight surfaces change status, leaving **68 implemented-unverified / 21 pending**
 Individual native visual approval, physical/assistive and real provider/store
 success remain open. The owner's later scope question is pending; no additional
 screen set starts from this pass.
+
+
+## 22 October · final 21 approved destinations
+
+Task012 finishes AI intro/consent/chat/sources/unavailable, profile/edit/switch/add,
+settings/sounds/local-data/deletion and all seven global/contextual states. Actual
+controllers preserve separate drafts, revisions, saved source snapshots, local care
+and explicit service/Premium boundaries. A larger-text preference and 48-point/dp
+chat edit target complete the interaction pass. No keys, uploads, live AI or purchases.
+
+184 JVM/30 tooling checks, Android Debug/Release/lint/migrations, iOS Debug/Release
+hosts/bundles, normal/larger native journeys in both themes and four-journal
+preservation per platform pass. [Evidence](../docs/design/evidence/soft-paws-finish/README.md)
+separates native implementation/runtime checks from individual visual approval.
+The inventory is **89 implemented-unverified / 0 pending**. The requested screen
+implementation is complete. Physical/assistive, minimum-OS, configured services/store
+and final individual visual/release approval remain open.

@@ -1,0 +1,42 @@
+{
+  "android": {
+    "frames": 8,
+    "uniqueCatCrops": 8,
+    "crop": [
+      600,
+      480,
+      1050,
+      1050
+    ],
+    "sha256": [
+      "ffcef3699fc17496e9738c52c87df32a3cecd375d45d93bac38d1e9ca259c4de",
+      "647caf301bcb093642601bd0d8bdbdaaba40ae934cf22579d46ed2167ba89d1d",
+      "a16d11c7290785660d0f56009a53e7ff31747a5fb6a126649ce3abada5b37244",
+      "0966b62973bee8f8e333f0a441b01d38d97ef87f8992bcac11aba42e8ba92226",
+      "1998f5725d0a0f70974f115bb9b29400223f0148c03544698f3deab240a5477a",
+      "ee24badcc25bbd96987344b59511c94ea4448187a34b6bf61e7be7960feafde8",
+      "2254a34edf65de9b028fdf2bbf1757b9d44e51da52ec571a36ac2a02f847df0e",
+      "d3eca1ad64936d2491d6b9f903108d6b750b0eb6537f959d2caa2406b49ccfd0"
+    ]
+  },
+  "ios": {
+    "frames": 8,
+    "uniqueCatCrops": 8,
+    "crop": [
+      375,
+      285,
+      690,
+      650
+    ],
+    "sha256": [
+      "12149ad45fc1023adf37cf1112097f2b262d835b5c4a44d0d08f5ba140599cc8",
+      "f7325833e37d69a1f6ff6c5adb13aae381b9709470cb05cc57e0cb514e2985f0",
+      "b0e2e3ee7583f758442e1606522bdcd4f1cd8da350bc93d1dde73c774a86fa6e",
+      "714e3543e5d07f7ebc7e59811f23270b4dc699a43f697ddbdeae277db1939358",
+      "af56279bbd096c7f6553bbadf639deb2d5c9676e4c8dc130d5f815ac706fef16",
+      "fe0c21ecb7478ffeed48b969a87d4964478dc6e0078644e08ceeca3c54e1bbfd",
+      "c87a269b943ce36195e989cb6b46c6c8eaaecfcbb134bc9eb55e934a64b0057e",
+      "e37bea638d8a916788e599b94b9feea613b51a0bea5155bea2221c547b57b4c2"
+    ]
+  }
+}

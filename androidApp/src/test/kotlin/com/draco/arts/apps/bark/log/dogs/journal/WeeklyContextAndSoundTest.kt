@@ -140,9 +140,9 @@ class WeeklyContextAndSoundTest {
             override fun keys() = values.keys.toSet()
             override fun clear() = values.clear()
         })
-        val settings = SettingsController(storage); settings.load(); assertFalse(settings.state.value.sounds)
-        settings.save(settings.state.value.copy(sounds = true, soundVolume = .35f, soundTexture = "wood"))
-        val restored = SettingsController(storage); restored.load(); assertTrue(restored.state.value.sounds)
+        val settings = SettingsController(storage); settings.load(); assertFalse(settings.state.value.sounds); assertFalse(settings.state.value.largeText)
+        settings.save(settings.state.value.copy(sounds = true, soundVolume = .35f, soundTexture = "wood", largeText = true))
+        val restored = SettingsController(storage); restored.load(); assertTrue(restored.state.value.sounds); assertTrue(restored.state.value.largeText)
         assertEquals(.35f, restored.state.value.soundVolume)
         values["sound_volume"] = "NaN"; restored.load(); assertEquals(.35f, restored.state.value.soundVolume)
     }

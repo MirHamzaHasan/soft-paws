@@ -1,0 +1,13 @@
+{
+  "acceptedCases": {
+    "testAAllRemainingScreensInBothThemes": "ios-final-normal.xcresult",
+    "testCActualFailedSaveRetryConflictAndDenial": "ios-final-normal.xcresult",
+    "testZEndOwnedPreview": "ios-normal-retry.xcresult",
+    "testBProfilePreferencesSourcesAndUnavailableDraft": "ios-normal-retry.xcresult",
+    "testDDeleteOnlyTheOwnedDisposableCat": "ios-normal-retry.xcresult",
+    "testYReplaceExistingNativeText": "ios-normal-retry.xcresult"
+  },
+  "count": 6,
+  "productionSourceFreeze": "bc6ab5352105e707afadfe8aaa9791f06964771b71c38778c97bd919c3f50269",
+  "note": "Normal cases include targeted harness retries with unchanged production sources. See raw summaries for excluded locator failures."
+}

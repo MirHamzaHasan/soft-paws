@@ -3047,3 +3047,169 @@ final class SoftPawsAccountJourneys: XCTestCase {
         cat.tap(); capture("ios-account-cat-live")
     }
 }
+
+final class SoftPawsFinishJourneys: XCTestCase {
+    private let app = XCUIApplication(bundleIdentifier: "com.draco.apps.soft.paws")
+    private let screens = ["ai-entry","ai-consent","chat","chat-source","chat-unavailable","cat-profile","profile-edit","cat-switcher","add-cat","settings","sound-settings","data-settings","delete-cat","delete-account","empty","loading","offline","save-failure","permission-denied","missing-photo","revision-conflict"]
+    private let headings = ["ai-entry":"A question about Miso?","ai-consent":"You choose the context.","chat":"Ask about Miso.","chat-source":"Where that detail came from.","chat-unavailable":"Your question can wait here.","cat-profile":"Miso’s familiar details.","profile-edit":"Still learning about them.","cat-switcher":"Every cat, their own story.","add-cat":"Another little shadow?","settings":"Make yourself at home.","sound-settings":"A quieter kind of tap.","data-settings":"Your records, your choice.","delete-cat":"Delete Miso’s local records?","delete-account":"Your account and your care.","empty":"A little begins here.","loading":"Opening the journal.","offline":"Still here, without a signal.","save-failure":"Your note is still here.","permission-denied":"A photo can wait.","missing-photo":"The photo is missing.","revision-conflict":"A newer version is here."]
+    private func launch(_ screen: String, _ theme: String = "Light", prepare: Bool = true) {
+        app.terminate()
+        let empty = screen == "empty"
+        let prefix = "-barklog_preference_v1_board_review_" + (empty ? "softpawsfinishempty" : "softpawsfinish") + "_v1_"
+        app.launchArguments = ["-DesignReview","-DesignReviewFixture",empty ? "soft-paws-finish-empty-v1" : "soft-paws-finish-v1","-DesignReviewScreen",screen,prefix + "theme",theme,prefix + "reduce_motion","true",prefix + "large_text","false"]
+        app.launch()
+        if screen == "save-failure" && prepare { XCTAssertTrue(item("One thing to remember.").waitForExistence(timeout: 25)); press("Everyday note"); fill("Notes (optional)","Miso watched birds · retained final-screen draft"); press("Keep this note"); top() }
+        if screen == "permission-denied" && prepare { XCTAssertTrue(item("One moment at a time.").waitForExistence(timeout: 25)); press("Choose a photo") }
+        if screen == "revision-conflict" && prepare { XCTAssertTrue(item("Keep the context right.").waitForExistence(timeout: 25)); fill("Your note","My retained edit · never overwrite a newer record"); press("Save changes"); top() }
+        if screen == "account-plan" { XCTAssertTrue(item("Your plan, plainly.").waitForExistence(timeout: 25)) }
+        if screen == "paywall" { XCTAssertTrue(item("A little more care.").waitForExistence(timeout: 25)) }
+        if screen == "finish-prepare-delete-cat" { XCTAssertTrue(item("A quick check-in").waitForExistence(timeout: 25)) }
+        if prepare, let heading = headings[screen] { XCTAssertTrue(item(heading).waitForExistence(timeout: 25), "Missing " + screen) }
+        Thread.sleep(forTimeInterval: 0.5)
+    }
+    private func item(_ label: String) -> XCUIElement {
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@ OR label == %@ OR label BEGINSWITH %@", label, label + ", ", "✓ " + label, "✓ " + label + ", ")
+        for query in [app.buttons.matching(predicate), app.secureTextFields.matching(predicate), app.textFields.matching(predicate), app.textViews.matching(predicate)] {
+            if query.firstMatch.exists { return query.firstMatch }
+        }
+        return app.descendants(matching: .any).matching(predicate).firstMatch
+    }
+    private func reveal(_ label: String) -> XCUIElement {
+        for attempt in 0..<32 {
+            let value = item(label)
+            let confirmation = item("Choose your cat’s photos").exists || item("This edit hasn’t saved yet.").exists
+            let labels = ["Continue with Apple","Continue with Google","Continue with email","Keep using the journal","Sign in","Create account","Send reset email","Back to sign in","Use the local journal","Purchases unavailable","Keep using the free journal","Back to preview","Back to the journal","Back to your plan","Back to your journal","Delete cat permanently","Delete permanently","Delete account","Manage store subscription","End Debug preview","Continue to demo chat","Keep context choice","See how context works","View Premium","Open journal record","Back to chat","Saved contacts · free","Keep changes","Edit profile","Back to Miso","View Premium access","Start separate setup","Keep current journal","Back to settings","Keep everything","Back to local data","Keep a first check-in","Keep a check-in","Saved contacts","Try saving again","Keep this note","Save changes","Continue without photo","Try the system picker","Choose a photo","Keep caption","Keep photo"]
+            let footers = confirmation ? [] : labels.map { app.buttons[$0] }.filter { $0.exists && $0.isHittable && $0.frame.minY > 200 }
+            let bottom = label == "Message Soft Paws AI" ? app.frame.maxY - 22 : (footers.map { $0.frame.minY - 14 }.min() ?? app.frame.maxY - 22)
+            if value.exists && value.isHittable && (value.elementType != .button || value.frame.height >= 44) && value.frame.minY > 30 && (footers.contains(where: { $0.label == label }) || value.frame.maxY < bottom) {
+                Thread.sleep(forTimeInterval: 0.4); return item(label)
+            }
+            let x = app.frame.width - 9
+            let back = app.buttons["Back"]
+            let headerAbove = ["Name this moment", "Your caption", "Choose replacement", "Collection caption"].contains(label) && back.exists && back.frame.maxY < 40
+            let upwards = label == "Back" || headerAbove || (value.exists && value.frame.maxY < 40) || (!value.exists && attempt >= 16)
+            let start = upwards ? CGFloat(150) : min(app.frame.height * 0.5, max(220, bottom - 25))
+            let end = upwards ? min(bottom - 24, CGFloat(420)) : max(90, start - 240)
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: start)).press(forDuration: 0.03,
+                thenDragTo: app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: x, dy: end)),
+                withVelocity: .slow, thenHoldForDuration: 0.3)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        capture("ios-finish-missing-control"); XCTFail("Missing control \(label): \(app.debugDescription)"); return item(label)
+    }
+    private func press(_ label: String) {
+        var value = reveal(label)
+        for _ in 0..<5 {
+            let frame = value.frame; Thread.sleep(forTimeInterval: 0.3); value = item(label)
+            if abs(value.frame.midY - frame.midY) < 1 { break }
+        }
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        Thread.sleep(forTimeInterval: 0.6)
+    }
+    private func fill(_ label: String, _ text: String) {
+        let value = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@ OR label == %@ OR label BEGINSWITH %@", label, label + ", ", "✓ " + label, "✓ " + label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let secure = app.secureTextFields.matching(predicate).firstMatch
+        let input = secure.exists ? secure : single.exists ? single : app.textViews.matching(predicate).firstMatch
+        value.coordinate(withNormalizedOffset: CGVector(dx: 0.2, dy: 0.3)).tap()
+        if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { input.tap() }
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 4))
+        let previous = input.value as? String ?? ""
+        input.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.95)).tap()
+        input.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: previous.count + 3))
+        input.typeText(text)
+        let protectedInput = label.lowercased().contains("password")
+        let expected = protectedInput ? "Entered" : text
+        let entered = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", expected), object: input)
+        if XCTWaiter.wait(for: [entered], timeout: 3) != .completed { XCTAssertEqual(input.value as? String, expected, "Exact native QA input for " + label) }
+        let done = app.keyboards.buttons["Done"]
+        if done.exists { done.tap() }
+        else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.12)).tap() }
+        Thread.sleep(forTimeInterval: 1)
+    }
+    private func capture(_ name: String) {
+        let image = XCTAttachment(screenshot: app.screenshot()); image.name = name; image.lifetime = .keepAlways; add(image)
+    }
+    private func value(_ label: String) -> String {
+        _ = reveal(label)
+        let predicate = NSPredicate(format: "label == %@ OR label BEGINSWITH %@ OR label == %@ OR label BEGINSWITH %@", label, label + ", ", "✓ " + label, "✓ " + label + ", ")
+        let single = app.textFields.matching(predicate).firstMatch
+        let field = single.exists ? single : app.textViews.matching(predicate).firstMatch
+        XCTAssertTrue(field.exists, app.debugDescription)
+        return field.value as? String ?? ""
+    }
+
+
+
+    private func top() { for _ in 0..<5 { app.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.3)).press(forDuration: 0.03, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.6)), withVelocity: .slow, thenHoldForDuration: 0.2) } }
+    private func selectMiso() {
+        launch("cat-switcher")
+        let miso = app.buttons.matching(NSPredicate(format: "label == %@ OR label BEGINSWITH %@", "Miso", "Miso, ")).firstMatch
+        if miso.exists { press("Miso") }
+    }
+    func testAAllRemainingScreensInBothThemes() {
+        continueAfterFailure = false
+        selectMiso()
+        launch("paywall"); press("Try Debug Premium preview")
+        for theme in ["Light","Dark"] { for screen in screens {
+            launch(screen,theme)
+            if ["save-failure","revision-conflict","chat"].contains(screen) { top() }
+            capture("ios-" + theme.lowercased() + "-" + screen)
+            if screen == "ai-consent" {
+                if !reveal("Continue to demo chat").isEnabled { press("I agree to online AI processing of my messages, Miso’s profile and the past seven calendar days of care records.") }
+                press("Continue to demo chat")
+            }
+        } }
+    }
+    func testBProfilePreferencesSourcesAndUnavailableDraft() {
+        continueAfterFailure = false
+        selectMiso()
+        launch("paywall"); press("Try Debug Premium preview")
+        launch("profile-edit"); fill("Cat’s name","Miso QA"); fill("Care notes","Window watch · saved profile QA"); press("Keep changes")
+        XCTAssertTrue(item("Miso QA’s familiar details.").waitForExistence(timeout: 10)); _ = reveal("Window watch · saved profile QA"); capture("ios-profile-committed")
+        launch("profile-edit"); XCTAssertEqual(value("Cat’s name"),"Miso QA"); fill("Cat’s name","Miso"); fill("Care notes","Owned final-screen QA · preserve this care note"); press("Keep changes")
+        launch("settings"); press("Larger text"); capture("ios-in-app-larger-text"); press("Larger text"); press("Reduced motion"); press("Reduced motion")
+        press("Theme"); press("Dark"); press("Theme"); press("Light")
+        launch("sound-settings"); press("Interaction sounds"); capture("ios-sounds-enabled"); press("Interaction sounds")
+        launch("chat-source"); press("Open journal record"); XCTAssertTrue(item("What you recorded").waitForExistence(timeout: 10))
+        launch("chat"); fill("Message Soft Paws AI","A retained question · no remote request"); launch("chat-unavailable"); XCTAssertTrue(item("A retained question · no remote request").waitForExistence(timeout: 10)); press("Saved contacts · free"); XCTAssertTrue(item("Your people, close by.").waitForExistence(timeout: 10))
+        launch("delete-account"); XCTAssertTrue(item("Delete account").exists); XCTAssertFalse(item("Delete account").isEnabled)
+        launch("add-cat"); press("Start separate setup"); XCTAssertTrue(item("Who is your little shadow?").waitForExistence(timeout: 10)); capture("ios-independent-add-cat-setup")
+    }
+    func testCActualFailedSaveRetryConflictAndDenial() {
+        continueAfterFailure = false
+        selectMiso()
+        launch("save-failure"); press("Try saving again"); XCTAssertTrue(item("A small thing, kept.").waitForExistence(timeout: 10)); capture("ios-save-retry-committed")
+        launch("revision-conflict"); press("Review saved record"); XCTAssertTrue(item("What you recorded").waitForExistence(timeout: 10)); XCTAssertTrue(item("A newer owned QA observation").exists); capture("ios-review-newer-record")
+        launch("permission-denied"); press("Continue without photo"); XCTAssertTrue(item("What did you notice?").waitForExistence(timeout: 10))
+        launch("missing-photo"); XCTAssertEqual(value("Your caption"),"All afternoon, keeping an eye on the birds."); press("Choose a replacement"); XCTAssertTrue(item("A moment, with context.").waitForExistence(timeout: 10))
+        launch("offline"); press("Saved contacts"); XCTAssertTrue(item("Your people, close by.").waitForExistence(timeout: 10))
+        launch("empty"); press("Keep a first check-in"); XCTAssertTrue(item("What did you notice?").waitForExistence(timeout: 10))
+    }
+    func testDDeleteOnlyTheOwnedDisposableCat() {
+        continueAfterFailure = false
+        selectMiso()
+        launch("finish-prepare-delete-cat"); launch("cat-switcher"); press("Juniper QA"); launch("delete-cat",prepare: false)
+        XCTAssertTrue(item("Delete Juniper QA’s local records?").waitForExistence(timeout: 25)); press("Delete cat permanently"); XCTAssertTrue(item("Delete Juniper QA?").waitForExistence(timeout: 5)); press("Keep everything")
+        press("Delete cat permanently"); press("Delete permanently"); Thread.sleep(forTimeInterval: 1)
+        launch("cat-switcher"); XCTAssertFalse(item("Juniper QA").exists); XCTAssertTrue(item("Beans").exists)
+        launch("account-plan"); if item("Debug Premium preview").waitForExistence(timeout: 2) { press("End Debug preview") }
+    }
+    func testYReplaceExistingNativeText() {
+        continueAfterFailure = false
+        selectMiso()
+        launch("revision-conflict", prepare: false)
+        XCTAssertTrue(item("Keep the context right.").waitForExistence(timeout: 25))
+        fill("Your note", "One exact replacement.")
+        XCTAssertEqual(value("Your note"), "One exact replacement.")
+        capture("ios-native-text-replacement")
+    }
+    func testZEndOwnedPreview() {
+        continueAfterFailure = false
+        launch("paywall"); press("Try Debug Premium preview")
+        launch("account-plan"); press("End Debug preview")
+        launch("account-plan"); XCTAssertTrue(item("Free journal").waitForExistence(timeout: 25))
+    }
+
+}

@@ -38,7 +38,7 @@ fun LocalPhoto(fileId: String, description: String, device: DeviceServices, modi
         catch (_: Exception) { PhotoFrame.Missing }
     }
     val bitmap = (frame as? PhotoFrame.Ready)?.bitmap
-    LaunchedEffect(fileId, frame, visible) { if (visible && frame == PhotoFrame.Missing) onUnavailable() }
+    SideEffect { if (visible && frame == PhotoFrame.Missing) onUnavailable() }
     Box(modifier.fillMaxWidth().then(if (frame == PhotoFrame.Missing) Modifier.heightIn(min = height) else Modifier.height(height)).onGloballyPositioned { coordinates ->
         val top = coordinates.positionInWindow().y
         visible = top + coordinates.size.height >= -220 && top <= windowHeight + 220

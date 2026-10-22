@@ -32,4 +32,7 @@ private val motionStarts = mapOf(
     "transition-notes-timeline" to "form-walk",
 )
 
-fun boardReviewEntry(id: String?): String? = boardReviewFlowStarts[id] ?: motionStarts[id] ?: id
+fun boardReviewEntry(id: String?): String? = softPawsStateEntries[id] ?: boardReviewFlowStarts[id] ?: motionStarts[id] ?: id
+
+private val softPawsStateEntries = mapOf("loading" to "startup-loading", "save-failure" to "cat-save-error",
+    "permission-denied" to "photo-permission-denied", "missing-photo" to "photo-missing", "revision-conflict" to "stale-record")

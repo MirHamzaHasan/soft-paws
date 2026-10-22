@@ -6,6 +6,9 @@ import com.dracoarts.shared.domain.model.ReportContent
 
 /** Board IDs resolve to real screens; state-specific evidence remains individually tracked. */
 val boardReviewFeatures = mapOf(
+    "cat-profile" to Feature.CatProfile, "profile-edit" to Feature.DogEdit, "cat-switcher" to Feature.DogSwitcher,
+    "add-cat" to Feature.DogAdd, "settings" to Feature.Settings, "sound-settings" to Feature.Sounds,
+    "data-settings" to Feature.DataSettings, "delete-cat" to Feature.DeleteDog, "offline" to Feature.OfflineGuide,
     "weight-history" to Feature.WeightHistory,
     "report" to Feature.Report,
     "export-options" to Feature.ReportFormat,
@@ -124,6 +127,7 @@ val boardReviewFeatures = mapOf(
 )
 
 val boardReviewTabs = mapOf(
+    "empty" to Route.Home,
     "insights" to Route.Insights,
     "home" to Route.Home,
     "timeline" to Route.Timeline,

@@ -64,6 +64,7 @@ fun App(platform: AppPlatform, state: AppState, modules: List<AppModule> = empty
                     platform.storage.setBoolean("fixture_seeded", true)
                 }
                 if (boardFixture != BoardReviewDataSet.Setup) platform.storage.setBoolean("coach_shown", true)
+                if (boardFixture == BoardReviewDataSet.SoftPawsFinish && initialScreen == "finish-prepare-delete-cat") BoardReviewFixture.prepareFinishDeletion(container.journal)
                 faults?.arm()
                 fixtureReady = true; fixtureError = false
             } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
@@ -76,6 +77,8 @@ fun App(platform: AppPlatform, state: AppState, modules: List<AppModule> = empty
     val dark = when (settings.theme) { "Dark" -> true; "Light" -> false; else -> isSystemInDarkTheme() }
 
     androidx.compose.runtime.SideEffect { runtimePlatform.device.updateAppearance(dark, settings.theme == "System") }
+    val systemDensity = androidx.compose.ui.platform.LocalDensity.current
+    CompositionLocalProvider(androidx.compose.ui.platform.LocalDensity provides androidx.compose.ui.unit.Density(systemDensity.density, systemDensity.fontScale * if (settings.largeText) 1.3f else 1f)) {
     AppTheme(darkTheme = dark, contrast = settings.contrast) {
     CompositionLocalProvider(com.dracoarts.shared.presentation.components.LocalInteractionSounds provides container.managers.sounds, com.dracoarts.shared.presentation.components.LocalMascotForeground provides soundForeground, LocalBarkMotion provides BarkMotion(reduced = rememberSystemReducedMotion() || settings.reduceMotion || (faults != null && initialScreen == "reduced-motion-state"))) {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
@@ -96,5 +99,6 @@ fun App(platform: AppPlatform, state: AppState, modules: List<AppModule> = empty
             }
         }
         }
+    }
     }
 }

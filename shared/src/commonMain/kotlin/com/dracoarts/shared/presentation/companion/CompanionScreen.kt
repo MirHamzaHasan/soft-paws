@@ -59,7 +59,9 @@ enum class CompanionScreen(val boardId: String) {
     MemoryCaption("next-memory-caption"),
     CreateAccount("create-account"),
     PasswordReset("password-reset"),
-    FutureFeatures("future-features"),;
+    FutureFeatures("future-features"),
+    ChatSource("chat-source"),
+    ChatUnavailable("chat-unavailable"),;
     companion object {
         fun fromBoard(id: String?): CompanionScreen? = entries.firstOrNull { it.boardId == id } ?: when (id) {
             "welcome" -> Opening
@@ -76,6 +78,10 @@ enum class CompanionScreen(val boardId: String) {
             "paywall" -> Paywall
             "account-plan" -> ManagePlan
             "manage-subscription" -> StoreManage
+            "delete-account" -> DeleteAccount
+            "ai-entry" -> AiGate
+            "ai-consent" -> AiPrivacy
+            "chat" -> Chat
             else -> null
         }
     }

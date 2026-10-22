@@ -26,6 +26,13 @@ fun HomeScreen(context: FeatureContext) {
     val saved = journal.lastSaved?.takeIf { it.dogId == cat.id }
     val today = JournalDates.day(context.now, context.zone)
     SoftPawsTop("${today.dayOfWeek.name.take(3)}, ${today.day} ${today.month.name.take(3)}") { context.open(Feature.Settings) }
+    if (!journal.loading && journal.totalCount == 0L) {
+        SoftPawsHeading("A little begins here.", "Your first record makes this a journal.", "begins here.")
+        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { AnimatedCat(Modifier.size(if (largeText) 184.dp else 232.dp, if (largeText) 200.dp else 252.dp), greetingLabel = "Say hello to ${cat.name}") }
+        CaptionText("No entries yet. Meals, litter, play and notes will appear here.")
+        BoardStickyAction { BarkButton("Keep a first check-in", { context.open(Feature.Chooser) }) }
+        return
+    }
     Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(28.dp), color = boardColor("cat-field"), border = BorderStroke(1.dp, boardColor("peach-line"))) {
         Box(Modifier.fillMaxWidth().heightIn(min = if (largeText) 350.dp else 235.dp)) {
             AnimatedCat(Modifier.align(Alignment.BottomEnd).offset(x = 8.dp).size(if (largeText) 190.dp else 204.dp, if (largeText) 185.dp else 224.dp), saved?.id, context.journalController::consumedReaction, greetingLabel = "Say hello to ${cat.name}")

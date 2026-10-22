@@ -116,8 +116,10 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
     LaunchedEffect(error) { if (error != null) errorRequester.bringIntoView() }
     if (status.conflict && !conflictDismissed) {
         BoardBackButton({ conflictDismissed = true })
-        FeatureNotice("This record changed", "A newer saved version is available on this device. Your draft is still here.", "refresh-cw", tone = "warn")
-        BarkButton("Review saved version", { scope.launch { draftLock.withLock {
+        SoftPawsHeading("A newer version is here.", "This record changed while you were editing.", "is here.")
+        SoftPawsCard("Your draft is still on screen", "butter") { SupportingText("Review the saved record before applying your edits. Your changes are not overwritten silently.") }
+        BarkField("Your draft", draft.note, { draft = draft.copy(note = it.take(2000)) }, multiline = true, softPaws = true)
+        BarkButton("Review saved record", { scope.launch { draftLock.withLock {
             try {
                 context.care.saveDraft(draft.dogId, draftSlot, LocalDraft(Json.encodeToString(EventDraft.serializer(), draft), listOfNotNull(draft.photoId)))
                 navigation.backGuard = null; navigation.detail(draft.dogId, draft.requestId)
@@ -131,7 +133,8 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
     }
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { BarkTextAction("Close", { keyboard?.hide(); navigation.back() }, enabled = !status.saving, icon = "x", leading = true); CaptionText("${context.dog.name} · local journal") }
     SoftPawsKicker(context.dog.name.uppercase())
-    SoftPawsHeading(if (editing) "Keep the context right." else catLogTitle(draft.type), if (editing) "Changes belong to this record." else logSubtitle(draft.type), accent = if (editing) "context right." else null)
+    SoftPawsHeading(if (status.error != null) { if (draft.type == CareEventType.Note) "Your note is still here." else "Your observation is still here." } else if (editing) "Keep the context right." else catLogTitle(draft.type), if (status.error != null) "The local save did not finish." else if (editing) "Changes belong to this record." else logSubtitle(draft.type), accent = if (status.error != null) "still here." else if (editing) "context right." else null)
+    if (status.error != null) SoftPawsCard("Draft kept on screen", "butter") { SupportingText("Your entries are still here. Try saving again or keep editing.") }
     if (restored) Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) { BarkIcon("notebook-pen", Modifier.size(16.dp)); CaptionText("Draft restored · your notes and choices are here.") }
     var editingDetails by rememberSaveable(sessionId) { mutableStateOf(false) }
     Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
@@ -264,9 +267,10 @@ private fun EventEditor(sessionId: String, initial: EventDraft, editing: Boolean
             BarkTextAction("Reload saved details", { confirmReload = true }, enabled = !status.saving, icon = "refresh-cw")
         }
         if (error != null) Box(Modifier.bringIntoViewRequester(errorRequester)) { ErrorText(error) }
+        if (status.error != null) BarkTextAction("Return to edit", controller::clearError)
         BoardStickyAction {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) { BarkIcon("shield-check", Modifier.size(14.dp)); Spacer(Modifier.width(6.dp)); CaptionText("${draft.date} · ${draft.time}") }
-        BarkButton(if (status.saving) "Saving on this device…" else if (editing) "Save changes" else if (draft.type == CareEventType.Note) "Keep this note" else "Keep this check-in", onClick = {
+        BarkButton(if (status.saving) "Saving on this device…" else if (status.error != null) "Try saving again" else if (editing) "Save changes" else if (draft.type == CareEventType.Note) "Keep this note" else "Keep this check-in", onClick = {
             scope.launch {
                 draftLock.withLock {
                     if (completed) return@withLock

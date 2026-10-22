@@ -27,6 +27,7 @@ enum class Feature {
     Report, ReportPreview, ReportFormat, Export, Training, Program, TrainingProgress, Session, TrainingSummary,
     Photos, PhotoForm, PhotoDetail, Baselines, Expenses, ExpenseForm, ExpenseDetail,
     Memory, MemoryCollection, MemoryHighlight, MemoryCaption, MemoryShare, Monthly, VideoHighlight, VideoHighlightGate, WeightHistory,
+    CatProfile, DataSettings, OfflineGuide,
 }
 data class FeaturePage(val feature: Feature, val id: String = "")
 /** Uses the same safe argument format as the persisted feature stack. */
@@ -62,6 +63,9 @@ class AppState(initialRoute: Route = Route.Home) {
     /** Called inside the companion's existing snapshot transition; never enqueue a second one. */
     internal fun openJournalTool(feature: Feature) {
         page = null; featureStack = listOf(FeaturePage(feature)); route = Route.Home
+    }
+    internal fun openJournalRecord(catId: String, eventId: String) {
+        page = JournalPage(JournalPage.Kind.Detail, catId, eventId); featureStack = emptyList(); route = Route.Home
     }
     internal fun enterJournal(route: Route = Route.Home) {
         page = null; featureStack = emptyList(); this.route = route

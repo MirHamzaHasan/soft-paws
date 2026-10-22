@@ -1,0 +1,12 @@
+{
+  "acceptedCases": {
+    "aAllRemainingScreensInBothThemes": "android-final-normal.log",
+    "cActualFailedSaveRetryConflictAndDenial": "android-final-normal.log",
+    "dDeleteOnlyTheOwnedDisposableCat": "android-final-normal.log",
+    "zEndOwnedPreview": "android-final-normal.log",
+    "bProfilePreferencesSourcesAndUnavailableDraft": "android-profile-retry.log"
+  },
+  "count": 5,
+  "productionSourceFreeze": "bc6ab5352105e707afadfe8aaa9791f06964771b71c38778c97bd919c3f50269",
+  "note": "Four normal cases passed in the first full run; the profile case passed after its disabled-button locator was corrected. Production sources unchanged."
+}

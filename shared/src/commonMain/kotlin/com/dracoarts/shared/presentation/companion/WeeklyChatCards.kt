@@ -64,10 +64,10 @@ internal fun answerSections(text: String): Pair<String, String?> {
     val scope = rememberCoroutineScope()
     var agree by remember(state.workspace.weeklyAllowed) { mutableStateOf(state.workspace.weeklyAllowed) }
     CaptionText("Soft Paws AI")
-    CHeading("A little context. A clearer answer.", "Your dog’s week, ready when you ask.")
+    CHeading("A little context. A clearer answer.", "Your cat’s week, ready when you ask.")
     listOf(Triple("paw-print", "$name’s profile", "Name, age, breed and the care details you’ve saved."),
-        Triple("notebook-pen", "The past seven days", "This dog’s care records are included automatically with each question. No need to select logs."),
-        Triple("shield-check", "You stay in control", "Online processing starts when you ask. Photos, contacts, other dogs and older records stay out. Turn off AI at any time.")).forEach { (icon, title, text) ->
+        Triple("notebook-pen", "The past seven days", "This cat’s care records are included automatically with each question. No need to select logs."),
+        Triple("shield-check", "You stay in control", "Online processing starts when you ask. Photos, contacts, other cats and older records stay out. Turn off AI at any time.")).forEach { (icon, title, text) ->
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) { BarkIcon(icon, Modifier.size(22.dp)); Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) { Text(title, style = MaterialTheme.typography.titleSmall); CaptionText(text) } }
     }
     if (controller.demoResponses) CaptionText("Design review · demo replies. No messages or records leave this phone.")
@@ -91,9 +91,9 @@ internal fun answerSections(text: String): Pair<String, String?> {
         BarkButton("Back to chat", onDismiss)
         BarkTextAction("Turn off Soft Paws AI", { scope.launch { if (controller.updateAiContext { it.copy(messageConsent = false, cloudConsent = false, profileConsent = false, recordConsent = false, weeklyConsentVersion = 0) }) { onDismiss(); controller.go(null) } } })
     }) {
-        CaptionText("The current dog’s saved profile and past seven days are included automatically while Soft Paws AI is enabled. No photos, documents, contacts, other dogs or older records.")
+        CaptionText("The current cat’s saved profile and past seven days are included automatically while Soft Paws AI is enabled. No photos, documents, contacts, other cats or older records.")
         if (error) { ErrorCard("Couldn’t read weekly context. Your journal is unchanged."); BarkButton("Try again", { retry++ }, secondary = true) }
-        else if (context == null) CaptionText("Reading this dog’s week…")
+        else if (context == null) CaptionText("Reading this cat’s week…")
         context?.let { snapshot ->
             Text("${snapshot.profile.name} · ${snapshot.weekly.total} saved records · ${snapshot.weekly.shared} note excerpts")
             BarkButton(if (showProfile) "Hide profile" else "Review ${snapshot.profile.name}’s profile", { showProfile = !showProfile }, secondary = true)

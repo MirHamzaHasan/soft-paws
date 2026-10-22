@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -113,12 +114,12 @@ fun SupportingText(text: String) {
 fun StartupMessage(message: String, onRetry: (() -> Unit)? = null) {
     Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing), contentAlignment = Alignment.TopCenter) {
         Column(Modifier.widthIn(max = AppSpacing.contentMaxWidth).fillMaxWidth().verticalScroll(rememberScrollState()).padding(AppSpacing.page), verticalArrangement = Arrangement.spacedBy(24.dp)) {
-            BrandHeader()
-            ScreenHeading(if (onRetry == null) "Opening your journal" else "Couldn't read your journal", if (onRetry == null) "Reading local records…" else "Your stored records have not been cleared.")
+            Text("Soft Paws", style = MaterialTheme.typography.titleLarge)
+            SoftPawsHeading(if (onRetry == null) "Opening the journal." else "Couldn't read your journal.", if (onRetry == null) "Reading local records." else "Your stored records have not been cleared.", if (onRetry == null) "the journal." else null)
             if (onRetry == null) {
-                JournalCard { SkeletonLine(180.dp, 88.dp); SkeletonLine(240.dp) }
-                repeat(2) { Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) { repeat(2) { JournalCard(Modifier.weight(1f)) { SkeletonLine(52.dp, 52.dp); SkeletonLine(80.dp) } } } }
-                JournalCard { repeat(3) { Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) { Surface(Modifier.size(38.dp), shape = CircleShape, color = MaterialTheme.colorScheme.surfaceVariant) {}; Column(verticalArrangement = Arrangement.spacedBy(8.dp)) { SkeletonLine(180.dp); SkeletonLine(90.dp) } } } }
+                Surface(Modifier.fillMaxWidth().height(220.dp), shape = RoundedCornerShape(24.dp), color = boardColor("inset")) {}
+                repeat(2) { Surface(Modifier.fillMaxWidth().height(64.dp), shape = RoundedCornerShape(20.dp), color = boardColor("inset")) {} }
+                CaptionText("Reading your local journal. AI and network services do not need to connect first.")
             } else {
                 JournalCard {
                     BarkIcon("file-text", Modifier.size(28.dp))

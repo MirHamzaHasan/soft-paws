@@ -3,7 +3,7 @@
 - [soft-paws-task001 · repository, cat design board and original Rive companion](soft-paws-task001-cat-redesign.md)
   — design approved on 20 October 2026; repository/design scope complete.
 - [soft-paws-task002 · approved Android/iOS native port](soft-paws-task002-native-port.md)
-  — in progress; cat storage and identity checks pass; screen parity remains unverified.
+  — all 89 screens implemented; storage/runtime checks pass; individual visual/physical approval remains open.
 - [soft-paws-task003 · ongoing cat motion](soft-paws-task003-cat-motion.md)
   — complete; native motion/settings checks and both platform Debug/Release builds pass.
 - [soft-paws-task004 · prescribed care and vaccination records](soft-paws-task004-prescribed-care.md)
@@ -26,6 +26,9 @@
 
 - [soft-paws-task011 · optional cat account and plans](soft-paws-task011-cat-account-and-plans.md)
   — implemented; 182 JVM tests, normal/larger-text native account/access journeys, journal preservation and both platform builds pass; provider/store setup and individual visual/physical review remain open.
+
+- [soft-paws-task012 · remaining cat screens](soft-paws-task012-complete-remaining-screens.md)
+  — implemented; all 21 remaining AI/profile/settings/states, 184 JVM tests, native normal/larger-text, four-journal preservation per platform and both platform builds pass; 89 implemented-unverified / 0 pending.
 
 The BarkLog tasks below are inherited foundation history, not Soft Paws approvals.
 

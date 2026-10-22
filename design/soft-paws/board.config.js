@@ -145,6 +145,7 @@ window.BOARD = {
       },
     ],
     ai: [
+      {title: "ChatGPT · evidence apart from the answer", took: "Keep saved provenance in its own readable view rather than mixing it into generated prose.", url: "https://mobbin.com/screens/3eaf4e44-fdce-48bc-965b-b194ed9c43ac"},
       {
         title: "Peerspace · compact conversation",
         took: "Keep the composer anchored and separate evidence from message prose.",
@@ -152,6 +153,7 @@ window.BOARD = {
       },
     ],
     account: [
+      {title: "NYT Cooking · deliberate data choices", took: "Group privacy choices and separate account deletion as a destructive final row.", url: "https://mobbin.com/screens/28ef4443-a0c6-417a-8851-eebb895efca0"},
       {
         title: "Moonly · recurring charge beside each plan",
         took: "Keep the full recurring charge and billing period beside every choice, with an accessible exit and no invented trial.",

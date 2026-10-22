@@ -24,7 +24,7 @@ fun FeatureScreens(page: FeaturePage, context: FeatureContext) {
 }
 
 fun featureFolio(feature: Feature): BoardFolio? = when (feature) {
-    Feature.DogSwitcher, Feature.DogAdd, Feature.DogEdit, Feature.Settings, Feature.DeleteDog, Feature.DeleteAll -> BoardFolio("YOUR DOG, ALL TOGETHER", "user-round", "walk")
+    Feature.DogSwitcher, Feature.DogAdd, Feature.DogEdit, Feature.Settings, Feature.DeleteDog, Feature.DeleteAll, Feature.CatProfile, Feature.DataSettings, Feature.OfflineGuide -> null
     Feature.Health, Feature.Medications, Feature.MedicationForm, Feature.MedicationDetail, Feature.MedicationGiven, Feature.MedicationArchive, Feature.MedicationHistory, Feature.Vaccinations, Feature.VaccinationForm -> BoardFolio("THE CARE RECORD", "pill", "medication")
     Feature.Calendar, Feature.TaskForm, Feature.TaskDetail, Feature.ReminderOptIn -> BoardFolio("A LITTLE PLANNING", "calendar", "training")
     Feature.Monthly, Feature.WeightHistory -> null
@@ -41,7 +41,7 @@ fun featureFolio(feature: Feature): BoardFolio? = when (feature) {
 private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
     LaunchedEffect(page) { context.care.clearError() }
     if (page.feature == Feature.Chooser) Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { FeatureBack(context); BoardDogChip(context.dog.name, { context.open(Feature.DogSwitcher) }) }
-    else if (page.feature in catReportScreens || page.feature in catExpenseScreens || page.feature in catPhotoScreens || page.feature in catMemoryScreens || page.feature in catVideoScreens || page.feature == Feature.Monthly) SoftPawsFeatureBack(context)
+    else if (page.feature in catProfileScreens || page.feature == Feature.Sounds || page.feature in catReportScreens || page.feature in catExpenseScreens || page.feature in catPhotoScreens || page.feature in catMemoryScreens || page.feature in catVideoScreens || page.feature == Feature.Monthly) SoftPawsFeatureBack(context)
     else if (page.feature in healthRecordScreens || page.feature in carePlanningScreens || page.feature in catSafetyScreens) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Surface(onClick = soundAction(context.navigation::back), enabled = !context.saving,
@@ -65,7 +65,7 @@ private fun FeatureScreenContent(page: FeaturePage, context: FeatureContext) {
     when (page.feature) {
         Feature.Sounds -> SoundSettingsScreen(context)
         Feature.CareTools -> ProfileHub(context)
-        Feature.DogSwitcher, Feature.DogAdd, Feature.DogEdit, Feature.Settings, Feature.DeleteDog, Feature.DeleteAll -> ProfileFeatureScreen(page, context)
+        Feature.DogSwitcher, Feature.DogAdd, Feature.DogEdit, Feature.Settings, Feature.DeleteDog, Feature.DeleteAll, Feature.CatProfile, Feature.DataSettings, Feature.OfflineGuide -> SoftPawsProfileScreen(page, context)
         Feature.Health, Feature.Medications, Feature.MedicationForm, Feature.MedicationDetail, Feature.MedicationGiven, Feature.MedicationArchive, Feature.MedicationHistory, Feature.Vaccinations, Feature.VaccinationForm -> HealthFeatureScreen(page, context)
         Feature.Calendar, Feature.TaskForm, Feature.TaskDetail, Feature.ReminderOptIn -> CalendarFeatureScreen(page, context)
         Feature.Training, Feature.Program, Feature.TrainingProgress, Feature.Session, Feature.TrainingSummary -> TrainingFeatureScreen(page, context)

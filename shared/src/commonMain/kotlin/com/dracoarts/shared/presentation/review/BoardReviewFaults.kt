@@ -40,7 +40,7 @@ class BoardReviewFaults(val screen: String?) {
             emitAll(journal.observeSummary(dogId, fromMillis, untilMillis))
         }
         override suspend fun createEvent(dogId: String, requestId: String, input: CareEventInput): CareEvent {
-            if (screen == "save-error" && once("event-write")) error("Owned QA write fault")
+            if (screen in setOf("save-error", "cat-save-error") && once("event-write")) error("Owned QA write fault")
             if (screen == "saving-state" && once("event-delay")) delay(6_000)
             return journal.createEvent(dogId, requestId, input)
         }

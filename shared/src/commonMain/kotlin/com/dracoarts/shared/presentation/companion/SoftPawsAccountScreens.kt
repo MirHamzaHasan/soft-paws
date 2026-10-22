@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 internal val softPawsAccountScreens = setOf(
     CompanionScreen.Login, CompanionScreen.Email, CompanionScreen.CreateAccount,
     CompanionScreen.PasswordReset, CompanionScreen.Paywall, CompanionScreen.ManagePlan,
-    CompanionScreen.StoreManage, CompanionScreen.Restore, CompanionScreen.FutureFeatures,
+    CompanionScreen.StoreManage, CompanionScreen.Restore, CompanionScreen.FutureFeatures, CompanionScreen.DeleteAccount,
 )
 
 /** Approved cat account/access screens. The existing controllers and native SDK guards own outcomes. */
@@ -232,6 +232,21 @@ internal fun SoftPawsAccountScreen(
                             if (state.premiumFeature != null) controller.dismissPremium() else backTo(CompanionScreen.ManagePlan)
                         }, enabled = !busy) }
                     }
+                    CompanionScreen.DeleteAccount -> {
+                        var confirming by remember { mutableStateOf(false) }
+                        SoftPawsHeading("Your account and your care.", "Account deletion needs a separate confirmation.", "your care.")
+                        SoftPawsCard("Store billing is separate") { SupportingText("Deleting an account does not cancel an App Store or Google Play subscription.") }
+                        SoftPawsCard("Local records need their own choice") { SupportingText("Account deletion keeps your local care records and photos. Saved conversations on this phone are removed only after the account deletion succeeds.") }
+                        CaptionText(if (state.session.signedIn) "${state.session.provider} account · ${state.session.email}" else "No account is signed in. Your local journal remains available.")
+                        Actions {
+                            BarkButton("Manage store subscription", { push(CompanionScreen.StoreManage) }, secondary = true, enabled = !busy)
+                            BarkButton("Back to local data", { controller.openJournalTool(navigation, Feature.DataSettings) }, enabled = !busy)
+                            BarkTextAction("Delete account", { confirming = true }, enabled = state.session.signedIn && controller.authenticationConfigured && !busy, danger = true)
+                        }
+                        if (confirming) com.dracoarts.shared.presentation.screens.ConfirmChange("Delete your account?", "This removes your identity and saved conversations on this phone after the account request succeeds. Your local cat care and store subscription stay separate.", "Delete account", busy, { confirming = false }, keepLabel = "Keep account") {
+                            scope.launch { if (controller.deleteAccount()) confirming = false }
+                        }
+                    }
                     CompanionScreen.FutureFeatures -> {
                         SoftPawsHeading("A little further ahead.", "These Premium ideas are not available.", "further ahead.")
                         Cat(200)
@@ -263,7 +278,7 @@ internal fun SoftPawsAccountScreen(
 }
 
 @Composable
-private fun AccountBack(onBack: () -> Unit, enabled: Boolean) {
+internal fun AccountBack(onBack: () -> Unit, enabled: Boolean) {
     val source = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
     Surface(onClick = soundAction(onBack), enabled = enabled, interactionSource = source,
         modifier = Modifier.size(48.dp).then(pressMotion(source, enabled)).semantics { contentDescription = "Back" },

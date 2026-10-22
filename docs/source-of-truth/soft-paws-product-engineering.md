@@ -113,17 +113,17 @@ entitlement guard. Cat film editing and a separate free preview retain real priv
 order, captions, portrait/square and a backward-compatible saved title. Native
 MP4 render/share uses current access guards and real 2.8-second clips. The preview
 navigation crash is corrected; both native encoders and normal/larger-text video
-journeys pass. Android native journeys and 182 JVM tests
+journeys pass. Android native journeys and 184 JVM tests
 pass. Health/document, planning and Safety journeys cover both platforms and
 larger text, including actual native location denial. Current Debug/Release builds
 and paired screen evidence pass. The eight optional account/plan destinations now
 use the cat kit and actual native availability, transient protected passwords,
 full recurring prices, free exits and separate Debug preview. No account, reset
-email, transaction or entitlement is fabricated. The inventory is 68 implemented-unverified / 21 pending; individual native visual
+email, transaction or entitlement is fabricated. Task012 also completes all five AI, nine profile/settings and seven contextual-state destinations with actual controllers, both themes and larger text. Four prior journals per platform retain every table hash. The inventory is 89 implemented-unverified / 0 pending; individual native visual
 approval remains open. The initial iOS
 host compiled; its accessibility crash was corrected with the official iOS
 renderer update and the repeated-navigation/save/relaunch tests now pass.
-Full downstream native cat adaptation, paired screen parity, store preparation
+Individual paired screen approval, physical/assistive review, store preparation
 and independent Firebase/service registrations remain pending. Do not reuse
 BarkLog's private registrations or uninstall/clear existing device data as a
 side effect of this port. The board's direction approval is already granted.
@@ -145,3 +145,6 @@ schema v5. Both hosts use `com.draco.apps.soft.paws`; inherited Firebase client
 registrations/callbacks are excluded. Atlas remains disabled in every build until
 Soft Paws has its own approved admission and live proof. Own billing IDs/keys stay
 deferred. Current native screen work is not a claim of completed visual parity.
+
+
+22 October: [remaining-screen behavior](../product/soft-paws-profiles-settings-and-ai.md) and [native evidence](../design/evidence/soft-paws-finish/README.md) document all 21 final destinations and the separate release gates.

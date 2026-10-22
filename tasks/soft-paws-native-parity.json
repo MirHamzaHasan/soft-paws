@@ -879,42 +879,107 @@
     {
       "id": "ai-entry",
       "section": "ai",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-ai-entry.png",
+        "docs/design/evidence/soft-paws-finish/android-light-ai-entry-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-ai-entry.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-ai-entry-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-ai-entry.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-ai-entry-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-ai-entry.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-ai-entry-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "ai-consent",
       "section": "ai",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-ai-consent.png",
+        "docs/design/evidence/soft-paws-finish/android-light-ai-consent-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-ai-consent.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-ai-consent-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-ai-consent.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-ai-consent-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-ai-consent.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-ai-consent-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "chat",
       "section": "ai",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/CompanionChat.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-chat.png",
+        "docs/design/evidence/soft-paws-finish/android-light-chat-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-chat.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-chat-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-chat.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-chat-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-chat.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-chat-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "chat-source",
       "section": "ai",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-chat-source.png",
+        "docs/design/evidence/soft-paws-finish/android-light-chat-source-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-chat-source.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-chat-source-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-chat-source.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-chat-source-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-chat-source.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-chat-source-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "chat-unavailable",
       "section": "ai",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAiScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-chat-unavailable.png",
+        "docs/design/evidence/soft-paws-finish/android-light-chat-unavailable-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-chat-unavailable.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-chat-unavailable-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-chat-unavailable.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-chat-unavailable-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-chat-unavailable.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-chat-unavailable-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "profile",
@@ -929,34 +994,86 @@
     {
       "id": "cat-profile",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsProfileScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-cat-profile.png",
+        "docs/design/evidence/soft-paws-finish/android-light-cat-profile-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-cat-profile.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-cat-profile-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-cat-profile.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-cat-profile-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-cat-profile.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-cat-profile-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "profile-edit",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsProfileScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-profile-edit.png",
+        "docs/design/evidence/soft-paws-finish/android-light-profile-edit-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-profile-edit.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-profile-edit-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-profile-edit.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-profile-edit-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-profile-edit.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-profile-edit-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "cat-switcher",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsProfileScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-cat-switcher.png",
+        "docs/design/evidence/soft-paws-finish/android-light-cat-switcher-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-cat-switcher.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-cat-switcher-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-cat-switcher.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-cat-switcher-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-cat-switcher.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-cat-switcher-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "add-cat",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsProfileScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-add-cat.png",
+        "docs/design/evidence/soft-paws-finish/android-light-add-cat-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-add-cat.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-add-cat-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-add-cat.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-add-cat-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-add-cat.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-add-cat-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "sign-in",
@@ -1087,42 +1204,107 @@
     {
       "id": "settings",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsProfileScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-settings.png",
+        "docs/design/evidence/soft-paws-finish/android-light-settings-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-settings.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-settings-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-settings.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-settings-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-settings.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-settings-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "sound-settings",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoundSettingsScreen.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-sound-settings.png",
+        "docs/design/evidence/soft-paws-finish/android-light-sound-settings-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-sound-settings.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-sound-settings-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-sound-settings.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-sound-settings-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-sound-settings.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-sound-settings-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "data-settings",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsProfileScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-data-settings.png",
+        "docs/design/evidence/soft-paws-finish/android-light-data-settings-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-data-settings.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-data-settings-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-data-settings.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-data-settings-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-data-settings.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-data-settings-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "delete-cat",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsProfileScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-delete-cat.png",
+        "docs/design/evidence/soft-paws-finish/android-light-delete-cat-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-delete-cat.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-delete-cat-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-delete-cat.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-delete-cat-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-delete-cat.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-delete-cat-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "delete-account",
       "section": "account",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/companion/SoftPawsAccountScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-delete-account.png",
+        "docs/design/evidence/soft-paws-finish/android-light-delete-account-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-delete-account.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-delete-account-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-delete-account.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-delete-account-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-delete-account.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-delete-account-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "future-features",
@@ -1145,60 +1327,151 @@
     {
       "id": "empty",
       "section": "states",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/HomeScreen.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-empty.png",
+        "docs/design/evidence/soft-paws-finish/android-light-empty-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-empty.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-empty-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-empty.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-empty-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-empty.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-empty-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "loading",
       "section": "states",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/components/AppComponents.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-loading.png",
+        "docs/design/evidence/soft-paws-finish/android-light-loading-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-loading.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-loading-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-loading.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-loading-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-loading.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-loading-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "offline",
       "section": "states",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/SoftPawsProfileScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-offline.png",
+        "docs/design/evidence/soft-paws-finish/android-light-offline-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-offline.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-offline-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-offline.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-offline-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-offline.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-offline-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "save-failure",
       "section": "states",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-save-failure.png",
+        "docs/design/evidence/soft-paws-finish/android-light-save-failure-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-save-failure.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-save-failure-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-save-failure.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-save-failure-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-save-failure.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-save-failure-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "permission-denied",
       "section": "states",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/PhotoFeatureScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-permission-denied.png",
+        "docs/design/evidence/soft-paws-finish/android-light-permission-denied-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-permission-denied.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-permission-denied-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-permission-denied.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-permission-denied-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-permission-denied.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-permission-denied-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "missing-photo",
       "section": "states",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/PhotoFeatureScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-missing-photo.png",
+        "docs/design/evidence/soft-paws-finish/android-light-missing-photo-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-missing-photo.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-missing-photo-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-missing-photo.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-missing-photo-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-missing-photo.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-missing-photo-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     },
     {
       "id": "revision-conflict",
       "section": "states",
-      "status": "pending",
-      "nativeSources": [],
-      "androidEvidence": [],
-      "iosEvidence": []
+      "status": "implemented-unverified",
+      "nativeSources": [
+        "shared/src/commonMain/kotlin/com/dracoarts/shared/presentation/screens/EventScreens.kt"
+      ],
+      "androidEvidence": [
+        "docs/design/evidence/soft-paws-finish/android-light-revision-conflict.png",
+        "docs/design/evidence/soft-paws-finish/android-light-revision-conflict-large.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-revision-conflict.png",
+        "docs/design/evidence/soft-paws-finish/android-dark-revision-conflict-large.png"
+      ],
+      "iosEvidence": [
+        "docs/design/evidence/soft-paws-finish/ios-light-revision-conflict.png",
+        "docs/design/evidence/soft-paws-finish/ios-light-revision-conflict-large.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-revision-conflict.png",
+        "docs/design/evidence/soft-paws-finish/ios-dark-revision-conflict-large.png"
+      ],
+      "evidenceNote": "Task012: current-source native simulator captures and functional journeys; individual visual/physical/assistive approval remains open."
     }
   ],
   "colourEvidence": "docs/design/evidence/soft-paws-color/README.md",
-  "scopeNote": "35 cat surfaces implemented but not approved for full paired visual parity; 54 downstream ports remain pending. Health, Journal, colour/core-journey and motion evidence are separate."
+  "scopeNote": "All 89 approved board surfaces are implemented; 0 native screen ports pending. Individual native visual approval and physical/assistive, minimum-OS, configured services/store and release gates remain separate."
 }

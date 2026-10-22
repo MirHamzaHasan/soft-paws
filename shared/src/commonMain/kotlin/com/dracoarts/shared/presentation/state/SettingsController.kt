@@ -10,7 +10,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 data class UserSettings(val reduceMotion: Boolean = false, val contrast: Boolean = false, val theme: String = "Light", val error: String? = null,
-    val sounds: Boolean = false, val soundVolume: Float = .35f, val soundTexture: String = "wood")
+    val sounds: Boolean = false, val soundVolume: Float = .35f, val soundTexture: String = "wood", val largeText: Boolean = false)
 
 class SettingsController(private val preferences: StorageManager) {
     private val _state = MutableStateFlow(UserSettings())
@@ -21,7 +21,8 @@ class SettingsController(private val preferences: StorageManager) {
             preferences.getString("theme")?.takeIf { it in listOf("System", "Light", "Dark") } ?: "Light",
             sounds = preferences.getBoolean("interaction_sounds") ?: false,
             soundVolume = (preferences.getString("sound_volume")?.toFloatOrNull()?.takeIf { it.isFinite() } ?: .35f).coerceIn(0f, 1f),
-            soundTexture = preferences.getString("sound_texture")?.takeIf { it in listOf("wood", "pop") } ?: "wood") }
+            soundTexture = preferences.getString("sound_texture")?.takeIf { it in listOf("wood", "pop") } ?: "wood",
+            largeText = preferences.getBoolean("large_text") ?: false) }
         catch (_: Exception) { UserSettings(error = "Couldn't read appearance settings. Light appearance is in use.") }
     }
     suspend fun save(settings: UserSettings) = withContext(Dispatchers.Default) {
@@ -36,6 +37,7 @@ class SettingsController(private val preferences: StorageManager) {
                 preferences.setBoolean("interaction_sounds", settings.sounds)
                 preferences.setString("sound_volume", settings.soundVolume.toString())
                 preferences.setString("sound_texture", settings.soundTexture)
+                preferences.setBoolean("large_text", settings.largeText)
                 _state.value = settings.copy(error = null)
             } catch (cancelled: CancellationException) { throw cancelled }
             catch (_: Exception) { _state.value = _state.value.copy(error = "Couldn't save appearance settings. Please try again.") }

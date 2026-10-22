@@ -499,9 +499,35 @@ class CompanionTest {
         p.authentication.wait=null;assertTrue(c.sendEmailLink("caregiver@example.com"));assertEquals(CompanionScreen.CheckEmail,c.state.value.route)
         assertFalse(c.state.value.session.signedIn);c.close()
     }
+    @Test fun finalCatFixtureSourcesAreRealBoundedRecordsWithoutConsentOrEntitlement()=store {repo,_,p->
+        com.dracoarts.shared.presentation.review.BoardReviewFixture.seed(repo,com.dracoarts.shared.presentation.review.BoardReviewDataSet.SoftPawsFinish)
+        val cats=repo.observeDogs().first();val cat=cats.first {it.name=="Miso"};val beans=cats.first {it.name=="Beans"}
+        val workspace=kotlinx.serialization.json.Json.decodeFromString<CompanionWorkspace>(repo.readDocument("companion-chat-${cat.id}")!!)
+        assertFalse(workspace.weeklyAllowed);assertFalse(workspace.cloudConsent);assertNull(repo.readDocument("companion-session"))
+        val answer=workspace.thread!!.messages.last();assertEquals("demo",answer.responseSource);assertEquals(2,answer.weekly!!.total)
+        assertTrue(answer.records.isNotEmpty());assertTrue(answer.records.all {it.dogId==cat.id})
+        answer.records.forEach { source->val actual=repo.observeEvent(cat.id,source.id).first()!!;assertTrue(source.note.contains(requireNotNull(actual.note)));assertEquals(actual.occurredAtMillis,source.at) }
+        assertEquals(1,repo.observeEvents(beans.id).first().size);assertNotNull(repo.loadDraft(beans.id,"final-screen-sentinel"))
+        (repo as com.dracoarts.shared.domain.repository.CareRepository).deleteDog("50f70012-0001-4000-8000-000000000003")
+        com.dracoarts.shared.presentation.review.BoardReviewFixture.prepareFinishDeletion(repo)
+        com.dracoarts.shared.presentation.review.BoardReviewFixture.prepareFinishDeletion(repo)
+        assertEquals(3,repo.observeDogs().first().size);assertEquals(2,repo.observeEvents(cat.id).first().size)
+        assertEquals(1,repo.observeEvents(beans.id).first().size);assertNotNull(repo.loadDraft(beans.id,"final-screen-sentinel"))
+
+    }
+    @Test fun sourceNavigationCannotOpenAnotherCatAndClearsOnSwitch()=store {repo,_,p->
+        com.dracoarts.shared.presentation.review.BoardReviewFixture.seed(repo,com.dracoarts.shared.presentation.review.BoardReviewDataSet.SoftPawsFinish)
+        val cats=repo.observeDogs().first();val cat=cats.first {it.name=="Miso"};val other=cats.first {it.name=="Beans"};val c=controller(repo,p);c.load(cat)
+        val answer=c.state.value.workspace.thread!!.messages.last();c.showSources(answer.id)
+        assertEquals(CompanionScreen.ChatSource,c.state.value.route);assertEquals(answer.id,c.state.value.sourceMessageId)
+        val nav=com.dracoarts.shared.presentation.navigation.AppState()
+        c.openSourceRecord(nav,other.id,answer.records.first().id);assertNull(nav.page)
+        c.openSourceRecord(nav,cat.id,answer.records.first().id);assertEquals(cat.id,nav.page!!.dogId);assertEquals(answer.records.first().id,nav.page!!.eventId)
+        c.activateDog(other.id);assertNull(c.state.value.sourceMessageId);assertTrue(c.state.value.workspace.threads.isEmpty());c.close()
+    }
     @Test fun allCompanionBoardRoutesExist() {
-        assertEquals(58,CompanionScreen.entries.size);assertEquals(58,CompanionScreen.entries.map {it.boardId}.distinct().size)
-        val account = mapOf("sign-in" to CompanionScreen.Login, "email-sign-in" to CompanionScreen.Email,
+        assertEquals(60,CompanionScreen.entries.size);assertEquals(60,CompanionScreen.entries.map {it.boardId}.distinct().size)
+        val account = mapOf("ai-entry" to CompanionScreen.AiGate, "ai-consent" to CompanionScreen.AiPrivacy, "chat" to CompanionScreen.Chat, "chat-source" to CompanionScreen.ChatSource, "chat-unavailable" to CompanionScreen.ChatUnavailable, "delete-account" to CompanionScreen.DeleteAccount, "sign-in" to CompanionScreen.Login, "email-sign-in" to CompanionScreen.Email,
             "create-account" to CompanionScreen.CreateAccount, "password-reset" to CompanionScreen.PasswordReset,
             "paywall" to CompanionScreen.Paywall, "account-plan" to CompanionScreen.ManagePlan,
             "manage-subscription" to CompanionScreen.StoreManage, "future-features" to CompanionScreen.FutureFeatures)

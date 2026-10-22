@@ -63,6 +63,7 @@ private fun CatPhotoPicker(context: FeatureContext) {
     val form = rememberFeatureForm(context, "photo-new", emptyMap())
     var picking by remember { mutableStateOf(false) }
     var message by remember { mutableStateOf<String?>(null) }
+    var denied by remember { mutableStateOf(false) }
     fun choose() { scope.launch {
         picking = true
         try { when (val result = context.platform.device.pickPhoto()) {
@@ -75,24 +76,25 @@ private fun CatPhotoPicker(context: FeatureContext) {
                 }
             }
             DeviceResult.Cancelled -> message = "Selection cancelled. Your draft is still here."
-            DeviceResult.Denied -> message = "This photo wasn't accessible. Your entries stay here."
+            DeviceResult.Denied -> { denied = true; message = "Photo access was not granted. Your observation can still be kept without a photo." }
             is DeviceResult.Failed -> message = result.message
         } } catch (cancelled: CancellationException) { throw cancelled }
         catch (_: Exception) { message = "Couldn't open the picker. Your entries stay here; try again." }
         finally { picking = false }
     } }
-    SoftPawsHeading("One moment at a time.", "Choose only the photos you want to keep.", "at a time.")
+    SoftPawsHeading(if (denied) "A photo can wait." else "One moment at a time.", if (denied) "Photo access was not granted." else "Choose only the photos you want to keep.", if (denied) "can wait." else "at a time.")
     if (form["file"].isNotBlank()) LocalPhoto(form["file"], "Your retained photo draft", context.platform.device, height = 220.dp)
     else Box(Modifier.fillMaxWidth().height(90.dp), contentAlignment = Alignment.Center) { BarkIcon("image", Modifier.size(52.dp), boardColor("accent")) }
-    SoftPawsCard(if (form["file"].isBlank()) "Choose one photo" else "Your photo draft is here") {
-        SupportingText("The system picker lets you choose a photo without giving access to your whole library.")
+    SoftPawsCard(if (denied) "Keep the observation anyway" else if (form["file"].isBlank()) "Choose one photo" else "Your photo draft is here") {
+        SupportingText(if (denied) "Save your observation without a photo. You can add one later." else "The system picker lets you choose a photo without giving access to your whole library.")
     }
     CaptionText("Selected photos become private local copies. No automatic upload.")
     message?.let { ErrorText(it) }
     BoardStickyAction {
         FeatureFormError(form)
         if (form["file"].isNotBlank()) BarkButton("Continue photo draft", { context.resetFeatureView(FeaturePage(Feature.PhotoForm, "draft")); context.navigation.backGuard = null; context.navigation.replace(Feature.PhotoForm, "draft") }, enabled = !picking)
-        BarkButton(if (picking) "Opening picker…" else "Choose a photo", ::choose, enabled = !picking, secondary = form["file"].isNotBlank())
+        if (denied) BarkButton("Continue without photo", { context.open(Feature.Chooser) })
+        BarkButton(if (picking) "Opening picker…" else if (denied) "Try the system picker" else "Choose a photo", ::choose, enabled = !picking, secondary = form["file"].isNotBlank())
         BarkTextAction("Cancel selection", context.navigation::back, enabled = !picking)
     }
 }
@@ -125,7 +127,13 @@ private fun CatPhotoEditor(page: FeaturePage, selected: CareItem?, context: Feat
     // Restored drafts keep captured revisions; an entered-month change updates the choice.
     LaunchedEffect(month, enteredDate, selection?.month) { if (enteredDate != null && selection != null && selection.month != month) refreshSelection() }
     var removing by remember { mutableStateOf<CareItem?>(null) }
-    if (form["file"].isNotBlank()) LocalPhoto(form["file"], form["title"].ifBlank { "Selected photo" }, context.platform.device, height = if (detail) 260.dp else 220.dp)
+    var missing by remember(form["file"]) { mutableStateOf(false) }
+    if (form["file"].isNotBlank() && !missing) LocalPhoto(form["file"], form["title"].ifBlank { "Selected photo" }, context.platform.device, onUnavailable = { missing = true }, height = if (detail) 260.dp else 220.dp)
+    if (missing) {
+        SoftPawsHeading("The photo is missing.", "The caption and record are still here.", "is missing.")
+        Box(Modifier.fillMaxWidth().height(90.dp), contentAlignment = Alignment.Center) { BarkIcon("image", Modifier.size(52.dp), boardColor("accent")) }
+        CaptionText("A missing file does not become a different image.")
+    }
     if (detail) {
         SoftPawsSection(old!!.title)
         CaptionText("${JournalDates.dateLabel(LocalDate.parse(old.date))} · ${context.dog.name}")
@@ -143,7 +151,7 @@ private fun CatPhotoEditor(page: FeaturePage, selected: CareItem?, context: Feat
         BarkField("Body area · optional", form["area"], { if (it.length <= 120) form["area"] = it }, Modifier.fillMaxWidth(), !context.saving, softPaws = true)
     } else {
         if (old!!.category != "Everyday" || old.bodyArea.isNotBlank()) SoftPawsFact(old.category, old.bodyArea, "image")
-        BarkTextAction("Edit photo details or replace image", { context.open(Feature.PhotoForm, selected!!.id) }, icon = "pencil")
+        BarkTextAction(if (missing) "Choose a replacement" else "Edit photo details or replace image", { context.open(Feature.PhotoForm, selected!!.id) }, icon = "pencil")
         BarkTextAction("Delete photo reference", { removing = selected }, enabled = !context.saving, danger = true, icon = "trash")
     }
     val changedSelection = selection != currentSelection

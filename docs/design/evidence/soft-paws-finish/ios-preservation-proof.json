@@ -1,0 +1,150 @@
+{
+  "barklog_kmp_v1.db": {
+    "version": 5,
+    "tables": {
+      "care_drafts": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "care_events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "care_items": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "device_cleanup": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "dogs": {
+        "rows": 1,
+        "sha256": "452a0c4284d0a732dbdbb747e8f79dae4d5b0871a3551eb76415141cf42dc05d"
+      },
+      "journal_metadata": {
+        "rows": 1,
+        "sha256": "4016538371a1cd463033d70e3b4cbff539afd4140abcc3de601136f4dab3d83a"
+      },
+      "local_documents": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "local_owner": {
+        "rows": 1,
+        "sha256": "496658bc6facefde92b1133770e1efbb2c5f3f01a702a73e69a5cc47294b7794"
+      }
+    }
+  },
+  "soft_paws_review_day_v1.db": {
+    "version": 5,
+    "tables": {
+      "care_drafts": {
+        "rows": 1,
+        "sha256": "9cfcaa2392dd4b92ce3d3661368b83df95bbff91f20d6b7a79304b7aba1aa14d"
+      },
+      "care_events": {
+        "rows": 26,
+        "sha256": "fb4590eb363a7e1de2aaa437592ff8bbbf9e6cb0b59d31435631bc9524b470b8"
+      },
+      "care_items": {
+        "rows": 50,
+        "sha256": "00fc14e2b9a8ea5a87e4454e533f3e7e200e7db84490fbadf6b33e01d1a2934c"
+      },
+      "device_cleanup": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "dogs": {
+        "rows": 1,
+        "sha256": "db574595a8b6c4224e6a6b9bc464593f4a0423c288bfe4b3ee92de63976cf530"
+      },
+      "journal_metadata": {
+        "rows": 1,
+        "sha256": "4016538371a1cd463033d70e3b4cbff539afd4140abcc3de601136f4dab3d83a"
+      },
+      "local_documents": {
+        "rows": 1,
+        "sha256": "cfda12cd9ab8255d5e3b01468f47b18f7f954d384b0e960b9313b13514c1bff7"
+      },
+      "local_owner": {
+        "rows": 1,
+        "sha256": "4db2d9cc7a5a966466aa8a3963b12067fc3dedfb5ef3dd19b0c51c78bf75038c"
+      }
+    }
+  },
+  "soft_paws_review_video_v1.db": {
+    "version": 5,
+    "tables": {
+      "care_drafts": {
+        "rows": 1,
+        "sha256": "ab931d457fcabdc5be5fa2bc95588d1e05bb4aac918a28ec102966ee72ab36f8"
+      },
+      "care_events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "care_items": {
+        "rows": 3,
+        "sha256": "7aa3c3509128dbf91aa20cdb69b74190682ca5cb9ef26304199edffbd47d2cde"
+      },
+      "device_cleanup": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "dogs": {
+        "rows": 1,
+        "sha256": "c5fc195dbafaeb73131f0f303225a1b0d90f298071de27fc483e6f6c79c17b30"
+      },
+      "journal_metadata": {
+        "rows": 1,
+        "sha256": "4016538371a1cd463033d70e3b4cbff539afd4140abcc3de601136f4dab3d83a"
+      },
+      "local_documents": {
+        "rows": 1,
+        "sha256": "cfda12cd9ab8255d5e3b01468f47b18f7f954d384b0e960b9313b13514c1bff7"
+      },
+      "local_owner": {
+        "rows": 1,
+        "sha256": "1f8374c9ef40c28d844aca4a07193bf92bafbb140ce31a05bb8e56e3a85ce2f6"
+      }
+    }
+  },
+  "soft_paws_review_account_v1.db": {
+    "version": 5,
+    "tables": {
+      "care_drafts": {
+        "rows": 1,
+        "sha256": "ae2c67d8de7ae6c2aa2103ae2dad352997c958825345be91d6706254b50f702e"
+      },
+      "care_events": {
+        "rows": 1,
+        "sha256": "47234de4a002f124dc9e179c5f75950540b35ac7212906932aef2da1157eb28c"
+      },
+      "care_items": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "device_cleanup": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "dogs": {
+        "rows": 1,
+        "sha256": "70ed345e48c6abbeaf203f43cfced82ca71ba23d6d511f14be5e09b0336219ef"
+      },
+      "journal_metadata": {
+        "rows": 1,
+        "sha256": "4016538371a1cd463033d70e3b4cbff539afd4140abcc3de601136f4dab3d83a"
+      },
+      "local_documents": {
+        "rows": 1,
+        "sha256": "cfda12cd9ab8255d5e3b01468f47b18f7f954d384b0e960b9313b13514c1bff7"
+      },
+      "local_owner": {
+        "rows": 1,
+        "sha256": "c7edef8794253467fc6f9553170f1b214d6ff2309ec60dc670995734e7b33cf8"
+      }
+    }
+  }
+}

@@ -62,7 +62,7 @@ fun SoftPawsYouScreen(context: FeatureContext) {
     SoftPawsHeading("A place for both of you.", "Your cat, preferences and local data.")
     Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { AnimatedCat(Modifier.size(104.dp, 116.dp)) }
     SoftPawsRow(context.dog.name, "Profile, care notes and routines", "heart") {
-        context.companion?.go(CompanionScreen.DogProfile) ?: context.open(Feature.DogEdit, context.dog.id)
+        context.open(Feature.CatProfile)
     }
     SoftPawsRow("Your cats", "Switch profiles or add another", "user-round") { context.open(Feature.DogSwitcher) }
     context.companion?.let { companion ->
@@ -72,5 +72,5 @@ fun SoftPawsYouScreen(context: FeatureContext) {
         SoftPawsRow("A little further ahead", "Future ideas · not available", "sparkles") { companion.go(CompanionScreen.FutureFeatures) }
     }
     SoftPawsRow("Settings & accessibility", "Make the app comfortable", "sliders-horizontal") { context.open(Feature.Settings) }
-    SoftPawsRow("Your local data", "Export and manage records", "archive") { context.open(Feature.Export) }
+    SoftPawsRow("Your local data", "Export and manage records", "archive") { context.open(Feature.DataSettings) }
 }

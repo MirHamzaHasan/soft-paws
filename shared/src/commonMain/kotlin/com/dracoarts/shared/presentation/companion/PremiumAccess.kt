@@ -2,10 +2,10 @@ package com.dracoarts.shared.presentation.companion
 
 /** Product gates only. DemoSession is not a verified store entitlement. */
 enum class PremiumFeature(val title: String, val description: String) {
-    AdditionalDog("A journal for each dog.", "Adding another dog is part of Premium. Your existing dogs stay available."),
-    AiChat("Ask about your dog.", "Soft Paws AI conversations are part of Premium."),
-    Toxicity("Know what to ask.", "Dog-specific toxicity explanations use Soft Paws AI and are part of Premium. Emergency calls stay free."),
-    SafetyTopics("Safety for your dog.", "Personalized safety explanations use Soft Paws AI and are part of Premium."),
+    AdditionalDog("A journal for each cat.", "Adding another cat is part of Premium. Your existing cats stay available."),
+    AiChat("Ask about your cat.", "Soft Paws AI conversations are part of Premium."),
+    Toxicity("Know what to ask.", "Cat-specific toxicity explanations use Soft Paws AI and are part of Premium. Emergency calls stay free."),
+    SafetyTopics("Safety for your cat.", "Personalized safety explanations use Soft Paws AI and are part of Premium."),
     NearestVet("Find a vet nearby.", "Search Maps for veterinary clinics near your chosen location with Premium."),
     DogTraining("Train your cat.", "A future Premium feature. Coming soon; training is not included as an available service yet."),
     VideoHighlight("Keep their moments moving.", "MP4 video export and sharing are part of Premium."),

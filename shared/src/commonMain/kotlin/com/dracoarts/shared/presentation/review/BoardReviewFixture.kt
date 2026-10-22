@@ -8,11 +8,16 @@ import com.dracoarts.shared.domain.repository.CareRepository
 import com.dracoarts.shared.managers.StorageBackend
 import kotlinx.datetime.*
 import kotlinx.coroutines.flow.first
+import com.dracoarts.shared.presentation.companion.*
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 enum class BoardReviewDataSet(val key: String, val databaseName: String) {
     SoftPawsDay("soft-paws-day-v1", "soft_paws_review_day_v1.db"),
     SoftPawsVideo("soft-paws-video-v1", "soft_paws_review_video_v1.db"),
     SoftPawsAccount("soft-paws-account-v1", "soft_paws_review_account_v1.db"),
+    SoftPawsFinish("soft-paws-finish-v1", "soft_paws_review_finish_v1.db"),
+    SoftPawsFinishEmpty("soft-paws-finish-empty-v1", "soft_paws_review_finish_empty_v1.db"),
     SoftPawsSetup("soft-paws-setup-v1", "soft_paws_review_setup_v1.db"),
     PremiumSafety("park-premium-safety-v1", "barklog_review_premium_safety_v1.db"),
     AddDog("park-add-dog-v1", "barklog_review_add_dog_v1.db"),
@@ -27,7 +32,7 @@ enum class BoardReviewDataSet(val key: String, val databaseName: String) {
     Paged("park-paged-v1", "barklog_review_park_paged_v1.db");
     val preferencePrefix get() = if (this == Day) "board_review_v1_" else "board_review_${name.lowercase()}_v1_"
     val nowMillis get() = when (this) {
-        SoftPawsDay, SoftPawsSetup, SoftPawsVideo, SoftPawsAccount -> LocalDateTime.parse("2026-10-20T09:41").toInstant(BoardReviewFixture.zone).toEpochMilliseconds()
+        SoftPawsDay, SoftPawsSetup, SoftPawsVideo, SoftPawsAccount, SoftPawsFinish, SoftPawsFinishEmpty -> LocalDateTime.parse("2026-10-20T09:41").toInstant(BoardReviewFixture.zone).toEpochMilliseconds()
         AiCards -> LocalDateTime.parse("2026-10-19T20:00").toInstant(BoardReviewFixture.zone).toEpochMilliseconds()
         else -> BoardReviewFixture.now
     }
@@ -45,8 +50,33 @@ object BoardReviewFixture {
     fun itemId(number: Int) = "b04d0022-0001-4000-8000-${number.toString().padStart(12, '0')}"
     private fun at(day: String, time: String) = LocalDateTime.parse("${day}T$time").toInstant(zone).toEpochMilliseconds()
 
+    /** Repeatable preparation of one disposable QA profile; never resets a journal. */
+    suspend fun prepareFinishDeletion(repository: JournalRepository) {
+        val id = "50f70012-0001-4000-8000-000000000003"
+        if (repository.observeDogs().first().none { it.id == id }) repository.addDog("Juniper QA", DogDetails(companion = DogContext.catDefaults()), id)
+    }
+
     suspend fun seed(repository: JournalRepository, dataSet: BoardReviewDataSet = BoardReviewDataSet.Day) {
         if (dataSet == BoardReviewDataSet.SoftPawsSetup) return
+        if (dataSet in setOf(BoardReviewDataSet.SoftPawsFinish, BoardReviewDataSet.SoftPawsFinishEmpty)) {
+            val cat = repository.addDog("Miso", DogDetails(breed = "Domestic shorthair", age = "3 years", sex = "Female", companion = DogContext.catDefaults().copy(stage = "Adult", years = "3", lifestyle = "Indoor", breeds = listOf("Domestic shorthair"), neutered = "Spayed", weight = "4.2", careNotes = "Owned final-screen QA · preserve this care note")), "50f70012-0001-4000-8000-000000000001")
+            if (dataSet == BoardReviewDataSet.SoftPawsFinishEmpty) return
+            val care = repository as CareRepository
+            val beans = repository.addDog("Beans", DogDetails(companion = DogContext.catDefaults()), "50f70012-0001-4000-8000-000000000002")
+            repository.addDog("Juniper QA", DogDetails(companion = DogContext.catDefaults()), "50f70012-0001-4000-8000-000000000003")
+            repository.createEvent(cat.id, itemId(100), CareEventInput(CareEventType.Note, at("2026-10-20", "08:00"), "Watched the birds after breakfast.", CareDetails.Note()))
+            repository.createEvent(cat.id, itemId(101), CareEventInput(CareEventType.Meal, at("2026-10-20", "08:10"), "65 g wet food offered. Some food remained.", CareDetails.Meal(offeredGrams = 65.0, eaten = MealEaten.Some)))
+            repository.createEvent(beans.id, itemId(102), CareEventInput(CareEventType.Note, at("2026-10-20", "08:20"), "Beans-only observation; never share with Miso.", CareDetails.Note()))
+            if (itemId(601) !in care.observeItems(cat.id).first().map { it.id }) care.saveItem(cat.id, itemId(601), dataSet.nowMillis, CareItemData.Photo("finish-qa-missing.jpg", "The window supervisor", "2026-10-20", notes = "All afternoon, keeping an eye on the birds."))
+            care.saveDraft(beans.id, "final-screen-sentinel", com.dracoarts.shared.domain.repository.LocalDraft("{\"note\":\"Beans draft stays separate\"}"))
+            val question = "What should I note about Miso’s breakfast?"
+            val prepared = prepareWeeklyContext(repository, cat.id, question, dataSet.nowMillis, zone)
+            val workspace = CompanionWorkspace(currentThread = itemId(910), threads = listOf(CompanionThread(itemId(910), "A breakfast observation", listOf(
+                CompanionMessage(itemId(911), question, false, dataSet.nowMillis - 2000),
+                CompanionMessage(itemId(912), "Keep the observation specific.\n\nRecord what you offered, roughly how much was left and when. Add anything else you noticed in your own words.\n\nThese are caregiver observations; they do not establish a cause.", true, dataSet.nowMillis - 1000, profile = prepared.profile, records = prepared.records, responseSource = "demo", weekly = prepared.weekly)))))
+            (repository as com.dracoarts.shared.domain.repository.LocalDocumentRepository).writeDocument("companion-chat-${cat.id}", Json.encodeToString(workspace), cat.id)
+            return
+        }
         if (dataSet == BoardReviewDataSet.SoftPawsAccount) {
             val cat = repository.addDog("Miso", DogDetails(companion = DogContext.catDefaults().copy(stage = "Adult", lifestyle = "Indoor")), "50f70011-0001-4000-8000-000000000001")
             repository.createEvent(cat.id, "50f70011-0001-4000-8000-000000000100", CareEventInput(CareEventType.Note, dataSet.nowMillis, "Owned account QA · keep this journal note", CareDetails.Note()))

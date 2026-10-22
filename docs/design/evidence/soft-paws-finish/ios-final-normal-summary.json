@@ -1,0 +1,73 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "21204A18-9CDD-4B75-9A27-8C4BAE455214",
+        "deviceName" : "BarkLog Application QA",
+        "modelName" : "iPhone SE (3rd generation)",
+        "osBuildNumber" : "22F77",
+        "osVersion" : "18.5",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 4,
+      "passedTests" : 2,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "iosApp · Built with macOS 26.6.1",
+  "expectedFailures" : 0,
+  "failedTests" : 4,
+  "finishTime" : 1792648131.374,
+  "passedTests" : 2,
+  "result" : "Failed",
+  "skippedTests" : 0,
+  "startTime" : 1792647111.249,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "failed - Missing control Message Soft Paws AI: Attributes: Application, 0x135e4a990, pid: 12152, label: 'Soft Paws'\nElement subtree:\n →Application, 0x135e4a990, pid: 12152, label: 'Soft Paws'\n    Window (Main), 0x136118c50, {{0.0, 0.0}, {375.0, 667.0}}\n      Other, 0x135afc570, {{0.0, 0.0}, {375.0, 667.0}}\n        Other, 0x13611be50, {{0.0, 0.0}, {375.0, 667.0}}\n          Other, 0x1361189c0, {{0.0, 0.0}, {375.0, 667.0}}\n            Other, 0x136108d90, {{0.0, 0.0}, {375.0, 667.0}}\n              Other, 0x13611bf70, {{0.0, 0.0}, {375.0, 667.0}}\n                Other, 0x135e49910, {{0.0, 0.0}, {375.0, 667.0}}\n                Other, 0x135e4a570, {{0.0, 0.0}, {375.0, 667.0}}\n                ScrollView, 0x135e494f0, {{0.0, 0.0}, {375.0, 667.0}}\n                  Other, 0x135e48c90, {{0.0, 0.0}, {375.0, 667.0}}\n                    Other, 0x135e4ed40, {{0.0, 0.0}, {375.0, 667.0}}\n                      Other, 0x135e4ee60, {{0.0, 0.0}, {375.0, 667.0}}\n                      Other, 0x135e4ef80, {{0.0, 0.0}, {375.0, 667.0}}\n                      Other, 0x135e4f0a0, {{0.0, 0.0}, {375.0, 667.0}}\n                      Button, 0x135e4f1c0, {{16.0, 32.0}, {48.0, 48.0}}, label: 'Back to journal'\n                      StaticText, 0x135e4f2e0, {{76.0, 32.0}, {211.5, 30.5}}, label: 'Ask about Miso.'\n                      Button, 0x135e4f400, {{311.0, 32.0}, {48.0, 48.0}}, label: 'Chat options'\n                      StaticText, 0x135e4f520, {{76.0, 62.5}, {113.5, 17.5}}, label: 'Soft Paws AI · demo'\n                      Other, 0x135f3bf30, {{16.0, 96.0}, {343.0, 401.5}}\n                        StaticText, 0x135e4f640, {{55.0, -643.5}, {283.0, 20.5}}, label: 'What should I note about Miso’s breakfast?'\n                        StaticText, 0x13611c090, {{64.0, -566.5}, {79.0, 17.5}}, label: 'Demo answer'\n                        StaticText, 0x13611c1b0, {{38.0, -537.0}, {299.0, 208.0}}, label: 'Keep the observation specific.\n\nRecord what you offered, roughly how much was left and when. Add anything else you noticed in your own words.\n\nThese are caregiver observations; they do not establish a cause.'\n                        StaticText, 0x13611c2d0, {{60.0, -282.0}, {95.0, 17.5}}, label: 'From Miso’s logs'\n                        StaticText, 0x13611c3f0, {{37.0, -252.5}, {25.5, 52.0}}, label: '2'\n                        StaticText, 0x13611c510, {{72.5, -221.0}, {127.0, 20.5}}, label: 'care records saved'\n                        StaticText, 0x13611c630, {{37.0, -188.5}, {286.5, 17.5}}, label: '14 October 2026 – 20 October 2026 · past 7 days'\n                        Other, 0x13611c750, {{37.0, -159.0}, {301.0, 76.0}}, label: '2026-10-14: 0 saved records; 2026-10-15: 0 saved records; 2026-10-16: 0 saved records; 2026-10-17: 0 saved records; 2026-10-18: 0 saved records; 2026-10-19: 0 saved records; 2026-10-20: 2 saved records'\n                        StaticText, 0x13611c870, {{37.0, -58.0}, {188.0, 17.5}}, label: 'Latest · 20 October 2026 · 08:10'\n                        StaticText, 0x13611c990, {{37.0, -28.5}, {301.0, 35.0}}, label: '65.0 g offered · Some eaten · 65 g wet food offered. Some food remained.'\n                        Button, 0x13611cab0, {{37.0, 18.5}, {301.0, 52.0}}\n                        Other, 0x13611cbd0, {{20.0, 72.0}, {335.0, 122.5}}\n                        StaticText, 0x13611ccf0, {{20.0, 99.5}, {335.0, 35.0}}, label: 'Care logs may be incomplete. A veterinarian can assess health concerns.'\n                        Button, 0x13611ce10, {{20.0, 146.5}, {335.0, 48.0}}, label: 'Cat profile used'\n                          Other, 0x13611cf30, {{34.0, 161.5}, {18.0, 18.0}}\n                          StaticText, 0x13611d050, {{62.0, 162.0}, {254.0, 17.5}}, label: 'Cat profile used'\n                        Button, 0x13611d170, {{20.0, 218.5}, {155.5, 48.0}}, label: 'Try another response'\n                          Other, 0x13611d290, {{4.0, 218.5}, {48.0, 48.0}}\n                          StaticText, 0x13611d3b0, {{42.0, 233.0}, {133.5, 19.0}}, label: 'Try another response'\n                        Button, 0x13611d4d0, {{20.0, 290.5}, {129.5, 48.0}}, label: 'Report for my vet'\n                          Other, 0x13611d5f0, {{4.0, 290.5}, {48.0, 48.0}}\n                          StaticText, 0x13611d710, {{42.0, 305.0}, {107.5, 19.0}}, label: 'Report for my vet'\n                        Button, 0x13611d830, {{20.0, 362.5}, {154.0, 48.0}}, label: 'Saved contacts · free'\n                          StaticText, 0x13611d950, {{20.0, 377.0}, {132.0, 19.0}}, label: 'Saved contacts · free'\n                          Other, 0x13611da70, {{142.0, 362.5}, {48.0, 48.0}}\n                        StaticText, 0x13611db90, {{20.0, 434.5}, {335.0, 35.0}}, label: 'Future contextual products · unavailable. No live products or links.'\n                      Other, 0x13611dcb0, {{16.0, 509.5}, {343.0, 149.5}}\n                      TextView, 0x13611ddd0, {{31.0, 519.5}, {313.0, 48.0}}, label: 'Message Soft Paws AI'\n                        Other, 0x13611def0, {{31.0, 519.5}, {313.0, 48.0}}\n                      Button, 0x13611e010, {{28.0, 575.5}, {48.0, 48.0}}, label: 'Attach a photo'\n                      Button, 0x13611e130, {{84.0, 575.5}, {207.0, 48.0}}, label: 'Review automatic profile and seven-day context, Profile + past 7 days'\n                        StaticText, 0x13611e250, {{116.0, 591.0}, {145.0, 17.5}}, label: 'Profile + past 7 days'\n                      Button, 0x13611e370, {{299.0, 575.5}, {48.0, 48.0}}, label: 'Send message', Disabled\n                      StaticText, 0x13611e490, {{28.0, 631.5}, {319.0, 17.5}}, label: 'Demo replies · not veterinary advice'\n                      StaticText, 0x13611e5b0, {{31.0, 519.5}, {114.0, 20.5}}, label: 'Ask about Miso…'\n    Window, 0x13611e6d0, {{0.0, 0.0}, {375.0, 667.0}}\n      Other, 0x13611e7f0, {{0.0, 0.0}, {375.0, 667.0}}\n        Other, 0x13611e910, {{0.0, 0.0}, {375.0, 667.0}}\nPath to element:\n →Application, 0x135e4a990, pid: 12152, label: 'Soft Paws'\nQuery chain:\n →Find: Target Application 'com.draco.apps.soft.paws'\n  Output: {\n    Application, 0x13611ec50, pid: 12152, label: 'Soft Paws'\n  }\n",
+      "targetName" : "BarkLogUITests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "SoftPawsFinishJourneys/testBProfilePreferencesSourcesAndUnavailableDraft()",
+      "testIdentifierURL" : "test://com.apple.xcode/iosApp/BarkLogUITests/SoftPawsFinishJourneys/testBProfilePreferencesSourcesAndUnavailableDraft",
+      "testName" : "testBProfilePreferencesSourcesAndUnavailableDraft()"
+    },
+    {
+      "failureText" : "failed - Missing control Delete cat permanently: Attributes: Application, 0x135f54b40, pid: 13056, label: 'Soft Paws'\nElement subtree:\n →Application, 0x135f54b40, pid: 13056, label: 'Soft Paws'\n    Window (Main), 0x135f87240, {{0.0, 0.0}, {375.0, 667.0}}\n      Other, 0x135f557a0, {{0.0, 0.0}, {375.0, 667.0}}\n        Other, 0x135f57060, {{0.0, 0.0}, {375.0, 667.0}}\n          Other, 0x135f4e790, {{0.0, 0.0}, {375.0, 667.0}}\n            Other, 0x135f56c40, {{0.0, 0.0}, {375.0, 667.0}}\n              Other, 0x135f55bc0, {{0.0, 0.0}, {375.0, 667.0}}\n                Other, 0x135f524c0, {{0.0, 0.0}, {375.0, 667.0}}\n                Other, 0x135f935e0, {{0.0, 0.0}, {375.0, 667.0}}\n                ScrollView, 0x135f93700, {{0.0, 0.0}, {375.0, 667.0}}\n                  Other, 0x135f93820, {{0.0, 0.0}, {375.0, 667.0}}\n                    Other, 0x135f93940, {{0.0, 0.0}, {375.0, 667.0}}\n                      Other, 0x135f93a60, {{0.0, 0.0}, {375.0, 667.0}}\n                      Other, 0x135f93b80, {{0.0, 20.0}, {375.0, 647.0}}\n                      Other, 0x135f93ca0, {{0.0, 20.0}, {375.0, 647.0}}\n                      Other, 0x135f93dc0, {{0.0, 20.0}, {375.0, 519.0}}\n                        Button, 0x135f93ee0, {{24.0, 32.0}, {48.0, 48.0}}, label: 'Back'\n                        StaticText, 0x135f94000, {{288.5, 48.5}, {62.5, 15.5}}, label: 'CAT CARE'\n                        Other, 0x135f94120, {{24.0, 100.0}, {327.0, 71.0}}, label: 'Delete Juniper QA’s local records?'\n                        StaticText, 0x135f94240, {{24.0, 183.0}, {229.0, 21.5}}, label: 'Export what you want to keep first.'\n                        Other, 0x135f94360, {{24.0, 224.5}, {327.0, 131.0}}\n                        StaticText, 0x135f94480, {{42.0, 242.5}, {175.0, 25.5}}, label: 'What this affects'\n                        StaticText, 0x135f945a0, {{42.0, 276.0}, {291.0, 61.5}}, label: 'This cat’s profile, care records, conversations and private attachments. Other cats keep their own data.'\n                        Button, 0x135f946c0, {{24.0, 375.5}, {91.0, 48.0}}, label: 'Export first'\n                          StaticText, 0x135f947e0, {{24.0, 390.0}, {69.0, 19.0}}, label: 'Export first'\n                          Other, 0x135f94900, {{83.0, 375.5}, {48.0, 48.0}}\n                        StaticText, 0x135f94a20, {{24.0, 443.5}, {327.0, 35.0}}, label: 'Deletion cannot be undone in this app. Unknown files from older versions are left untouched.'\n                      Other, 0x135f94b40, {{0.0, 539.0}, {375.0, 128.0}}\n                      Button, 0x135f94c60, {{20.0, 549.0}, {335.0, 52.0}}, label: 'Keep everything'\n                        StaticText, 0x135f94d80, {{129.0, 564.0}, {117.5, 22.0}}, label: 'Keep everything'\n                      Button, 0x135f94ea0, {{20.0, 609.0}, {145.0, 48.0}}, label: 'Delete cat permanently'\n                        StaticText, 0x135f94fc0, {{20.0, 623.5}, {145.0, 19.0}}, label: 'Delete cat permanently'\n    Window, 0x135f950e0, {{0.0, 0.0}, {375.0, 667.0}}\n      Other, 0x135f95200, {{0.0, 0.0}, {375.0, 667.0}}\n        Other, 0x135f95320, {{0.0, 0.0}, {375.0, 667.0}}\nPath to element:\n →Application, 0x135f54b40, pid: 13056, label: 'Soft Paws'\nQuery chain:\n →Find: Target Application 'com.draco.apps.soft.paws'\n  Output: {\n    Application, 0x134f1ca20, pid: 13056, label: 'Soft Paws'\n  }\n",
+      "targetName" : "BarkLogUITests",
+      "testIdentifier" : 4,
+      "testIdentifierString" : "SoftPawsFinishJourneys/testDDeleteOnlyTheOwnedDisposableCat()",
+      "testIdentifierURL" : "test://com.apple.xcode/iosApp/BarkLogUITests/SoftPawsFinishJourneys/testDDeleteOnlyTheOwnedDisposableCat",
+      "testName" : "testDDeleteOnlyTheOwnedDisposableCat()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "BarkLogUITests",
+      "testIdentifier" : 5,
+      "testIdentifierString" : "SoftPawsFinishJourneys/testYReplaceExistingNativeText()",
+      "testIdentifierURL" : "test://com.apple.xcode/iosApp/BarkLogUITests/SoftPawsFinishJourneys/testYReplaceExistingNativeText",
+      "testName" : "testYReplaceExistingNativeText()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "BarkLogUITests",
+      "testIdentifier" : 6,
+      "testIdentifierString" : "SoftPawsFinishJourneys/testZEndOwnedPreview()",
+      "testIdentifierURL" : "test://com.apple.xcode/iosApp/BarkLogUITests/SoftPawsFinishJourneys/testZEndOwnedPreview",
+      "testName" : "testZEndOwnedPreview()"
+    }
+  ],
+  "title" : "Test - iosApp",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 6
+}

@@ -104,9 +104,9 @@ class CompanionController(private val documents: LocalDocumentRepository, privat
             val composer = care.loadDraft(id, "chat-composer-v1")?.let { json.decodeFromString<ChatComposerDraft>(it.value) } ?: ChatComposerDraft()
             require(composer.text.length <= 4000 && composer.photoIds.size <= 3 && composer.photoIds.all { LocalAttachmentRules.image.matches(it) })
             composerRevision++
-            _state.update { it.copy(dogId = id, composer = composer, workspace = workspace, conversationsFailed = false, busy = false, streaming = null, error = null) }
+            _state.update { it.copy(dogId = id, composer = composer, workspace = workspace, sourceMessageId = null, conversationsFailed = false, busy = false, streaming = null, error = null) }
         } catch (cancelled: CancellationException) { throw cancelled }
-        catch (_: Exception) { _state.update { it.copy(dogId = id, composer = ChatComposerDraft(), workspace = CompanionWorkspace(), busy = false, conversationsFailed = true, error = "Couldn't open this dog’s conversations. Your journal is still available.") } }
+        catch (_: Exception) { _state.update { it.copy(dogId = id, composer = ChatComposerDraft(), workspace = CompanionWorkspace(), busy = false, conversationsFailed = true, error = "Couldn't open this cat’s conversations. Your journal is still available.") } }
     }
     fun editDraft(change: (CompanionDraft) -> CompanionDraft) {
         if (state.value.profileSaving) return
@@ -297,6 +297,16 @@ class CompanionController(private val documents: LocalDocumentRepository, privat
         catch (_: Exception) { setError(if (accountCleanupPending) "Your Firebase account was deleted. Clearing saved conversations on this phone failed. Retry to finish; your journal stays." else "Couldn't finish the account change. Try again. Your journal stays here."); false }
         finally { _state.update { it.copy(authBusy = false) }; authLock.unlock() }
     }
+    fun showSources(messageId: String) {
+        if (state.value.workspace.thread?.messages?.any { it.id == messageId && it.assistant } != true) return
+        _state.update { it.copy(sourceMessageId = messageId) }
+        go(CompanionScreen.ChatSource, com.dracoarts.shared.presentation.navigation.BoardNavigationMove.Push)
+    }
+    fun openSourceRecord(navigation: com.dracoarts.shared.presentation.navigation.AppState, catId: String, eventId: String) {
+        if (catId != state.value.dogId) return
+        val action = { navigation.openJournalRecord(catId, eventId); _state.update { it.copy(route = null, error = null) }; Unit }
+        navigationHandler?.invoke(com.dracoarts.shared.presentation.navigation.BoardNavigationMove.Push, action) ?: action()
+    }
     fun beginEdit(dog: Dog) {
         originalDog = dog
         _state.update { it.copy(draft = CompanionDraft(platform.newId(), dog.name, dog.details.sex, dog.details.photoId, dog.details.companion, "next-context-review", dog.id), route = CompanionScreen.ContextReview) }
@@ -312,7 +322,7 @@ class CompanionController(private val documents: LocalDocumentRepository, privat
             val draft = state.value.draft; draft.context.validate()
             require(draft.name.trim().length in 1..80 && draft.name.none(Char::isISOControl)) { "Enter a cat name from 1 to 80 characters." }
             if (draft.context.birthday.isNotBlank()) require(kotlinx.datetime.LocalDate.parse(draft.context.birthday) <= com.dracoarts.shared.presentation.state.JournalDates.day(platform.nowMillis(), platform.timeZone())) { "Birthday can’t be in the future." }
-            val old = if (draft.editingDogId != null) originalDog ?: journal.observeDogs().first().firstOrNull { it.id == draft.editingDogId } ?: kotlin.error("This dog no longer exists.") else null
+            val old = if (draft.editingDogId != null) originalDog ?: journal.observeDogs().first().firstOrNull { it.id == draft.editingDogId } ?: kotlin.error("This cat no longer exists.") else null
             val details = (old?.details ?: DogDetails()).copy(breed = draft.context.breeds.joinToString(" × ").take(100), age = draft.context.ageLabel().take(60), sex = draft.sex, photoId = draft.photoId, companion = draft.context)
             result = if (draft.editingDogId != null) {
                 care.updateDog(old!!, draft.name.trim(), details)
@@ -327,7 +337,7 @@ class CompanionController(private val documents: LocalDocumentRepository, privat
     suspend fun updateWorkspace(consumeComposer: Boolean = false, change: (CompanionWorkspace) -> CompanionWorkspace): Boolean = operation {
         lock.withLock {
             check(!state.value.conversationsFailed) { "Reopen saved conversations before changing them." }
-            val id = state.value.dogId ?: kotlin.error("Open a dog journal first.")
+            val id = state.value.dogId ?: kotlin.error("Open a cat journal first.")
             val next = change(state.value.workspace)
             documents.writeDocument("companion-chat-$id", json.encodeToString(next), id, if (consumeComposer) "chat-composer-v1" else null)
             if (consumeComposer) composerRevision++
@@ -386,7 +396,7 @@ class CompanionController(private val documents: LocalDocumentRepository, privat
                 _state.update { it.copy(streaming = null, error = failure ?: it.error) }
             }
           } catch (cancelled: CancellationException) { throw cancelled }
-          catch (_: Exception) { setError("Couldn’t read this dog’s weekly context. Your draft is kept; try again.") }
+          catch (_: Exception) { setError("Couldn’t read this cat’s weekly context. Your draft is kept; try again.") }
           finally { _state.update { it.copy(busy = false) } }
         }
     }
@@ -409,8 +419,8 @@ class CompanionController(private val documents: LocalDocumentRepository, privat
     }
     private suspend fun saveComposer(expectedDog: String? = state.value.dogId, change: (ChatComposerDraft) -> ChatComposerDraft): Boolean = operation {
         lock.withLock {
-            val id = state.value.dogId ?: error("Open your dog first.")
-            check(id == expectedDog && !state.value.conversationsFailed) { "Reopen this dog’s chat before changing its draft." }
+            val id = state.value.dogId ?: error("Open your cat first.")
+            check(id == expectedDog && !state.value.conversationsFailed) { "Reopen this cat’s chat before changing its draft." }
             val next = change(state.value.composer)
             require(next.text.length <= 4000 && next.photoIds.size <= 3 && next.photoIds.all { LocalAttachmentRules.image.matches(it) }) { "Choose up to three photos." }
             care.saveDraft(id, "chat-composer-v1", LocalDraft(json.encodeToString(next), next.photoIds))

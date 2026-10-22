@@ -157,6 +157,7 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
                 reviewStart in setOf("record-detail", "delete-confirmation") -> state.detail(journal.selectedDogId!!, BoardReviewFixture.itemId(100))
                 reviewStart in setOf("record-edit", "stale-record") -> state.edit(journal.selectedDogId!!, BoardReviewFixture.itemId(100), platform.newId())
                 reviewStart == "form-notes-example" -> state.newLog(journal.selectedDogId!!, CareEventType.Walk, platform.newId())
+                reviewStart == "cat-save-error" -> state.newLog(journal.selectedDogId!!, CareEventType.Note, platform.newId())
                 reviewStart in setOf("save-error", "retained-draft") -> state.newLog(journal.selectedDogId!!, CareEventType.Meal, platform.newId())
                 reviewStart == "saving-state" -> state.newLog(journal.selectedDogId!!, CareEventType.Walk, platform.newId())
             }
@@ -178,8 +179,8 @@ fun BarkLogShell(state: AppState, controller: JournalController, platform: AppPl
             val opened = controller.state.first { it.readFailed || (it.selectedDogId == id && !it.loading) }
             if (!opened.readFailed) {
                 onboardingInProgress = false; reviewOnboarding = false; companion.enterJournal(state)
-            } else companion.setError("Your dog is saved. Couldn't read their journal yet. Try again.")
-        } else companion.setError(controller.state.value.error ?: "Your dog is saved. Try opening their journal again.")
+            } else companion.setError("Your cat is saved. Couldn't read their journal yet. Try again.")
+        } else companion.setError(controller.state.value.error ?: "Your cat is saved. Try opening their journal again.")
     }
     // Profile is a journal tab. Keep its scene and dock in this composition so the
     // selected pill retains its live position when entering/leaving the account menu.

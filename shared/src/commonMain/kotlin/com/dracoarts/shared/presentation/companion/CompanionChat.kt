@@ -91,10 +91,11 @@ import kotlinx.datetime.minus
     Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing).pointerInput(focus) { detectTapGestures(onTap = { focus.clearFocus() }) }.padding(horizontal = 16.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(Modifier.fillMaxWidth().heightIn(min = 56.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             ChatIcon("Back to journal", "arrow-left", onClick = onBack)
-            Column(Modifier.weight(1f)) { Text("Ask about ${dog.name}", style = MaterialTheme.typography.titleLarge); Text(if (controller.demoResponses) "Soft Paws AI · demo" else if (controller.atlasOnly) "Soft Paws AI" else "On-device first · Soft Paws AI optional", style = MaterialTheme.typography.bodySmall, color = boardColor("ink-muted")) }
+            Column(Modifier.weight(1f)) { Text("Ask about ${dog.name}.", style = MaterialTheme.typography.headlineSmall); Text(if (controller.demoResponses) "Soft Paws AI · demo" else if (controller.atlasOnly) "Soft Paws AI" else "On-device first · Soft Paws AI optional", style = MaterialTheme.typography.bodySmall, color = boardColor("ink-muted")) }
             Box {
                 ChatIcon("Chat options", "ellipsis", onClick = { menu = true })
                 DropdownMenu(menu, { menu = false }, containerColor = boardColor("panel"), tonalElevation = 0.dp, shadowElevation = 0.dp, border = BorderStroke(1.dp, boardColor("hair"))) {
+                    DropdownMenuItem(text = { Text("Service connection") }, onClick = soundAction({ menu = false; controller.go(CompanionScreen.ChatUnavailable) }))
                     DropdownMenuItem(text = { Text("Past conversations") }, onClick = soundAction({ menu = false; controller.go(CompanionScreen.Threads) }))
                     DropdownMenuItem(text = { Text("Report for my vet") }, onClick = soundAction({ menu = false; report = true }))
                     DropdownMenuItem(text = { Text("Call my vet") }, onClick = soundAction({ menu = false; vet = true }))
@@ -115,23 +116,27 @@ import kotlinx.datetime.minus
                     Text(dog.details.companion.topics.joinToString(" · ").ifBlank { "A question, a note, a little context." }, style = MaterialTheme.typography.bodySmall, color = boardColor("ink-muted"), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    val prompts = listOf("What do you know about ${dog.name}?", "When was the last walk?", "Help me prepare questions for the vet")
-                    prompts.forEachIndexed { i, question -> Box(Modifier.then(chatArrival("prompt-$i", i * 70))) { ChatRow(question, if (i == 1) "footprints" else "message-circle", enabled = !readOnly && !state.busy) { following = true; controller.send(question, dog, records, includeComposer = false) } } }
+                    val prompts = listOf("What do you know about ${dog.name}?", "What care did I record this week?", "Help me prepare questions for the vet")
+                    prompts.forEachIndexed { i, question -> Box(Modifier.then(chatArrival("prompt-$i", i * 70))) { ChatRow(question, if (i == 1) "notebook-pen" else "message-circle", enabled = !readOnly && !state.busy) { following = true; controller.send(question, dog, records, includeComposer = false) } } }
                 }
             }
             messages.forEach { message -> key(message.id) {
                 if (message.assistant) Column(Modifier.then(chatArrival(message.id)), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    ChatMark(message.responseSource)
                     val sections = answerSections(barkLogAiText(message.text, message.profile?.name))
-                    Text(sections.first, style = MaterialTheme.typography.bodyLarge.copy(lineHeight = 26.sp))
-                    if (!message.stopped) WeeklyLogCard(message) { recordSource = it }
+                    Surface(shape = RoundedCornerShape(22.dp), color = boardColor("panel"), border = BorderStroke(1.dp, boardColor("hair"))) {
+                        Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                            ChatMark(message.responseSource)
+                            Text(sections.first, style = MaterialTheme.typography.bodyLarge.copy(lineHeight = 26.sp))
+                        }
+                    }
+                    if (!message.stopped) WeeklyLogCard(message) { controller.showSources(message.id) }
                     sections.second?.let { guidance -> JournalCard { CaptionText("General care ideas"); Text(guidance, style = MaterialTheme.typography.bodyMedium) } }
                     if (message.weekly != null) CaptionText("Care logs may be incomplete. A veterinarian can assess health concerns.")
                     if (message.text == ChatHealth.medicationEducation) BarkTextAction("Medication questions · FDA", { if (!platform.device.openSource(ChatHealth.medicationSource)) controller.setError("Couldn't open the FDA guide. You can still ask your vet these questions.") }, icon = "arrow-up-right")
                     if (message.stopped) CaptionText("Response stopped")
-                    message.profile?.let { snapshot -> ChatRow("Dog profile used", "paw-print") { profileSource = snapshot } }
-                    if (message.weekly == null && message.records.isNotEmpty()) ChatRow("${message.records.size} source records", "notebook-pen") { recordSource = message.records }
-                } else Surface(Modifier.align(Alignment.End).widthIn(max = 330.dp).then(chatArrival(message.id)), shape = RoundedCornerShape(20.dp, 20.dp, 5.dp, 20.dp), color = boardColor("inset")) {
+                    message.profile?.let { snapshot -> ChatRow("Cat profile used", "paw-print") { profileSource = snapshot } }
+                    if (message.weekly == null && message.records.isNotEmpty()) ChatRow("${message.records.size} source records", "notebook-pen") { controller.showSources(message.id) }
+                } else Surface(Modifier.align(Alignment.End).widthIn(max = 330.dp).then(chatArrival(message.id)), shape = RoundedCornerShape(20.dp, 20.dp, 5.dp, 20.dp), color = boardColor("accent-soft")) {
                     Column(Modifier.padding(horizontal = 17.dp, vertical = 14.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         message.photoIds.forEach { id ->
                             ChatPhoto(id, platform.device, Modifier.fillMaxWidth().height(150.dp))
@@ -153,10 +158,12 @@ import kotlinx.datetime.minus
                     ChatRow("Prepare a report for my vet", "download") { report = true }
                 }
             } else if (messages.isNotEmpty()) BarkTextAction("Report for my vet", { report = true }, icon = "download", leading = true)
+            BarkTextAction("Saved contacts · free", { vet = true }, icon = "phone")
+            CaptionText("Future contextual products · unavailable. No live products or links.")
             Spacer(Modifier.height(4.dp))
         }
         }
-        if (readOnly) { CaptionText("Past conversations remain readable. Your care journal stays free."); BarkTextAction("See demo Premium", { controller.go(CompanionScreen.Paywall) }, icon = "arrow-up-right") }
+        if (readOnly) { CaptionText("Past conversations remain readable. Your care journal stays free."); BarkTextAction("View Premium", { controller.go(CompanionScreen.Paywall) }, icon = "arrow-up-right") }
         else Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(25.dp), color = boardColor("panel"), border = BorderStroke(1.dp, boardColor("hair-2"))) {
             Column(Modifier.padding(horizontal = 12.dp, vertical = 10.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (state.composer.photoIds.isNotEmpty()) {
@@ -170,27 +177,27 @@ import kotlinx.datetime.minus
                     }
                     CaptionText("Photos stay on this device and are never sent to Soft Paws AI.")
                 }
-                Box(Modifier.fillMaxWidth().heightIn(min = 45.dp).padding(horizontal = 3.dp, vertical = 6.dp)) {
+                Box(Modifier.fillMaxWidth().padding(horizontal = 3.dp)) {
                     if (input.isEmpty()) Text("Ask about ${dog.name}…", style = MaterialTheme.typography.bodyMedium, color = boardColor("ink-muted"))
-                    BasicTextField(input, controller::composerText, Modifier.fillMaxWidth().semantics { contentDescription = "Message Soft Paws AI" }, enabled = !state.busy, textStyle = MaterialTheme.typography.bodyMedium.copy(color = boardColor("ink")), cursorBrush = SolidColor(boardColor("ink-strong")), maxLines = 4)
+                    BasicTextField(input, controller::composerText, Modifier.fillMaxWidth().heightIn(min = 48.dp).semantics { contentDescription = "Message Soft Paws AI" }, enabled = !state.busy, textStyle = MaterialTheme.typography.bodyMedium.copy(color = boardColor("ink")), cursorBrush = SolidColor(boardColor("ink-strong")), maxLines = 4)
                 }
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     ChatIcon("Attach a photo", "plus", enabled = !state.busy && state.streaming == null && state.composer.photoIds.size < 3) { photoMenu = true }
                     Surface(onClick = soundAction({ context = true }), modifier = Modifier.weight(1f).heightIn(min = 48.dp).semantics { contentDescription = if (controller.atlasOnly || workspace.weeklyAllowed) "Review automatic profile and seven-day context" else "Choose journal context" }, shape = RoundedCornerShape(15.dp), color = boardColor("inset")) {
                         Row(Modifier.padding(horizontal = 10.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                             BarkIcon(if (workspace.recordConsent) "notebook-pen" else "shield", Modifier.size(16.dp))
-                            Text(if (controller.atlasOnly || workspace.weeklyAllowed) "Profile + past 7 days" else if (!controller.demoResponses && !controller.atlasOnly) "${dog.name} · auto context" else if (workspace.profileConsent) (if (workspace.recordConsent) "Profile + ${workspace.selectedRecords.size} records" else "Dog profile") else if (workspace.recordConsent) "${workspace.selectedRecords.size} records" else "No context", Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
+                            Text(if (controller.atlasOnly || workspace.weeklyAllowed) "Profile + past 7 days" else if (!controller.demoResponses && !controller.atlasOnly) "${dog.name} · auto context" else if (workspace.profileConsent) (if (workspace.recordConsent) "Profile + ${workspace.selectedRecords.size} records" else "Cat profile") else if (workspace.recordConsent) "${workspace.selectedRecords.size} records" else "No context", Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
                             BarkIcon("chevron-down", Modifier.size(14.dp))
                         }
                     }
-                    ChatIcon(if (state.streaming != null) "Stop response" else "Send message", if (state.streaming != null) "square" else "arrow-up", enabled = !state.busy && (state.streaming != null || input.isNotBlank() || state.composer.photoIds.isNotEmpty()), filled = true) { following = true; if (state.streaming != null) controller.stopReply() else controller.send(input, dog, records) }
+                    ChatIcon(if (state.streaming != null) "Stop response" else "Send message", if (state.streaming != null) "square" else "arrow-up", enabled = !state.busy && (state.streaming != null || input.isNotBlank() || state.composer.photoIds.isNotEmpty()), filled = true) { following = true; if (state.streaming != null) controller.stopReply() else if (!controller.demoResponses && !controller.authenticationConfigured) controller.go(CompanionScreen.ChatUnavailable) else controller.send(input, dog, records) }
                 }
                 Text(if (controller.demoResponses) "Demo replies · not veterinary advice" else if (controller.atlasOnly) "Soft Paws AI · general care, not diagnosis" else "On-device first · general care, not diagnosis", Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp), color = boardColor("ink-muted"), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
             }
         }
     }
     if (photoMenu) CDialog("Add a photo", { photoMenu = false }, actions = { BarkTextAction("Back to chat", { photoMenu = false }) }) {
-        CaptionText("Up to three photos per message. Use Describe on this phone for a scene-only draft with the downloaded photo model. AI cannot diagnose or assess an image.")
+        CaptionText("Up to three local photos per message. They stay on this phone and are not automatically sent to Soft Paws AI.")
         ChatRow("Choose from photos", "image") { photoMenu = false; photoRequest = false }
         ChatRow("Take a photo", "camera") { photoMenu = false; photoRequest = true }
     }
@@ -200,14 +207,14 @@ import kotlinx.datetime.minus
     else if(context) {
         var profile by remember {mutableStateOf(workspace.profileConsent)};var include by remember {mutableStateOf(workspace.recordConsent)};var selected by remember {mutableStateOf(workspace.selectedRecords.toSet())};var week by remember {mutableStateOf(workspace.week)}
         CDialog(if (controller.demoResponses) "Choose journal context" else "Choose Soft Paws AI context",{context = false},actions = {BarkButton("Save context choices",{scope.launch {if(controller.updateAiContext {it.copy(profileConsent = profile,recordConsent = include,selectedRecords = if(include) selected.take(50) else emptyList(),week = week)}) context = false}})}) {
-            if (!controller.demoResponses && !controller.atlasOnly) CaptionText("On-device AI automatically uses this dog’s profile and up to 12 recent or relevant care records. These choices control Soft Paws AI sharing only.")
+            if (!controller.demoResponses && !controller.atlasOnly) CaptionText("On-device AI automatically uses this cat’s profile and up to 12 recent or relevant care records. These choices control Soft Paws AI sharing only.")
             CCheck("Share profile & care notes with Soft Paws AI",profile) {profile = it};CCheck("Share selected care records with Soft Paws AI",include) {include = it};CaptionText("At most 50 explicit records per reply. Changing the date range clears record selection.")
             CSegment(listOf("Today","This week"),if(week) "This week" else "Today") {value -> week = value == "This week";selected = emptySet();browseWeek = week}
             if(include) records.forEach { event -> CCheck("${event.type.label} · ${JournalDates.dateAndTime(event.occurredAtMillis,platform.timeZone())}",event.id in selected) { on -> selected = if(on) (selected + event.id).take(50).toSet() else selected - event.id } }
             if(include && records.isEmpty()) CaptionText("No records in this range. Your first saved record will appear here.")
         }
     }
-    profileSource?.let {snapshot -> CDialog("Dog profile used",{profileSource = null},actions = {BarkButton("Close profile",{profileSource = null})}) { profileFacts(snapshot).forEach { (label, value) -> CaptionText(label); Text(boundedProfileFact(value)) }; CaptionText("Long profile notes may be shortened for a reply.") } }
+    profileSource?.let {snapshot -> CDialog("Cat profile used",{profileSource = null},actions = {BarkButton("Close profile",{profileSource = null})}) { profileFacts(snapshot).forEach { (label, value) -> CaptionText(label); Text(boundedProfileFact(value)) }; CaptionText("Long profile notes may be shortened for a reply.") } }
     recordSource?.let {sources -> CDialog("Source records",{recordSource = null},actions = {BarkButton("Close records",{recordSource = null})}) {sources.forEach {record -> Text("${record.type} · ${JournalDates.dateAndTime(record.at,platform.timeZone())}");Text(record.note.ifBlank {"No extra note recorded."})}} }
 }
 @Composable internal fun ColumnScope.CompanionChatPages(route: CompanionScreen,controller: CompanionController,journal: JournalState,platform: AppPlatform) {
@@ -221,7 +228,7 @@ import kotlinx.datetime.minus
         CompanionScreen.ChatLimit -> {CHeading("Your journal keeps going.","This conversation has reached its local message limit.");CaptionText("Start a new conversation. Your existing records and past messages stay available. No usage price or reset schedule has been set.");CFoot("New conversation") {scope.launch {if(controller.newThread()) controller.go(CompanionScreen.Chat)}};BarkTextAction("Read past conversations",{controller.go(CompanionScreen.Threads)})}
         CompanionScreen.WeeklyRecap,CompanionScreen.VetQuestions,CompanionScreen.MemoryCaption -> {
             val title = when(route) {CompanionScreen.WeeklyRecap -> "Weekly recap";CompanionScreen.VetQuestions -> "Appointment questions";else -> "Memory caption"}
-            CHeading(title,"Ask about your dog and their saved care.");CaptionText(if (controller.atlasOnly) "Soft Paws AI includes your dog’s profile and the past seven days after you enable it. Photos stay on this phone; write a description for a memory caption." else "Local chat adds recent care automatically. Choose shared context for Soft Paws AI. Photo descriptions need the downloaded photo model.");CFoot("Open in chat") {scope.launch {if(!controller.newThread()) return@launch;controller.prompt(when(route){CompanionScreen.WeeklyRecap->"Summarize the supplied care records from this week. Say if the supplied sample is incomplete.";CompanionScreen.VetQuestions->"Help me prepare questions for the vet.";else->"Write a caption for a memory with my dog."});if(route == CompanionScreen.WeeklyRecap) controller.updateWorkspace {it.copy(week = true,selectedRecords = emptyList())};controller.go(if(!state.premiumAccess) CompanionScreen.AiGate else if(controller.requiresAiConsent) CompanionScreen.AiPrivacy else CompanionScreen.Chat)}};BarkTextAction("Use the free journal",{controller.go(null)})
+            CHeading(title,"Ask about your cat and their saved care.");CaptionText(if (controller.atlasOnly) "Soft Paws AI includes your cat’s profile and the past seven days after you enable it. Photos stay on this phone; write a description for a memory caption." else "Local chat adds recent care automatically. Choose shared context for Soft Paws AI. Photo descriptions need the downloaded photo model.");CFoot("Open in chat") {scope.launch {if(!controller.newThread()) return@launch;controller.prompt(when(route){CompanionScreen.WeeklyRecap->"Summarize the supplied care records from this week. Say if the supplied sample is incomplete.";CompanionScreen.VetQuestions->"Help me prepare questions for the vet.";else->"Write a caption for a memory with my cat."});if(route == CompanionScreen.WeeklyRecap) controller.updateWorkspace {it.copy(week = true,selectedRecords = emptyList())};controller.go(if(!state.premiumAccess) CompanionScreen.AiGate else if(controller.requiresAiConsent) CompanionScreen.AiPrivacy else CompanionScreen.Chat)}};BarkTextAction("Use the free journal",{controller.go(null)})
         }
         else -> Unit
     }
@@ -241,7 +248,7 @@ private fun ChatIcon(label: String, icon: String, enabled: Boolean = true, fille
     Surface(soundAction(onClick), Modifier.size(48.dp).semantics { contentDescription = label }.then(pressMotion(source, enabled)), enabled = enabled, interactionSource = source, shape = CircleShape, color = if (filled) boardColor("ink-strong") else boardColor("panel"), contentColor = if (filled) boardColor("ground") else boardColor("ink"), border = if (filled) null else BorderStroke(1.dp, boardColor("hair"))) { Box(contentAlignment = Alignment.Center) { BarkIcon(icon, Modifier.size(21.dp)) } }
 }
 @Composable private fun ChatMark(source: String) {
-    val label = when(source) { "local" -> "On-device AI"; "journal" -> "Saved journal facts"; "local-caption" -> "On-device photo draft"; "atlas" -> "Soft Paws AI"; "safety" -> "BarkLog safety guidance"; "pending" -> "Preparing your answer"; else -> "Demo answer" }
+    val label = when(source) { "local" -> "On-device AI"; "journal" -> "Saved journal facts"; "local-caption" -> "On-device photo draft"; "atlas" -> "Soft Paws AI"; "safety" -> "Soft Paws safety guidance"; "pending" -> "Preparing your answer"; else -> "Demo answer" }
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) { BarkIcon("paw-print", Modifier.size(18.dp), boardColor("accent-text")); Text(label, style = MaterialTheme.typography.labelMedium) }
 }
 @Composable private fun chatArrival(key: Any, stagger: Int = 0): Modifier {

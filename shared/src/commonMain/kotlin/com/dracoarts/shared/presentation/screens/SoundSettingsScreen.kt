@@ -24,9 +24,8 @@ fun SoundSettingsScreen(context: FeatureContext) {
     val ready by (sounds?.readiness ?: com.dracoarts.shared.services.SilentInteractionSoundPlayer.readiness).collectAsState()
     val scope = rememberCoroutineScope()
     var volume by remember(settings.soundVolume) { mutableFloatStateOf(settings.soundVolume) }
-    CaptionText("Make it feel like BarkLog")
-    ScreenHeading("A softer little tap.", "Quiet sounds for the things you touch.")
-    JournalCard {
+    SoftPawsHeading("A quieter kind of tap.", "Soft wood · optional interaction sounds.", "kind of tap.")
+    SoftPawsCard("Interaction sounds") {
         FeatureToggle("Interaction sounds", "Optional. Start quiet and adjust to suit you.", settings.sounds) { on ->
             if (!on) sounds?.configure(false, volume, settings.soundTexture, true)
             scope.launch { context.settings.save(settings.copy(sounds = on)) }
@@ -48,7 +47,11 @@ fun SoundSettingsScreen(context: FeatureContext) {
         if (settings.sounds && ready == SoundReadiness.Unavailable) BarkButton("Retry sounds", { sounds?.retry() }, secondary = true)
     }
     settings.error?.let { ErrorCard(it) }
-    JournalCard {
+    SoftPawsCard("Quiet where it matters") {
+        CaptionText("Typing, scrolling, loading and AI generation stay silent. Saves make a sound only after the local write succeeds.")
+        CaptionText("Native playback respects silent mode. Sound never replaces a visible confirmation.")
+    }
+    SoftPawsCard("Try the sounds") {
         SectionTitle("Try the sounds")
         CompositionLocalProvider(LocalInteractionSounds provides null) {
             listOf(Triple("Button tap", "A small, rounded touch", SoundCue.Tap), Triple("Selection tick", "A lighter sound for a choice", SoundCue.Selection), Triple("Saved", "A warm note after a completed save", SoundCue.Saved)).forEach { (label, subtitle, cue) ->
@@ -67,7 +70,7 @@ fun SoundSettingsScreen(context: FeatureContext) {
     CaptionText("Typing, scrolling and loading stay silent. Sound never replaces a visible confirmation.")
     BarkButton("Try in AI chat", {
         val chat = context.companion
-        chat?.go(if (!chat.state.value.session.premium) com.dracoarts.shared.presentation.companion.CompanionScreen.AiGate else if (chat.requiresAiConsent) com.dracoarts.shared.presentation.companion.CompanionScreen.AiPrivacy else com.dracoarts.shared.presentation.companion.CompanionScreen.Chat)
+        chat?.go(if (!chat.hasPremium) com.dracoarts.shared.presentation.companion.CompanionScreen.AiGate else if (chat.requiresAiConsent) com.dracoarts.shared.presentation.companion.CompanionScreen.AiPrivacy else com.dracoarts.shared.presentation.companion.CompanionScreen.Chat)
     })
-    BarkTextAction("Back to journal", { context.navigation.show(com.dracoarts.shared.presentation.navigation.Route.Home) })
+    BoardStickyAction { BarkButton("Back to settings", { context.navigation.returnTo(com.dracoarts.shared.presentation.navigation.Feature.Settings) }) }
 }

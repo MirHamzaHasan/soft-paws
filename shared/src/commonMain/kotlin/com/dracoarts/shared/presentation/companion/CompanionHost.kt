@@ -36,6 +36,8 @@ internal fun CompanionHostContent(controller: CompanionController, journal: Jour
             state.draft.addingDog && route == CompanionScreen.Dog -> { scope.launch { controller.pauseAddDog(navigation) }; Unit }
             state.premiumFeature != null && route in setOf(CompanionScreen.Paywall, CompanionScreen.Restore) -> controller.dismissPremium()
             route in setOf(CompanionScreen.CreateAccount, CompanionScreen.PasswordReset) -> controller.go(CompanionScreen.Email, BoardNavigationMove.Back)
+            route == CompanionScreen.DeleteAccount -> controller.openJournalTool(navigation, Feature.DataSettings)
+            route in setOf(CompanionScreen.ChatSource, CompanionScreen.ChatUnavailable) -> controller.go(CompanionScreen.Chat, BoardNavigationMove.Back)
             route == CompanionScreen.Email -> controller.go(CompanionScreen.Login, BoardNavigationMove.Back)
             route in setOf(CompanionScreen.Login, CompanionScreen.ManagePlan, CompanionScreen.FutureFeatures) -> controller.navigateTab(navigation, Route.Profile)
             route in setOf(CompanionScreen.StoreManage, CompanionScreen.Restore) -> controller.go(CompanionScreen.ManagePlan, BoardNavigationMove.Back)
@@ -55,6 +57,9 @@ internal fun CompanionHostContent(controller: CompanionController, journal: Jour
         LaunchedEffect(route) { if (route == CompanionScreen.HomePremium) controller.saveSession(state.session.copy(premium = true)); controller.go(null) }
         return
     }
+    if (route == CompanionScreen.DogProfile && journal.selectedDog != null) {
+        LaunchedEffect(route) { controller.openJournalTool(navigation, Feature.CatProfile) }; return
+    }
     if (route in chatScreens && journal.selectedDog != null) {
         CompanionChat(controller, journal.selectedDog!!, repository, platform, ::back, onEditVet = { controller.go(null); navigation.open(Feature.EmergencyEdit) }); return
     }
@@ -70,6 +75,9 @@ internal fun CompanionHostContent(controller: CompanionController, journal: Jour
     if (route == CompanionScreen.Plan) {
         SoftPawsPlanReveal(controller, journal, applySafeInsets, onEnterJournal)
         return
+    }
+    if (route in softPawsAiScreens) {
+        SoftPawsAiScreen(route, controller, journal, repository, platform, navigation, applySafeInsets, ::back); return
     }
     if (route in softPawsAccountScreens) {
         SoftPawsAccountScreen(route, controller, journal, platform, navigation, applySafeInsets, ::back, onEnterJournal)
